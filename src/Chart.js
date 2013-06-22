@@ -13,29 +13,26 @@
   
   Meteor.Chart.prototype = {
     _init: function(config) {
-      var model = config.model || {},
+      var model = this.model = config.model || {},
+          skin = this.skin = config.skin || {},
+          layout = this.layout = config.layout || {},
           title = config.title || model.title || EMPTY_STRING,
-          titleWidth, halfTitleWidth,
-          skin = config.skin || {};
- 
-      this.skin = skin; 
-      this.container = config.container;
-      this.model = model
+          container, titleWidth, halfTitleWidth;
+          
       this.units = config.units || model.units || EMPTY_STRING;
-      this.width = config.layout.width || 0;
-      this.height = config.layout.height || 0;
 
-      container.style.display = 'inline-block';
-      container.style.backgroundColor = skin.background;
-    
       // create stage
       this.stage = new Kinetic.Stage({
-        width: this.width,
-        height: this.height,
-        container: 'container',
+        width: layout.width || 0,
+        height: layout.height || 0,
+        container: config.container,
         listening: false
       });
-        
+
+      container = this.stage.getContainer();
+      container.style.display = 'inline-block';
+      container.style.backgroundColor = skin.background;
+
       // layers
       this.bottomLabelLayer = new Kinetic.Layer();
       this.mainLayer = new Kinetic.Layer(); 
@@ -56,6 +53,7 @@
     },
     addTitle: function(str) {
       var skin = this.skin,
+          layout = this.layout,
           text = new Kinetic.Text(Meteor.Util.merge(skin.titleLabel, {
             text: str
           })),
@@ -70,7 +68,7 @@
       label.setOffset({
           x: label.getWidth() / 2
       });
-      label.setX(this.width / 2);
+      label.setX(layout.width / 2);
       this.topLabelLayer.add(label);  
     },
     getLineColor: function(n) {

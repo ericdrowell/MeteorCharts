@@ -43,11 +43,7 @@
   
   Meteor.Line.prototype = {
     init: function(config) {
-      var that = this,
-          stage = this.stage,
-          model = this.model,
-          width = this.width,
-          height = this.height
+      var that = this;
 
       this.setMinMax();
       this.setGranularity();
@@ -55,7 +51,7 @@
       this.tooltips = [];
       
       // transform model layer
-      this.mainLayer.setY(height + (minY * scaleY));
+      this.mainLayer.setY(this.layout.height + (minY * scaleY));
       this.mainLayer.setScale(scaleX, -1 * scaleY);
       
       // add lines and labels
@@ -63,7 +59,7 @@
       this.addYLabels();
       this.addXLabels();
       this.addSlider();
-      stage.draw();
+      this.stage.draw();
       this.bind();
       
       this.interactionAnim = new Kinetic.Animation(function() {
@@ -83,12 +79,13 @@
       */
     },
     addSlider: function() {
-      var stage = this.stage;
+      var layout = this.layout,
+          stage = this.stage;
       
       this.slider = new Kinetic.Line({
         x: 0,
         y: 0,
-        points: [0, 0, 0, this.height],
+        points: [0, 0, 0, layout.height],
         stroke: this.skin.slider,
         strokeWidth: 2,
         opacity: 0.8
@@ -136,9 +133,10 @@
     },
     updateInteractionLayer: function() {
       var stage = this.stage,
+          layout = this.layout,
           stageWidth = stage.getWidth(),
           pos = stage.getPointerPosition(),
-          height = this.height,
+          height = layout.height,
           posX = pos.x,
           nearestPoints = this.getNearestPoints(posX),
           len = nearestPoints.length,
@@ -212,7 +210,7 @@
       return nearestPoints;
     },
     getChartY: function(y) {
-      var height = this.height;
+      var height = this.layout.height;
       
       return height + (minY - y) * scaleY;
     },
@@ -290,7 +288,7 @@
       }
     },
     addXLabel: function(str, x) {
-      var y = this.height - 16,
+      var y = this.layout.height - 16,
           skin = this.skin,
           text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
             text: str
@@ -308,8 +306,9 @@
       this.topLabelLayer.add(label);
     },
     addYLabel: function(str, y) {
-      var width = this.width,
-          height = this.height,
+      var layout = this.layout,
+          width = layout.width,
+          height = layout.height,
           bottomLabelLayer = this.bottomLabelLayer,
           topLabelLayer = this.topLabelLayer,
           skin = this.skin,
@@ -340,10 +339,11 @@
     },
     setMinMax: function() {
       var model = this.model,
+          layout = this.layout,
           lines = model.lines,
           len = lines.length,
-          width = this.width,
-          height = this.height,
+          width = layout.width,
+          height = layout.height,
           firstPoint = lines[0].points[0],
           firstPointX = firstPoint.x,
           firstPointY = firstPoint.y,
@@ -435,6 +435,7 @@
     addLineTitle: function(str, y) {
       var skin = this.skin,
           lineLabelSkin = skin.lineLabel,
+          layout = this.layout,
           text = new Kinetic.Text(Meteor.Util.merge(lineLabelSkin.text, {
               text: str
             })),
@@ -445,7 +446,7 @@
               lineJoin: 'round'
             })),
           label = new Kinetic.Label({
-            x: this.width,
+            x: layout.width,
             y: y
           });
 
@@ -459,5 +460,5 @@
     }
   };
   
-  Meteor.extend(Meteor.Line, Meteor.Chart);
+  Meteor.Util.extend(Meteor.Line, Meteor.Chart);
 })();
