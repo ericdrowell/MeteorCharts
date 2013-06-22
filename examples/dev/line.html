@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.4.js"></script>
+
+    <script src="../../src/Meteor.js"></script>
+    <script src="../../src/Util.js"></script>
+    <script src="../../src/Chart.js"></script>
+
+    <script src="../../skins/classic-dark.js"></script>
+    <script src="../../skins/classic-light.js"></script>
+
+    <script src="../../src/Charts/Line.js"></script>
+
+    <script src="model.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      var lineChart = new Meteor.Line({
+        container: 'container',
+        model: model,
+        skin: CLASSIC_DARK,
+        width: 800,
+        height: 500
+      });
+    </script>
+  </body>
+</html>

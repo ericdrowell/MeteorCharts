@@ -1,0 +1,13 @@
+# High Level Design
+  * Enterprise Class
+  * Can handle thousands of data points
+  * Runs well on mobile and tablets
+  * Easy to interact with data
+  * Clear separation of data and presentation
+  
+# Product Design
+  * Maximize the visualizations by overlaying labels and legends
+  * Interactions are the same across desktop and mobile with the Flag Pole component(patent pending)
+  * Accessible (color blind)
+  * Internationalizable
+  * Skinnable
