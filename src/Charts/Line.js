@@ -1,10 +1,5 @@
 (function() {
   var EMPTY_STRING = '',
-      SECONDS_IN_YEAR = 31536000,
-      SECONDS_IN_MONTH = 2628000,
-      SECONDS_IN_DAY = 86400,
-      SECONDS_IN_HOUR = 3600,
-      SECONDS_IN_MINUTE = 60,
       SPACE = ' ',
       MOUSEMOVE = 'mousemove',
       MOUSEOUT = 'mouseout',
@@ -16,24 +11,7 @@
       RECT = 'Rect',
       COMMA_SPACE = ', ',
       APPROX_NUMBER_OF_Y_LABELS = 5,
-      MAX_NUMBER_OF_X_LABELS = 7,
-      MAX_POINT_DIST = 10,
-      GRANULARITY_TO_SECONDS = [
-        SECONDS_IN_YEAR, 
-        SECONDS_IN_MONTH, 
-        SECONDS_IN_DAY, 
-        SECONDS_IN_HOUR, 
-        SECONDS_IN_MINUTE
-      ],
-      GRANULARITIES = {
-        YEAR: 0,
-        MONTH: 1,
-        DAY: 2,
-        HOUR: 3,
-        MINUTE: 4,
-        SECOND: 5 
-      },
-      minX, minY, maxX, maxY, scaleX, scaleY;
+      MAX_POINT_DIST = 10;
   
   Meteor.Line = function(config) {
     // super
@@ -46,18 +24,19 @@
       var that = this;
 
       this.setMinMax();
-      this.setGranularity();
+      
       this.markers = [];
       this.tooltips = [];
       
       // transform model layer
-      this.dataLayer.setY(this.layout.height + (minY * scaleY));
-      this.dataLayer.setScale(scaleX, -1 * scaleY);
+      this.dataLayer.setY(this.layout.height + (this.minY * this.scaleY));
+      this.dataLayer.setScale(this.scaleX, -1 * this.scaleY);
       
       // add lines and labels
       this.addLines();
       this.addYLabels();
-      this.addXLabels();
+      //this.xAxis = new Meteor.XAxis(this);
+
       this.addSlider();
       this.stage.draw();
       this.bind();
@@ -145,6 +124,10 @@
           slider = this.slider,
           markers = this.markers,
           granularity = this.granularity,
+          minX = this.minX,
+          minY = this.minY,
+          scaleX = this.scaleX,
+          scaleY = this.scaleY,
           n, marker, point, pointX, pointY, text, markerX, markerY, rightX, tooltip;
           
       slider.setX(posX);
@@ -181,6 +164,9 @@
           lines = model.lines,
           len = lines.length,
           nearestPoints = [],
+          minX = this.minX,
+          maxX = this.maxX,
+          scaleX = this.scaleX,
           relX = x / scaleX,
           n, i, pointsLen, point, pointX, pointY, nearestPoint, minDist, dist;
           
@@ -212,10 +198,12 @@
     getChartY: function(y) {
       var height = this.layout.height;
       
-      return height + (minY - y) * scaleY;
+      return height + (this.minY - y) * this.scaleY;
     },
     addYLabels: function() {
-      var range = maxY - minY,
+      var minY = this.minY,
+          maxY = this.maxY,
+          range = maxY - minY,
           increment = Math.round((range / APPROX_NUMBER_OF_Y_LABELS) / 10) * 10,
           y = 0;
 
@@ -231,51 +219,7 @@
         this.addYLabel(this.getFormattedYLabel(y), this.getChartY(y));
         y-=increment; 
       }
-    },
-    setGranularity: function() {
-      var range = (maxX - minX) / 1000,
-          smallestIncrement = range / MAX_NUMBER_OF_X_LABELS,
-          granularity = GRANULARITIES.SECOND;
 
-      if (smallestIncrement > SECONDS_IN_MINUTE) {
-        granularity = GRANULARITIES.MINUTE;
-      }
-      if (smallestIncrement > SECONDS_IN_HOUR) {
-        granularity = GRANULARITIES.HOUR;
-      }
-      if (smallestIncrement > SECONDS_IN_DAY) {
-        granularity = GRANULARITIES.DAY;
-      }
-      if (smallestIncrement > SECONDS_IN_MONTH) {
-        granularity = GRANULARITIES.MONTH;
-      }
-      if (smallestIncrement > SECONDS_IN_YEAR) {
-        granularity = GRANULARITIES.YEAR;
-      }
-
-      this.granularity = granularity;
-    },
-    addXLabels: function() {
-      var range = (maxX - minX) / 1000,
-          granularity = this.granularity,
-          nearest = GRANULARITY_TO_SECONDS[granularity],
-          smallestIncrement = Math.round(range / MAX_NUMBER_OF_X_LABELS / nearest) * nearest,
-          n;
-
-      for (n=minX; n<maxX; n+=(smallestIncrement*1000)) {
-        this.addXLabel(this.getFormattedShortDate(new Date(n), granularity), (n - minX) * scaleX);
-      }
-    }, 
-
-    getFormattedShortDate: function(date, granularity) {
-      switch(granularity) {
-        case 0: return date.format('yyyy'); // year
-        case 1: return date.format('yy mmm');  // month
-        case 2: return date.format('mmm dd'); // day
-        case 3: return date.format('ddd htt'); // hours
-        case 4: return date.format('h:MMtt'); // minute
-        default: return date.format('MM:sstt'); // seconds
-      }
     },
     getFormattedLongDate: function(date, granularity) {
       switch(granularity) {
@@ -286,24 +230,6 @@
         case 4: return date.format('yyyy mmm dd h:MMtt'); // minute
         default: return date.format('yyyy mmm dd h:MM:sstt'); // seconds
       }
-    },
-    addXLabel: function(str, x) {
-      var y = this.layout.height - 16,
-          skin = this.skin,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
-            text: str
-          })),
-          tag = new Kinetic.Tag({
-            fill: skin.background,
-            opacity: 0.7
-          }),
-          label = new Kinetic.Label({
-            x: x,
-            y: y
-          });
-
-      label.add(tag).add(text);
-      this.topLabelLayer.add(label);
     },
     addYLabel: function(str, y) {
       var layout = this.layout,
@@ -347,12 +273,11 @@
           firstPoint = lines[0].points[0],
           firstPointX = firstPoint.x,
           firstPointY = firstPoint.y,
+          minX = firstPointX,
+          minY = firstPointY,
+          maxX = firstPointX,
+          maxY = firstPointY,
           n, i, pointsLen, point, pointX, pointY;
-      
-      minX = firstPointX;
-      minY = firstPointY;
-      maxX = firstPointX;
-      maxY = firstPointY;
           
       for (n=0; n<len; n++) {
         line = lines[n];
@@ -370,8 +295,12 @@
         }
       }
       
-      scaleX = width / (maxX - minX);
-      scaleY = height / (maxY - minY);
+      this.minX = minX;
+      this.maxX = maxX;
+      this.minY = minY;
+      this.maxY = maxY;
+      this.scaleX = width / (maxX - minX);
+      this.scaleY = height / (maxY - minY);
     },
     addMarker: function(color) {
       var marker = new Kinetic.Group(),
@@ -408,6 +337,7 @@
       var model = this.model,
         lines = model.lines,
         len = lines.length,
+        minX = this.minX,
         color, backgroundColor, n, line, lineObj, points, pointsLen;
   
       for (n=0; n<len; n++) {
