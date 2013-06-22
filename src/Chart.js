@@ -49,7 +49,7 @@
       this.stage.add(this.interactionLayer);
       this.stage.add(this.topLabelLayer);
       
-      this.title = new Meteor.Title(this);
+      this.title = new Meteor.Title(this).render();
     },
     getLineColor: function(n) {
       var line = this.skin.line,
