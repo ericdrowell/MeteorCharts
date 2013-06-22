@@ -51,8 +51,8 @@
       this.tooltips = [];
       
       // transform model layer
-      this.mainLayer.setY(this.layout.height + (minY * scaleY));
-      this.mainLayer.setScale(scaleX, -1 * scaleY);
+      this.dataLayer.setY(this.layout.height + (minY * scaleY));
+      this.dataLayer.setScale(scaleX, -1 * scaleY);
       
       // add lines and labels
       this.addLines();
@@ -428,7 +428,7 @@
         
         this.addLineTitle(line.title, this.getChartY(points[pointsLen - 1].y));
         this.addMarker(color);
-        this.mainLayer.add(lineObj);  
+        this.dataLayer.add(lineObj);  
         
       }
     },

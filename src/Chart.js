@@ -35,7 +35,7 @@
 
       // layers
       this.bottomLabelLayer = new Kinetic.Layer();
-      this.mainLayer = new Kinetic.Layer(); 
+      this.dataLayer = new Kinetic.Layer(); 
       this.middleLabelLayer = new Kinetic.Layer();
       this.interactionLayer = new Kinetic.Layer({
         opacity: 0 
@@ -44,12 +44,12 @@
       
       
       this.stage.add(this.bottomLabelLayer);
-      this.stage.add(this.mainLayer);
+      this.stage.add(this.dataLayer);
       this.stage.add(this.middleLabelLayer);
       this.stage.add(this.interactionLayer);
       this.stage.add(this.topLabelLayer);
       
-      this.title = new Meteor.Title(this).render();
+      this.title = new Meteor.Title(this);
     },
     getLineColor: function(n) {
       var line = this.skin.line,
