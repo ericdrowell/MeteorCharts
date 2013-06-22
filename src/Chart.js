@@ -16,7 +16,7 @@
       var model = this.model = config.model || {},
           skin = this.skin = config.skin || {},
           layout = this.layout = config.layout || {},
-          title = config.title || model.title || EMPTY_STRING,
+          title = model.title || EMPTY_STRING,
           container, titleWidth, halfTitleWidth;
           
       this.units = config.units || model.units || EMPTY_STRING;
@@ -49,27 +49,7 @@
       this.stage.add(this.interactionLayer);
       this.stage.add(this.topLabelLayer);
       
-      this.addTitle(title);
-    },
-    addTitle: function(str) {
-      var skin = this.skin,
-          layout = this.layout,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.titleLabel, {
-            text: str
-          })),
-          tag = new Kinetic.Tag({
-            fill: skin.background,
-            opacity: 0.7
-          }),
-          label = new Kinetic.Label();
-
-      label.add(tag).add(text);
-      
-      label.setOffset({
-          x: label.getWidth() / 2
-      });
-      label.setX(layout.width / 2);
-      this.topLabelLayer.add(label);  
+      this.title = new Meteor.Title(this);
     },
     getLineColor: function(n) {
       var line = this.skin.line,
