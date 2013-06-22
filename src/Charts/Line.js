@@ -10,7 +10,6 @@
       TEXT = 'Text',
       RECT = 'Rect',
       COMMA_SPACE = ', ',
-      APPROX_NUMBER_OF_Y_LABELS = 5,
       MAX_POINT_DIST = 10;
   
   Meteor.Line = function(config) {
@@ -34,8 +33,9 @@
       
       // add lines and labels
       this.addLines();
-      this.addYLabels();
-      //this.xAxis = new Meteor.XAxis(this);
+      
+      this.xAxis = new Meteor.XAxis(this);
+      this.yAxis = new Meteor.YAxis(this);
 
       this.addSlider();
       this.stage.draw();
@@ -200,27 +200,6 @@
       
       return height + (this.minY - y) * this.scaleY;
     },
-    addYLabels: function() {
-      var minY = this.minY,
-          maxY = this.maxY,
-          range = maxY - minY,
-          increment = Math.round((range / APPROX_NUMBER_OF_Y_LABELS) / 10) * 10,
-          y = 0;
-
-      // draw labels at 0 and above
-      while(y <= maxY) {
-        this.addYLabel(this.getFormattedYLabel(y), this.getChartY(y));
-        y+=increment; 
-      }
-      
-      // draw labels below 0
-      y=-1 * increment;
-      while(y > minY) {
-        this.addYLabel(this.getFormattedYLabel(y), this.getChartY(y));
-        y-=increment; 
-      }
-
-    },
     getFormattedLongDate: function(date, granularity) {
       switch(granularity) {
         case 0: return date.format('yyyy'); // year
@@ -230,38 +209,6 @@
         case 4: return date.format('yyyy mmm dd h:MMtt'); // minute
         default: return date.format('yyyy mmm dd h:MM:sstt'); // seconds
       }
-    },
-    addYLabel: function(str, y) {
-      var layout = this.layout,
-          width = layout.width,
-          height = layout.height,
-          bottomLabelLayer = this.bottomLabelLayer,
-          topLabelLayer = this.topLabelLayer,
-          skin = this.skin,
-          gridLineColor = skin.gridLine,
-          textColor = skin.text,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
-            text: str
-          })),
-          tag = new Kinetic.Tag({
-            fill: skin.background,
-            opacity: 0.7
-          }),
-          backgroundColor = skin.background,
-          label = new Kinetic.Label({
-            y: y + 2
-          }),
-          line = new Kinetic.Line({
-            stroke: gridLineColor,
-            strokeWidth: 2,
-            points: [0, 0, width, 0],
-            y: y
-          });
-
-      label.add(tag).add(text);
-       
-      bottomLabelLayer.add(line); 
-      this.topLabelLayer.add(label);
     },
     setMinMax: function() {
       var model = this.model,

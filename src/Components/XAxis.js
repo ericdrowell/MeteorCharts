@@ -58,8 +58,9 @@
       var chart = this.chart,
           maxX = chart.maxX,
           minX = chart.minX,
+          scaleX = chart.scaleX,
           range = (maxX - minX) / 1000,
-          granularity = chart.granularity,
+          granularity = this.granularity,
           nearest = GRANULARITY_TO_SECONDS[granularity],
           smallestIncrement = Math.round(range / MAX_NUMBER_OF_X_LABELS / nearest) * nearest,
           n;
@@ -88,6 +89,7 @@
       label.add(tag).add(text);
       chart.topLabelLayer.add(label);
     },
+    // TODO this is a utility.  move to Util
     getFormattedShortDate: function(date, granularity) {
       switch(granularity) {
         case 0: return date.format('yyyy'); // year
