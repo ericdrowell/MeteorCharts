@@ -1,5 +1,11 @@
 var HEADLANDS_LIGHT = {
   background: 'white',
+  width: 800,
+  height: 500,
+  xAxis: {
+    maxNumberOfLabels: 7,
+    position: 'outside'
+  },
   gridLine: '#aaa',
   label: {
     fill: '#585858',

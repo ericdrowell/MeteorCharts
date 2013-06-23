@@ -4,7 +4,6 @@
 	      model = this.model = chart.model,
 	      str = model.str = '',
 	      skin = this.skin = chart.skin,
-	      layout = this.layout = chart.layout,
 	      text = this.text = new Kinetic.Text(Meteor.Util.merge(skin.titleLabel, {
 	        text: model.title
 	      })),
@@ -19,7 +18,7 @@
 	  label.setOffset({
 	    x: label.getWidth() / 2
 	  });
-	  label.setX(layout.width / 2);
+	  label.setX(skin.width / 2);
 	  chart.topLabelLayer.add(label);
   };
 
@@ -28,7 +27,6 @@
       var chart = this.chart,
           model = this.model,
           skin = this.skin = chart.skin,
-          layout = this.layout = chart.layout,
           tag = this.tag,
           label = this.label;
 
@@ -38,7 +36,7 @@
         x: label.getWidth() / 2
       });
 
-      label.setX(layout.width / 2);
+      label.setX(skin.width / 2);
 
       return this;
     }

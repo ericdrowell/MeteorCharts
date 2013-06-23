@@ -31,9 +31,9 @@
     },
     addYLabel: function(str, y) {
       var chart = this.chart,
-          layout = chart.layout,
-          width = layout.width,
-          height = layout.height,
+          skin = chart.skin,
+          width = skin.width,
+          height = skin.height,
           bottomLabelLayer = chart.bottomLabelLayer,
           topLabelLayer = chart.topLabelLayer,
           skin = chart.skin,

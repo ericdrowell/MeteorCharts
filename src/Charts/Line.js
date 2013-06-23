@@ -28,7 +28,7 @@
       this.tooltips = [];
       
       // transform model layer
-      this.dataLayer.setY(this.layout.height + (this.minY * this.scaleY));
+      this.dataLayer.setY(this.skin.height + (this.minY * this.scaleY));
       this.dataLayer.setScale(this.scaleX, -1 * this.scaleY);
       
       // add lines and labels
@@ -41,17 +41,17 @@
 
     },
     getChartY: function(y) {
-      var height = this.layout.height;
+      var height = this.skin.height;
       
       return height + (this.minY - y) * this.scaleY;
     },
     setMinMax: function() {
       var model = this.model,
-          layout = this.layout,
+          skin = this.skin,
           lines = model.lines,
           len = lines.length,
-          width = layout.width,
-          height = layout.height,
+          width = skin.width,
+          height = skin.height,
           firstPoint = lines[0].points[0],
           firstPointX = firstPoint.x,
           firstPointY = firstPoint.y,

@@ -15,14 +15,13 @@
     _init: function(config) {
       var model = this.model = config.model || {},
           skin = this.skin = config.skin || {},
-          layout = this.layout = config.layout || {},
           title = model.title || EMPTY_STRING,
           container, titleWidth, halfTitleWidth;
           
       // create stage
       this.stage = new Kinetic.Stage({
-        width: layout.width || 0,
-        height: layout.height || 0,
+        width: skin.width || 0,
+        height: skin.height || 0,
         container: config.container,
         listening: false
       });
