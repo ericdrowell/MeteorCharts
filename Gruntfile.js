@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     'src/Meteor.js', 
     'src/Chart.js', 
     'src/Util.js',
+    'src/Unit.js',
 
     // lib
     //'lib/moment.js',

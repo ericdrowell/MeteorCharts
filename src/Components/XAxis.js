@@ -1,35 +1,24 @@
 (function() {
-	var MAX_NUMBER_OF_X_LABELS = 7;
-
   Meteor.XAxis = function(chart) {
     this.chart = chart;
-    this.units = new Meteor[chart.model.xAxis.units]();
-    this.setGranularity();
+    this.maxNumberOfLabels = chart.layout.xAxis.maxNumberOfLabels;
+    this.units = new Meteor[chart.model.xAxis.units](chart.maxX - chart.minX, this.maxNumberOfLabels);
     this.addXLabels();
   };
 
   Meteor.XAxis.prototype = {
-  	setGranularity: function() {
-      var chart = this.chart,
-          maxX = chart.maxX,
-          minX = chart.minX,
-          range = maxX - minX,
-          smallestIncrement = range / MAX_NUMBER_OF_X_LABELS;
-
-      this.units.setGranularity(smallestIncrement);
-  	},
     addXLabels: function() {
       var chart = this.chart,
           units = this.units,
+          maxNumberOfLabels = this.maxNumberOfLabels,
           maxX = chart.maxX,
           minX = chart.minX,
           scaleX = chart.scaleX,
           range = maxX - minX,
           increment = units.getIncrement(),
-          smallestIncrement = Math.round(range / MAX_NUMBER_OF_X_LABELS / increment) * increment,
           n;
 
-      for (n=minX; n<maxX; n+=smallestIncrement) {
+      for (n=minX; n<maxX; n+=increment) {
         this.addXLabel(units.getFormattedShort(n), (n - minX) * scaleX);
       }
     }, 

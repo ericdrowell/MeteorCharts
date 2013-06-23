@@ -4,7 +4,7 @@
       SECONDS_IN_DAY = 86400,
       SECONDS_IN_HOUR = 3600,
       SECONDS_IN_MINUTE = 60,
-      GRANULARITY_TO_SECONDS = [
+      GRANULARITY_MAP = [
         SECONDS_IN_YEAR, 
         SECONDS_IN_MONTH, 
         SECONDS_IN_DAY, 
@@ -21,12 +21,14 @@
         SECOND: 5 
       };
 
-  Meteor.Seconds = function() {
+  Meteor.Seconds = function(range, maxNumberOfLabels) {
+    Meteor.Unit.call(this, range, maxNumberOfLabels, GRANULARITY_MAP);
   };
 
   Meteor.Seconds.prototype = {
     setGranularity: function(smallestIncrement) {
-      var granularity = GRANULARITIES.SECOND;
+      var granularity = GRANULARITIES.SECOND,
+          smallestIncrement = this.range / this.maxNumberOfLabels;
 
       if (smallestIncrement > SECONDS_IN_MINUTE) {
         granularity = GRANULARITIES.MINUTE;
@@ -46,9 +48,6 @@
 
       this.granularity = granularity;
     },
-    getIncrement: function() {
-      return GRANULARITY_TO_SECONDS[this.granularity];
-    },
     getFormattedShort: function(seconds) {
       var date = new Date(seconds * 1000);
       switch(this.granularity) {
@@ -57,4 +56,6 @@
       }
     }
   };
+
+  Meteor.Util.extend(Meteor.Seconds, Meteor.Unit);
 })();
