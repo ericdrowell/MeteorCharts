@@ -1,72 +1,36 @@
 (function() {
-	var MAX_NUMBER_OF_X_LABELS = 7,
-	    SECONDS_IN_YEAR = 31536000,
-      SECONDS_IN_MONTH = 2628000,
-      SECONDS_IN_DAY = 86400,
-      SECONDS_IN_HOUR = 3600,
-      SECONDS_IN_MINUTE = 60,
-      GRANULARITY_TO_SECONDS = [
-        SECONDS_IN_YEAR, 
-        SECONDS_IN_MONTH, 
-        SECONDS_IN_DAY, 
-        SECONDS_IN_HOUR, 
-        SECONDS_IN_MINUTE
-      ],
-      GRANULARITIES = {
-        YEAR: 0,
-        MONTH: 1,
-        DAY: 2,
-        HOUR: 3,
-        MINUTE: 4,
-        SECOND: 5 
-      };
+	var MAX_NUMBER_OF_X_LABELS = 7;
 
   Meteor.XAxis = function(chart) {
     this.chart = chart;
+    this.unit = new Meteor.Timestamp();
     this.setGranularity();
     this.addXLabels();
   };
 
   Meteor.XAxis.prototype = {
-    setGranularity: function() {
+  	setGranularity: function() {
       var chart = this.chart,
           maxX = chart.maxX,
           minX = chart.minX,
           range = (maxX - minX) / 1000,
-          smallestIncrement = range / MAX_NUMBER_OF_X_LABELS,
-          granularity = GRANULARITIES.SECOND;
+          smallestIncrement = range / MAX_NUMBER_OF_X_LABELS;
 
-      if (smallestIncrement > SECONDS_IN_MINUTE) {
-        granularity = GRANULARITIES.MINUTE;
-      }
-      if (smallestIncrement > SECONDS_IN_HOUR) {
-        granularity = GRANULARITIES.HOUR;
-      }
-      if (smallestIncrement > SECONDS_IN_DAY) {
-        granularity = GRANULARITIES.DAY;
-      }
-      if (smallestIncrement > SECONDS_IN_MONTH) {
-        granularity = GRANULARITIES.MONTH;
-      }
-      if (smallestIncrement > SECONDS_IN_YEAR) {
-        granularity = GRANULARITIES.YEAR;
-      }
-
-      this.granularity = granularity;
-    },
+      this.unit.setGranularity(smallestIncrement);
+  	},
     addXLabels: function() {
       var chart = this.chart,
+          unit = this.unit,
           maxX = chart.maxX,
           minX = chart.minX,
           scaleX = chart.scaleX,
           range = (maxX - minX) / 1000,
-          granularity = this.granularity,
-          nearest = GRANULARITY_TO_SECONDS[granularity],
-          smallestIncrement = Math.round(range / MAX_NUMBER_OF_X_LABELS / nearest) * nearest,
+          increment = unit.getIncrement(),
+          smallestIncrement = Math.round(range / MAX_NUMBER_OF_X_LABELS / increment) * increment,
           n;
 
       for (n=minX; n<maxX; n+=(smallestIncrement*1000)) {
-        this.addXLabel(this.getFormattedShortDate(new Date(n), granularity), (n - minX) * scaleX);
+        this.addXLabel(unit.getFormattedShort(new Date(n)), (n - minX) * scaleX);
       }
     }, 
     addXLabel: function(str, x) {
@@ -88,17 +52,6 @@
 
       label.add(tag).add(text);
       chart.topLabelLayer.add(label);
-    },
-    // TODO this is a utility.  move to Util
-    getFormattedShortDate: function(date, granularity) {
-      switch(granularity) {
-        case 0: return date.format('yyyy'); // year
-        case 1: return date.format('yy mmm');  // month
-        case 2: return date.format('mmm dd'); // day
-        case 3: return date.format('ddd htt'); // hours
-        case 4: return date.format('h:MMtt'); // minute
-        default: return date.format('MM:sstt'); // seconds
-      }
     }
   };
 })();

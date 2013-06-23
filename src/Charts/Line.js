@@ -143,7 +143,7 @@
       }
     },
     getFormattedYLabel: function(label) {
-      return label + SPACE + this.units;
+      return label + SPACE + this.model.yAxis.units;
     }
   };
   

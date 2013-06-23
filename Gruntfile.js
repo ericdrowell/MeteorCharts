@@ -6,10 +6,11 @@ module.exports = function(grunt) {
     'src/Util.js',
 
     // units
-    'src/units/Date.js', 
-    'src/units/EnglishDistance.js', 
-    'src/units/MetricDistance.js', 
-    'src/units/Time.js', 
+    'src/units/Number.js', 
+    'src/units/Timestamp.js', 
+    'src/units/Foot.js', 
+    'src/units/Meter.js', 
+    'src/units/Seconds.js', 
 
     // components
     'src/components/Legend.js', 

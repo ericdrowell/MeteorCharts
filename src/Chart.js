@@ -19,8 +19,6 @@
           title = model.title || EMPTY_STRING,
           container, titleWidth, halfTitleWidth;
           
-      this.units = config.units || model.units || EMPTY_STRING;
-
       // create stage
       this.stage = new Kinetic.Stage({
         width: layout.width || 0,
