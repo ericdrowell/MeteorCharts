@@ -10,32 +10,26 @@
 
       // seconds in second
       if (max < 1) {
-        console.log('second');
         return date.format('ss');
       }
       // seconds in minute
       else if (max < 60) {
-        console.log('minute');
         return date.format('ss');
       }
       // seconds in hour
       else if (max < 3600) {
-        console.log('hour');
         return date.format('MM:ss');
       }
       // seconds in day
       else if (max < 86400) {
-        console.log('day');
         return date.format('hh:MM');
       }
       // seconds in month
       else if (max < 2628000) {
-        console.log('month');
         return date.format('dd hh'); 
       }
       // seconds in year
       else { 
-        console.log('year');
         return date.format('y'); 
       }
     },

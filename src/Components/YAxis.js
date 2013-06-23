@@ -14,18 +14,20 @@
           maxY = chart.maxY,
           range = maxY - minY,
           increment = units.getIncrement(),
+          dataHeight = chart.dataHeight,
+          scaleY = chart.scaleY,
           y = 0;
 
       // draw labels at 0 and above
       while(y <= maxY) {
-        this.addYLabel(units.shortFormatter(y), Math.round(chart.getChartY(y)));
+        this.addYLabel(units.shortFormatter(y), Math.round(dataHeight + (minY - y) * scaleY));
         y+=increment; 
       }
       
       // draw labels below 0
       y=-1 * increment;
       while(y > minY) {
-        this.addYLabel(units.shortFormatter(y), Math.round(chart.getChartY(y)));
+        this.addYLabel(units.shortFormatter(y), Math.round(dataHeight + (minY - y) * scaleY));
         y-=increment; 
       }
 

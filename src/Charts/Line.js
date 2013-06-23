@@ -45,11 +45,6 @@
       this.stage.draw();
 
     },
-    getChartY: function(y) {
-      var height = this.dataHeight;
-      
-      return height + (this.minY - y) * this.scaleY;
-    },
     setMinMax: function() {
       var model = this.model,
           skin = this.skin,
