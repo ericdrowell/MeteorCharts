@@ -19,7 +19,7 @@
           n;
 
       for (n=minX; n<maxX; n+=increment) {
-        this.addXLabel(units.getFormattedShort(n), (n - minX) * scaleX);
+        this.addXLabel(units.shortFormatter(n), (n - minX) * scaleX);
       }
     }, 
     addXLabel: function(str, x) {

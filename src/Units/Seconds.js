@@ -1,59 +1,57 @@
 (function() {
-	var SECONDS_IN_YEAR = 31536000,
-      SECONDS_IN_MONTH = 2628000,
-      SECONDS_IN_DAY = 86400,
-      SECONDS_IN_HOUR = 3600,
-      SECONDS_IN_MINUTE = 60,
-      GRANULARITY_MAP = [
-        SECONDS_IN_YEAR, 
-        SECONDS_IN_MONTH, 
-        SECONDS_IN_DAY, 
-        SECONDS_IN_HOUR, 
-        SECONDS_IN_MINUTE,
-        1
-      ],
-      GRANULARITIES = {
-        YEAR: 0,
-        MONTH: 1,
-        DAY: 2,
-        HOUR: 3,
-        MINUTE: 4,
-        SECOND: 5 
-      };
-
   Meteor.Seconds = function(range, maxNumberOfLabels) {
-    Meteor.Unit.call(this, range, maxNumberOfLabels, GRANULARITY_MAP);
+    Meteor.Unit.call(this, range, maxNumberOfLabels);
   };
 
   Meteor.Seconds.prototype = {
-    setGranularity: function(smallestIncrement) {
-      var granularity = GRANULARITIES.SECOND,
-          smallestIncrement = this.range / this.maxNumberOfLabels;
-
-      if (smallestIncrement > SECONDS_IN_MINUTE) {
-        granularity = GRANULARITIES.MINUTE;
-      }
-      if (smallestIncrement > SECONDS_IN_HOUR) {
-        granularity = GRANULARITIES.HOUR;
-      }
-      if (smallestIncrement > SECONDS_IN_DAY) {
-        granularity = GRANULARITIES.DAY;
-      }
-      if (smallestIncrement > SECONDS_IN_MONTH) {
-        granularity = GRANULARITIES.MONTH;
-      }
-      if (smallestIncrement > SECONDS_IN_YEAR) {
-        granularity = GRANULARITIES.YEAR;
-      }
-
-      this.granularity = granularity;
-    },
-    getFormattedShort: function(seconds) {
+    shortFormatter: function(seconds) {
       var date = new Date(seconds * 1000);
-      switch(this.granularity) {
-        case 4: return date.format('MM:ss'); // minute
-        default: return 0;
+
+      // seconds in second
+      if (seconds < 1) {
+        return date.format('MM:ss');
       }
+      // seconds in minute
+      else if (seconds < 60) {
+        return date.format('MM:ss');
+      }
+      // seconds in hour
+      else if (seconds < 3600) {
+        return date.format('MM:ss');
+      }
+      // seconds in day
+      else if (seconds < 86400) {
+        return date.format('MM:ss');
+      }
+      // seconds in month
+      else if (seconds < 2628000) {
+        return date.format('MM:ss'); 
+      }
+      // seconds in year
+      else { 
+        return date.format('MM:ss'); 
+      }
+    },
+    increments: function() {
+      return [
+        0,
+        1, // 1 second
+        2,
+        5,
+        10, 
+        15, // [5]
+        30,
+        60, // 1 minute
+        90, 
+        60 * 2,
+        60 * 3, // [10]
+        60 * 5,
+        60 * 10,
+        60 * 15,
+        60 * 20,
+        60 * 30, // [15]
+        60 * 60, // 1 hour
+      ]
     }
   };
 
