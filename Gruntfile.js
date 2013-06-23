@@ -5,6 +5,12 @@ module.exports = function(grunt) {
     'src/Chart.js', 
     'src/Util.js',
 
+    // units
+    'src/units/Date.js', 
+    'src/units/EnglishDistance.js', 
+    'src/units/MetricDistance.js', 
+    'src/units/Time.js', 
+
     // components
     'src/components/Legend.js', 
     'src/components/Title.js', 
