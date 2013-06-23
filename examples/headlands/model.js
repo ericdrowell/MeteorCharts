@@ -1,22 +1,21 @@
 var model = {
   title: 'Example Line Chart',
   xAxis: {
-    units: 'Timestamp'
+    units: 'Seconds'
   },
   yAxis: {
-    units: '°F'
+    units: ''
   },
   lines: []
 };
 
-var start = 429926400 * 1000; // aug 17 1983 in ms
-var end = 1061078400 * 1000; // aug 17 2003 in ms
+var start = 0; // 0 seconds
+var end = 10 * 60; // 10 minutes
 
 /*
 var start = 1104577200 * 1000; // Jan 1 2005 3:00
 var end = 1104588000 * 1000; // Jan 1 2005 6:00
 */
-
 
 var diff = end - start;
 var numDataPoints = 400;

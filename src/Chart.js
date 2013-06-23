@@ -50,7 +50,7 @@
       this.title = new Meteor.Title(this);
     },
     getLineColor: function(n) {
-      var line = this.skin.line,
+      var line = this.skin.lines,
           len = line.length;
           
       return line[n % len]; 

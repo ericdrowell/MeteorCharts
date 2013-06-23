@@ -5,11 +5,14 @@ module.exports = function(grunt) {
     'src/Chart.js', 
     'src/Util.js',
 
+    // lib
+    //'lib/moment.js',
+
     // units
-    'src/units/Number.js', 
+    'src/units/Numbers.js', 
     'src/units/Timestamp.js', 
-    'src/units/Foot.js', 
-    'src/units/Meter.js', 
+    'src/units/Feet.js', 
+    'src/units/Meters.js', 
     'src/units/Seconds.js', 
 
     // components

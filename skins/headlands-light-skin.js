@@ -13,7 +13,7 @@ var HEADLANDS_LIGHT = {
     fill: '#585858',
     fontSize: 16
   },
-  line: [
+  lines: [
     '#ff0c03',
     '#0306ff'
   ]

@@ -1,6 +1,11 @@
 var model = {
   title: 'Example Line Chart',
-  units: '°F',
+  xAxis: {
+    units: 'Timestamp'
+  },
+  yAxis: {
+    units: '°F'
+  },
   lines: []
 };
 
@@ -14,7 +19,7 @@ var end = 1104588000 * 1000; // Jan 1 2005 6:00
 
 
 var diff = end - start;
-var numDataPoints = 100;
+var numDataPoints = 400;
 var increment = diff / numDataPoints;
 
 // create lines

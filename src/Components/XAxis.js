@@ -3,7 +3,7 @@
 
   Meteor.XAxis = function(chart) {
     this.chart = chart;
-    this.unit = new Meteor[chart.model.xAxis.units]();
+    this.units = new Meteor[chart.model.xAxis.units]();
     this.setGranularity();
     this.addXLabels();
   };
@@ -13,24 +13,24 @@
       var chart = this.chart,
           maxX = chart.maxX,
           minX = chart.minX,
-          range = (maxX - minX) / 1000,
+          range = maxX - minX,
           smallestIncrement = range / MAX_NUMBER_OF_X_LABELS;
 
-      this.unit.setGranularity(smallestIncrement);
+      this.units.setGranularity(smallestIncrement);
   	},
     addXLabels: function() {
       var chart = this.chart,
-          unit = this.unit,
+          units = this.units,
           maxX = chart.maxX,
           minX = chart.minX,
           scaleX = chart.scaleX,
-          range = (maxX - minX) / 1000,
-          increment = unit.getIncrement(),
+          range = maxX - minX,
+          increment = units.getIncrement(),
           smallestIncrement = Math.round(range / MAX_NUMBER_OF_X_LABELS / increment) * increment,
           n;
 
-      for (n=minX; n<maxX; n+=(smallestIncrement*1000)) {
-        this.addXLabel(unit.getFormattedShort(n), (n - minX) * scaleX);
+      for (n=minX; n<maxX; n+=smallestIncrement) {
+        this.addXLabel(units.getFormattedShort(n), (n - minX) * scaleX);
       }
     }, 
     addXLabel: function(str, x) {
