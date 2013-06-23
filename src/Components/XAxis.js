@@ -34,7 +34,7 @@
             opacity: 0.7
           }),
           label = new Kinetic.Label({
-            x: x,
+            x: x + chart.dataX,
             y: y
           });
 

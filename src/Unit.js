@@ -5,10 +5,19 @@
     1,
     2,
     5,
-    10,
-    15,
+    10, 
+    15, // 5
     30,
-    60
+    60,
+    90, 
+    60 * 2,
+    60 * 3, // 10
+    60 * 5,
+    60 * 10,
+    60 * 15,
+    60 * 20,
+    60 * 30, // 15
+    60 * 60
   ],
   
   // cached variables
@@ -26,19 +35,17 @@
       var increment = this.granularityMap[this.granularity],
           range = this.range,
           maxNumberOfLabels = this.maxNumberOfLabels,
-          smallestIncrement = range / maxNumberOfLabels;
-          smallestIncrementAdj = Math.round(smallestIncrement / increment) * increment;
-          returnIncrement = smallestIncrementAdj,
-          n;
+          returnIncrement, n;
 
+      // return largest increment that obeys the max number of labels rule
       for (n=0; n<roundedIncrementsLength; n++) {
-      	returnIncrement = smallestIncrementAdj + ROUNDED_INCREMENTS[n];
-      	if (smallestIncrement <= returnIncrement) {
+      	returnIncrement = ROUNDED_INCREMENTS[n];
+      	if (returnIncrement >= range / maxNumberOfLabels) {
           return returnIncrement
       	}
       }
 
-      return smallestIncrementAdj;
+      return returnIncrement;
     }
   };
 
