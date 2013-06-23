@@ -22,13 +22,18 @@
     init: function(config) {
       var that = this;
 
+      this.dataWidth = 765;
+      this.dataHeight = 400;
+      this.dataX = 35;
+      this.dataY = 40;
       this.setMinMax();
       
       this.markers = [];
       this.tooltips = [];
       
       // transform model layer
-      this.dataLayer.setY(this.skin.height + (this.minY * this.scaleY));
+      this.dataLayer.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
+      this.dataLayer.setX(this.dataX);
       this.dataLayer.setScale(this.scaleX, -1 * this.scaleY);
       
       // add lines and labels
@@ -41,7 +46,7 @@
 
     },
     getChartY: function(y) {
-      var height = this.skin.height;
+      var height = this.dataHeight;
       
       return height + (this.minY - y) * this.scaleY;
     },
@@ -50,8 +55,8 @@
           skin = this.skin,
           lines = model.lines,
           len = lines.length,
-          width = skin.width,
-          height = skin.height,
+          width = this.dataWidth,
+          height = this.dataHeight,
           firstPoint = lines[0].points[0],
           firstPointX = firstPoint.x,
           firstPointY = firstPoint.y,

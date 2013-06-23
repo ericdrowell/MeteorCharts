@@ -4,21 +4,14 @@
 	      model = this.model = chart.model,
 	      str = model.str = '',
 	      skin = this.skin = chart.skin,
-	      text = this.text = new Kinetic.Text(Meteor.Util.merge(skin.titleLabel, {
+	      text = this.text = new Kinetic.Text(Meteor.Util.merge(skin.title.text, {
 	        text: model.title
 	      })),
-	      tag = this.tag = new Kinetic.Tag({
-	        fill: skin.background,
-	        opacity: 0.7
-	      }),
+	      tag = this.tag = new Kinetic.Tag(skin.title.tag),
 	      label = this.label = new Kinetic.Label();
 
 	  label.add(tag).add(text);
 
-	  label.setOffset({
-	    x: label.getWidth() / 2
-	  });
-	  label.setX(skin.width / 2);
 	  chart.topLabelLayer.add(label);
   };
 

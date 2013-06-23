@@ -17,14 +17,14 @@
 
       // draw labels at 0 and above
       while(y <= maxY) {
-        this.addYLabel(chart.getFormattedYLabel(y), chart.getChartY(y));
+        this.addYLabel(chart.getFormattedYLabel(y), Math.round(chart.getChartY(y)));
         y+=increment; 
       }
       
       // draw labels below 0
       y=-1 * increment;
       while(y > minY) {
-        this.addYLabel(chart.getFormattedYLabel(y), chart.getChartY(y));
+        this.addYLabel(chart.getFormattedYLabel(y), Math.round(chart.getChartY(y)));
         y-=increment; 
       }
 
@@ -32,29 +32,28 @@
     addYLabel: function(str, y) {
       var chart = this.chart,
           skin = chart.skin,
-          width = skin.width,
-          height = skin.height,
+          width = chart.dataWidth,
+          height = chart.dataHeight,
+          dataX = chart.dataX,
+          dataY = chart.dataY,
           bottomLabelLayer = chart.bottomLabelLayer,
           topLabelLayer = chart.topLabelLayer,
-          skin = chart.skin,
           gridLineColor = skin.gridLine,
           textColor = skin.text,
           text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
             text: str
           })),
-          tag = new Kinetic.Tag({
-            fill: skin.background,
-            opacity: 0.7
-          }),
+          tag = new Kinetic.Tag(),
           backgroundColor = skin.background,
           label = new Kinetic.Label({
-            y: y + 2
+            y: y - 8 + dataY
           }),
           line = new Kinetic.Line({
             stroke: gridLineColor,
             strokeWidth: 2,
             points: [0, 0, width, 0],
-            y: y
+            y: y + dataY,
+            x: dataX
           });
 
       label.add(tag).add(text);

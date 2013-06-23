@@ -49,7 +49,7 @@
       this.title = new Meteor.Title(this);
     },
     getLineColor: function(n) {
-      var line = this.skin.lines,
+      var line = this.skin.data.lines,
           len = line.length;
           
       return line[n % len]; 
@@ -69,7 +69,6 @@
           });
           
           rect = new Kinetic.Rect({
-            fill: backgroundColor || skin.background,
             width: text.getWidth(),
             height: text.getHeight(),
             opacity: 0.7,

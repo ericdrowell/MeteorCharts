@@ -10,7 +10,7 @@ var model = {
 };
 
 var start = 0; // 0 seconds
-var end = 10 * 60; // 10 minutes
+var end = (Math.round(Math.random() * 50) + 5) * 60; // 10 minutes
 
 /*
 var start = 1104577200 * 1000; // Jan 1 2005 3:00
@@ -18,11 +18,11 @@ var end = 1104588000 * 1000; // Jan 1 2005 6:00
 */
 
 var diff = end - start;
-var numDataPoints = 400;
+var numDataPoints = 500;
 var increment = diff / numDataPoints;
 
 // create lines
-for (var n=0; n<2; n++) {
+for (var n=0; n<3; n++) {
   var line = {
     title: 'Line Title ' + n,
     points: [] 
