@@ -9,21 +9,21 @@
 
   Meteor.Numbers.prototype = {
     shortFormatter: function(num) {
-    	var absNum = Math.abs(num);
-      if (absNum < 1000) {
+    	var absMax = Math.abs(this.max);
+      if (absMax < 1000) {
       	return numberWithCommas(num);
       }
       // thousands
-      else if (absNum < 1000000) {
-      	return numberWithCommas(Math.round(num / 1000)) + 'k';
+      else if (absMax < 1000000) {
+      	return numberWithCommas(Math.round(num / 1000 * 10)/10) + 'k';
       }
       // millions
-      else if (absNum < 1000000000) {
-      	return numberWithCommas(Math.round(num / 1000000)) + 'M';
+      else if (absMax < 1000000000) {
+      	return numberWithCommas(Math.round(num / 1000000 * 10)/10) + 'M';
       }
       // billions
       else {
-      	return numberWithCommas(Math.round(num / 1000000000)) + 'B';
+      	return numberWithCommas(Math.round(num / 1000000000 * 10)/10) + 'B';
       }
     },
     increments: function() {
