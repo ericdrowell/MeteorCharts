@@ -1,30 +1,31 @@
 (function() {
-	var APPROX_NUMBER_OF_Y_LABELS = 5;
-
   Meteor.YAxis = function(chart) {
     this.chart = chart;
+    this.maxNumberOfLabels = chart.skin.yAxis.maxNumberOfLabels;
+    this.units = new Meteor[chart.model.yAxis.units](chart.minY, chart.maxY, this.maxNumberOfLabels);
     this.addYLabels();
   };
 
   Meteor.YAxis.prototype = {
     addYLabels: function() {
       var chart = this.chart,
+          units = this.units,
           minY = chart.minY,
           maxY = chart.maxY,
           range = maxY - minY,
-          increment = Math.round((range / APPROX_NUMBER_OF_Y_LABELS) / 10) * 10,
+          increment = units.getIncrement(),
           y = 0;
 
       // draw labels at 0 and above
       while(y <= maxY) {
-        this.addYLabel(chart.getFormattedYLabel(y), Math.round(chart.getChartY(y)));
+        this.addYLabel(units.shortFormatter(y), Math.round(chart.getChartY(y)));
         y+=increment; 
       }
       
       // draw labels below 0
       y=-1 * increment;
       while(y > minY) {
-        this.addYLabel(chart.getFormattedYLabel(y), Math.round(chart.getChartY(y)));
+        this.addYLabel(units.shortFormatter(y), Math.round(chart.getChartY(y)));
         y-=increment; 
       }
 

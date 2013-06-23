@@ -147,9 +147,6 @@
         
         this.dataLayer.add(lineObj);  
       }
-    },
-    getFormattedYLabel: function(label) {
-      return label + SPACE + this.model.yAxis.units;
     }
   };
   

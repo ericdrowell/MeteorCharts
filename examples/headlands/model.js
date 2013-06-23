@@ -4,7 +4,7 @@ var model = {
     units: 'Seconds'
   },
   yAxis: {
-    units: ''
+    units: 'Numbers'
   },
   lines: []
 };
@@ -27,11 +27,11 @@ for (var n=0; n<3; n++) {
     title: 'Line Title ' + n,
     points: [] 
   }
-  var lastY = Math.round(((Math.random() * 100) - 50) * 1);
+  var lastY = Math.round(((Math.random() * 100000) - 50000) * 1);
   
   // create points
   for (var i=start; i<end; i+=increment) {
-    var y = Math.round((lastY + (Math.random() * 10) - 5) * 1);
+    var y = Math.round((lastY + (Math.random() * 10000) - 5000) * 1);
     lastY = y;
     line.points.push({
         x: i,

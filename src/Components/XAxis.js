@@ -2,7 +2,7 @@
   Meteor.XAxis = function(chart) {
     this.chart = chart;
     this.maxNumberOfLabels = chart.skin.xAxis.maxNumberOfLabels;
-    this.units = new Meteor[chart.model.xAxis.units](chart.maxX - chart.minX, this.maxNumberOfLabels);
+    this.units = new Meteor[chart.model.xAxis.units](chart.minX, chart.maxX, this.maxNumberOfLabels);
     this.addXLabels();
   };
 

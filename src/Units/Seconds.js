@@ -1,35 +1,42 @@
 (function() {
-  Meteor.Seconds = function(range, maxNumberOfLabels) {
-    Meteor.Unit.call(this, range, maxNumberOfLabels);
+  Meteor.Seconds = function(min, max, maxNumberOfLabels) {
+    Meteor.Unit.call(this, min, max, maxNumberOfLabels);
   };
 
   Meteor.Seconds.prototype = {
     shortFormatter: function(seconds) {
-      var date = new Date(seconds * 1000);
+      var date = new Date(seconds * 1000),
+          max = this.max;
 
       // seconds in second
-      if (seconds < 1) {
-        return date.format('MM:ss');
+      if (max < 1) {
+        console.log('second');
+        return date.format('ss');
       }
       // seconds in minute
-      else if (seconds < 60) {
-        return date.format('MM:ss');
+      else if (max < 60) {
+        console.log('minute');
+        return date.format('ss');
       }
       // seconds in hour
-      else if (seconds < 3600) {
+      else if (max < 3600) {
+        console.log('hour');
         return date.format('MM:ss');
       }
       // seconds in day
-      else if (seconds < 86400) {
-        return date.format('MM:ss');
+      else if (max < 86400) {
+        console.log('day');
+        return date.format('hh:MM');
       }
       // seconds in month
-      else if (seconds < 2628000) {
-        return date.format('MM:ss'); 
+      else if (max < 2628000) {
+        console.log('month');
+        return date.format('dd hh'); 
       }
       // seconds in year
       else { 
-        return date.format('MM:ss'); 
+        console.log('year');
+        return date.format('y'); 
       }
     },
     increments: function() {

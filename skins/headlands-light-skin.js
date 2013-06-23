@@ -3,8 +3,10 @@ var HEADLANDS_LIGHT = {
   width: 800,
   height: 500,
   xAxis: {
-    maxNumberOfLabels: 7,
-    position: 'outside'
+    maxNumberOfLabels: 7
+  },
+  yAxis: {
+    maxNumberOfLabels: 10
   },
   gridLine: '#ccc',
   label: {
