@@ -26,20 +26,13 @@
       var chart = this.chart,
           skin = chart.skin,
           y = skin.height - 16,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
-            text: str
-          })),
-          tag = new Kinetic.Tag({
-            fill: skin.background,
-            opacity: 0.7
-          }),
-          label = new Kinetic.Label({
+          text = new Kinetic.Text(Meteor.Util.merge(skin.text, {
+            text: str,
             x: x + chart.dataX,
             y: y
-          });
+          }));
 
-      label.add(tag).add(text);
-      chart.topLayer.add(label);
+      chart.topLayer.add(text);
     }
   };
 })();

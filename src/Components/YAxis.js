@@ -39,28 +39,25 @@
           dataY = chart.dataY,
           bottomLayer = chart.bottomLayer,
           topLayer = chart.topLayer,
-          gridLineColor = skin.gridLine,
+          lines = skin.yAxis.lines,
           textColor = skin.text,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
-            text: str
-          })),
-          tag = new Kinetic.Tag(),
-          backgroundColor = skin.background,
-          label = new Kinetic.Label({
+          text = new Kinetic.Text(Meteor.Util.merge(skin.text, {
+            text: str,
             y: y - 8 + dataY
-          }),
-          line = new Kinetic.Line({
-            stroke: gridLineColor,
-            strokeWidth: 2,
-            points: [0, 0, width, 0],
-            y: y + dataY,
-            x: dataX
-          });
+          })),
+          line;
 
-      label.add(tag).add(text);
-       
-      bottomLayer.add(line); 
-      chart.topLayer.add(label);
+      if (lines) {
+        line = new Kinetic.Line(Meteor.Util.merge(lines, {
+          points: [0, 0, width, 0],
+          y: y + dataY,
+          x: dataX
+        }));
+ 
+        bottomLayer.add(line); 
+      }
+
+      chart.topLayer.add(text);
     }
   };
 })();

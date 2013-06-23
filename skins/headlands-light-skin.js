@@ -1,26 +1,25 @@
 var HEADLANDS_LIGHT = {
-  background: '#eee',
+  background: 'white',
   width: 800,
   height: 500,
   xAxis: {
     maxNumberOfLabels: 7
   },
   yAxis: {
-    maxNumberOfLabels: 10
-  },
-  gridLine: '#ccc',
-  label: {
-    fill: '#585858',
-    fontSize: 24
+    maxNumberOfLabels: 10,
+    lines: {
+      stroke: '#ccc',
+      strokeWidth: 1,
+      dashArray: [2, 2]
+    }
   },
   title: {
     text: {
       fill: '#585858',
       fontSize: 24
-    },
-    tag: {}
+    }
   },
-  gridLabel: {
+  text: {
     fill: '#585858',
     fontSize: 16
   },

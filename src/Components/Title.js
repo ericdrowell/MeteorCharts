@@ -6,32 +6,12 @@
 	      skin = this.skin = chart.skin,
 	      text = this.text = new Kinetic.Text(Meteor.Util.merge(skin.title.text, {
 	        text: model.title
-	      })),
-	      tag = this.tag = new Kinetic.Tag(skin.title.tag),
-	      label = this.label = new Kinetic.Label();
+	      }));
 
-	  label.add(tag).add(text);
-
-	  chart.topLayer.add(label);
+	  chart.topLayer.add(text);
   };
 
   Meteor.Title.prototype = {
-    sync: function() {
-      var chart = this.chart,
-          model = this.model,
-          skin = this.skin = chart.skin,
-          tag = this.tag,
-          label = this.label;
 
-      text.setText(model.text);
-
-      label.setOffset({
-        x: label.getWidth() / 2
-      });
-
-      label.setX(skin.width / 2);
-
-      return this;
-    }
   };
 })();
