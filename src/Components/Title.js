@@ -12,7 +12,7 @@
 
 	  label.add(tag).add(text);
 
-	  chart.topLabelLayer.add(label);
+	  chart.topLayer.add(label);
   };
 
   Meteor.Title.prototype = {

@@ -36,8 +36,8 @@
           height = chart.dataHeight,
           dataX = chart.dataX,
           dataY = chart.dataY,
-          bottomLabelLayer = chart.bottomLabelLayer,
-          topLabelLayer = chart.topLabelLayer,
+          bottomLayer = chart.bottomLayer,
+          topLayer = chart.topLayer,
           gridLineColor = skin.gridLine,
           textColor = skin.text,
           text = new Kinetic.Text(Meteor.Util.merge(skin.gridLabel, {
@@ -58,8 +58,8 @@
 
       label.add(tag).add(text);
        
-      bottomLabelLayer.add(line); 
-      chart.topLabelLayer.add(label);
+      bottomLayer.add(line); 
+      chart.topLayer.add(label);
     }
   };
 })();

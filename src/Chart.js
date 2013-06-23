@@ -31,20 +31,24 @@
       container.style.backgroundColor = skin.background;
 
       // layers
-      this.bottomLabelLayer = new Kinetic.Layer();
+      this.bottomLayer = new Kinetic.Layer();
       this.dataLayer = new Kinetic.Layer(); 
-      this.middleLabelLayer = new Kinetic.Layer();
       this.interactionLayer = new Kinetic.Layer({
         opacity: 0 
       });
-      this.topLabelLayer = new Kinetic.Layer();
+      this.topLayer = new Kinetic.Layer();
+
+      // add meteor classes
+      this.bottomLayer.getCanvas().getElement().className = 'meteorcharts-bottom-layer';
+      this.dataLayer.getCanvas().getElement().className = 'meteorcharts-data-layer';
+      this.interactionLayer.getCanvas().getElement().className = 'meteorcharts-interaction-layer';
+      this.topLayer.getCanvas().getElement().className = 'meteorcharts-top-layer';
       
       
-      this.stage.add(this.bottomLabelLayer);
+      this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
-      this.stage.add(this.middleLabelLayer);
       this.stage.add(this.interactionLayer);
-      this.stage.add(this.topLabelLayer);
+      this.stage.add(this.topLayer);
       
       this.title = new Meteor.Title(this);
     },
@@ -56,7 +60,7 @@
     },
     buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {
       var skin = this.skin,
-          topLabelLayer = this.topLabelLayer,
+          topLayer = this.topLayer,
           label = new Kinetic.Group({
             x: x,
             y: y 
