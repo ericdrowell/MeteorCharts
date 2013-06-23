@@ -1,4 +1,19 @@
 (function() {
+  // constants
+  ROUNDED_INCREMENTS = [
+    0,
+    1,
+    2,
+    5,
+    10,
+    15,
+    30,
+    60
+  ],
+  
+  // cached variables
+  roundedIncrementsLength = ROUNDED_INCREMENTS.length;
+
   Meteor.Unit = function(range, maxNumberOfLabels, granularityMap) {
     this.range = range;
     this.maxNumberOfLabels = maxNumberOfLabels;
@@ -9,13 +24,21 @@
   Meteor.Unit.prototype = {
     getIncrement: function() {
       var increment = this.granularityMap[this.granularity],
-          smallestIncrement = Math.round(this.range / this.maxNumberOfLabels / increment) * increment;
+          range = this.range,
+          maxNumberOfLabels = this.maxNumberOfLabels,
+          smallestIncrement = range / maxNumberOfLabels;
+          smallestIncrementAdj = Math.round(smallestIncrement / increment) * increment;
+          returnIncrement = smallestIncrementAdj,
+          n;
 
-      if (this.range / this.maxNumberOfLabels > smallestIncrement) {
-        console.log('problem')
+      for (n=0; n<roundedIncrementsLength; n++) {
+      	returnIncrement = smallestIncrementAdj + ROUNDED_INCREMENTS[n];
+      	if (smallestIncrement <= returnIncrement) {
+          return returnIncrement
+      	}
       }
 
-      return smallestIncrement;
+      return smallestIncrementAdj;
     }
   };
 
