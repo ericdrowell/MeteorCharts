@@ -84,10 +84,11 @@
       this.scaleX = width / (maxX - minX);
       this.scaleY = height / (maxY - minY);
     },
+    /*
     addMarker: function(color) {
       var marker = new Kinetic.Group(),
           skin = this.skin,
-          markerSkin = skin.sliderLabel,
+          markerSkin = skin.label,
           textSkin = markerSkin.text,
           rectSkin = markerSkin.tag,
           node = new Kinetic.Circle({
@@ -115,6 +116,7 @@
       this.interactionLayer.add(marker);
       this.markers.push(marker);    
     },
+    */
     addLines: function() {
       var model = this.model,
         lines = model.lines,
@@ -138,7 +140,6 @@
           offsetX: minX
         });
         
-        this.addMarker(color);
         this.dataLayer.add(lineObj);  
       }
     },

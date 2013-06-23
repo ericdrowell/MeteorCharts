@@ -1,7 +1,7 @@
 var model = {
   title: 'Example Line Chart',
   xAxis: {
-    units: Meteor.Timestamp
+    units: 'Timestamp'
   },
   yAxis: {
     units: '°F'

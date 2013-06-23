@@ -3,7 +3,7 @@
 
   Meteor.XAxis = function(chart) {
     this.chart = chart;
-    this.unit = new Meteor.Timestamp();
+    this.unit = new Meteor[chart.model.xAxis.units]();
     this.setGranularity();
     this.addXLabels();
   };
@@ -30,7 +30,7 @@
           n;
 
       for (n=minX; n<maxX; n+=(smallestIncrement*1000)) {
-        this.addXLabel(unit.getFormattedShort(new Date(n)), (n - minX) * scaleX);
+        this.addXLabel(unit.getFormattedShort(n), (n - minX) * scaleX);
       }
     }, 
     addXLabel: function(str, x) {

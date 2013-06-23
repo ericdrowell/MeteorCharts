@@ -49,7 +49,8 @@
     getIncrement: function() {
       return GRANULARITY_TO_SECONDS[this.granularity];
     },
-    getFormattedShort: function(date) {
+    getFormattedShort: function(time) {
+      var date = new Date(time);
       switch(this.granularity) {
         case 0: return date.format('yyyy'); // year
         case 1: return date.format('yy mmm');  // month
