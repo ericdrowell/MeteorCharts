@@ -33,7 +33,8 @@ var HEADLANDS_LIGHT = {
   tooltip: {
     text: {
       fill: 'white',
-      fontSize: 16
+      fontSize: 16,
+      padding: 5
     },
     tag: {
       fill: 'black'

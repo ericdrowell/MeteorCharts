@@ -16,19 +16,23 @@ var EMPTY_STRING = '',
 		    node = this.node = new Kinetic.Circle({
 		      radius: 5,
 		      stroke: skin.background,
-		      strokeWidth: 5
+		      strokeWidth: 3
 		    }),
 		    text = this.text = new Kinetic.Text(Meteor.Util.merge(tooltipSkin.text, {
-		      text: ''
+		      text: 'stuff'
 		    })),
 		    tag = this.tag = new Kinetic.Tag(Meteor.Util.merge(tooltipSkin.tag, {
-		      pointerDirection: 'left',
-		      pointerWidth: 5,
-		      pointerHeight: tooltipSkin.text.fontSize + (2*tooltipSkin.text.padding),
-		      lineJoin: 'round'
+		      pointerDirection: 'down',
+		      pointerWidth: 10,
+		      pointerHeight: 10,
+		      lineJoin: 'round',
+	        shadowColor: 'black',
+	        shadowBlur: 10,
+	        shadowOffset: 5,
+	        shadowOpacity: 0.5
 		    })),
 		    label = this.label = new Kinetic.Label({
-		      x: 5
+		      y: -5
 		    });
 
     this.chart = chart;
@@ -43,18 +47,15 @@ var EMPTY_STRING = '',
     _bind: function() {
       var stage = this.chart.stage,
           content = stage.getContent(),
-          that = this;
+          chart = this.chart;
       
       content.addEventListener(MOUSEMOVE, function() {
-        that.update();
+        chart.pointerMove();
       }); 
       
       content.addEventListener(TOUCHMOVE, function() {
-        that.update();
+        chart.pointerMove();
       }); 
-    },
-    update: function() {
-
     }
   };
 })();

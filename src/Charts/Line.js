@@ -76,6 +76,51 @@
       this.scaleX = width / (maxX - minX);
       this.scaleY = height / (maxY - minY);
     },
+    pointerMove: function() {
+      var pos = this.stage.getPointerPosition(),
+          skin = this.skin,
+          width = skin.width,
+          model = this.model,
+          lines = model.lines,
+          minX = this.minX,
+          maxX = this.maxX,
+          minY = this.minY,
+          maxY = this.maxY,
+          rangeX = maxX - minX,
+          rangeY = maxY - minY,
+          dataX = this.dataX,
+          dataY = this.dataY,
+          dataHeight = this.dataHeight,
+          scaleX = this.scaleX,
+          scaleY = this.scaleY,
+          height = skin.height;
+
+      // if mouse is inside the data area
+      if (pos.x >= dataX && pos.y >= dataY && pos.x <= dataX + this.dataWidth && pos.y <= dataY + this.dataHeight) {
+        var normalizedX = (pos.x - dataX) / this.dataWidth;
+        var normalizedY = (pos.y - dataY) / this.dataHeight;
+        var idealX = (rangeX * normalizedX) + minX;
+        var idealY = maxY - (rangeY * normalizedY);
+
+        for (var n=0; n<1; n++) {
+          var line = lines[n];
+          var points = line.points;
+          var nearestPoint = points[0];
+          for (var i=0; i<points.length; i++) {
+            var point = points[i];
+            if (Math.abs(Math.abs(point.x) - Math.abs(idealX)) < Math.abs(Math.abs(point.x) - Math.abs(nearestPoint.x)) ) {
+              nearestPoint = point;
+            }
+          }
+        }
+
+        var tooltipX = (nearestPoint.x-minX) * scaleX + dataX;
+        var tooltipY = dataHeight - ((nearestPoint.y - minY) * scaleY) + dataY;
+
+        this.tooltip.group.setPosition(tooltipX, tooltipY);
+        this.tooltip.node.setFill(this.getLineColor(0));
+      }
+    },
     addLines: function() {
       var model = this.model,
         lines = model.lines,
