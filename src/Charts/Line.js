@@ -1,17 +1,4 @@
-(function() {
-  var EMPTY_STRING = '',
-      SPACE = ' ',
-      MOUSEMOVE = 'mousemove',
-      MOUSEOUT = 'mouseout',
-      MOUSEOVER = 'mouseover',
-      TOUCHMOVE = 'touchmove',
-      TOUCHSTART = 'touchstart',
-      TOUCHEND = 'touchend',
-      TEXT = 'Text',
-      RECT = 'Rect',
-      COMMA_SPACE = ', ',
-      MAX_POINT_DIST = 10;
-  
+(function() { 
   Meteor.Line = function(config) {
     // super
     Meteor.Chart.call(this, config);
@@ -28,9 +15,6 @@
       this.dataY = 40;
       this.setMinMax();
       
-      this.markers = [];
-      this.tooltips = [];
-      
       // transform model layer
       this.dataLayer.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
       this.dataLayer.setX(this.dataX);
@@ -42,8 +26,16 @@
       this.xAxis = new Meteor.XAxis(this);
       this.yAxis = new Meteor.YAxis(this);
 
+      this.tooltip = new Meteor.Tooltip(this);
+
       this.stage.draw();
 
+    },
+    getLineColor: function(n) {
+      var line = this.skin.data.lines,
+          len = line.length;
+          
+      return line[n % len]; 
     },
     setMinMax: function() {
       var model = this.model,
@@ -84,39 +76,6 @@
       this.scaleX = width / (maxX - minX);
       this.scaleY = height / (maxY - minY);
     },
-    /*
-    addMarker: function(color) {
-      var marker = new Kinetic.Group(),
-          skin = this.skin,
-          markerSkin = skin.label,
-          textSkin = markerSkin.text,
-          rectSkin = markerSkin.tag,
-          node = new Kinetic.Circle({
-            fill: color,
-            radius: 6,
-            stroke: skin.background,
-            strokeWidth: 3
-          }),
-          text = new Kinetic.Text(Meteor.Util.merge(textSkin, {
-              text: EMPTY_STRING
-            })),
-          tag = new Kinetic.Tag(Meteor.Util.merge(rectSkin, {
-              pointerDirection: 'left',
-              pointerWidth: 5,
-              pointerHeight: textSkin.fontSize + (2*textSkin.padding),
-              lineJoin: 'round'
-            })),
-          tooltip = new Kinetic.Label({
-            x: 5
-          });
-
-      tooltip.add(tag).add(text);  
-      marker.add(node).add(tooltip);
-      marker.tooltip = tooltip;
-      this.interactionLayer.add(marker);
-      this.markers.push(marker);    
-    },
-    */
     addLines: function() {
       var model = this.model,
         lines = model.lines,

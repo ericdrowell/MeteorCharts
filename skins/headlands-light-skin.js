@@ -29,5 +29,14 @@ var HEADLANDS_LIGHT = {
       'orange',
       'green'
     ]
+  },
+  tooltip: {
+    text: {
+      fill: 'white',
+      fontSize: 16
+    },
+    tag: {
+      fill: 'black'
+    }
   }
 };

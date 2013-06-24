@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     'src/components/VerticalSlider.js', 
     'src/components/XAxis.js', 
     'src/components/YAxis.js', 
+    'src/components/Tooltip.js', 
 
     // charts
     'src/charts/Line.js'

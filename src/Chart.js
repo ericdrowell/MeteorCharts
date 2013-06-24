@@ -5,15 +5,22 @@
       AUTO = 'auto',
       EMPTY_STRING = '',
       TEXT = 'Text',
-      RECT = 'Rect';
-      
+      SPACE = ' ',
+      MOUSEMOVE = 'mousemove',
+      MOUSEOUT = 'mouseout',
+      MOUSEOVER = 'mouseover',
+      TOUCHMOVE = 'touchmove',
+      TOUCHSTART = 'touchstart',
+      TOUCHEND = 'touchend';
+
   Meteor.Chart = function(config) {
     this._init(config); 
   };
   
   Meteor.Chart.prototype = {
     _init: function(config) {
-      var model = this.model = config.model || {},
+      var that = this,
+          model = this.model = config.model || {},
           skin = this.skin = config.skin || {},
           title = model.title || EMPTY_STRING,
           container, titleWidth, halfTitleWidth;
@@ -51,12 +58,48 @@
       this.stage.add(this.topLayer);
       
       this.title = new Meteor.Title(this);
+
+      this.interactionAnim = new Kinetic.Animation(function() {
+      }, this.interactionLayer);
+
+      this.interactionShow = new Kinetic.Tween({
+        node: that.interactionLayer,
+        duration: 0.3,
+        opacity: 1,
+        easing: Kinetic.Easings.EaseInOut
+      });
+
+      this._bind();
     },
-    getLineColor: function(n) {
-      var line = this.skin.data.lines,
-          len = line.length;
-          
-      return line[n % len]; 
+    showInteractionLayer: function() {
+      this.interactionShow.play();
+      this.interactionLayer.setOpacity(1);
+      this.interactionAnim.start();
+    },
+    hideInteractionLayer: function() {
+      this.interactionShow.reverse();
+      this.interactionAnim.stop();
+    },
+    _bind: function() {
+      var stage = this.stage,
+          content = stage.getContent(),
+          that = this;
+      
+      content.addEventListener(MOUSEOUT, function() {
+        that.hideInteractionLayer();
+      });   
+      
+      content.addEventListener(TOUCHEND, function() {
+        that.hideInteractionLayer();
+      }); 
+      
+      content.addEventListener(MOUSEOVER, function() {
+        that.showInteractionLayer();
+      });
+      
+      content.addEventListener(TOUCHSTART, function() {
+        that.showInteractionLayer();
+      });
     },
     buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {
       var skin = this.skin,
