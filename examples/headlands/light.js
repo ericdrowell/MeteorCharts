@@ -1,12 +1,12 @@
 var HEADLANDS_LIGHT = {
   background: 'white',
-  width: 800,
-  height: 500,
+  width: 900,
+  height: 400,
   xAxis: {
-    maxNumberOfLabels: 7
+    maxNumberOfLabels: 10
   },
   yAxis: {
-    maxNumberOfLabels: 10,
+    maxNumberOfLabels: 8,
     lines: {
       stroke: '#ccc',
       strokeWidth: 1,

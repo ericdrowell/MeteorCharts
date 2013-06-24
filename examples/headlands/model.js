@@ -1,5 +1,5 @@
 var model = {
-  title: 'Example Line Chart',
+  title: 'Headlands Tech',
   xAxis: {
     units: 'Seconds'
   },

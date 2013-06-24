@@ -8,7 +8,7 @@
   };
 
   Meteor.Numbers.prototype = {
-    shortFormatter: function(num) {
+    formatShort: function(num) {
     	var absMax = Math.abs(this.max);
       if (absMax < 1000) {
       	return numberWithCommas(num);

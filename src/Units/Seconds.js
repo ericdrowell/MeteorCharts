@@ -4,7 +4,7 @@
   };
 
   Meteor.Seconds.prototype = {
-    shortFormatter: function(seconds) {
+    formatShort: function(seconds) {
       var date = new Date(seconds * 1000),
           max = this.max;
 
