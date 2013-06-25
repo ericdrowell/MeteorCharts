@@ -16,21 +16,37 @@
           scaleX = chart.scaleX,
           range = maxX - minX,
           increment = units.getIncrement(),
-          n;
+          n, x;
 
       for (n=minX; n<maxX; n+=increment) {
-        this.addXLabel(units.formatShort(n), (n - minX) * scaleX);
+        x = (n - minX) * scaleX + chart.dataX;
+        this.addXLabel(units.formatShort(n), x);
       }
     }, 
     addXLabel: function(str, x) {
       var chart = this.chart,
           skin = chart.skin,
+          lines = skin.xAxis.lines,
+          dataY = chart.dataY,
+          dataHeight = chart.dataHeight,
+          bottomLayer = chart.bottomLayer,
           y = skin.height - 16,
           text = new Kinetic.Text(Meteor.Util.merge(skin.text, {
             text: str,
-            x: x + chart.dataX,
+            x: x,
             y: y
-          }));
+          })),
+          line;
+
+      text.setOffsetX(text.getWidth()/2);
+
+      if (lines) {
+        line = new Kinetic.Line(Meteor.Util.merge(lines, {
+          points: [x, dataY, x, dataY + dataHeight]
+        }));
+ 
+        bottomLayer.add(line); 
+      }
 
       chart.topLayer.add(text);
     }

@@ -18,7 +18,7 @@ var end = 1104588000 * 1000; // Jan 1 2005 6:00
 */
 
 var diff = end - start;
-var numDataPoints = 500;
+var numDataPoints = 1000;
 var increment = diff / numDataPoints;
 
 // create lines

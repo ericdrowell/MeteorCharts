@@ -3,7 +3,12 @@ var HEADLANDS_LIGHT = {
   width: 900,
   height: 400,
   xAxis: {
-    maxNumberOfLabels: 10
+    maxNumberOfLabels: 10,
+    lines: {
+      stroke: '#ccc',
+      strokeWidth: 1,
+      dashArray: [2, 2]
+    }
   },
   yAxis: {
     maxNumberOfLabels: 8,

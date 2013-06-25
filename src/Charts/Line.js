@@ -9,9 +9,9 @@
     init: function(config) {
       var that = this;
 
-      this.dataWidth = 865;
-      this.dataHeight = 300;
-      this.dataX = 35;
+      this.dataWidth = 855;
+      this.dataHeight = 335;
+      this.dataX = 45;
       this.dataY = 40;
       this.setMinMax();
       
