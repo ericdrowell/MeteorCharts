@@ -25,8 +25,8 @@
       
       this.xAxis = new Meteor.XAxis(this);
       this.yAxis = new Meteor.YAxis(this);
-
       this.tooltip = new Meteor.Tooltip(this);
+      this.legend = new Meteor.Legend(this);
 
       this.stage.draw();
 

@@ -1,29 +1,52 @@
+(function() {
+  Meteor.Legend = function(chart) {
+    this.chart = chart;
+    this.group = new Kinetic.Group();
+    this.addLabels();
+  };
 
+  Meteor.Legend.prototype = {
+    addLabels: function() {
+      var chart = this.chart,
+          group = this.group,
+          model = chart.model,
+          skin = chart.skin,
+          legendSkin = skin.legend,
+          lines = model.lines,
+          len = lines.length,
+          x = 0,
+          n, line, text, rect;
 
-/*
+      for (n=0; n<len; n++) {
+        line = lines[n];
 
-    addLineTitle: function(str, y) {
-      var skin = this.skin,
-          lineLabelSkin = skin.lineLabel,
-          layout = this.layout,
-          text = new Kinetic.Text(Meteor.Util.merge(lineLabelSkin.text, {
-              text: str
-            })),
-          tag = new Kinetic.Tag(Meteor.Util.merge(lineLabelSkin.tag, {
-              pointerDirection: 'right',
-              pointerHeight: lineLabelSkin.fontSize + (2*lineLabelSkin.padding),
-              pointerWidth: 5,
-              lineJoin: 'round'
-            })),
-          label = new Kinetic.Label({
-            x: layout.width,
-            y: y
-          });
+        rect = new Kinetic.Rect(Meteor.Util.merge(legendSkin.rect, {
+          fill: chart.getLineColor(n),
+          x: x
+        }));
 
-      label.add(tag).add(text);
-             
-      this.middleLabelLayer.add(label);
+        x += rect.getWidth();
+        x += 3;
 
-    },
+        text = new Kinetic.Text(Meteor.Util.merge(legendSkin.text, {
+          text: line.title,
+          x: x
+        }));
 
-    */
+        x += text.getWidth();
+
+        if (n<len-1) {  
+          x += legendSkin.spacing;
+        }
+
+        rect.setY((text.getHeight() - legendSkin.rect.size)/2);
+
+        group.add(rect).add(text);
+      } 
+
+      group.setPosition(skin.width - x - 10, 5);
+
+      chart.topLayer.add(group);
+    }
+  };
+})();

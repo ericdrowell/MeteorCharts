@@ -2,6 +2,27 @@ var HEADLANDS_LIGHT = {
   background: 'white',
   width: 900,
   height: 400,
+  text: {
+    fill: '#585858',
+    fontSize: 16
+  },
+  title: {
+    text: {
+      fill: '#585858',
+      fontSize: 24
+    }
+  },
+  legend: {
+    text: {
+      fill: '#585858',
+      fontSize: 20
+    },
+    rect: {
+      size: 12,
+      cornerRadius: 2
+    },
+    spacing: 20
+  },
   xAxis: {
     maxNumberOfLabels: 10,
     lines: {
@@ -17,16 +38,6 @@ var HEADLANDS_LIGHT = {
       strokeWidth: 1,
       dashArray: [2, 2]
     }
-  },
-  title: {
-    text: {
-      fill: '#585858',
-      fontSize: 24
-    }
-  },
-  text: {
-    fill: '#585858',
-    fontSize: 16
   },
   data: {
     lines: [
