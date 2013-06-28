@@ -2,7 +2,8 @@ var Meteor;
 (function() {      
   Meteor = {
     Charts: {},
-    Skins: {},
+    Components: {},
+    Units: {},
     Util: {}
   };
 })();

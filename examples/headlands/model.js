@@ -1,4 +1,4 @@
-var model = {
+var MODEL = {
   title: 'Headlands Tech',
   xAxis: {
     units: 'Seconds'
@@ -10,7 +10,7 @@ var model = {
 };
 
 var start = 0; // 0 seconds
-var end = (Math.round(Math.random() * 50) + 5) * 60; // 10 minutes
+var end = (Math.round(Math.random() * 50) + 5) * 60; 
 
 /*
 var start = 1104577200 * 1000; // Jan 1 2005 3:00
@@ -39,5 +39,29 @@ for (var n=0; n<3; n++) {
     });
   }
 
-  model.lines.push(line);
+  MODEL.lines.push(line);
+}
+
+function updateModel() {
+  var firstPoints = MODEL.lines[0].points;
+  var start = firstPoints[firstPoints.length-1].x;
+  var end = start + (0.1 * 60);
+
+  // create lines
+  for (var n=0; n<3; n++) {
+    var points = MODEL.lines[n].points
+    var lastY = points[points.length-1].y;
+    
+    // create points
+    for (var i=start; i<end; i+=increment) {
+      var y = Math.round((lastY + (Math.random() * 10000) - 5000) * 1);
+      lastY = y;
+      MODEL.lines[n].points.shift();
+
+      MODEL.lines[n].points.push({
+          x: i,
+          y: y
+      });
+    }
+  }
 }

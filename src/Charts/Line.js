@@ -7,7 +7,13 @@
   
   Meteor.Line.prototype = {
     init: function(config) {
-      var that = this;
+      this.tooltip = new Meteor.Tooltip(this);
+      this.sync();
+    },
+    sync: function() {
+      this.bottomLayer.destroyChildren();
+      this.dataLayer.destroyChildren();
+      this.topLayer.destroyChildren();
 
       this.dataWidth = 855;
       this.dataHeight = 335;
@@ -15,21 +21,22 @@
       this.dataY = 40;
       this.setMinMax();
       
-      // transform model layer
+      this.xAxis = new Meteor.XAxis(this);
+      this.yAxis = new Meteor.YAxis(this);
+      this.legend = new Meteor.Legend(this);
+
+      // transform data layer
       this.dataLayer.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
       this.dataLayer.setX(this.dataX);
       this.dataLayer.setScale(this.scaleX, -1 * this.scaleY);
-      
+
       // add lines and labels
       this.addLines();
-      
-      this.xAxis = new Meteor.XAxis(this);
-      this.yAxis = new Meteor.YAxis(this);
-      this.tooltip = new Meteor.Tooltip(this);
-      this.legend = new Meteor.Legend(this);
+
+      // update interaction layer
+      this.pointerMove();
 
       this.stage.draw();
-
     },
     getLineColor: function(n) {
       var line = this.skin.data.lines,
@@ -77,8 +84,13 @@
       this.scaleY = height / (maxY - minY);
     },
     pointerMove: function() {
-      var pos = this.stage.getPointerPosition(),
-          skin = this.skin,
+      var pos = this.stage.getPointerPosition();
+
+      if (!pos) {
+        return false;
+      }
+
+      var skin = this.skin,
           width = skin.width,
           model = this.model,
           lines = model.lines,

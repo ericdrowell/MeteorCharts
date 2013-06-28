@@ -26,6 +26,14 @@
         model: MODEL,
         skin: HEADLANDS_LIGHT
       });
+
+   
+      // update the chart 10 times per second
+      setInterval(function() {
+        updateModel();
+        lineChart.sync();
+      }, 100);
+
     </script>
   </body>
 </html>

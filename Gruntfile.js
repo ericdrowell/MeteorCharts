@@ -6,9 +6,6 @@ module.exports = function(grunt) {
     'src/Util.js',
     'src/Unit.js',
 
-    // lib
-    //'lib/moment.js',
-
     // units
     'src/units/Numbers.js', 
     'src/units/Timestamp.js', 
