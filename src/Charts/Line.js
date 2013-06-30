@@ -7,7 +7,6 @@
   
   Meteor.Line.prototype = {
     init: function(config) {
-      this.tooltip = new Meteor.Tooltip(this);
       this.sync();
     },
     sync: function() {
@@ -24,6 +23,7 @@
       this.xAxis = new Meteor.XAxis(this);
       this.yAxis = new Meteor.YAxis(this);
       this.legend = new Meteor.Legend(this);
+      this.title = new Meteor.Title(this);
 
       // transform data layer
       this.dataLayer.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));

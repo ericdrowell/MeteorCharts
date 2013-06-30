@@ -54,8 +54,8 @@
       
       this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
-      this.stage.add(this.interactionLayer);
       this.stage.add(this.topLayer);
+      this.stage.add(this.interactionLayer);
       
       this.title = new Meteor.Title(this);
 
@@ -68,6 +68,10 @@
         opacity: 1,
         easing: Kinetic.Easings.EaseInOut
       });
+
+      // interaction components
+      this.zoom = new Meteor.Zoom(this);
+      this.tooltip = new Meteor.Tooltip(this);
 
       this._bind();
     },
@@ -99,6 +103,11 @@
       
       content.addEventListener(TOUCHSTART, function() {
         that.showInteractionLayer();
+      });
+
+      // only one interaction component should be visible at a time
+      this.zoom.rect.on('visibleChange', function(evt) {
+        that.tooltip.group.setVisible(!evt.newVal);
       });
     },
     buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {

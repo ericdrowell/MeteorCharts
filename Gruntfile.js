@@ -16,10 +16,10 @@ module.exports = function(grunt) {
     // components
     'src/components/Legend.js', 
     'src/components/Title.js', 
-    'src/components/VerticalSlider.js', 
     'src/components/XAxis.js', 
     'src/components/YAxis.js', 
-    'src/components/Tooltip.js', 
+    'src/components/Tooltip.js',
+    'src/components/Zoom.js',
 
     // charts
     'src/charts/Line.js'

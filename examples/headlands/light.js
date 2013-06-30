@@ -55,5 +55,9 @@ var HEADLANDS_LIGHT = {
     tag: {
       fill: 'black'
     }
+  },
+  select: {
+    fill: 'blue',
+    opacity: 0.5
   }
 };

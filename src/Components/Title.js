@@ -8,7 +8,7 @@
 	        text: model.title
 	      }));
 
-	  chart.topLayer.add(text);
+	  chart.bottomLayer.add(text);
   };
 
   Meteor.Title.prototype = {

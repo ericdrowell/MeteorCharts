@@ -46,7 +46,7 @@
 
       group.setPosition(skin.width - x - 10, 5);
 
-      chart.topLayer.add(group);
+      chart.bottomLayer.add(group);
     }
   };
 })();
