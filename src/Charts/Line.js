@@ -173,30 +173,54 @@
         y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
       };
     },
+    addLine: function(newPoints, color) {
+      var lineObj = new Kinetic.Line({
+        points: newPoints,
+        stroke: color,
+        strokeWidth: 2,
+        lineJoin: 'round',
+        strokeScaleEnabled: false,
+        offsetX: this.minX
+      });
+      this.dataLayer.add(lineObj); 
+    },
     addLines: function() {
       var model = this.model,
         lines = model.lines,
         len = lines.length,
         minX = this.minX,
-        color, backgroundColor, n, line, lineObj, points, pointsLen;
+        minY = this.minY,
+        maxX = this.maxX,
+        maxY = this.maxY,
+        color, backgroundColor, n, line, lineObj, points, pointsLen, point;
   
       for (n=0; n<len; n++) {
         line = lines[n],
         points = line.points,
         pointsLen = points.length,
         color = this.getLineColor(n),
-        backgroundColor = this.skin.background;
-        
-        lineObj = new Kinetic.Line({
-          points: points,
-          stroke: color,
-          strokeWidth: 2,
-          lineJoin: 'round',
-          strokeScaleEnabled: false,
-          offsetX: minX
-        });
-        
-        this.dataLayer.add(lineObj);  
+        newPoints = [];
+
+        for (var i=0; i<pointsLen; i++) {
+          point = points[i];
+          if (point.x >= minX && point.x <= maxX && point.y >= minY && point.y <= maxY) {
+            newPoints.push({
+              x: point.x, 
+              y: point.y
+            });
+          }
+          else if (newPoints.length > 1) {
+            this.addLine(newPoints, color);
+            newPoints = []; 
+          }
+          else {
+            newPoints = [];
+          }
+        }
+
+        if (newPoints.length > 1) {
+          this.addLine(newPoints, color);
+        }
       }
     }
   };
