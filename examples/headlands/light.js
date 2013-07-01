@@ -57,7 +57,11 @@ var HEADLANDS_LIGHT = {
     }
   },
   select: {
-    fill: 'blue',
-    opacity: 0.5
+    // light blue
+    fill: '#87c8ff',
+    opacity: 0.3,
+    // dark blue
+    stroke: '#2d7dc0',
+    strokeWidth: 2
   }
 };

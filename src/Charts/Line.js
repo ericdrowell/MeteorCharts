@@ -7,6 +7,7 @@
   
   Meteor.Line.prototype = {
     init: function(config) {
+      this.shouldAutoSetMinMax = true;
       this.sync();
     },
     sync: function() {
@@ -18,7 +19,11 @@
       this.dataHeight = 335;
       this.dataX = 45;
       this.dataY = 40;
-      this.setMinMax();
+
+      if (this.shouldAutoSetMinMax) {
+        this.autoSetMinMax();
+        this.shouldAutoSetMinMax = true;
+      }
       
       this.xAxis = new Meteor.XAxis(this);
       this.yAxis = new Meteor.YAxis(this);
@@ -44,13 +49,11 @@
           
       return line[n % len]; 
     },
-    setMinMax: function() {
+    autoSetMinMax: function() {
       var model = this.model,
           skin = this.skin,
           lines = model.lines,
           len = lines.length,
-          width = this.dataWidth,
-          height = this.dataHeight,
           firstPoint = lines[0].points[0],
           firstPointX = firstPoint.x,
           firstPointY = firstPoint.y,
@@ -75,13 +78,21 @@
           maxY = Math.max(maxY, pointY);
         }
       }
-      
+
+      this.setMinMaxX(minX, maxX);
+      this.setMinMaxY(minY, maxY); 
+    },
+    setMinMaxX: function(minX, maxX) {
       this.minX = minX;
       this.maxX = maxX;
+      this.scaleX = this.dataWidth / (maxX - minX);
+      this.shouldAutoSetMinMax = false;
+    },
+    setMinMaxY: function(minY, maxY) {
       this.minY = minY;
       this.maxY = maxY;
-      this.scaleX = width / (maxX - minX);
-      this.scaleY = height / (maxY - minY);
+      this.scaleY = this.dataHeight / (maxY - minY);
+      this.shouldAutoSetMinMax = false;
     },
     pointerMove: function() {
       var pos = this.stage.getPointerPosition();
@@ -142,14 +153,25 @@
         }
       }
 
-      var tooltipX = (finalPoint.x-minX) * scaleX + dataX;
-      var tooltipY = dataHeight - ((finalPoint.y - minY) * scaleY) + dataY;
+      var tooltipPos = this.dataToChart(finalPoint.x, finalPoint.y);
       var str = this.xAxis.units.formatShort(finalPoint.x) + ', ' + this.yAxis.units.formatShort(finalPoint.y)
 
-      this.tooltip.group.setPosition(tooltipX, tooltipY);
+      this.tooltip.group.setPosition(tooltipPos);
       this.tooltip.node.setFill(finalPoint.color);
       this.tooltip.text.setText(str);
 
+    },
+    dataToChart: function(x, y) {
+      return {
+        x: (x-this.minX) * this.scaleX + this.dataX,
+        y: this.dataHeight - ((y - this.minY) * this.scaleY) + this.dataY
+      };
+    },
+    chartToData: function(x, y) {
+      return {
+        x: ((x - this.dataX) / this.scaleX) + this.minX,
+        y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
+      };
     },
     addLines: function() {
       var model = this.model,
