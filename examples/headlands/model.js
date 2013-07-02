@@ -10,7 +10,7 @@ var MODEL = {
 };
 
 var start = 0; // 0 seconds
-var end = (Math.round(Math.random() * 50) + 5) * 60; 
+var end = start + (Math.round(Math.random() * 50) + 5) * 60; 
 
 /*
 var start = 1104577200 * 1000; // Jan 1 2005 3:00
@@ -45,7 +45,7 @@ for (var n=0; n<3; n++) {
 function updateModel() {
   var firstPoints = MODEL.lines[0].points;
   var start = firstPoints[firstPoints.length-1].x;
-  var end = start + (0.1 * 60);
+  var end = start + (1 * 60);
 
   // create lines
   for (var n=0; n<3; n++) {

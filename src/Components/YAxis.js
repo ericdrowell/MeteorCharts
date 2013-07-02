@@ -20,14 +20,18 @@
 
       // draw labels at 0 and above
       while(y <= maxY) {
-        this.addYLabel(units.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
+        if (y >= minY) {
+          this.addYLabel(units.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
+        }
         y+=increment; 
       }
       
       // draw labels below 0
       y=-1 * increment;
-      while(y > minY) {
-        this.addYLabel(units.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
+      while(y >= minY) {
+        if (y <= maxY) {
+          this.addYLabel(units.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
+        }
         y-=increment; 
       }
 

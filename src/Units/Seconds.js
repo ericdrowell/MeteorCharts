@@ -8,29 +8,25 @@
       var date = new Date(seconds * 1000),
           max = this.max;
 
-      // seconds in second
-      if (max < 1) {
-        return date.format('ss');
-      }
       // seconds in minute
-      else if (max < 60) {
-        return date.format('ss');
+      if (max < 60) {
+        return date.format('UTC:ss');
       }
       // seconds in hour
       else if (max < 3600) {
-        return date.format('MM:ss');
+        return date.format('UTC:MM:ss');
       }
       // seconds in day
       else if (max < 86400) {
-        return date.format('hh:MM');
+        return date.format('UTC:HH:MM');
       }
       // seconds in month
       else if (max < 2628000) {
-        return date.format('dd hh'); 
+        return date.format('UTC:d"d" H"h"'); 
       }
       // seconds in year
       else { 
-        return date.format('y'); 
+        return date.format('UTC:m"m" d"d"'); 
       }
     },
     increments: function() {
