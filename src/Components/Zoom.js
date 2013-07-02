@@ -67,6 +67,7 @@
     },
     _updateMinMax: function() {
       var chart = this.chart,
+          skin = chart.skin,
           pos = chart.stage.getPointerPosition(),
           startX = this.startX,
           startY = this.startY,
@@ -82,8 +83,10 @@
       //console.log(min.y + ',' + max.y)
 
       if (Math.abs(chartMaxX - chartMinX) > MIN_ZOOM_SIZE && Math.abs(chartMaxY - chartMinY) > MIN_ZOOM_SIZE) {
-	      chart.setMinMaxX(min.x, max.x);
-	      chart.setMinMaxY(min.y, max.y);
+        skin.xAxis.min = min.x;
+        skin.yAxis.min = min.y;
+        skin.xAxis.max = max.x;
+        skin.yAxis.max = max.y;
 	      chart.sync();
 	    }
 
