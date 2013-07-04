@@ -22,6 +22,7 @@
       var that = this,
           model = this.model = config.model || {},
           skin = this.skin = config.skin || {},
+          behavior = this.behavior = config.behavior || {},
           title = model.title || EMPTY_STRING,
           container, titleWidth, halfTitleWidth;
           

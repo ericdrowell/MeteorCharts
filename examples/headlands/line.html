@@ -24,12 +24,14 @@
     <script src="model.js" charset="utf-8"></script>
     <script src="dark.js"></script>
     <script src="light.js"></script>
+    <script src="behavior.js"></script>
 
     <script type="text/javascript">
       var lineChart = new Meteor.Line({
         container: 'container',
         model: MODEL,
-        skin: HEADLANDS_LIGHT
+        skin: HEADLANDS_LIGHT,
+        behavior: BEHAVIOR
       });
     </script>
   </body>

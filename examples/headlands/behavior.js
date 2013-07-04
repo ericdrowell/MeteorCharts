@@ -1,0 +1,5 @@
+BEHAVIOR = {
+  select: {
+    type: 'range'
+  }
+};

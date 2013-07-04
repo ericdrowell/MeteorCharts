@@ -43,18 +43,26 @@
       }); 
     },
     _startZoomSelect: function() {
-    	var pos = this.chart.stage.getPointerPosition();
+    	var chart = this.chart,
+          pos = chart.stage.getPointerPosition(),
+          behavior = chart.behavior,
+          type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
+
     	this.startX = pos.x;
-    	this.startY = pos.y;
-    	this.rect.setPosition(pos);
+    	this.startY = type === 'bounding-box' ? pos.y : chart.dataY;
+    	this.rect.setPosition(this.startX, this.startY);
       this.selecting = true;
       this.rect.setVisible(true);
     },
     _resizeZoomSelect: function() {
     	if (this.selecting) {
-	    	var pos = this.chart.stage.getPointerPosition();
+	    	var chart = this.chart,
+          pos = chart.stage.getPointerPosition(),
+          behavior = chart.behavior,
+          type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
+
 	    	this.rect.setWidth(pos.x - this.startX);
-	    	this.rect.setHeight(pos.y - this.startY);
+	    	this.rect.setHeight(type === 'bounding-box' ? pos.y - this.startY : chart.dataHeight);
     	}
     },
     _endZoomSelect: function() {
