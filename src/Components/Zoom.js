@@ -26,19 +26,17 @@
   Meteor.Zoom.prototype = {
     _bind: function() {
       var that = this,
-          stage = this.chart.stage,
-          content = stage.getContent(),
-          chart = this.chart;
+          stage = this.chart.stage;
       
-      content.addEventListener(MOUSEDOWN, function() {
+      stage.on(MOUSEDOWN, function() {
       	that._startZoomSelect();
       }); 
 
-      content.addEventListener(MOUSEMOVE, function() {
+      stage.on(MOUSEMOVE, function() {
         that._resizeZoomSelect();
       }); 
 
-      content.addEventListener(MOUSEUP, function() {
+      stage.on(MOUSEUP, function() {
       	that._endZoomSelect();
       }); 
     },
@@ -48,21 +46,27 @@
           behavior = chart.behavior,
           type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
 
+      this.selecting = true;
     	this.startX = pos.x;
     	this.startY = type === 'bounding-box' ? pos.y : chart.dataY;
     	this.rect.setPosition(this.startX, this.startY);
-      this.selecting = true;
-      this.rect.setVisible(true);
     },
     _resizeZoomSelect: function() {
+      var rect = this.rect,
+          chart = this.chart,
+          pos, behavior, type;
+
     	if (this.selecting) {
-	    	var chart = this.chart,
-          pos = chart.stage.getPointerPosition(),
-          behavior = chart.behavior,
+          pos = chart.stage.getPointerPosition();
+          behavior = chart.behavior;
           type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
 
 	    	this.rect.setWidth(pos.x - this.startX);
 	    	this.rect.setHeight(type === 'bounding-box' ? pos.y - this.startY : chart.dataHeight);
+
+        if (!rect.isVisible()) {
+          rect.setVisible(true);
+        }
     	}
     },
     _endZoomSelect: function() {
@@ -76,14 +80,16 @@
     _updateMinMax: function() {
       var chart = this.chart,
           skin = chart.skin,
+          behavior = chart.behavior,
+          type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
           pos = chart.stage.getPointerPosition(),
           startX = this.startX,
           startY = this.startY,
           rect = this.rect,
           chartMinX = Math.min(startX, pos.x),
-          chartMinY = Math.max(startY, pos.y),
+          chartMinY = type === 'bounding-box' ? Math.max(startY, pos.y) : chart.dataY + chart.dataHeight,
           chartMaxX = Math.max(startX, pos.x),
-          chartMaxY = Math.min(startY, pos.y),
+          chartMaxY = type === 'bounding-box' ? Math.min(startY, pos.y) : chart.dataY,
           min = chart.chartToData(chartMinX, chartMinY),
           max = chart.chartToData(chartMaxX, chartMaxY);
 

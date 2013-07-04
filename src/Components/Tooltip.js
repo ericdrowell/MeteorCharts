@@ -45,15 +45,14 @@ var EMPTY_STRING = '',
 
   Meteor.Tooltip.prototype = {
     _bind: function() {
-      var stage = this.chart.stage,
-          content = stage.getContent(),
-          chart = this.chart;
+      var chart = this.chart,
+          stage = chart.stage;
       
-      content.addEventListener(MOUSEMOVE, function() {
+      stage.on(MOUSEMOVE, function() {
         chart.pointerMove();
       }); 
       
-      content.addEventListener(TOUCHMOVE, function() {
+      stage.on(TOUCHMOVE, function() {
         chart.pointerMove();
       }); 
     }
