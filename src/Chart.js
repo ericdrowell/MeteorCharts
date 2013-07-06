@@ -11,7 +11,13 @@
       MOUSEOVER = 'mouseover',
       TOUCHMOVE = 'touchmove',
       TOUCHSTART = 'touchstart',
-      TOUCHEND = 'touchend';
+      TOUCHEND = 'touchend',
+      MOUSEDOWN = 'mousedown',
+      MOUSEMOVE = 'mousemove',
+      MOUSEUP = 'mouseup',
+      HOVERING = 'hovering',
+      ZOOMING = 'zooming',
+      PANNING = 'panning';
 
   Meteor.Chart = function(config) {
     this._init(config); 
@@ -52,16 +58,12 @@
       this.interactionLayer.getCanvas().getElement().className = 'meteorcharts-interaction-layer';
       this.topLayer.getCanvas().getElement().className = 'meteorcharts-top-layer';
       
-      
       this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
       this.stage.add(this.topLayer);
       this.stage.add(this.interactionLayer);
       
       this.title = new Meteor.Title(this);
-
-      this.interactionAnim = new Kinetic.Animation(function() {
-      }, this.interactionLayer);
 
       this.interactionShow = new Kinetic.Tween({
         node: that.interactionLayer,
@@ -79,37 +81,89 @@
     showInteractionLayer: function() {
       this.interactionShow.play();
       this.interactionLayer.setOpacity(1);
-      this.interactionAnim.start();
     },
     hideInteractionLayer: function() {
       this.interactionShow.reverse();
-      this.interactionAnim.stop();
     },
     _bind: function() {
       var stage = this.stage,
-          content = stage.getContent(),
-          that = this;
-      
-      content.addEventListener(MOUSEOUT, function() {
+          that = this,
+          holdingShift = false,
+          zoom = this.zoom,
+          state = HOVERING;
+  
+        // manage keydown / up
+      document.body.addEventListener('keydown', function(evt) {
+        holdingShift = window.event ? window.event.shiftKey : evt.shiftKey;
+      });
+
+      document.body.addEventListener('keyup', function(evt) {
+        holdingShift = window.event ? window.event.shiftKey : evt.shiftKey;
+      });
+
+      // mouse events 
+      stage.on(MOUSEDOWN, function() {
+        switch (state) {
+          case HOVERING:
+            if (holdingShift) {
+              state = PANNING;
+            }
+            else {
+              state = ZOOMING;
+            }
+          case ZOOMING:
+            zoom._startZoomSelect();
+
+        }
+      }); 
+
+      stage.on(MOUSEMOVE, function() {
+        switch(state) {
+          case HOVERING: 
+            that.pointerMove(); break;
+          case ZOOMING:
+            that.tooltip.group.hide(); 
+            zoom._resizeZoomSelect(); 
+            break;
+          case PANNING: 
+            that.tooltip.group.hide();
+
+            break;
+        }
+
+        that.interactionLayer.batchDraw();
+      }); 
+
+      stage.on(MOUSEUP, function() {
+        switch(state) {
+          case ZOOMING: 
+            zoom._endZoomSelect();
+            state = HOVERING;
+            that.tooltip.group.show();
+            break;
+          case PANNING:
+            state = HOVERING;
+            that.tooltip.group.show();
+            break;
+        }
+      });  
+
+      stage.on(MOUSEOVER, function() {
+        that.showInteractionLayer();
+      }); 
+
+      stage.on(MOUSEOUT, function() {
         that.hideInteractionLayer();
       });   
-      
-      content.addEventListener(TOUCHEND, function() {
-        that.hideInteractionLayer();
-      }); 
-      
-      content.addEventListener(MOUSEOVER, function() {
-        that.showInteractionLayer();
-      });
-      
-      content.addEventListener(TOUCHSTART, function() {
+
+      // touch events
+      stage.on(TOUCHSTART, function() {
         that.showInteractionLayer();
       });
 
-      // only one interaction component should be visible at a time
-      this.zoom.rect.on('visibleChange', function(evt) {
-        that.tooltip.group.setVisible(!evt.newVal);
-      });
+      stage.on(TOUCHEND, function() {
+        that.hideInteractionLayer();
+      }); 
     },
     buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {
       var skin = this.skin,

@@ -1,7 +1,5 @@
 (function() {
-	var MOUSEDOWN = 'mousedown',
-	    MOUSEMOVE = 'mousemove',
-	    MOUSEUP = 'mouseup',
+	var DBLCLICK = 'dblclick',
 	    MIN_ZOOM_SIZE = 20;
 
   Meteor.Zoom = function(chart) {
@@ -26,29 +24,27 @@
   Meteor.Zoom.prototype = {
     _bind: function() {
       var that = this,
-          stage = this.chart.stage;
+          chart = this.chart,
+          stage = chart.stage,
+          skin = chart.skin;
       
-      stage.on(MOUSEDOWN, function() {
-      	that._startZoomSelect();
-      }); 
-
-      stage.on(MOUSEMOVE, function() {
-        that._resizeZoomSelect();
-      }); 
-
-      stage.on(MOUSEUP, function() {
-      	that._endZoomSelect();
-      }); 
+      stage.on(DBLCLICK, function() {
+        skin.xAxis.min = 'auto';
+        skin.xAxis.max = 'auto';
+        skin.yAxis.min = 'auto';
+        skin.yAxis.max = 'auto';
+        chart.sync();
+      });
     },
     _startZoomSelect: function() {
     	var chart = this.chart,
           pos = chart.stage.getPointerPosition(),
           behavior = chart.behavior,
-          type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
+          type = behavior.select && behavior.select.type ? behavior.select.type : 'box';
 
       this.selecting = true;
     	this.startX = pos.x;
-    	this.startY = type === 'bounding-box' ? pos.y : chart.dataY;
+    	this.startY = type === 'box' ? pos.y : chart.dataY;
     	this.rect.setPosition(this.startX, this.startY);
     },
     _resizeZoomSelect: function() {
@@ -59,10 +55,10 @@
     	if (this.selecting) {
           pos = chart.stage.getPointerPosition();
           behavior = chart.behavior;
-          type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
+          type = behavior.select && behavior.select.type ? behavior.select.type : 'box';
 
 	    	this.rect.setWidth(pos.x - this.startX);
-	    	this.rect.setHeight(type === 'bounding-box' ? pos.y - this.startY : chart.dataHeight);
+	    	this.rect.setHeight(type === 'box' ? pos.y - this.startY : chart.dataHeight);
 
         if (!rect.isVisible()) {
           rect.setVisible(true);
@@ -81,15 +77,15 @@
       var chart = this.chart,
           skin = chart.skin,
           behavior = chart.behavior,
-          type = behavior.select && behavior.select.type ? behavior.select.type : 'bounding-box';
+          type = behavior.select && behavior.select.type ? behavior.select.type : 'box';
           pos = chart.stage.getPointerPosition(),
           startX = this.startX,
           startY = this.startY,
           rect = this.rect,
           chartMinX = Math.min(startX, pos.x),
-          chartMinY = type === 'bounding-box' ? Math.max(startY, pos.y) : chart.dataY + chart.dataHeight,
+          chartMinY = type === 'box' ? Math.max(startY, pos.y) : chart.dataY + chart.dataHeight,
           chartMaxX = Math.max(startX, pos.x),
-          chartMaxY = type === 'bounding-box' ? Math.min(startY, pos.y) : chart.dataY,
+          chartMaxY = type === 'box' ? Math.min(startY, pos.y) : chart.dataY,
           min = chart.chartToData(chartMinX, chartMinY),
           max = chart.chartToData(chartMaxX, chartMaxY);
 

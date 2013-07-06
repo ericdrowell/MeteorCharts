@@ -39,22 +39,9 @@ var EMPTY_STRING = '',
     label.add(tag).add(text);  
     group.add(node).add(label);
     chart.interactionLayer.add(group);
-
-    this._bind();
   };
 
   Meteor.Tooltip.prototype = {
-    _bind: function() {
-      var chart = this.chart,
-          stage = chart.stage;
-      
-      stage.on(MOUSEMOVE, function() {
-        chart.pointerMove();
-      }); 
-      
-      stage.on(TOUCHMOVE, function() {
-        chart.pointerMove();
-      }); 
-    }
+
   };
 })();

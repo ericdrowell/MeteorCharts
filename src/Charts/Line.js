@@ -1,4 +1,8 @@
 (function() { 
+  var MOUSEDOWN = 'mousedown',
+      MOUSEUP = 'mouseup',
+      MOUSEMOVE = 'mousemove';
+
   Meteor.Line = function(config) {
     // super
     Meteor.Chart.call(this, config);
@@ -47,7 +51,29 @@
       // update interaction layer
       this.pointerMove();
 
+      this.__bind();
+
       this.stage.draw();
+    },
+    __bind: function() {
+      var that = this,
+          stage = this.stage;
+
+      stage.on(MOUSEDOWN, function() {
+        if (that.holdingShift) {
+          that.panning = true;
+        }
+      });
+
+      stage.on(MOUSEMOVE, function() {
+        if (that.panning) {
+          console.log('panning')
+        }
+      });
+
+      stage.on(MOUSEUP, function() {
+        that.panning = false;
+      });
     },
     getLineColor: function(n) {
       var line = this.skin.data.lines,
