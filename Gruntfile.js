@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
   var sourceFiles = [
+    // lib
+    'lib/date.js',
+
     // core
     'src/Meteor.js', 
     'src/Chart.js', 
