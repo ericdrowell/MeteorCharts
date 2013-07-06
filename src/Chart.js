@@ -62,6 +62,13 @@
       this.stage.add(this.dataLayer);
       this.stage.add(this.topLayer);
       this.stage.add(this.interactionLayer);
+
+      /*
+      this.dataLayer.on('draw', function() {
+        console.log('draw')
+      });
+      */
+      
       
       this.title = new Meteor.Title(this);
 

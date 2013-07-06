@@ -14,8 +14,9 @@
     <div id="container"></div>
     <h2>Links</h2>
     <ul>
-      <li><a href="line.html">Simple</a>
-      <li><a href="live-updates.html">Live updates</a>
+      <li><a href="line.html">Simple</a></li>
+      <li><a href="live-updates.html">Live updates</a></li>
+      <li><a href="dual.html">Dual</a></li>
     </ul>
     
     <script src="kinetic-v4.5.5-beta.js"></script>
@@ -28,14 +29,13 @@
     <script type="text/javascript">
       var lineChart = new Meteor.Line({
         container: 'container',
-        model: MODEL,
+        model: getModel(),
         skin: HEADLANDS_LIGHT
       });
 
-   
       // update the chart 10 times per second
       setInterval(function() {
-        updateModel();
+        updateModel(lineChart.model);
         lineChart.sync();
       }, 100);
 

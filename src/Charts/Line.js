@@ -13,7 +13,7 @@
     init: function(config) {
       this.sync();
     },
-    sync: function() {
+    sync: function(batchDraw) {
       var autoMinMax = this.getAutoMinMax(),
           skin = this.skin,
           xAxisSkin = skin.xAxis,
@@ -27,10 +27,10 @@
       this.dataLayer.destroyChildren();
       this.topLayer.destroyChildren();
 
-      this.dataWidth = 855;
-      this.dataHeight = 335;
       this.dataX = 45;
       this.dataY = 40;
+      this.dataWidth = skin.width - this.dataX;
+      this.dataHeight = skin.height - this.dataY- skin.text.fontSize - 10;
 
       this.setMinMaxX(minX, maxX);
       this.setMinMaxY(minY, maxY);
@@ -53,10 +53,17 @@
 
       this.__bind();
 
-      this.bottomLayer.batchDraw();
-      this.dataLayer.batchDraw();
-      this.topLayer.batchDraw();
-      this.interactionLayer.batchDraw();
+      if (batchDraw) {
+        this.bottomLayer.batchDraw();
+        this.dataLayer.batchDraw();
+        this.topLayer.batchDraw();
+        this.interactionLayer.batchDraw();
+      }
+      else {
+        this.stage.draw();
+      }
+
+      this.stage.fire('sync');
     },
     __bind: function() {
       var that = this,

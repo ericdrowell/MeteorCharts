@@ -1,0 +1,75 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: #eee;
+      }
+      #topContainer, #bottomContainer {
+        height: 250px;
+      }
+      #bottomContainer {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="topContainer"></div>
+    <div id="bottomContainer"></div>
+    <h2>Links</h2>
+    <ul>
+      <li><a href="line.html">Simple</a></li>
+      <li><a href="live-updates.html">Live updates</a></li>
+      <li><a href="dual.html">Dual</a></li>
+    </ul>
+
+    <script src="kinetic-v4.5.5-beta.js"></script>
+    <script src="../../dist/meteorcharts-v0.0.0.js"></script>
+
+    <script src="model.js" charset="utf-8"></script>
+    <script src="light-thin.js"></script>
+    <script src="behavior.js"></script>
+
+    <script type="text/javascript">
+      var topChart = new Meteor.Line({
+        container: 'topContainer',
+        model: getModel(),
+        skin: HEADLANDS_LIGHT_THIN,
+        behavior: BEHAVIOR
+      });
+
+      var bottomChart = new Meteor.Line({
+        container: 'bottomContainer',
+        model: getModel(),
+        skin: HEADLANDS_LIGHT_THIN,
+        behavior: BEHAVIOR
+      });
+
+      var syncLocked = false;
+
+      topChart.stage.on('sync', function() {
+        if (!syncLocked) {
+          bottomChart.skin.xAxis.min = topChart.skin.xAxis.min;
+          bottomChart.skin.xAxis.max = topChart.skin.xAxis.max;
+          bottomChart.skin.yAxis.min = 'auto';
+          bottomChart.skin.yAxis.max = 'auto';
+          syncLocked = true;
+          bottomChart.sync();
+          syncLocked = false;
+        }
+      });
+
+      bottomChart.stage.on('sync', function() {
+        if (!syncLocked) {
+          topChart.skin.xAxis.min = bottomChart.skin.xAxis.min;
+          topChart.skin.xAxis.max = bottomChart.skin.xAxis.max;
+          topChart.skin.yAxis.min = 'auto';
+          topChart.skin.yAxis.max = 'auto';
+          syncLocked = true;
+          topChart.sync();
+          syncLocked = false;
+        }
+      });
+    </script>
+  </body>
+</html>
