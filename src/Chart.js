@@ -55,8 +55,8 @@
       // add meteor classes
       this.bottomLayer.getCanvas().getElement().className = 'meteorcharts-bottom-layer';
       this.dataLayer.getCanvas().getElement().className = 'meteorcharts-data-layer';
-      this.interactionLayer.getCanvas().getElement().className = 'meteorcharts-interaction-layer';
       this.topLayer.getCanvas().getElement().className = 'meteorcharts-top-layer';
+      this.interactionLayer.getCanvas().getElement().className = 'meteorcharts-interaction-layer';
       
       this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
@@ -88,24 +88,24 @@
     _bind: function() {
       var stage = this.stage,
           that = this,
-          holdingShift = false,
+          keydown = false,
           zoom = this.zoom,
           state = HOVERING;
   
         // manage keydown / up
       document.body.addEventListener('keydown', function(evt) {
-        holdingShift = window.event ? window.event.shiftKey : evt.shiftKey;
+        keydown = true;
       });
 
       document.body.addEventListener('keyup', function(evt) {
-        holdingShift = window.event ? window.event.shiftKey : evt.shiftKey;
+        keydown = false;
       });
 
       // mouse events 
       stage.on(MOUSEDOWN, function() {
         switch (state) {
           case HOVERING:
-            if (holdingShift) {
+            if (keydown) {
               state = PANNING;
             }
             else {
@@ -126,11 +126,12 @@
             zoom._resizeZoomSelect(); 
             break;
           case PANNING: 
+            that._pan();
             that.tooltip.group.hide();
-
             break;
         }
 
+        that.lastPos = stage.getPointerPosition();
         that.interactionLayer.batchDraw();
       }); 
 

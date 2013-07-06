@@ -53,7 +53,10 @@
 
       this.__bind();
 
-      this.stage.draw();
+      this.bottomLayer.batchDraw();
+      this.dataLayer.batchDraw();
+      this.topLayer.batchDraw();
+      this.interactionLayer.batchDraw();
     },
     __bind: function() {
       var that = this,
@@ -255,6 +258,23 @@
         if (newPoints.length > 1) {
           this.addLine(newPoints, color);
         }
+      }
+    },
+    _pan: function() {
+      var pos = this.stage.getPointerPosition(),
+          skin = this.skin,
+          diffX, diffY, minX, maxX, minY, maxY;
+
+      if (this.lastPos) {
+        diffX = (pos.x - this.lastPos.x) / this.scaleX;
+        diffY = (pos.y - this.lastPos.y) / this.scaleY;
+
+        skin.xAxis.min = this.minX - diffX;
+        skin.xAxis.max = this.maxX - diffX;
+        skin.yAxis.min = this.minY + diffY;
+        skin.yAxis.max = this.maxY + diffY;
+
+        this.sync();
       }
     }
   };
