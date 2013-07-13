@@ -85,11 +85,11 @@
         that.panning = false;
       });
     },
-    getLineColor: function(n) {
-      var line = this.skin.data.lines,
-          len = line.length;
+    getDataStyle: function(n) {
+      var data = this.skin.data,
+          len = data.length;
           
-      return line[n % len]; 
+      return data[n % len]; 
     },
     getAutoMinMax: function() {
       var model = this.model,
@@ -175,7 +175,7 @@
         var nearestPoint = {
           x: points[0].x,
           y: points[0].y,
-          color: this.getLineColor(n)
+          color: this.getDataStyle(n).stroke
         };
         for (var i=0; i<points.length; i++) {
           var point = points[i];
@@ -217,15 +217,19 @@
         y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
       };
     },
-    addLine: function(newPoints, color) {
-      var lineObj = new Kinetic.Line({
-        points: newPoints,
-        stroke: color,
-        strokeWidth: 2,
-        lineJoin: 'round',
-        strokeScaleEnabled: false,
-        offsetX: this.minX
-      });
+    addLine: function(newPoints, style) {
+      var lineObj = new Kinetic.Line(Meteor.Util.merge(
+        // defaults
+        {
+          strokeWidth: 2,
+          lineJoin: 'round'
+        },
+        style, 
+        {
+          points: newPoints,
+          strokeScaleEnabled: false,
+          offsetX: this.minX
+        }));
       this.dataLayer.add(lineObj); 
     },
     addLines: function() {
@@ -236,13 +240,13 @@
         minY = this.minY,
         maxX = this.maxX,
         maxY = this.maxY,
-        color, backgroundColor, n, line, lineObj, points, pointsLen, point;
+        style, backgroundColor, n, line, lineObj, points, pointsLen, point;
   
       for (n=0; n<len; n++) {
         line = lines[n],
         points = line.points,
         pointsLen = points.length,
-        color = this.getLineColor(n),
+        style = this.getDataStyle(n),
         newPoints = [];
 
         for (var i=0; i<pointsLen; i++) {
@@ -254,7 +258,7 @@
             });
           }
           else if (newPoints.length > 1) {
-            this.addLine(newPoints, color);
+            this.addLine(newPoints, style);
             newPoints = []; 
           }
           else {
@@ -263,7 +267,7 @@
         }
 
         if (newPoints.length > 1) {
-          this.addLine(newPoints, color);
+          this.addLine(newPoints, style);
         }
       }
     },

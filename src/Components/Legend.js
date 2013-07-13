@@ -15,21 +15,22 @@
           lines = model.lines,
           len = lines.length,
           x = 0,
-          n, line, text, rect;
+          n, dataLine, text, line;
 
       for (n=0; n<len; n++) {
-        line = lines[n];
+        dataLine = lines[n];
 
-        rect = new Kinetic.Rect(Meteor.Util.merge(legendSkin.rect, {
-          fill: chart.getLineColor(n),
-          x: x
+        line = new Kinetic.Line(Meteor.Util.merge(chart.getDataStyle(n), {
+          x: x,
+          points: [0, 0, 5, 0],
+          scale: 2
         }));
 
-        x += rect.getWidth();
+        x += 10;
         x += 3;
 
         text = new Kinetic.Text(Meteor.Util.merge(legendSkin.text, {
-          text: line.title,
+          text: dataLine.title,
           x: x
         }));
 
@@ -39,9 +40,9 @@
           x += legendSkin.spacing;
         }
 
-        rect.setY((text.getHeight() - legendSkin.rect.size)/2);
+        line.setY(text.getHeight()/2);
 
-        group.add(rect).add(text);
+        group.add(line).add(text);
       } 
 
       group.setPosition(skin.width - x - 10, 5);
