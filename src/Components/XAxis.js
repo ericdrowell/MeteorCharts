@@ -16,9 +16,10 @@
           scaleX = chart.scaleX,
           range = maxX - minX,
           increment = units.getIncrement(),
+          start = Math.ceil(minX/increment) * increment,
           n, x;
 
-      for (n=minX; n<maxX; n+=increment) {
+      for (n=start; n<maxX; n+=increment) {
         x = (n - minX) * scaleX + chart.dataX;
         this.addXLabel(units.formatShort(n), x);
       }
