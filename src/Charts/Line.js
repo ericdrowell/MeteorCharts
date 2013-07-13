@@ -18,25 +18,23 @@
           skin = this.skin,
           xAxisSkin = skin.xAxis,
           yAxisSkin = skin.yAxis,
-          minX = xAxisSkin.min === undefined || xAxisSkin.min === 'auto' ? autoMinMax.minX : xAxisSkin.min,
-          minY = yAxisSkin.min === undefined || yAxisSkin.min === 'auto' ? autoMinMax.minY : yAxisSkin.min,
-          maxX = xAxisSkin.max === undefined || xAxisSkin.max === 'auto' ? autoMinMax.maxX : xAxisSkin.max,
-          maxY = yAxisSkin.max === undefined || yAxisSkin.max === 'auto' ? autoMinMax.maxY : yAxisSkin.max;
+          minX = this.minX = xAxisSkin.min === undefined || xAxisSkin.min === 'auto' ? autoMinMax.minX : xAxisSkin.min,
+          minY = this.minY = yAxisSkin.min === undefined || yAxisSkin.min === 'auto' ? autoMinMax.minY : yAxisSkin.min,
+          maxX = this.maxX = xAxisSkin.max === undefined || xAxisSkin.max === 'auto' ? autoMinMax.maxX : xAxisSkin.max,
+          maxY = this.maxY = yAxisSkin.max === undefined || yAxisSkin.max === 'auto' ? autoMinMax.maxY : yAxisSkin.max;
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();
       this.topLayer.destroyChildren();
 
-      this.dataX = 45;
       this.dataY = 40;
-      this.dataWidth = skin.width - this.dataX;
       this.dataHeight = skin.height - this.dataY- skin.text.fontSize - 10;
-
-      this.setMinMaxX(minX, maxX);
-      this.setMinMaxY(minY, maxY);
-
+      this.scaleY = this.dataHeight / (maxY - minY);
+      this.yAxis = new Meteor.YAxis(this); 
+      this.dataWidth = skin.width - this.dataX; 
+      this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new Meteor.XAxis(this);
-      this.yAxis = new Meteor.YAxis(this);
+      
       this.legend = new Meteor.Legend(this);
       this.title = new Meteor.Title(this);
 
@@ -127,16 +125,6 @@
         maxX: maxX,
         maxY: maxY
       }
-    },
-    setMinMaxX: function(minX, maxX) {
-      this.minX = minX;
-      this.maxX = maxX;
-      this.scaleX = this.dataWidth / (maxX - minX);
-    },
-    setMinMaxY: function(minY, maxY) {
-      this.minY = minY;
-      this.maxY = maxY;
-      this.scaleY = this.dataHeight / (maxY - minY);
     },
     pointerMove: function() {
       var pos = this.stage.getPointerPosition();

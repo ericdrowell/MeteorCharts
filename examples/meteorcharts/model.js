@@ -22,11 +22,11 @@ function getModel() {
       title: 'Line Title ' + n,
       points: [] 
     }
-    var lastY = Math.round(((Math.random() * 100000) - 50000) * 1);
+    var lastY = Math.round(((Math.random() * 10000000) - 5000000) * 1);
     
     // create points
     for (var i=start; i<end; i+=increment) {
-      var y = Math.round((lastY + (Math.random() * 10000) - 5000) * 1);
+      var y = Math.round((lastY + (Math.random() * 1000000) - 500000) * 1);
       lastY = y;
       line.points.push({
           x: i,
