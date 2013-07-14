@@ -11,6 +11,12 @@
   
   Meteor.Line.prototype = {
     init: function(config) {
+      var that = this;
+      // NOTE: when Kinetic introduces new clip bounding box, update this
+      this.dataLayer.setClipFunc(function(canvas) {
+          var context = canvas.getContext();
+          context.rect(that.dataX, that.dataY, that.dataWidth, that.dataHeight);
+      });
       this.sync();
     },
     sync: function(batchDraw) {
@@ -21,11 +27,15 @@
           minX = this.minX = xAxisSkin.min === undefined || xAxisSkin.min === 'auto' ? autoMinMax.minX : xAxisSkin.min,
           minY = this.minY = yAxisSkin.min === undefined || yAxisSkin.min === 'auto' ? autoMinMax.minY : yAxisSkin.min,
           maxX = this.maxX = xAxisSkin.max === undefined || xAxisSkin.max === 'auto' ? autoMinMax.maxX : xAxisSkin.max,
-          maxY = this.maxY = yAxisSkin.max === undefined || yAxisSkin.max === 'auto' ? autoMinMax.maxY : yAxisSkin.max;
+          maxY = this.maxY = yAxisSkin.max === undefined || yAxisSkin.max === 'auto' ? autoMinMax.maxY : yAxisSkin.max,
+          dataBottomGroup = this.dataBottomGroup = new Kinetic.Group(),
+          dataTopGroup = this.dataTopGroup = new Kinetic.Group();
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();
       this.topLayer.destroyChildren();
+
+      this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
 
       this.dataY = 40;
       this.dataHeight = skin.height - this.dataY- skin.text.fontSize - 10;
@@ -39,9 +49,9 @@
       this.title = new Meteor.Title(this);
 
       // transform data layer
-      this.dataLayer.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
-      this.dataLayer.setX(this.dataX);
-      this.dataLayer.setScale(this.scaleX, -1 * this.scaleY);
+      this.dataBottomGroup.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
+      this.dataBottomGroup.setX(this.dataX);
+      this.dataBottomGroup.setScale(this.scaleX, -1 * this.scaleY);
 
       // add lines and labels
       this.addLines();
@@ -218,7 +228,7 @@
           strokeScaleEnabled: false,
           offsetX: this.minX
         }));
-      this.dataLayer.add(lineObj); 
+      this.dataBottomGroup.add(lineObj); 
 
       if (addNode) {
         this.addNodes(newPoints, style);
@@ -227,13 +237,13 @@
     addNodes: function(points, style) {
       var skin = this.skin,
           len = points.length,
-          topLayer = this.topLayer,
+          dataTopGroup = this.dataTopGroup,
           n, point, chartPoint;
 
       for (n=0; n<len; n++) {
         point = points[n];
         chartPoint = this.dataToChart(point.x, point.y);
-        topLayer.add(new Kinetic.Circle({
+        dataTopGroup.add(new Kinetic.Circle({
           x: chartPoint.x,
           y: chartPoint.y,
           radius: 5,
@@ -267,7 +277,7 @@
         for (var i=0; i<pointsLen; i++) {
           point = points[i];
           if (start === null && point.x >= minX) {
-            start = i;
+            start = i === 0 ? 0 : i -1;
           }
           if (end === null && point.x >= maxX) {
             end = i;
@@ -275,23 +285,18 @@
           }
         }
 
+        if (end === null) {
+          end = pointsLen-1;
+        }
+
         addNodes = (end - start) < addNodesThreshold;
 
         for (var i=start; i<=end; i++) {
           point = points[i];
-          if (point.x >= minX && point.x <= maxX && point.y >= minY && point.y <= maxY) {
-            newPoints.push({
-              x: point.x, 
-              y: point.y
-            });
-          }
-          else if (newPoints.length > 1) {
-            this.addLine(newPoints, style, addNodes);
-            newPoints = []; 
-          }
-          else {
-            newPoints = [];
-          }
+          newPoints.push({
+            x: point.x, 
+            y: point.y
+          });
         }
 
         if (newPoints.length > 1) {
