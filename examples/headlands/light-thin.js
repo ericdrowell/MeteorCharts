@@ -39,13 +39,17 @@ var HEADLANDS_LIGHT_THIN = {
       dashArray: [2, 2]
     }
   },
-  data: {
-    lines: [
-      'blue',
-      'orange',
-      'green'
-    ]
-  },
+  data: [
+    {
+      stroke: 'blue'
+    },
+    {
+      stroke: 'orange'
+    },
+    {
+      stroke: 'green'
+    }
+  ],
   tooltip: {
     text: {
       fill: 'white',

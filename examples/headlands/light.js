@@ -17,10 +17,6 @@ var HEADLANDS_LIGHT = {
       fill: '#585858',
       fontSize: 20
     },
-    rect: {
-      size: 12,
-      cornerRadius: 2
-    },
     spacing: 20
   },
   xAxis: {
@@ -39,13 +35,17 @@ var HEADLANDS_LIGHT = {
       dashArray: [2, 2]
     }
   },
-  data: {
-    lines: [
-      'blue',
-      'orange',
-      'green'
-    ]
-  },
+  data: [
+    {
+      stroke: 'blue'
+    },
+    {
+      stroke: 'orange'
+    },
+    {
+      stroke: 'green'
+    }
+  ],
   tooltip: {
     text: {
       fill: 'white',

@@ -35,11 +35,11 @@ var DEFAULT_DARK = {
   },
   data: [
     {
-      stroke: '#00f3fc',
+      stroke: '#00f3fc'/*,
       dashArray: [0.001, 10],
       lineCap: 'round',
       lineJoin: 'round',
-      strokeWidth: 4
+      strokeWidth: 4*/
     },
     {
       stroke: '#fcf900'

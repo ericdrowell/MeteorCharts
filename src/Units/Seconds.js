@@ -5,29 +5,34 @@
 
   Meteor.Seconds.prototype = {
     formatShort: function(seconds) {
-      var date = new Date(seconds * 1000),
-          max = this.max;
+      var polarity = seconds < 0 ? '-' : '',
+          newSeconds = Math.abs(seconds),
+          date = new Date(newSeconds * 1000),
+          max = Math.abs(this.max),
+          str = '';
 
       // seconds in minute
       if (max < 60) {
-        return date.format('UTC:ss');
+        str = date.format('UTC:ss"s"');
       }
       // seconds in hour
       else if (max < 3600) {
-        return date.format('UTC:MM:ss');
+        str = date.format('UTC:MM:ss"m"');
       }
       // seconds in day
       else if (max < 86400) {
-        return date.format('UTC:HH:MM');
+        str = date.format('UTC:HH:MM"h"');
       }
       // seconds in month
       else if (max < 2628000) {
-        return date.format('UTC:d"d" H"h"'); 
+        str = date.format('UTC:d"d" H"h"'); 
       }
       // seconds in year
       else { 
-        return date.format('UTC:m"m" d"d"'); 
+        str = date.format('UTC:m"m" d"d"'); 
       }
+
+      return polarity + str;
     },
     increments: function() {
       return [
