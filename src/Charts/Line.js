@@ -34,7 +34,7 @@
       this.dataWidth = skin.width - this.dataX; 
       this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new Meteor.XAxis(this);
-      
+
       this.legend = new Meteor.Legend(this);
       this.title = new Meteor.Title(this);
 
@@ -75,7 +75,7 @@
 
       stage.on(MOUSEMOVE, function() {
         if (that.panning) {
-          console.log('panning')
+
         }
       });
 
@@ -205,7 +205,7 @@
         y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
       };
     },
-    addLine: function(newPoints, style) {
+    addLine: function(newPoints, style, addNode) {
       var lineObj = new Kinetic.Line(Meteor.Util.merge(
         // defaults
         {
@@ -219,6 +219,30 @@
           offsetX: this.minX
         }));
       this.dataLayer.add(lineObj); 
+
+      if (addNode) {
+        this.addNodes(newPoints, style);
+      }
+    },
+    addNodes: function(points, style) {
+      var skin = this.skin,
+          len = points.length,
+          topLayer = this.topLayer,
+          n, point, chartPoint;
+
+      for (n=0; n<len; n++) {
+        point = points[n];
+        chartPoint = this.dataToChart(point.x, point.y);
+        topLayer.add(new Kinetic.Circle({
+          x: chartPoint.x,
+          y: chartPoint.y,
+          radius: 5,
+          stroke: skin.background,
+          strokeWidth: 3,
+          fill: style.stroke
+
+        }));
+      }
     },
     addLines: function() {
       var model = this.model,
@@ -228,16 +252,32 @@
         minY = this.minY,
         maxX = this.maxX,
         maxY = this.maxY,
-        style, backgroundColor, n, line, lineObj, points, pointsLen, point;
+        addNodesThreshold = this.dataWidth / 20,
+        style, backgroundColor, n, line, lineObj, points, pointsLen, point, addNodes, start, end;
   
       for (n=0; n<len; n++) {
-        line = lines[n],
-        points = line.points,
-        pointsLen = points.length,
-        style = this.getDataStyle(n),
+        line = lines[n];
+        points = line.points;
+        pointsLen = points.length;
+        style = this.getDataStyle(n);
+        start = null;
+        end = null;
         newPoints = [];
 
         for (var i=0; i<pointsLen; i++) {
+          point = points[i];
+          if (start === null && point.x >= minX) {
+            start = i;
+          }
+          if (end === null && point.x >= maxX) {
+            end = i;
+            break;
+          }
+        }
+
+        addNodes = (end - start) < addNodesThreshold;
+
+        for (var i=start; i<=end; i++) {
           point = points[i];
           if (point.x >= minX && point.x <= maxX && point.y >= minY && point.y <= maxY) {
             newPoints.push({
@@ -246,7 +286,7 @@
             });
           }
           else if (newPoints.length > 1) {
-            this.addLine(newPoints, style);
+            this.addLine(newPoints, style, addNodes);
             newPoints = []; 
           }
           else {
@@ -255,7 +295,7 @@
         }
 
         if (newPoints.length > 1) {
-          this.addLine(newPoints, style);
+          this.addLine(newPoints, style, addNodes);
         }
       }
     },
