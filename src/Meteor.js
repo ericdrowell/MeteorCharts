@@ -1,5 +1,5 @@
 var Meteor;
-(function() {      
+(function() {
   Meteor = {
     Charts: {},
     Components: {},
