@@ -1,7 +1,9 @@
 (function() { 
   var MOUSEDOWN = 'mousedown',
       MOUSEUP = 'mouseup',
-      MOUSEMOVE = 'mousemove';
+      MOUSEMOVE = 'mousemove',
+      // pixels per node
+      ADD_NODES_THRESHOLD = 15;
 
   Meteor.Line = function(config) {
     // super
@@ -203,10 +205,16 @@
       this.tooltip.text.setText(str);
 
     },
+    dataToChartX: function(x) {
+      return (x-this.minX) * this.scaleX + this.dataX;
+    },
+    dataToChartY: function(y) {
+      return this.dataHeight - ((y - this.minY) * this.scaleY) + this.dataY;
+    },
     dataToChart: function(x, y) {
       return {
-        x: (x-this.minX) * this.scaleX + this.dataX,
-        y: this.dataHeight - ((y - this.minY) * this.scaleY) + this.dataY
+        x: this.dataToChartX(x),
+        y: this.dataToChartY(y)
       };
     },
     chartToData: function(x, y) {
@@ -254,42 +262,54 @@
         }));
       }
     },
+    getStartEnd: function(points) {
+      var minX = this.minX,
+          maxX = this.maxX,
+          len = points.length,
+          start, end, i;
+
+      for (i=0; i<len; i++) {
+        point = points[i];
+        if (start === undefined && point.x >= minX) {
+          start = i === 0 ? 0 : i -1;
+        }
+        if (end === undefined && point.x >= maxX) {
+          end = i;
+          break;
+        }
+      }
+
+      if (end === undefined) {
+        end = len-1;
+      }
+
+      return {
+        start: start,
+        end: end
+      };
+    },
     addLines: function() {
       var model = this.model,
         lines = model.lines,
         len = lines.length,
         minX = this.minX,
-        minY = this.minY,
         maxX = this.maxX,
-        maxY = this.maxY,
-        addNodesThreshold = this.dataWidth / 20,
-        style, backgroundColor, n, line, lineObj, points, pointsLen, point, addNodes, start, end;
+        addNodesThreshold, style, backgroundColor, n, line, lineObj, points, pointsLen, point, addNodes, startEnd, start, end, chartRange;
   
       for (n=0; n<len; n++) {
         line = lines[n];
         points = line.points;
-        pointsLen = points.length;
         style = this.getDataStyle(n);
-        start = null;
-        end = null;
         newPoints = [];
+        startEnd = this.getStartEnd(points);
+        start = startEnd.start;
+        end = startEnd.end;
+        addNodes = false;
 
-        for (var i=0; i<pointsLen; i++) {
-          point = points[i];
-          if (start === null && point.x >= minX) {
-            start = i === 0 ? 0 : i -1;
-          }
-          if (end === null && point.x >= maxX) {
-            end = i;
-            break;
-          }
+        if (start !== undefined && end !== undefined) {
+          chartRange = this.dataToChartX(points[end].x) - this.dataToChartX(points[start].x);
+          addNodes = chartRange / (end - start) > ADD_NODES_THRESHOLD;
         }
-
-        if (end === null) {
-          end = pointsLen-1;
-        }
-
-        addNodes = (end - start) < addNodesThreshold;
 
         for (var i=start; i<=end; i++) {
           point = points[i];
