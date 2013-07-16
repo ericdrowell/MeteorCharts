@@ -15,11 +15,11 @@
 
       // return largest increment that obeys the max number of labels rule
       for (n=0; n<len; n++) {
-      	increment = increments[n];
+        increment = increments[n];
 
-      	if (increment >= range / maxNumberOfLabels) {
+        if (increment >= range / maxNumberOfLabels) {
           return increment
-      	}
+        }
       }
 
       return increment;
