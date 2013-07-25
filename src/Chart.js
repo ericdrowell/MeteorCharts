@@ -1,4 +1,4 @@
-(function() { 
+(function() {
   // constants
   var LEFT = 'left',
       CENTER = 'center',
@@ -20,35 +20,30 @@
       PANNING = 'panning';
 
   Meteor.Chart = function(config) {
-    this._init(config); 
+    this._init(config);
   };
-  
+
   Meteor.Chart.prototype = {
     _init: function(config) {
-      var that = this,
-          model = this.model = config.model || {},
-          skin = this.skin = config.skin || {},
-          behavior = this.behavior = config.behavior || {},
-          title = model.title || EMPTY_STRING,
-          container, titleWidth, halfTitleWidth;
-          
+      var that = this;
+
+      this.model = config.model;
+      this.skin = config.skin;
+      this.behavior = config.behavior;
+
       // create stage
       this.stage = new Kinetic.Stage({
-        width: skin.width || 0,
-        height: skin.height || 0,
         container: config.container,
         listening: false
       });
 
-      container = this.stage.getContainer();
-      container.style.display = 'inline-block';
-      container.style.backgroundColor = skin.background;
+      this.stage.getContainer().style.display = 'inline-block';
 
       // layers
       this.bottomLayer = new Kinetic.Layer();
-      this.dataLayer = new Kinetic.Layer(); 
+      this.dataLayer = new Kinetic.Layer();
       this.interactionLayer = new Kinetic.Layer({
-        opacity: 0 
+        opacity: 0
       });
       this.topLayer = new Kinetic.Layer();
 
@@ -57,19 +52,12 @@
       this.dataLayer.getCanvas().getElement().className = 'meteorcharts-data-layer';
       this.topLayer.getCanvas().getElement().className = 'meteorcharts-top-layer';
       this.interactionLayer.getCanvas().getElement().className = 'meteorcharts-interaction-layer';
-      
+
       this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
       this.stage.add(this.topLayer);
       this.stage.add(this.interactionLayer);
 
-      /*
-      this.dataLayer.on('draw', function() {
-        console.log('draw')
-      });
-      */
-      
-      
       this.title = new Meteor.Title(this);
 
       this.interactionShow = new Kinetic.Tween({
@@ -78,10 +66,6 @@
         opacity: 1,
         easing: Kinetic.Easings.EaseInOut
       });
-
-      // interaction components
-      this.zoom = new Meteor.Zoom(this);
-      this.tooltip = new Meteor.Tooltip(this);
 
       this._bind();
     },
@@ -96,9 +80,8 @@
       var stage = this.stage,
           that = this,
           keydown = false,
-          zoom = this.zoom,
           state = HOVERING;
-  
+
         // manage keydown / up
       document.body.addEventListener('keydown', function(evt) {
         keydown = true;
@@ -108,7 +91,7 @@
         keydown = false;
       });
 
-      // mouse events 
+      // mouse events
       stage.on(MOUSEDOWN, function() {
         switch (state) {
           case HOVERING:
@@ -119,20 +102,20 @@
               state = ZOOMING;
             }
           case ZOOMING:
-            zoom._startZoomSelect();
+            that.zoom._startZoomSelect();
 
         }
-      }); 
+      });
 
       stage.on(MOUSEMOVE, function() {
         switch(state) {
-          case HOVERING: 
+          case HOVERING:
             that.pointerMove(); break;
           case ZOOMING:
-            that.tooltip.group.hide(); 
-            zoom._resizeZoomSelect(); 
+            that.tooltip.group.hide();
+            that.zoom._resizeZoomSelect();
             break;
-          case PANNING: 
+          case PANNING:
             that._pan();
             that.tooltip.group.hide();
             break;
@@ -140,12 +123,12 @@
 
         that.lastPos = stage.getPointerPosition();
         that.interactionLayer.batchDraw();
-      }); 
+      });
 
       stage.on(MOUSEUP, function() {
         switch(state) {
-          case ZOOMING: 
-            zoom._endZoomSelect();
+          case ZOOMING:
+            that.zoom._endZoomSelect();
             state = HOVERING;
             that.tooltip.group.show();
             break;
@@ -154,15 +137,15 @@
             that.tooltip.group.show();
             break;
         }
-      });  
+      });
 
       stage.on(MOUSEOVER, function() {
         that.showInteractionLayer();
-      }); 
+      });
 
       stage.on(MOUSEOUT, function() {
         that.hideInteractionLayer();
-      });   
+      });
 
       // touch events
       stage.on(TOUCHSTART, function() {
@@ -171,14 +154,14 @@
 
       stage.on(TOUCHEND, function() {
         that.hideInteractionLayer();
-      }); 
+      });
     },
     buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {
       var skin = this.skin,
           topLayer = this.topLayer,
           label = new Kinetic.Group({
             x: x,
-            y: y 
+            y: y
           });
           text = new Kinetic.Text({
             fill: textColor || skin.text,
@@ -186,14 +169,14 @@
             fontSize: fontSize || 16,
             name: TEXT
           });
-          
+
           rect = new Kinetic.Rect({
             width: text.getWidth(),
             height: text.getHeight(),
             opacity: 0.7,
             name: RECT
-          }); 
-      
+          });
+
       label.add(rect).add(text);
 
       return label;

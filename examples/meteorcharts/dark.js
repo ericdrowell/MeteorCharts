@@ -8,13 +8,11 @@ var DEFAULT_DARK = {
   },
   title: {
     text: {
-      fill: '#ccc',
       fontSize: 24
     }
   },
   legend: {
     text: {
-      fill: '#ccc',
       fontSize: 20
     },
     spacing: 20
@@ -35,17 +33,13 @@ var DEFAULT_DARK = {
   },
   data: [
     {
-      stroke: '#00f3fc'/*,
-      dashArray: [0.001, 10],
-      lineCap: 'round',
-      lineJoin: 'round',
-      strokeWidth: 4*/
+      stroke: '#afe225' // light green
     },
     {
-      stroke: '#fcf900'
+      stroke: '#76d0ff' // light blue
     },
     {
-      stroke: '#fc009a'
+      stroke: '#fc009a' // pink
     }
   ],
   tooltip: {

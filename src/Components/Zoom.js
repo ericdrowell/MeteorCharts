@@ -3,18 +3,11 @@
       MIN_ZOOM_SIZE = 20;
 
   Meteor.Zoom = function(chart) {
-    var chart = this.chart = chart,
-        skin = chart.skin;
-
+    this.chart = chart;
     this.selecting = false;
     this.startX = 0;
     this.startY = 0;
-
-    this.rect = new Kinetic.Rect(Meteor.Util.merge(skin.select, {
-      width: 0,
-      height: 0,
-      visible: false
-    }));
+    this.rect = new Kinetic.Rect();
 
     chart.interactionLayer.add(this.rect);
 
@@ -22,17 +15,23 @@
   };
 
   Meteor.Zoom.prototype = {
+    draw: function() {
+      this.rect.setAttrs(Meteor.Util.merge(this.chart.skin.select, {
+        width: 0,
+        height: 0,
+        visible: false
+      }));
+    },
     _bind: function() {
       var that = this,
           chart = this.chart,
-          stage = chart.stage,
-          skin = chart.skin;
+          stage = chart.stage;
 
       stage.on(DBLCLICK, function() {
-        skin.xAxis.min = 'auto';
-        skin.xAxis.max = 'auto';
-        skin.yAxis.min = 'auto';
-        skin.yAxis.max = 'auto';
+        chart.skin.xAxis.min = 'auto';
+        chart.skin.xAxis.max = 'auto';
+        chart.skin.yAxis.min = 'auto';
+        chart.skin.yAxis.max = 'auto';
         chart.sync();
       });
     },

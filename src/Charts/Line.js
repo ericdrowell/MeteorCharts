@@ -1,4 +1,4 @@
-(function() { 
+(function() {
   var MOUSEDOWN = 'mousedown',
       MOUSEUP = 'mouseup',
       MOUSEMOVE = 'mousemove',
@@ -8,17 +8,22 @@
   Meteor.Line = function(config) {
     // super
     Meteor.Chart.call(this, config);
-    this.init(config);
-  };     
-  
+    this.__init(config);
+  };
+
   Meteor.Line.prototype = {
-    init: function(config) {
+    __init: function(config) {
       var that = this;
       // NOTE: when Kinetic introduces new clip bounding box, update this
       this.dataLayer.setClipFunc(function(canvas) {
           var context = canvas.getContext();
           context.rect(that.dataX, that.dataY, that.dataWidth, that.dataHeight);
       });
+
+      // interaction components
+      this.zoom = new Meteor.Zoom(this);
+      this.tooltip = new Meteor.Tooltip(this);
+
       this.sync();
     },
     sync: function(batchDraw) {
@@ -31,19 +36,28 @@
           maxX = this.maxX = xAxisSkin.max === undefined || xAxisSkin.max === 'auto' ? autoMinMax.maxX : xAxisSkin.max,
           maxY = this.maxY = yAxisSkin.max === undefined || yAxisSkin.max === 'auto' ? autoMinMax.maxY : yAxisSkin.max,
           dataBottomGroup = this.dataBottomGroup = new Kinetic.Group(),
-          dataTopGroup = this.dataTopGroup = new Kinetic.Group();
+          dataTopGroup = this.dataTopGroup = new Kinetic.Group(),
+          stage = this.stage,
+          container = stage.getContainer();
+
+      this.zoom.draw();
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();
       this.topLayer.destroyChildren();
+
+
+      stage.setSize(skin.width, skin.height);
+
+      container.style.backgroundColor = skin.background;
 
       this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
 
       this.dataY = 40;
       this.dataHeight = skin.height - this.dataY- skin.text.fontSize - 10;
       this.scaleY = this.dataHeight / (maxY - minY);
-      this.yAxis = new Meteor.YAxis(this); 
-      this.dataWidth = skin.width - this.dataX; 
+      this.yAxis = new Meteor.YAxis(this);
+      this.dataWidth = skin.width - this.dataX;
       this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new Meteor.XAxis(this);
 
@@ -76,30 +90,13 @@
       this.stage.fire('sync');
     },
     __bind: function() {
-      var that = this,
-          stage = this.stage;
 
-      stage.on(MOUSEDOWN, function() {
-        if (that.holdingShift) {
-          that.panning = true;
-        }
-      });
-
-      stage.on(MOUSEMOVE, function() {
-        if (that.panning) {
-
-        }
-      });
-
-      stage.on(MOUSEUP, function() {
-        that.panning = false;
-      });
     },
     getDataStyle: function(n) {
       var data = this.skin.data,
           len = data.length;
-          
-      return data[n % len]; 
+
+      return data[n % len];
     },
     getAutoMinMax: function() {
       var model = this.model,
@@ -114,7 +111,7 @@
           maxX = firstPointX,
           maxY = firstPointY,
           n, i, pointsLen, point, pointX, pointY;
-          
+
       for (n=0; n<len; n++) {
         line = lines[n];
         points = line.points;
@@ -230,13 +227,13 @@
           strokeWidth: 2,
           lineJoin: 'round'
         },
-        style, 
+        style,
         {
           points: newPoints,
           strokeScaleEnabled: false,
           offsetX: this.minX
         }));
-      this.dataBottomGroup.add(lineObj); 
+      this.dataBottomGroup.add(lineObj);
 
       if (addNode) {
         this.addNodes(newPoints, style);
@@ -295,7 +292,7 @@
         minX = this.minX,
         maxX = this.maxX,
         addNodesThreshold, style, backgroundColor, n, line, lineObj, points, pointsLen, point, addNodes, startEnd, start, end, chartRange;
-  
+
       for (n=0; n<len; n++) {
         line = lines[n];
         points = line.points;
@@ -314,7 +311,7 @@
         for (var i=start; i<=end; i++) {
           point = points[i];
           newPoints.push({
-            x: point.x, 
+            x: point.x,
             y: point.y
           });
         }
@@ -342,6 +339,6 @@
       }
     }
   };
-  
+
   Meteor.Util.extend(Meteor.Line, Meteor.Chart);
 })();

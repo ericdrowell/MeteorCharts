@@ -29,21 +29,24 @@
         x += 10;
         x += 3;
 
-        text = new Kinetic.Text(Meteor.Util.merge(legendSkin.text, {
-          text: dataLine.title,
-          x: x
-        }));
+        text = new Kinetic.Text(Meteor.Util.merge({
+            fill: skin.text.fill
+          }, legendSkin.text, {
+            text: dataLine.title,
+            x: x
+          }
+        ));
 
         x += text.getWidth();
 
-        if (n<len-1) {  
+        if (n<len-1) {
           x += legendSkin.spacing;
         }
 
         line.setY(text.getHeight()/2);
 
         group.add(line).add(text);
-      } 
+      }
 
       group.setPosition(skin.width - x - 10, 5);
 

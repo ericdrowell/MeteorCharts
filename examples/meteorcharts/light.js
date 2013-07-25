@@ -1,59 +1,52 @@
 var DEFAULT_LIGHT = {
   background: 'white',
   width: 900,
-  height: 400,
+  height: 450,
   text: {
-    fill: '#585858',
+    fill: '#888',
     fontSize: 16
   },
   title: {
     text: {
-      fill: '#585858',
       fontSize: 24
     }
   },
   legend: {
     text: {
-      fill: '#585858',
       fontSize: 20
-    },
-    rect: {
-      size: 12,
-      cornerRadius: 2
     },
     spacing: 20
   },
   xAxis: {
     maxNumberOfLabels: 10,
-    lines: {
-      stroke: '#ccc',
-      strokeWidth: 1,
-      dashArray: [2, 2]
-    }
+    lines: {}
   },
   yAxis: {
     maxNumberOfLabels: 8,
     lines: {
-      stroke: '#ccc',
-      strokeWidth: 1,
-      dashArray: [2, 2]
+      stroke: '#ddd',
+      strokeWidth: 2
     }
   },
-  data: {
-    lines: [
-      'red',
-      'blue',
-      'green'
-    ]
-  },
+  data: [
+    {
+      stroke: '#afe225' // light green
+    },
+    {
+      stroke: '#76d0ff' // light blue
+    },
+    {
+      stroke: '#fc009a' // pink
+    }
+  ],
   tooltip: {
     text: {
-      fill: 'white',
+      fill: 'black',
       fontSize: 16,
-      padding: 5
+      padding: 2
     },
     tag: {
-      fill: 'black'
+      fill: '#e8e8e8'
     }
   },
   select: {
