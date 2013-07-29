@@ -1,13 +1,13 @@
 (function() {
   Meteor.Util = {
-    // third obj overrides second obj, and
-    // second obj overrides first obj
-    merge: function(obj1,obj2,obj3){
-      var retObj = {}; 
-      for (var attrname in obj1) { retObj[attrname] = obj1[attrname]; }
-      for (var attrname in obj2) { retObj[attrname] = obj2[attrname]; }
-      if (obj3) {
-        for (var attrname in obj3) { retObj[attrname] = obj3[attrname]; }
+    merge: function(){
+      var len = arguments.length,
+          retObj = {},
+          n, obj, attr;
+
+      for (n=0; n<len; n++) {
+        obj = arguments[n];
+        for (attr in obj) { retObj[attr] = obj[attr]; }
       }
       return retObj;
     },

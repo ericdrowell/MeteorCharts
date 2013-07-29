@@ -10,36 +10,9 @@ var EMPTY_STRING = '',
 
   Meteor.Tooltip = function(chart) {
     var group = this.group = new Kinetic.Group(),
-        skin = chart.skin,
-        tooltipSkin = skin.tooltip,
-
-        node = this.node = new Kinetic.Circle({
-          radius: 5,
-          stroke: skin.background,
-          strokeWidth: 3,
-          listening: false
-        }),
-        text = this.text = new Kinetic.Text(Meteor.Util.merge(
-          tooltipSkin.text, 
-          {
-            text: 'stuff',
-            listening: false
-          }
-        )),
-        tag = this.tag = new Kinetic.Tag(Meteor.Util.merge(
-          tooltipSkin.tag, 
-          {
-            pointerDirection: 'down',
-            pointerWidth: 10,
-            pointerHeight: 10,
-            lineJoin: 'round',
-            shadowColor: 'black',
-            shadowBlur: 10,
-            shadowOffset: 5,
-            shadowOpacity: 0.5,
-            listening: false
-          }
-        )),
+        node = this.node = new Kinetic.Circle(),
+        text = this.text = new Kinetic.Text({}),
+        tag = this.tag = new Kinetic.Tag(),
         label = this.label = new Kinetic.Label({
           y: -5
         });
@@ -51,6 +24,39 @@ var EMPTY_STRING = '',
   };
 
   Meteor.Tooltip.prototype = {
+    style: function() {
+      var skin = this.chart.skin,
+          tooltipSkin = skin.tooltip;
 
+      this.node.setAttrs({
+        radius: 5,
+        stroke: skin.background,
+        strokeWidth: 3,
+        listening: false
+      });
+
+      this.text.setAttrs(Meteor.Util.merge(
+        tooltipSkin.text, 
+        {
+          text: '',
+          listening: false
+        }
+      ));
+
+      this.tag.setAttrs(Meteor.Util.merge(
+        tooltipSkin.tag, 
+        {
+          pointerDirection: 'down',
+          pointerWidth: 10,
+          pointerHeight: 10,
+          lineJoin: 'round',
+          shadowColor: 'black',
+          shadowBlur: 10,
+          shadowOffset: 5,
+          shadowOpacity: 0.5,
+          listening: false
+        }
+      ));
+    }
   };
 })();

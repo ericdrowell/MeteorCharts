@@ -40,7 +40,8 @@
           stage = this.stage,
           container = stage.getContainer();
 
-      this.zoom.reset();
+      this.zoom.style();
+      this.tooltip.style();
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();

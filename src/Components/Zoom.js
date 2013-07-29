@@ -15,7 +15,7 @@
   };
 
   Meteor.Zoom.prototype = {
-    reset: function() {
+    style: function() {
       this.rect.setAttrs(Meteor.Util.merge(
         this.chart.skin.select, 
         {
