@@ -24,9 +24,9 @@
       this.zoom = new Meteor.Zoom(this);
       this.tooltip = new Meteor.Tooltip(this);
 
-      this.sync();
+      this.draw();
     },
-    sync: function(batchDraw) {
+    _draw: function() {
       var autoMinMax = this.getAutoMinMax(),
           skin = this.skin,
           xAxisSkin = skin.xAxis,
@@ -40,14 +40,14 @@
           stage = this.stage,
           container = stage.getContainer();
 
-      this.zoom.draw();
+      this.zoom.reset();
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();
       this.topLayer.destroyChildren();
 
-
-      stage.setSize(skin.width, skin.height);
+      // TODO: width and height should be cached
+      //stage.setSize(skin.width, skin.height);
 
       container.style.backgroundColor = skin.background;
 
@@ -74,23 +74,6 @@
 
       // update interaction layer
       this.pointerMove();
-
-      this.__bind();
-
-      if (batchDraw) {
-        this.bottomLayer.batchDraw();
-        this.dataLayer.batchDraw();
-        this.topLayer.batchDraw();
-        this.interactionLayer.batchDraw();
-      }
-      else {
-        this.stage.draw();
-      }
-
-      this.stage.fire('sync');
-    },
-    __bind: function() {
-
     },
     getDataStyle: function(n) {
       var data = this.skin.data,
@@ -231,7 +214,8 @@
         {
           points: newPoints,
           strokeScaleEnabled: false,
-          offsetX: this.minX
+          offsetX: this.minX,
+          listening: false
         }));
       this.dataBottomGroup.add(lineObj);
 
@@ -254,8 +238,8 @@
           radius: 5,
           stroke: skin.background,
           strokeWidth: 3,
-          fill: style.stroke
-
+          fill: style.stroke,
+          listening: false
         }));
       }
     },
@@ -308,13 +292,7 @@
           addNodes = chartRange / (end - start) > ADD_NODES_THRESHOLD;
         }
 
-        for (var i=start; i<=end; i++) {
-          point = points[i];
-          newPoints.push({
-            x: point.x,
-            y: point.y
-          });
-        }
+        newPoints = points.slice(start, end + 1);
 
         if (newPoints.length > 1) {
           this.addLine(newPoints, style, addNodes);
@@ -334,8 +312,7 @@
         skin.xAxis.max = this.maxX - diffX;
         skin.yAxis.min = this.minY + diffY;
         skin.yAxis.max = this.maxY + diffY;
-
-        this.sync();
+        this.batchDraw();
       }
     }
   };

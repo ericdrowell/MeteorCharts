@@ -55,18 +55,26 @@
           topLayer = chart.topLayer,
           lines = skin.yAxis.lines,
           textColor = skin.text,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.text, {
-            text: str,
-            y: y - 8 + dataY
-          })),
+          text = new Kinetic.Text(Meteor.Util.merge(
+            skin.text, 
+            {
+              text: str,
+              y: y - 8 + dataY,
+              listening: false
+            }
+          )),
           lineGroup = this.lineGroup,
           line;
 
       if (lines) {
-        line = new Kinetic.Line(Meteor.Util.merge(lines, {
-          points: [0, 0, width, 0],
-          y: y + dataY
-        }));
+        line = new Kinetic.Line(Meteor.Util.merge(
+          lines, 
+          {
+            points: [0, 0, width, 0],
+            y: y + dataY,
+            listening: false
+          }
+        ));
  
         lineGroup.add(line); 
       }

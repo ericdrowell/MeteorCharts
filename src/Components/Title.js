@@ -4,10 +4,14 @@
         model = this.model = chart.model,
         str = model.str = '',
         skin = this.skin = chart.skin,
-        text = this.text = new Kinetic.Text(Meteor.Util.merge({
+        text = this.text = new Kinetic.Text(Meteor.Util.merge(
+          {
             fill: skin.text.fill
-          }, skin.title.text, {
-            text: model.title
+          }, 
+          skin.title.text, 
+          {
+            text: model.title,
+            listening: false
           }
         ));
 

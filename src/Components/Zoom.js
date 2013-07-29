@@ -7,7 +7,7 @@
     this.selecting = false;
     this.startX = 0;
     this.startY = 0;
-    this.rect = new Kinetic.Rect();
+    this.rect = new Kinetic.Rect({listening: false});
 
     chart.interactionLayer.add(this.rect);
 
@@ -15,12 +15,14 @@
   };
 
   Meteor.Zoom.prototype = {
-    draw: function() {
-      this.rect.setAttrs(Meteor.Util.merge(this.chart.skin.select, {
-        width: 0,
-        height: 0,
-        visible: false
-      }));
+    reset: function() {
+      this.rect.setAttrs(Meteor.Util.merge(
+        this.chart.skin.select, 
+        {
+          width: 0,
+          height: 0
+        }
+      ));
     },
     _bind: function() {
       var that = this,
@@ -32,7 +34,7 @@
         chart.skin.xAxis.max = 'auto';
         chart.skin.yAxis.min = 'auto';
         chart.skin.yAxis.max = 'auto';
-        chart.sync();
+        chart.draw();
       });
     },
     _startZoomSelect: function() {
@@ -96,7 +98,7 @@
         skin.yAxis.min = min.y;
         skin.xAxis.max = max.x;
         skin.yAxis.max = max.y;
-        chart.sync();
+        chart.draw();
       }
 
     }

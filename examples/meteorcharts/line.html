@@ -13,7 +13,8 @@
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/kinetic-v4.5.5-beta.js"></script>
+    <!--<script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.5.js"></script>-->
+    <script src="../../lib/kinetic-v4.6.0-beta.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
@@ -31,6 +32,9 @@
 
       //lineChart.skin = DEFAULT_DARK;
       //lineChart.sync();
+
+      //lineChart.interactionLayer.hitCanvas.element.style.position = 'relative';
+      //document.body.appendChild(lineChart.interactionLayer.hitCanvas.element);
     </script>
   </body>
 </html>

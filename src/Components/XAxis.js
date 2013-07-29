@@ -32,19 +32,27 @@
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,
           y = skin.height - 16,
-          text = new Kinetic.Text(Meteor.Util.merge(skin.text, {
-            text: str,
-            x: x,
-            y: y
-          })),
+          text = new Kinetic.Text(Meteor.Util.merge(
+            skin.text, 
+            {
+              text: str,
+              x: x,
+              y: y,
+              listening: false
+            }
+          )),
           line;
 
       text.setOffsetX(text.getWidth()/2);
 
       if (lines) {
-        line = new Kinetic.Line(Meteor.Util.merge(lines, {
-          points: [x, dataY, x, dataY + dataHeight]
-        }));
+        line = new Kinetic.Line(Meteor.Util.merge(
+          lines, 
+          {
+            points: [x, dataY, x, dataY + dataHeight],
+            listening: false
+          }
+        ));
  
         bottomLayer.add(line); 
       }

@@ -34,18 +34,21 @@
       // create stage
       this.stage = new Kinetic.Stage({
         container: config.container,
-        listening: false
+        listening: false,
+        width: this.skin.width,
+        height: this.skin.height
       });
 
       this.stage.getContainer().style.display = 'inline-block';
 
       // layers
-      this.bottomLayer = new Kinetic.Layer();
-      this.dataLayer = new Kinetic.Layer();
+      this.bottomLayer = new Kinetic.Layer({listening: false});
+      this.dataLayer = new Kinetic.Layer({listening: false});
       this.interactionLayer = new Kinetic.Layer({
-        opacity: 0
+        opacity: 0,
+        listening: false
       });
-      this.topLayer = new Kinetic.Layer();
+      this.topLayer = new Kinetic.Layer({listening: false});
 
       // add meteor classes
       this.bottomLayer.getCanvas().getElement().className = 'meteorcharts-bottom-layer';
@@ -68,6 +71,14 @@
       });
 
       this._bind();
+    },
+    batchDraw: function() {
+      this._draw();
+      this.stage.batchDraw();
+    },
+    draw: function() {
+      this._draw();
+      this.stage.draw();
     },
     showInteractionLayer: function() {
       this.interactionShow.play();
@@ -139,12 +150,16 @@
         }
       });
 
-      stage.on(MOUSEOVER, function() {
-        that.showInteractionLayer();
+      stage.on(MOUSEOVER, function(evt) {
+        if (!evt.targetNode) {
+          that.showInteractionLayer();
+        }
       });
 
-      stage.on(MOUSEOUT, function() {
-        that.hideInteractionLayer();
+      stage.on(MOUSEOUT, function(evt) {
+        if (!evt.targetNode) {
+          that.hideInteractionLayer();
+        }
       });
 
       // touch events

@@ -16,21 +16,30 @@ var EMPTY_STRING = '',
         node = this.node = new Kinetic.Circle({
           radius: 5,
           stroke: skin.background,
-          strokeWidth: 3
+          strokeWidth: 3,
+          listening: false
         }),
-        text = this.text = new Kinetic.Text(Meteor.Util.merge(tooltipSkin.text, {
-          text: 'stuff'
-        })),
-        tag = this.tag = new Kinetic.Tag(Meteor.Util.merge(tooltipSkin.tag, {
-          pointerDirection: 'down',
-          pointerWidth: 10,
-          pointerHeight: 10,
-          lineJoin: 'round',
-          shadowColor: 'black',
-          shadowBlur: 10,
-          shadowOffset: 5,
-          shadowOpacity: 0.5
-        })),
+        text = this.text = new Kinetic.Text(Meteor.Util.merge(
+          tooltipSkin.text, 
+          {
+            text: 'stuff',
+            listening: false
+          }
+        )),
+        tag = this.tag = new Kinetic.Tag(Meteor.Util.merge(
+          tooltipSkin.tag, 
+          {
+            pointerDirection: 'down',
+            pointerWidth: 10,
+            pointerHeight: 10,
+            lineJoin: 'round',
+            shadowColor: 'black',
+            shadowBlur: 10,
+            shadowOffset: 5,
+            shadowOpacity: 0.5,
+            listening: false
+          }
+        )),
         label = this.label = new Kinetic.Label({
           y: -5
         });
