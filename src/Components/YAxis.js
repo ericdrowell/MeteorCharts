@@ -1,7 +1,7 @@
 (function() {
   Meteor.YAxis = function(chart) {
     this.chart = chart;
-    this.maxNumberOfLabels = chart.skin.yAxis.maxNumberOfLabels;
+    this.maxNumberOfLabels = chart.view.yAxis.maxNumberOfLabels;
     this.units = new Meteor[chart.model.yAxis.units](chart.minY, chart.maxY, this.maxNumberOfLabels);
     this.lineGroup = new Kinetic.Group();
     chart.bottomLayer.add(this.lineGroup);
@@ -47,16 +47,16 @@
     },
     addYLabel: function(str, y) {
       var chart = this.chart,
-          skin = chart.skin,
-          width = skin.width,
+          view = chart.view,
+          width = view.width,
           height = chart.dataHeight,
           dataY = chart.dataY,
           bottomLayer = chart.bottomLayer,
           topLayer = chart.topLayer,
-          lines = skin.yAxis.lines,
-          textColor = skin.text,
+          lines = view.yAxis.lines,
+          textColor = view.text,
           text = new Kinetic.Text(Meteor.Util.merge(
-            skin.text, 
+            view.text, 
             {
               text: str,
               y: y - 8 + dataY,

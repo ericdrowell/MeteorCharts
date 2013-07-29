@@ -62,6 +62,7 @@ var HEADLANDS_LIGHT_THIN = {
   },
   select: {
     fill: 'black',
-    opacity: 0.1
+    opacity: 0.1,
+    type: 'range'
   }
 };

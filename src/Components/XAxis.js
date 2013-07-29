@@ -1,7 +1,7 @@
 (function() {
   Meteor.XAxis = function(chart) {
     this.chart = chart;
-    this.maxNumberOfLabels = chart.skin.xAxis.maxNumberOfLabels;
+    this.maxNumberOfLabels = chart.view.xAxis.maxNumberOfLabels;
     this.units = new Meteor[chart.model.xAxis.units](chart.minX, chart.maxX, this.maxNumberOfLabels);
     this.addXLabels();
   };
@@ -26,14 +26,14 @@
     }, 
     addXLabel: function(str, x) {
       var chart = this.chart,
-          skin = chart.skin,
-          lines = skin.xAxis.lines,
+          view = chart.view,
+          lines = view.xAxis.lines,
           dataY = chart.dataY,
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,
-          y = skin.height - 16,
+          y = view.height - 16,
           text = new Kinetic.Text(Meteor.Util.merge(
-            skin.text, 
+            view.text, 
             {
               text: str,
               x: x,

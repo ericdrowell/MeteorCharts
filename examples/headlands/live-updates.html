@@ -19,8 +19,8 @@
       <li><a href="dual.html">Dual</a></li>
     </ul>
 
-    <script src="../../lib/kinetic-v4.5.5-beta.js"></script>
-    <script src="../../dist/meteorcharts-v0.0.0.js"></script>
+    <script src="../../lib/kinetic-v4.6.0-beta.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
     <script src="dark.js"></script>
@@ -30,13 +30,13 @@
       var lineChart = new Meteor.Line({
         container: 'container',
         model: getModel(),
-        skin: HEADLANDS_LIGHT
+        view: HEADLANDS_LIGHT
       });
 
       // update the chart 10 times per second
       setInterval(function() {
         updateModel(lineChart.model);
-        lineChart.sync();
+        lineChart.draw();
       }, 100);
 
     </script>

@@ -17,7 +17,7 @@
   Meteor.Zoom.prototype = {
     style: function() {
       this.rect.setAttrs(Meteor.Util.merge(
-        this.chart.skin.select, 
+        this.chart.view.select, 
         {
           width: 0,
           height: 0
@@ -30,18 +30,18 @@
           stage = chart.stage;
 
       stage.on(DBLCLICK, function() {
-        chart.skin.xAxis.min = 'auto';
-        chart.skin.xAxis.max = 'auto';
-        chart.skin.yAxis.min = 'auto';
-        chart.skin.yAxis.max = 'auto';
+        chart.view.xAxis.min = 'auto';
+        chart.view.xAxis.max = 'auto';
+        chart.view.yAxis.min = 'auto';
+        chart.view.yAxis.max = 'auto';
         chart.draw();
       });
     },
     _startZoomSelect: function() {
       var chart = this.chart,
           pos = chart.stage.getPointerPosition(),
-          behavior = chart.behavior,
-          type = behavior.select && behavior.select.type ? behavior.select.type : 'box';
+          view = chart.view,
+          type = view.select && view.select.type ? view.select.type : 'box';
 
       this.selecting = true;
       this.startX = pos.x;
@@ -51,12 +51,12 @@
     _resizeZoomSelect: function() {
       var rect = this.rect,
           chart = this.chart,
-          pos, behavior, type;
+          pos, view, type;
 
       if (this.selecting) {
           pos = chart.stage.getPointerPosition();
-          behavior = chart.behavior;
-          type = behavior.select && behavior.select.type ? behavior.select.type : 'box';
+          view = chart.view;
+          type = view.select && view.select.type ? view.select.type : 'box';
 
         this.rect.setWidth(pos.x - this.startX);
         this.rect.setHeight(type === 'box' ? pos.y - this.startY : chart.dataHeight);
@@ -76,9 +76,8 @@
     },
     _updateMinMax: function() {
       var chart = this.chart,
-          skin = chart.skin,
-          behavior = chart.behavior,
-          type = behavior.select && behavior.select.type ? behavior.select.type : 'box';
+          view = chart.view,
+          type = view.select && view.select.type ? view.select.type : 'box';
           pos = chart.stage.getPointerPosition(),
           startX = this.startX,
           startY = this.startY,
@@ -94,10 +93,10 @@
       //console.log(min.y + ',' + max.y)
 
       if (Math.abs(chartMaxX - chartMinX) > MIN_ZOOM_SIZE && Math.abs(chartMaxY - chartMinY) > MIN_ZOOM_SIZE) {
-        skin.xAxis.min = min.x;
-        skin.yAxis.min = min.y;
-        skin.xAxis.max = max.x;
-        skin.yAxis.max = max.y;
+        view.xAxis.min = min.x;
+        view.yAxis.min = min.y;
+        view.xAxis.max = max.x;
+        view.yAxis.max = max.y;
         chart.draw();
       }
 

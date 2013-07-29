@@ -28,15 +28,14 @@
       var that = this;
 
       this.model = config.model;
-      this.skin = config.skin;
-      this.behavior = config.behavior;
+      this.view = config.view;
 
       // create stage
       this.stage = new Kinetic.Stage({
         container: config.container,
         listening: false,
-        width: this.skin.width,
-        height: this.skin.height
+        width: this.view.width,
+        height: this.view.height
       });
 
       this.stage.getContainer().style.display = 'inline-block';
@@ -172,14 +171,14 @@
       });
     },
     buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {
-      var skin = this.skin,
+      var view = this.view,
           topLayer = this.topLayer,
           label = new Kinetic.Group({
             x: x,
             y: y
           });
           text = new Kinetic.Text({
-            fill: textColor || skin.text,
+            fill: textColor || view.text,
             text: str,
             fontSize: fontSize || 16,
             name: TEXT

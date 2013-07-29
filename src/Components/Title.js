@@ -3,12 +3,12 @@
     var chart = this.chart = chart,
         model = this.model = chart.model,
         str = model.str = '',
-        skin = this.skin = chart.skin,
+        view = this.view = chart.view,
         text = this.text = new Kinetic.Text(Meteor.Util.merge(
           {
-            fill: skin.text.fill
+            fill: view.text.fill
           }, 
-          skin.title.text, 
+          view.title.text, 
           {
             text: model.title,
             listening: false

@@ -25,18 +25,18 @@ var EMPTY_STRING = '',
 
   Meteor.Tooltip.prototype = {
     style: function() {
-      var skin = this.chart.skin,
-          tooltipSkin = skin.tooltip;
+      var view = this.chart.view,
+          tooltipView = view.tooltip;
 
       this.node.setAttrs({
         radius: 5,
-        stroke: skin.background,
+        stroke: view.background,
         strokeWidth: 3,
         listening: false
       });
 
       this.text.setAttrs(Meteor.Util.merge(
-        tooltipSkin.text, 
+        tooltipView.text, 
         {
           text: '',
           listening: false
@@ -44,7 +44,7 @@ var EMPTY_STRING = '',
       ));
 
       this.tag.setAttrs(Meteor.Util.merge(
-        tooltipSkin.tag, 
+        tooltipView.tag, 
         {
           pointerDirection: 'down',
           pointerWidth: 10,

@@ -28,13 +28,13 @@
     },
     _draw: function() {
       var autoMinMax = this.getAutoMinMax(),
-          skin = this.skin,
-          xAxisSkin = skin.xAxis,
-          yAxisSkin = skin.yAxis,
-          minX = this.minX = xAxisSkin.min === undefined || xAxisSkin.min === 'auto' ? autoMinMax.minX : xAxisSkin.min,
-          minY = this.minY = yAxisSkin.min === undefined || yAxisSkin.min === 'auto' ? autoMinMax.minY : yAxisSkin.min,
-          maxX = this.maxX = xAxisSkin.max === undefined || xAxisSkin.max === 'auto' ? autoMinMax.maxX : xAxisSkin.max,
-          maxY = this.maxY = yAxisSkin.max === undefined || yAxisSkin.max === 'auto' ? autoMinMax.maxY : yAxisSkin.max,
+          view = this.view,
+          xAxisView = view.xAxis,
+          yAxisView = view.yAxis,
+          minX = this.minX = xAxisView.min === undefined || xAxisView.min === 'auto' ? autoMinMax.minX : xAxisView.min,
+          minY = this.minY = yAxisView.min === undefined || yAxisView.min === 'auto' ? autoMinMax.minY : yAxisView.min,
+          maxX = this.maxX = xAxisView.max === undefined || xAxisView.max === 'auto' ? autoMinMax.maxX : xAxisView.max,
+          maxY = this.maxY = yAxisView.max === undefined || yAxisView.max === 'auto' ? autoMinMax.maxY : yAxisView.max,
           dataBottomGroup = this.dataBottomGroup = new Kinetic.Group(),
           dataTopGroup = this.dataTopGroup = new Kinetic.Group(),
           stage = this.stage,
@@ -48,17 +48,17 @@
       this.topLayer.destroyChildren();
 
       // TODO: width and height should be cached
-      //stage.setSize(skin.width, skin.height);
+      //stage.setSize(view.width, view.height);
 
-      container.style.backgroundColor = skin.background;
+      container.style.backgroundColor = view.background;
 
       this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
 
       this.dataY = 40;
-      this.dataHeight = skin.height - this.dataY- skin.text.fontSize - 10;
+      this.dataHeight = view.height - this.dataY- view.text.fontSize - 10;
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new Meteor.YAxis(this);
-      this.dataWidth = skin.width - this.dataX;
+      this.dataWidth = view.width - this.dataX;
       this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new Meteor.XAxis(this);
 
@@ -75,16 +75,19 @@
 
       // update interaction layer
       this.pointerMove();
+
+      // TODO: remove this when KineticJs no longer bubbles draw events
+      this.stage.fire('chart-draw');
     },
     getDataStyle: function(n) {
-      var data = this.skin.data,
+      var data = this.view.data,
           len = data.length;
 
       return data[n % len];
     },
     getAutoMinMax: function() {
       var model = this.model,
-          skin = this.skin,
+          view = this.view,
           lines = model.lines,
           len = lines.length,
           firstPoint = lines[0].points[0],
@@ -126,8 +129,8 @@
         return false;
       }
 
-      var skin = this.skin,
-          width = skin.width,
+      var view = this.view,
+          width = view.width,
           model = this.model,
           lines = model.lines,
           minX = this.minX,
@@ -141,7 +144,7 @@
           dataHeight = this.dataHeight,
           scaleX = this.scaleX,
           scaleY = this.scaleY,
-          height = skin.height;
+          height = view.height;
 
 
       var normalizedX = (pos.x - dataX) / this.dataWidth;
@@ -225,7 +228,7 @@
       }
     },
     addNodes: function(points, style) {
-      var skin = this.skin,
+      var view = this.view,
           len = points.length,
           dataTopGroup = this.dataTopGroup,
           n, point, chartPoint;
@@ -237,7 +240,7 @@
           x: chartPoint.x,
           y: chartPoint.y,
           radius: 5,
-          stroke: skin.background,
+          stroke: view.background,
           strokeWidth: 3,
           fill: style.stroke,
           listening: false
@@ -302,17 +305,17 @@
     },
     _pan: function() {
       var pos = this.stage.getPointerPosition(),
-          skin = this.skin,
+          view = this.view,
           diffX, diffY, minX, maxX, minY, maxY;
 
       if (this.lastPos) {
         diffX = (pos.x - this.lastPos.x) / this.scaleX;
         diffY = (pos.y - this.lastPos.y) / this.scaleY;
 
-        skin.xAxis.min = this.minX - diffX;
-        skin.xAxis.max = this.maxX - diffX;
-        skin.yAxis.min = this.minY + diffY;
-        skin.yAxis.max = this.maxY + diffY;
+        view.xAxis.min = this.minX - diffX;
+        view.xAxis.max = this.maxX - diffX;
+        view.yAxis.min = this.minY + diffY;
+        view.yAxis.max = this.maxY + diffY;
         this.batchDraw();
       }
     }

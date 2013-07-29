@@ -10,8 +10,8 @@
       var chart = this.chart,
           group = this.group,
           model = chart.model,
-          skin = chart.skin,
-          legendSkin = skin.legend,
+          view = chart.view,
+          legendView = view.legend,
           lines = model.lines,
           len = lines.length,
           x = 0,
@@ -35,9 +35,9 @@
 
         text = new Kinetic.Text(Meteor.Util.merge(
           {
-            fill: skin.text.fill
+            fill: view.text.fill
           }, 
-          legendSkin.text, 
+          legendView.text, 
           {
             text: dataLine.title,
             x: x,
@@ -48,7 +48,7 @@
         x += text.getWidth();
 
         if (n<len-1) {
-          x += legendSkin.spacing;
+          x += legendView.spacing;
         }
 
         line.setY(text.getHeight()/2);
@@ -56,7 +56,7 @@
         group.add(line).add(text);
       }
 
-      group.setPosition(skin.width - x - 10, 5);
+      group.setPosition(view.width - x - 10, 5);
 
       chart.bottomLayer.add(group);
     }

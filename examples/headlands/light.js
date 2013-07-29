@@ -58,6 +58,7 @@ var HEADLANDS_LIGHT = {
   },
   select: {
     fill: 'black',
-    opacity: 0.1
+    opacity: 0.1,
+    type: 'range'
   }
 };

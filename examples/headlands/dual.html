@@ -23,53 +23,52 @@
       <li><a href="dual.html">Dual</a></li>
     </ul>
 
-    <script src="../../lib/kinetic-v4.5.5-beta.js"></script>
-    <script src="../../dist/meteorcharts-v0.0.0.js"></script>
+    <script src="../../lib/kinetic-v4.6.0-beta.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
     <script src="light-thin.js"></script>
-    <script src="behavior.js"></script>
 
     <script type="text/javascript">
       var topChart = new Meteor.Line({
         container: 'topContainer',
         model: getModel(),
-        skin: HEADLANDS_LIGHT_THIN,
-        behavior: BEHAVIOR
+        view: HEADLANDS_LIGHT_THIN
       });
 
       var bottomChart = new Meteor.Line({
         container: 'bottomContainer',
         model: getModel(),
-        skin: HEADLANDS_LIGHT_THIN,
-        behavior: BEHAVIOR
+        view: HEADLANDS_LIGHT_THIN
       });
 
-      var syncLocked = false;
+      var drawLocked = false;
 
-      topChart.stage.on('sync', function() {
-        if (!syncLocked) {
-          bottomChart.skin.xAxis.min = topChart.skin.xAxis.min;
-          bottomChart.skin.xAxis.max = topChart.skin.xAxis.max;
-          bottomChart.skin.yAxis.min = 'auto';
-          bottomChart.skin.yAxis.max = 'auto';
-          syncLocked = true;
-          bottomChart.sync();
-          syncLocked = false;
+      topChart.stage.on('chart-draw', function(evt) {
+        if (!drawLocked) {
+          bottomChart.view.xAxis.min = topChart.view.xAxis.min;
+          bottomChart.view.xAxis.max = topChart.view.xAxis.max;
+          bottomChart.view.yAxis.min = 'auto';
+          bottomChart.view.yAxis.max = 'auto';
+          drawLocked = true;
+          bottomChart.draw();
+          drawLocked = false;
         }
       });
 
-      bottomChart.stage.on('sync', function() {
-        if (!syncLocked) {
-          topChart.skin.xAxis.min = bottomChart.skin.xAxis.min;
-          topChart.skin.xAxis.max = bottomChart.skin.xAxis.max;
-          topChart.skin.yAxis.min = 'auto';
-          topChart.skin.yAxis.max = 'auto';
-          syncLocked = true;
-          topChart.sync();
-          syncLocked = false;
+      bottomChart.stage.on('chart-draw', function(evt) {
+        if (!drawLocked) {
+          topChart.view.xAxis.min = bottomChart.view.xAxis.min;
+          topChart.view.xAxis.max = bottomChart.view.xAxis.max;
+          topChart.view.yAxis.min = 'auto';
+          topChart.view.yAxis.max = 'auto';
+          drawLocked = true;
+          topChart.draw();
+          drawLocked = false;
         }
       });
+
+      topChart.stage.draw();
     </script>
   </body>
 </html>
