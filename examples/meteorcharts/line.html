@@ -14,7 +14,7 @@
     <div id="container"></div>
 
     <script src="../../lib/kinetic-v4.5.5-beta.js"></script>
-    <script src="../../dist/meteorcharts-v0.0.0.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
     <script src="dark.js"></script>
@@ -25,12 +25,12 @@
       var lineChart = new Meteor.Line({
         container: 'container',
         model: getModel(),
-        skin: DEFAULT_LIGHT,
+        skin: DEFAULT_DARK,
         behavior: BEHAVIOR
       });
 
-      lineChart.skin = DEFAULT_DARK;
-      lineChart.sync();
+      //lineChart.skin = DEFAULT_DARK;
+      //lineChart.sync();
     </script>
   </body>
 </html>

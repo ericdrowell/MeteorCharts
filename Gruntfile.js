@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
   var sourceFiles = [
     // top level
-    'license.js',
     'src/Meteor.js',
 
     // lib
@@ -38,14 +37,14 @@ module.exports = function(grunt) {
       options: {
         separator: ';'
       },
-      source: {
+      dev: {
+        src: sourceFiles,
+        dest: 'dist/meteorcharts-dev.js'
+      },
+      prod: {
         src: sourceFiles,
         dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
       },
-      license: {
-        src: ['license.js', 'dist/meteorcharts-v<%= pkg.version %>.min.js'],
-        dest: 'dist/meteorcharts-v<%= pkg.version %>.min.js'
-      }
     },
     uglify: {
       build: {
@@ -67,15 +66,15 @@ module.exports = function(grunt) {
       dev: {
         options: {
           variables: {
-            version: '<%= pkg.version %>',
+            version: 'dev',
             date: '<%= grunt.template.today("yyyy-mm-dd") %>'
           },
           prefix: '@@'
         },
 
         files: [{
-          src: ['dist/meteorcharts-v<%= pkg.version %>.js'],
-          dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
+          src: ['dist/meteorcharts-dev.js'],
+          dest: 'dist/meteorcharts-dev.js'
         }]
       },
       prod: {
@@ -88,8 +87,8 @@ module.exports = function(grunt) {
         },
 
         files: [{
-          src: ['dist/meteorcharts-v<%= pkg.version %>.min.js'],
-          dest: 'dist/meteorcharts-v<%= pkg.version %>.min.js'
+          src: ['dist/meteorcharts-v<%= pkg.version %>.js'],
+          dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
         }]
       }
     }
@@ -105,7 +104,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Tasks
-  grunt.registerTask('dev', ['clean', 'concat:source', 'replace:dev']);
-  grunt.registerTask('full', ['dev', 'uglify', 'concat:license', 'replace:prod']);
+  grunt.registerTask('dev', ['clean', 'concat:dev', 'replace:dev']);
+  grunt.registerTask('full', ['clean', 'concat:prod', 'replace:prod', 'uglify']);
 
 };
