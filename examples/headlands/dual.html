@@ -44,7 +44,7 @@
 
       var drawLocked = false;
 
-      topChart.stage.on('chart-draw', function(evt) {
+      topChart.on('draw', function(evt) {
         if (!drawLocked) {
           bottomChart.view.xAxis.min = topChart.view.xAxis.min;
           bottomChart.view.xAxis.max = topChart.view.xAxis.max;
@@ -56,7 +56,7 @@
         }
       });
 
-      bottomChart.stage.on('chart-draw', function(evt) {
+      bottomChart.on('draw', function(evt) {
         if (!drawLocked) {
           topChart.view.xAxis.min = bottomChart.view.xAxis.min;
           topChart.view.xAxis.max = bottomChart.view.xAxis.max;

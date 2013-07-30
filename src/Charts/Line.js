@@ -75,9 +75,6 @@
 
       // update interaction layer
       this.pointerMove();
-
-      // TODO: remove this when KineticJs no longer bubbles draw events
-      this.stage.fire('chart-draw');
     },
     getDataStyle: function(n) {
       var data = this.view.data,

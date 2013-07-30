@@ -3,7 +3,7 @@ var DEFAULT_LIGHT = {
   width: 900,
   height: 450,
   text: {
-    fill: '#888',
+    fill: '#333',
     fontSize: 16
   },
   title: {
@@ -30,10 +30,10 @@ var DEFAULT_LIGHT = {
   },
   data: [
     {
-      stroke: '#afe225' // light green
+      stroke: 'green' // light green
     },
     {
-      stroke: '#76d0ff' // light blue
+      stroke: 'blue' // light blue
     },
     {
       stroke: '#fc009a' // pink

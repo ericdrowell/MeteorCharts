@@ -29,6 +29,7 @@
 
       this.model = config.model;
       this.view = config.view;
+      this.events = {};
 
       // create stage
       this.stage = new Kinetic.Stage({
@@ -78,6 +79,7 @@
     draw: function() {
       this._draw();
       this.stage.draw();
+      this.fire('draw');
     },
     showInteractionLayer: function() {
       this.interactionShow.play();
@@ -85,6 +87,23 @@
     },
     hideInteractionLayer: function() {
       this.interactionShow.reverse();
+    },
+    on: function(evt, handler) {
+      if (!this.events[evt]) {
+        this.events[evt] = [];
+      }
+      this.events[evt].push(handler);
+    },
+    fire: function(evt) {
+      var events = this.events[evt],
+          len, n;
+
+      if (events) {
+        len = events.length;
+        for (n=0; n<len; n++) {
+          events[n]();
+        }
+      }
     },
     _bind: function() {
       var stage = this.stage,
@@ -145,6 +164,8 @@
           case PANNING:
             state = HOVERING;
             that.tooltip.group.show();
+            stage.draw();
+            that.fire('draw');
             break;
         }
       });
@@ -169,31 +190,6 @@
       stage.on(TOUCHEND, function() {
         that.hideInteractionLayer();
       });
-    },
-    buildLabel: function(str, x, y, fontSize, textColor, backgroundColor) {
-      var view = this.view,
-          topLayer = this.topLayer,
-          label = new Kinetic.Group({
-            x: x,
-            y: y
-          });
-          text = new Kinetic.Text({
-            fill: textColor || view.text,
-            text: str,
-            fontSize: fontSize || 16,
-            name: TEXT
-          });
-
-          rect = new Kinetic.Rect({
-            width: text.getWidth(),
-            height: text.getHeight(),
-            opacity: 0.7,
-            name: RECT
-          });
-
-      label.add(rect).add(text);
-
-      return label;
     }
   };
 })();
