@@ -5,9 +5,9 @@
  * License http://www.meteorcharts.com/terms-of-use.html
  * Date: @@date
  */
- var Meteor;
+ var MeteorCharts;
 (function() {
-  Meteor = {
+  MeteorCharts = {
   	version: '@@version',
     Charts: {},
     Components: {},

@@ -5,13 +5,13 @@
       // pixels per node
       ADD_NODES_THRESHOLD = 15;
 
-  Meteor.Line = function(config) {
+  MeteorCharts.Line = function(config) {
     // super
-    Meteor.Chart.call(this, config);
+    MeteorCharts.Chart.call(this, config);
     this.__init(config);
   };
 
-  Meteor.Line.prototype = {
+  MeteorCharts.Line.prototype = {
     __init: function(config) {
       var that = this;
       // NOTE: when Kinetic introduces new clip bounding box, update this
@@ -21,8 +21,8 @@
       });
 
       // interaction components
-      this.zoom = new Meteor.Zoom(this);
-      this.tooltip = new Meteor.Tooltip(this);
+      this.zoom = new MeteorCharts.Zoom(this);
+      this.tooltip = new MeteorCharts.Tooltip(this);
 
       this.draw();
     },
@@ -57,13 +57,13 @@
       this.dataY = 40;
       this.dataHeight = view.height - this.dataY- view.text.fontSize - 10;
       this.scaleY = this.dataHeight / (maxY - minY);
-      this.yAxis = new Meteor.YAxis(this);
+      this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = view.width - this.dataX;
       this.scaleX = this.dataWidth / (maxX - minX);
-      this.xAxis = new Meteor.XAxis(this);
+      this.xAxis = new MeteorCharts.XAxis(this);
 
-      this.legend = new Meteor.Legend(this);
-      this.title = new Meteor.Title(this);
+      this.legend = new MeteorCharts.Legend(this);
+      this.title = new MeteorCharts.Title(this);
 
       // transform data layer
       this.dataBottomGroup.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
@@ -205,7 +205,7 @@
       };
     },
     addLine: function(newPoints, style, addNode) {
-      var lineObj = new Kinetic.Line(Meteor.Util.merge(
+      var lineObj = new Kinetic.Line(MeteorCharts.Util.merge(
         // defaults
         {
           strokeWidth: 2,
@@ -318,5 +318,5 @@
     }
   };
 
-  Meteor.Util.extend(Meteor.Line, Meteor.Chart);
+  MeteorCharts.Util.extend(MeteorCharts.Line, MeteorCharts.Chart);
 })();

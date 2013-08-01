@@ -1,12 +1,12 @@
 (function() {
-  Meteor.XAxis = function(chart) {
+  MeteorCharts.XAxis = function(chart) {
     this.chart = chart;
     this.maxNumberOfLabels = chart.view.xAxis.maxNumberOfLabels;
-    this.units = new Meteor[chart.model.xAxis.units](chart.minX, chart.maxX, this.maxNumberOfLabels);
+    this.units = new MeteorCharts[chart.model.xAxis.units](chart.minX, chart.maxX, this.maxNumberOfLabels);
     this.addXLabels();
   };
 
-  Meteor.XAxis.prototype = {
+  MeteorCharts.XAxis.prototype = {
     addXLabels: function() {
       var chart = this.chart,
           units = this.units,
@@ -32,7 +32,7 @@
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,
           y = view.height - 16,
-          text = new Kinetic.Text(Meteor.Util.merge(
+          text = new Kinetic.Text(MeteorCharts.Util.merge(
             view.text, 
             {
               text: str,
@@ -46,7 +46,7 @@
       text.setOffsetX(text.getWidth()/2);
 
       if (lines) {
-        line = new Kinetic.Line(Meteor.Util.merge(
+        line = new Kinetic.Line(MeteorCharts.Util.merge(
           lines, 
           {
             points: [x, dataY, x, dataY + dataHeight],

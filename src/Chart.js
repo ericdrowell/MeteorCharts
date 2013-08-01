@@ -19,11 +19,11 @@
       ZOOMING = 'zooming',
       PANNING = 'panning';
 
-  Meteor.Chart = function(config) {
+  MeteorCharts.Chart = function(config) {
     this._init(config);
   };
 
-  Meteor.Chart.prototype = {
+  MeteorCharts.Chart.prototype = {
     _init: function(config) {
       var that = this;
 
@@ -61,7 +61,7 @@
       this.stage.add(this.topLayer);
       this.stage.add(this.interactionLayer);
 
-      this.title = new Meteor.Title(this);
+      this.title = new MeteorCharts.Title(this);
 
       this.interactionShow = new Kinetic.Tween({
         node: that.interactionLayer,

@@ -19,7 +19,7 @@
       <li><a href="dual.html">Dual</a></li>
     </ul>
 
-    <script src="../../lib/kinetic-v4.6.0-beta.js"></script>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.5.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
@@ -27,7 +27,7 @@
     <script src="light.js"></script>
 
     <script type="text/javascript">
-      var lineChart = new Meteor.Line({
+      var lineChart = new MeteorCharts.Line({
         container: 'container',
         model: getModel(),
         view: HEADLANDS_LIGHT

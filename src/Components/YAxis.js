@@ -1,14 +1,14 @@
 (function() {
-  Meteor.YAxis = function(chart) {
+  MeteorCharts.YAxis = function(chart) {
     this.chart = chart;
     this.maxNumberOfLabels = chart.view.yAxis.maxNumberOfLabels;
-    this.units = new Meteor[chart.model.yAxis.units](chart.minY, chart.maxY, this.maxNumberOfLabels);
+    this.units = new MeteorCharts[chart.model.yAxis.units](chart.minY, chart.maxY, this.maxNumberOfLabels);
     this.lineGroup = new Kinetic.Group();
     chart.bottomLayer.add(this.lineGroup);
     this.addYLabels();
   };
 
-  Meteor.YAxis.prototype = {
+  MeteorCharts.YAxis.prototype = {
     addYLabels: function() {
       var chart = this.chart,
           units = this.units,
@@ -55,7 +55,7 @@
           topLayer = chart.topLayer,
           lines = view.yAxis.lines,
           textColor = view.text,
-          text = new Kinetic.Text(Meteor.Util.merge(
+          text = new Kinetic.Text(MeteorCharts.Util.merge(
             view.text, 
             {
               text: str,
@@ -67,7 +67,7 @@
           line;
 
       if (lines) {
-        line = new Kinetic.Line(Meteor.Util.merge(
+        line = new Kinetic.Line(MeteorCharts.Util.merge(
           lines, 
           {
             points: [0, 0, width, 0],

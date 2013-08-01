@@ -8,7 +8,7 @@ var EMPTY_STRING = '',
     TOUCHSTART = 'touchstart',
     TOUCHEND = 'touchend';
 
-  Meteor.Tooltip = function(chart) {
+  MeteorCharts.Tooltip = function(chart) {
     var group = this.group = new Kinetic.Group(),
         node = this.node = new Kinetic.Circle(),
         text = this.text = new Kinetic.Text({}),
@@ -23,7 +23,7 @@ var EMPTY_STRING = '',
     chart.interactionLayer.add(group);
   };
 
-  Meteor.Tooltip.prototype = {
+  MeteorCharts.Tooltip.prototype = {
     style: function() {
       var view = this.chart.view,
           tooltipView = view.tooltip;
@@ -35,7 +35,7 @@ var EMPTY_STRING = '',
         listening: false
       });
 
-      this.text.setAttrs(Meteor.Util.merge(
+      this.text.setAttrs(MeteorCharts.Util.merge(
         tooltipView.text, 
         {
           text: '',
@@ -43,7 +43,7 @@ var EMPTY_STRING = '',
         }
       ));
 
-      this.tag.setAttrs(Meteor.Util.merge(
+      this.tag.setAttrs(MeteorCharts.Util.merge(
         tooltipView.tag, 
         {
           pointerDirection: 'down',

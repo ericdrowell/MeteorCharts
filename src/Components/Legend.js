@@ -1,11 +1,11 @@
 (function() {
-  Meteor.Legend = function(chart) {
+  MeteorCharts.Legend = function(chart) {
     this.chart = chart;
     this.group = new Kinetic.Group();
     this.addLabels();
   };
 
-  Meteor.Legend.prototype = {
+  MeteorCharts.Legend.prototype = {
     addLabels: function() {
       var chart = this.chart,
           group = this.group,
@@ -20,7 +20,7 @@
       for (n=0; n<len; n++) {
         dataLine = lines[n];
 
-        line = new Kinetic.Line(Meteor.Util.merge(
+        line = new Kinetic.Line(MeteorCharts.Util.merge(
           chart.getDataStyle(n), 
           {
             x: x,
@@ -33,7 +33,7 @@
         x += 10;
         x += 3;
 
-        text = new Kinetic.Text(Meteor.Util.merge(
+        text = new Kinetic.Text(MeteorCharts.Util.merge(
           {
             fill: view.text.fill
           }, 

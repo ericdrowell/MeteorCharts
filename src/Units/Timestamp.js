@@ -20,11 +20,11 @@
         SECOND: 5 
       };
 
-  Meteor.Timestamp = function() {
+  MeteorCharts.Timestamp = function() {
     this.setGranularity();
   };
 
-  Meteor.Timestamp.prototype = {
+  MeteorCharts.Timestamp.prototype = {
     setGranularity: function(smallestIncrement) {
       var granularity = GRANULARITIES.SECOND;
 

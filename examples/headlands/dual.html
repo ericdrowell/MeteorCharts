@@ -23,20 +23,20 @@
       <li><a href="dual.html">Dual</a></li>
     </ul>
 
-    <script src="../../lib/kinetic-v4.6.0-beta.js"></script>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.5.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
     <script src="light-thin.js"></script>
 
     <script type="text/javascript">
-      var topChart = new Meteor.Line({
+      var topChart = new MeteorCharts.Line({
         container: 'topContainer',
         model: getModel(),
         view: HEADLANDS_LIGHT_THIN
       });
 
-      var bottomChart = new Meteor.Line({
+      var bottomChart = new MeteorCharts.Line({
         container: 'bottomContainer',
         model: getModel(),
         view: HEADLANDS_LIGHT_THIN

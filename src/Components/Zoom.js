@@ -2,7 +2,7 @@
   var DBLCLICK = 'dblclick',
       MIN_ZOOM_SIZE = 20;
 
-  Meteor.Zoom = function(chart) {
+  MeteorCharts.Zoom = function(chart) {
     this.chart = chart;
     this.selecting = false;
     this.startX = 0;
@@ -14,9 +14,9 @@
     this._bind();
   };
 
-  Meteor.Zoom.prototype = {
+  MeteorCharts.Zoom.prototype = {
     style: function() {
-      this.rect.setAttrs(Meteor.Util.merge(
+      this.rect.setAttrs(MeteorCharts.Util.merge(
         this.chart.view.select, 
         {
           width: 0,

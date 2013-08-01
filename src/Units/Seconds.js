@@ -1,9 +1,9 @@
 (function() {
-  Meteor.Seconds = function(min, max, maxNumberOfLabels) {
-    Meteor.Unit.call(this, min, max, maxNumberOfLabels);
+  MeteorCharts.Seconds = function(min, max, maxNumberOfLabels) {
+    MeteorCharts.Unit.call(this, min, max, maxNumberOfLabels);
   };
 
-  Meteor.Seconds.prototype = {
+  MeteorCharts.Seconds.prototype = {
     formatShort: function(seconds) {
       var polarity = seconds < 0 ? '-' : '',
           newSeconds = Math.abs(seconds),
@@ -56,5 +56,5 @@
     }
   };
 
-  Meteor.Util.extend(Meteor.Seconds, Meteor.Unit);
+  MeteorCharts.Util.extend(MeteorCharts.Seconds, MeteorCharts.Unit);
 })();

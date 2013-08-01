@@ -1,5 +1,5 @@
 (function() {
-  Meteor.Util = {
+  MeteorCharts.Util = {
     merge: function(){
       var len = arguments.length,
           retObj = {},
