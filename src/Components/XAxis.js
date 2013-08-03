@@ -1,7 +1,7 @@
 (function() {
   MeteorCharts.XAxis = function(chart) {
     this.chart = chart;
-    this.maxNumberOfLabels = chart.view.xAxis.maxNumberOfLabels;
+    this.maxNumberOfLabels = chart._view.get('xAxis', 'maxNumberOfLabels');
     this.units = new MeteorCharts[chart.model.xAxis.units](chart.minX, chart.maxX, this.maxNumberOfLabels);
     this.addXLabels();
   };

@@ -1,7 +1,7 @@
 (function() {
   MeteorCharts.YAxis = function(chart) {
     this.chart = chart;
-    this.maxNumberOfLabels = chart.view.yAxis.maxNumberOfLabels;
+    this.maxNumberOfLabels = chart._view.get('yAxis', 'maxNumberOfLabels');
     this.units = new MeteorCharts[chart.model.yAxis.units](chart.minY, chart.maxY, this.maxNumberOfLabels);
     this.lineGroup = new Kinetic.Group();
     chart.bottomLayer.add(this.lineGroup);

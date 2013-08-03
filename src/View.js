@@ -104,6 +104,7 @@
       if (n === len) {
         return obj;
       }
+      
       // invalid attr path
       else {
         return null;
