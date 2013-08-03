@@ -1,5 +1,4 @@
 var DEFAULT_DARK = {
-  background: 'black',
   width: 900,
   height: 450,
   text: {

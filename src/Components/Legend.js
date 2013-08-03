@@ -21,7 +21,7 @@
         dataLine = lines[n];
 
         line = new Kinetic.Line(MeteorCharts.Util.merge(
-          chart.getDataStyle(n), 
+          chart._view.getDataStyle(n), 
           {
             x: x,
             points: [0, 0, 5, 0],

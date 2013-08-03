@@ -10,6 +10,7 @@ module.exports = function(grunt) {
     'src/Chart.js',
     'src/Util.js',
     'src/Unit.js',
+    'src/View.js',
 
     // units
     'src/units/Numbers.js',

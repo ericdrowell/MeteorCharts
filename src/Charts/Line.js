@@ -29,6 +29,7 @@
     _draw: function() {
       var autoMinMax = this.getAutoMinMax(),
           view = this.view,
+          _view = this._view,
           xAxisView = view.xAxis,
           yAxisView = view.yAxis,
           minX = this.minX = xAxisView.min === undefined || xAxisView.min === 'auto' ? autoMinMax.minX : xAxisView.min,
@@ -50,15 +51,15 @@
       // TODO: width and height should be cached
       //stage.setSize(view.width, view.height);
 
-      container.style.backgroundColor = view.background;
+      container.style.backgroundColor = _view.get('backgroundColor');
 
       this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
 
       this.dataY = 40;
-      this.dataHeight = view.height - this.dataY- view.text.fontSize - 10;
+      this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - 10;
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new MeteorCharts.YAxis(this);
-      this.dataWidth = view.width - this.dataX;
+      this.dataWidth = _view.get('width') - this.dataX;
       this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new MeteorCharts.XAxis(this);
 
@@ -75,12 +76,6 @@
 
       // update interaction layer
       this.pointerMove();
-    },
-    getDataStyle: function(n) {
-      var data = this.view.data,
-          len = data.length;
-
-      return data[n % len];
     },
     getAutoMinMax: function() {
       var model = this.model,
@@ -127,7 +122,8 @@
       }
 
       var view = this.view,
-          width = view.width,
+          _view = this._view,
+          width = _view.get('width'),
           model = this.model,
           lines = model.lines,
           minX = this.minX,
@@ -141,7 +137,7 @@
           dataHeight = this.dataHeight,
           scaleX = this.scaleX,
           scaleY = this.scaleY,
-          height = view.height;
+          height = _view.get('height');
 
 
       var normalizedX = (pos.x - dataX) / this.dataWidth;
@@ -156,7 +152,7 @@
         var nearestPoint = {
           x: points[0].x,
           y: points[0].y,
-          color: this.getDataStyle(n).stroke
+          color: _view.getDataStyle(n).stroke
         };
         for (var i=0; i<points.length; i++) {
           var point = points[i];
@@ -225,7 +221,7 @@
       }
     },
     addNodes: function(points, style) {
-      var view = this.view,
+      var _view = this._view,
           len = points.length,
           dataTopGroup = this.dataTopGroup,
           n, point, chartPoint;
@@ -237,7 +233,7 @@
           x: chartPoint.x,
           y: chartPoint.y,
           radius: 5,
-          stroke: view.background,
+          stroke: _view.get('backgroundColor'),
           strokeWidth: 3,
           fill: style.stroke,
           listening: false
@@ -281,7 +277,7 @@
       for (n=0; n<len; n++) {
         line = lines[n];
         points = line.points;
-        style = this.getDataStyle(n);
+        style = this._view.getDataStyle(n);
         newPoints = [];
         startEnd = this.getStartEnd(points);
         start = startEnd.start;
