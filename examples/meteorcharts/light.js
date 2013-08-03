@@ -1,5 +1,5 @@
 var DEFAULT_LIGHT = {
-  background: 'white',
+  backgroundColor: 'white',
   width: 900,
   height: 450,
   text: {
@@ -49,8 +49,11 @@ var DEFAULT_LIGHT = {
       fill: '#e8e8e8'
     }
   },
-  select: {
-    fill: 'black',
-    opacity: 0.1
+  zoom: {
+    type: 'box',
+    selection: {
+      fill: 'black',
+      opacity: 0.1
+    }
   }
 };
