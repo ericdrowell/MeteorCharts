@@ -30,6 +30,7 @@
       var autoMinMax = this.getAutoMinMax(),
           view = this.view,
           _view = this._view,
+          padding = _view.get('padding'),
           xAxisView = view.xAxis,
           yAxisView = view.yAxis,
           viewMinX = _view.get('xAxis', 'min'),
@@ -59,11 +60,11 @@
 
       this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
 
-      this.dataY = 40;
-      this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - 10;
+      this.dataY = _view.get('title', 'text', 'fontSize') + 10 + padding;
+      this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - 10 - padding;
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new MeteorCharts.YAxis(this);
-      this.dataWidth = _view.get('width') - this.dataX;
+      this.dataWidth = _view.get('width') - this.dataX - padding;
       this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new MeteorCharts.XAxis(this);
 

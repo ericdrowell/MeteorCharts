@@ -11,6 +11,7 @@
           group = this.group,
           model = chart.model,
           _view = chart._view,
+          padding = _view.get('padding'),
           lines = model.lines,
           len = lines.length,
           x = 0,
@@ -52,7 +53,7 @@
         group.add(line).add(text);
       }
 
-      group.setPosition(_view.get('width') - x - 10, 5);
+      group.setPosition(_view.get('width') - x - padding, padding);
 
       chart.bottomLayer.add(group);
     }

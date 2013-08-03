@@ -31,7 +31,7 @@
           dataY = chart.dataY,
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,
-          y = _view.get('height') - 16,
+          y = _view.get('height') - _view.get('text', 'fontSize') - _view.get('padding'),
           text = new Kinetic.Text(MeteorCharts.Util.merge(
             _view.get('text'),
             {

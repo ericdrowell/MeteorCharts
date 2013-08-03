@@ -4,11 +4,14 @@
         model = this.model = chart.model,
         _view = chart._view,
         str = model.str = '',
+        padding = _view.get('padding'),
         text = this.text = new Kinetic.Text(MeteorCharts.Util.merge(
           _view.getText('title', 'text'), 
           {
             text: model.title,
-            listening: false
+            listening: false,
+            x: padding,
+            y: padding
           }
         ));
 

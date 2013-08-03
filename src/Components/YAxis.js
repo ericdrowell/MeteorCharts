@@ -41,13 +41,14 @@
         y-=increment; 
       }
 
-      chart.dataX = maxWidth + 10;
+      chart.dataX = maxWidth + 10 + chart._view.get('padding');
       this.lineGroup.setX(chart.dataX);
 
     },
     addYLabel: function(str, y) {
       var chart = this.chart,
           _view = chart._view,
+          padding = _view.get('padding'),
           width = _view.get('width'),
           height = chart.dataHeight,
           dataY = chart.dataY,
@@ -58,6 +59,7 @@
             _view.get('text'),
             {
               text: str,
+              x: padding,
               y: y - 8 + dataY,
               listening: false
             }

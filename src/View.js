@@ -3,6 +3,7 @@
     backgroundColor: 'black',
     width: 900,
     height: 450,
+    padding: 10,
     text: {
       fill: '#ccc',
       fontSize: 16

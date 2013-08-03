@@ -1,5 +1,5 @@
 var HEADLANDS_LIGHT_THIN = {
-  background: 'white',
+  backgroundColor: 'white',
   width: 900,
   height: 250,
   text: {
@@ -60,9 +60,11 @@ var HEADLANDS_LIGHT_THIN = {
       fill: 'black'
     }
   },
-  select: {
-    fill: 'black',
-    opacity: 0.1,
-    type: 'range'
+  zoom: {
+    type: 'range',
+    selection: {
+      fill: 'black',
+      opacity: 0.1,
+    }  
   }
 };
