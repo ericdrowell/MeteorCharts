@@ -57,10 +57,13 @@
         fill: '#e8e8e8'
       }
     },
-    select: {
-      fill: 'white',
-      opacity: 0.3
-    }
+    zoom: {
+    	type: 'box',
+	    selection: {
+	      fill: 'white',
+	      opacity: 0.3
+	    }
+	  }
   };
 
   MeteorCharts.View = function(config) {
@@ -105,6 +108,10 @@
       else {
         return null;
       }
+    },
+    getText: function() {
+      var textObj = this.get.apply(this, arguments);
+      return MeteorCharts.Util.merge(this.get('text'), textObj);
     },
     getDataStyle: function(n) {
       var data = this.get('data'),

@@ -36,8 +36,8 @@
       this.stage = new Kinetic.Stage({
         container: config.container,
         listening: false,
-        width: this.view.width,
-        height: this.view.height
+        width: this._view.get('width'),
+        height: this._view.get('height'),
       });
 
       this.stage.getContainer().style.display = 'inline-block';

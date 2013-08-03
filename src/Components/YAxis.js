@@ -47,16 +47,15 @@
     },
     addYLabel: function(str, y) {
       var chart = this.chart,
-          view = chart.view,
-          width = view.width,
+          _view = chart._view,
+          width = _view.get('width'),
           height = chart.dataHeight,
           dataY = chart.dataY,
           bottomLayer = chart.bottomLayer,
           topLayer = chart.topLayer,
-          lines = view.yAxis.lines,
-          textColor = view.text,
+          lines = _view.get('yAxis', 'lines'),
           text = new Kinetic.Text(MeteorCharts.Util.merge(
-            view.text, 
+            _view.get('text'),
             {
               text: str,
               y: y - 8 + dataY,

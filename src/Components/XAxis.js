@@ -26,14 +26,14 @@
     }, 
     addXLabel: function(str, x) {
       var chart = this.chart,
-          view = chart.view,
-          lines = view.xAxis.lines,
+          _view = chart._view,
+          lines = _view.get('xAxis', 'lines'),
           dataY = chart.dataY,
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,
-          y = view.height - 16,
+          y = _view.get('height') - 16,
           text = new Kinetic.Text(MeteorCharts.Util.merge(
-            view.text, 
+            _view.get('text'),
             {
               text: str,
               x: x,

@@ -17,7 +17,7 @@
   MeteorCharts.Zoom.prototype = {
     style: function() {
       this.rect.setAttrs(MeteorCharts.Util.merge(
-        this.chart.view.select, 
+        this.chart._view.get('zoom', 'selection'),
         {
           width: 0,
           height: 0
@@ -41,7 +41,7 @@
       var chart = this.chart,
           pos = chart.stage.getPointerPosition(),
           view = chart.view,
-          type = view.select && view.select.type ? view.select.type : 'box';
+          type = chart._view.get('zoom', 'type');
 
       this.selecting = true;
       this.startX = pos.x;
@@ -56,7 +56,7 @@
       if (this.selecting) {
           pos = chart.stage.getPointerPosition();
           view = chart.view;
-          type = view.select && view.select.type ? view.select.type : 'box';
+          type = chart._view.get('zoom', 'type');
 
         this.rect.setWidth(pos.x - this.startX);
         this.rect.setHeight(type === 'box' ? pos.y - this.startY : chart.dataHeight);
@@ -77,7 +77,7 @@
     _updateMinMax: function() {
       var chart = this.chart,
           view = chart.view,
-          type = view.select && view.select.type ? view.select.type : 'box';
+          type = chart._view.get('zoom', 'type');
           pos = chart.stage.getPointerPosition(),
           startX = this.startX,
           startY = this.startY,

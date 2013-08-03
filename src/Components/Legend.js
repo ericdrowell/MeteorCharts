@@ -10,8 +10,7 @@
       var chart = this.chart,
           group = this.group,
           model = chart.model,
-          view = chart.view,
-          legendView = view.legend,
+          _view = chart._view,
           lines = model.lines,
           len = lines.length,
           x = 0,
@@ -34,10 +33,7 @@
         x += 3;
 
         text = new Kinetic.Text(MeteorCharts.Util.merge(
-          {
-            fill: view.text.fill
-          }, 
-          legendView.text, 
+          _view.getText('legend', 'text'), 
           {
             text: dataLine.title,
             x: x,
@@ -48,7 +44,7 @@
         x += text.getWidth();
 
         if (n<len-1) {
-          x += legendView.spacing;
+          x += _view.get('legend', 'spacing');
         }
 
         line.setY(text.getHeight()/2);
@@ -56,7 +52,7 @@
         group.add(line).add(text);
       }
 
-      group.setPosition(view.width - x - 10, 5);
+      group.setPosition(_view.get('width') - x - 10, 5);
 
       chart.bottomLayer.add(group);
     }

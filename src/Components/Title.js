@@ -2,13 +2,10 @@
   MeteorCharts.Title = function(chart) {
     var chart = this.chart = chart,
         model = this.model = chart.model,
+        _view = chart._view,
         str = model.str = '',
-        view = this.view = chart.view,
         text = this.text = new Kinetic.Text(MeteorCharts.Util.merge(
-          {
-            fill: view.text.fill
-          }, 
-          view.title.text, 
+          _view.getText('title', 'text'), 
           {
             text: model.title,
             listening: false

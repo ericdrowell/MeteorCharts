@@ -25,18 +25,17 @@ var EMPTY_STRING = '',
 
   MeteorCharts.Tooltip.prototype = {
     style: function() {
-      var view = this.chart.view,
-          tooltipView = view.tooltip;
+      var _view = this.chart._view;
 
       this.node.setAttrs({
         radius: 5,
-        stroke: view.background,
+        stroke: _view.get('backgroundColor'),
         strokeWidth: 3,
         listening: false
       });
 
       this.text.setAttrs(MeteorCharts.Util.merge(
-        tooltipView.text, 
+        _view.getText('tooltip', 'text'),
         {
           text: '',
           listening: false
@@ -44,7 +43,7 @@ var EMPTY_STRING = '',
       ));
 
       this.tag.setAttrs(MeteorCharts.Util.merge(
-        tooltipView.tag, 
+        _view.get('tooltip', 'tag'),
         {
           pointerDirection: 'down',
           pointerWidth: 10,
