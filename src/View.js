@@ -58,16 +58,16 @@
       }
     },
     zoom: {
-    	type: 'box',
-	    selection: {
-	      fill: 'white',
-	      opacity: 0.3
-	    }
-	  }
+      type: 'box',
+      selection: {
+        fill: 'white',
+        opacity: 0.3
+      }
+    }
   };
 
-  MeteorCharts.View = function(config) {
-    this.config = config || {};
+  MeteorCharts.View = function(chart) {
+    this.chart = chart;
   };
 
   MeteorCharts.View.prototype = {
@@ -75,7 +75,7 @@
     * @example get('tooltip', 'text', 'fill');
     */
     get: function() {
-      var config = this.config,
+      var config = this.chart.view,
           len = arguments.length,
           n, obj;
 
@@ -104,7 +104,7 @@
       if (n === len) {
         return obj;
       }
-      
+
       // invalid attr path
       else {
         return null;
@@ -113,6 +113,40 @@
     getText: function() {
       var textObj = this.get.apply(this, arguments);
       return MeteorCharts.Util.merge(this.get('text'), textObj);
+    },
+    /*
+    * @example set('legend', 'text', 'fontSize', 16);
+    */
+    set: function() {
+      var view = this.chart.view,
+          a0 = arguments[0],
+          a1 = arguments[1],
+          a2, a3;
+
+      switch (arguments.length) {
+        case 2: 
+          view[a0] = a1;
+          break;
+        case 3: 
+          a2 = arguments[2];
+          if (view[a0] === undefined) {
+            view[a0] = {};
+          }
+          view[a0][a1] = a2;
+          break;
+        case 4:
+          a2 = arguments[2];
+          a3 = arguments[3];
+          if (view[a0] === undefined) {
+            view[a0] = {};
+          }
+          if (view[a0][a1] === undefined) {
+            view[a0][a1] = {};
+          }
+          view[a0][a1][a2] = a3;
+          break; 
+      }
+
     },
     getDataStyle: function(n) {
       var data = this.get('data'),

@@ -303,16 +303,16 @@
     _pan: function() {
       var pos = this.stage.getPointerPosition(),
           view = this.view,
+          _view = this._view,
           diffX, diffY, minX, maxX, minY, maxY;
 
       if (this.lastPos) {
         diffX = (pos.x - this.lastPos.x) / this.scaleX;
         diffY = (pos.y - this.lastPos.y) / this.scaleY;
-
-        view.xAxis.min = this.minX - diffX;
-        view.xAxis.max = this.maxX - diffX;
-        view.yAxis.min = this.minY + diffY;
-        view.yAxis.max = this.maxY + diffY;
+        _view.set('xAxis', 'min', this.minX - diffX);
+        _view.set('xAxis', 'max', this.maxX - diffX);
+        _view.set('yAxis', 'min', this.minY + diffY);
+        _view.set('yAxis', 'max', this.maxY + diffY);
         this.batchDraw();
       }
     }

@@ -18,14 +18,12 @@
     <script src="../../dist/meteorcharts-dev.js"></script>
 
     <script src="model.js" charset="utf-8"></script>
-    <script src="dark.js"></script>
     <script src="light.js"></script>
 
     <script type="text/javascript">
       var lineChart = new MeteorCharts.Line({
         container: 'container',
-        model: getModel(),
-        view: DEFAULT_DARK
+        model: getModel()
       });
 
       //lineChart.skin = DEFAULT_LIGHT;

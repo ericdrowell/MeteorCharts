@@ -27,9 +27,9 @@
     _init: function(config) {
       var that = this;
 
-      this.model = config.model;
-      this.view = config.view;
-      this._view = new MeteorCharts.View(config.view);
+      this.model = config.model || {};
+      this.view = config.view || {};
+      this._view = new MeteorCharts.View(this);
       this.events = {};
 
       // create stage

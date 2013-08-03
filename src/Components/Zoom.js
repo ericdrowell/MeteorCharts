@@ -77,6 +77,7 @@
     _updateMinMax: function() {
       var chart = this.chart,
           view = chart.view,
+          _view = chart._view,
           type = chart._view.get('zoom', 'type');
           pos = chart.stage.getPointerPosition(),
           startX = this.startX,
@@ -93,10 +94,10 @@
       //console.log(min.y + ',' + max.y)
 
       if (Math.abs(chartMaxX - chartMinX) > MIN_ZOOM_SIZE && Math.abs(chartMaxY - chartMinY) > MIN_ZOOM_SIZE) {
-        view.xAxis.min = min.x;
-        view.yAxis.min = min.y;
-        view.xAxis.max = max.x;
-        view.yAxis.max = max.y;
+        _view.set('xAxis', 'min', min.x);
+        _view.set('yAxis', 'min', min.y);
+        _view.set('xAxis', 'max', max.x);
+        _view.set('yAxis', 'max', max.y);
         chart.draw();
       }
 
