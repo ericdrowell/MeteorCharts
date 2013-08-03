@@ -23,7 +23,11 @@
     <script type="text/javascript">
       var lineChart = new MeteorCharts.Line({
         container: 'container',
-        model: getModel()
+        model: getModel(),
+        view: {
+          //width: 534
+
+        }
       });
 
       //lineChart.view = DEFAULT_LIGHT;

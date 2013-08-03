@@ -26,12 +26,12 @@
             x: x,
             points: [0, 0, 5, 0],
             scale: 2,
-            listening: false
+            listening: false,
+            lineCap: 'round'
           }
         ));
 
-        x += 10;
-        x += 3;
+        x += 16;
 
         text = new Kinetic.Text(MeteorCharts.Util.merge(
           _view.getText('legend', 'text'), 
@@ -53,9 +53,16 @@
         group.add(line).add(text);
       }
 
+      this.width = x;
       group.setPosition(_view.get('width') - x - padding, padding);
 
       chart.bottomLayer.add(group);
+    },
+    getWidth: function() {
+      return this.width || 0;
+    },    
+    hide: function() {
+      this.group.hide();
     }
   };
 })();

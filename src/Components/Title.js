@@ -19,6 +19,11 @@
   };
 
   MeteorCharts.Title.prototype = {
-
+    getWidth: function() {
+      return this.text.getWidth() || 0;
+    },
+    hide: function() {
+      this.text.hide();
+    }
   };
 })();

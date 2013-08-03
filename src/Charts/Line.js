@@ -60,8 +60,8 @@
 
       this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
 
-      this.dataY = _view.get('title', 'text', 'fontSize') + 10 + padding;
-      this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - 10 - padding;
+      this.dataY = _view.get('title', 'text', 'fontSize') + _view.get('spacing') + padding;
+      this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - _view.get('spacing') - padding;
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
@@ -70,6 +70,10 @@
 
       this.legend = new MeteorCharts.Legend(this);
       this.title = new MeteorCharts.Title(this);
+
+      if (this.title.getWidth() + this.legend.getWidth() + (padding*2) + _view.get('spacing')> _view.get('width')) {
+        this.legend.hide();
+      }
 
       // transform data layer
       this.dataBottomGroup.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
