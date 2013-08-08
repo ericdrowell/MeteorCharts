@@ -8,11 +8,7 @@
  var MeteorCharts;
 (function() {
   MeteorCharts = {
-  	version: '@@version',
-    Charts: {},
-    Components: {},
-    Units: {},
-    Util: {}
+  	version: '@@version'
   };
 })();
 
