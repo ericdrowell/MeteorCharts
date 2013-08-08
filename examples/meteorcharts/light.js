@@ -19,13 +19,12 @@ var DEFAULT_LIGHT = {
   },
   xAxis: {
     maxNumberOfLabels: 10,
-    lines: {}
+    lines: 'none'
   },
   yAxis: {
     maxNumberOfLabels: 8,
     lines: {
-      stroke: '#ddd',
-      strokeWidth: 2
+      stroke: '#ccc'
     }
   },
   data: [

@@ -5,7 +5,7 @@
           arr = Array.prototype.slice.call(arguments),
           n, attr, ret, val;
 
-      if (this.containsObject(arr)) {
+      if (this.containsObjects(arr)) {
         ret = {};
         for (n=0; n<len; n++) {
           val = arguments[n];
@@ -34,17 +34,17 @@
     isObject: function(obj) {
       return (!!obj && obj.constructor == Object);
     },
-    containsObject: function(arr) {
+    containsObjects: function(arr) {
       var len = arr.length,
           n, val;
 
       for (n=0; n<len; n++) {
         val = arr[n];
-        if (val !== undefined && this.isObject(val)) {
-          return true;
+        if (val !== undefined && !this.isObject(val)) {
+          return false;
         }
       }
-      return false;
+      return true;
     },
     get: function(obj, arr) {
       var len = arr.length,

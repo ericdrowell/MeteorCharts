@@ -42,6 +42,7 @@
       }
 
       chart.dataX = maxWidth + 10 + chart._view.get('padding');
+
       this.lineGroup.setX(chart.dataX);
 
     },
@@ -67,11 +68,10 @@
           lineGroup = this.lineGroup,
           line;
 
-      if (lines) {
+      if (lines !== 'none') {
         line = new Kinetic.Line(MeteorCharts.Util.merge(
           lines, 
           {
-            points: [0, 0, width, 0],
             y: y + dataY,
             listening: false
           }

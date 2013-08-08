@@ -45,7 +45,7 @@
 
       text.setOffsetX(text.getWidth()/2);
 
-      if (lines) {
+      if (lines !== 'none') {
         line = new Kinetic.Line(MeteorCharts.Util.merge(
           lines, 
           {

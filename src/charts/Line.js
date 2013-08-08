@@ -27,7 +27,8 @@
       this.draw();
     },
     _draw: function() {
-      var autoMinMax = this.getAutoMinMax(),
+      var that = this,
+          autoMinMax = this.getAutoMinMax(),
           view = this.view,
           _view = this._view,
           padding = _view.get('padding'),
@@ -65,6 +66,11 @@
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
+
+      this.yAxis.lineGroup.getChildren().each(function(node) {
+        node.setPoints([0, 0, that.dataWidth, 0]);
+      });
+
       this.scaleX = this.dataWidth / (maxX - minX);
       this.xAxis = new MeteorCharts.XAxis(this);
 

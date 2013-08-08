@@ -87,6 +87,7 @@
       return util.merge(
         get(DEFAULT, [arr[lastIndex]]),
         get(DEFAULT, arr),
+        get(view, [arr[lastIndex]]),
         get(view, arr)
       );
     },
