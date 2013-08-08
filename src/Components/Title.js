@@ -6,7 +6,7 @@
         str = model.str = '',
         padding = _view.get('padding'),
         text = this.text = new Kinetic.Text(MeteorCharts.Util.merge(
-          _view.getText('title', 'text'), 
+          _view.get('title', 'text'), 
           {
             text: model.title,
             listening: false,

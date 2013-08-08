@@ -35,7 +35,7 @@ var EMPTY_STRING = '',
       });
 
       this.text.setAttrs(MeteorCharts.Util.merge(
-        _view.getText('tooltip', 'text'),
+        _view.get('tooltip', 'text'),
         {
           text: '',
           listening: false

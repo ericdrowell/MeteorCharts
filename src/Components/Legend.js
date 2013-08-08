@@ -32,9 +32,8 @@
         ));
 
         x += 16;
-
         text = new Kinetic.Text(MeteorCharts.Util.merge(
-          _view.getText('legend', 'text'), 
+          _view.get('legend', 'text'), 
           {
             text: dataLine.title,
             x: x,

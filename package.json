@@ -8,7 +8,8 @@
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-replace": "~0.4.4",
-    "grunt-contrib-clean": "~0.4.1"
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-simple-mocha": "~0.4.0"
   },
   "readmeFilename": "README.md",
   "main": "Gruntfile.js",

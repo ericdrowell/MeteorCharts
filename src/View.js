@@ -15,6 +15,7 @@
       }
     },
     legend: {
+      layout: 'top',
       text: {
         fontSize: 20
       },
@@ -73,48 +74,19 @@
   };
 
   MeteorCharts.View.prototype = {
-    /*
-    * @example get('tooltip', 'text', 'fill');
-    */
     get: function() {
-      var config = this.chart.view,
-          len = arguments.length,
-          n, obj;
+      var arr = Array.prototype.slice.call(arguments),
+          util = MeteorCharts.Util,
+          get = util.get,
+          view = this.chart.view,
+          len = arr.length,
+          lastIndex = len - 1;
 
-      // try to access config attr
-      obj = config;
-      for (n=0; n<len; n++) {
-        obj = obj[arguments[n]];
-        if (obj === undefined) {
-          break;
-        }
-      }
-
-      if (n === len) {
-        return obj;
-      }
-
-      // try to access default attr
-      obj = DEFAULT;
-      for (n=0; n<len; n++) {
-        obj = obj[arguments[n]];
-        if (obj === undefined) {
-          break;
-        }
-      }
-
-      if (n === len) {
-        return obj;
-      }
-
-      // invalid attr path
-      else {
-        return null;
-      }
-    },
-    getText: function() {
-      var textObj = this.get.apply(this, arguments);
-      return MeteorCharts.Util.merge(this.get('text'), textObj);
+      return util.merge(
+        get(DEFAULT, [arr[lastIndex]]),
+        get(DEFAULT, arr),
+        get(view, arr)
+      );
     },
     /*
     * @example set('legend', 'text', 'fontSize', 16);

@@ -92,7 +92,30 @@ module.exports = function(grunt) {
           dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
         }]
       }
+    },
+    simplemocha: {
+      options: {
+        globals: ['should'],
+        timeout: 3000,
+        ignoreLeaks: false,
+        ui: 'tdd',
+        reporter: 'spec'
+      },
+
+      all: { src: ['test/**/*.js'] }
     }
+    /*
+    shell: {
+      test: {
+        command: 'mocha -u tdd -d -v -R spec test/build/meteorcharts-test.js',
+        options: {
+          callback: function(err, stdout, stderr, cb) {
+            console.log(stdout);
+            cb();
+          }
+        }
+      }
+    }*/
   };
 
   grunt.initConfig(config);
@@ -103,9 +126,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-simple-mocha');
 
   // Tasks
   grunt.registerTask('dev', ['clean', 'concat:dev', 'replace:dev']);
   grunt.registerTask('full', ['clean', 'concat:prod', 'replace:prod', 'uglify']);
+  grunt.registerTask('test', ['simplemocha']);
+  grunt.registerTask('devtest', ['dev', 'test']);
 
 };
