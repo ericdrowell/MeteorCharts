@@ -1,7 +1,5 @@
 var HEADLANDS_LIGHT = {
   backgroundColor: 'white',
-  width: 900,
-  height: 400,
   text: {
     fill: '#585858',
     fontSize: 16
