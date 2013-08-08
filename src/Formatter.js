@@ -23,6 +23,12 @@
       }
 
       return increment;
+    },
+    getLongestValue: function() {
+      return Math.max(
+        Math.abs(this.max), 
+        Math.abs(this.min)
+      );
     }
   };
 

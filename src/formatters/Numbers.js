@@ -9,16 +9,17 @@
 
   MeteorCharts.Numbers.prototype = {
     formatShort: function(num) {
-      var absMax = Math.abs(this.max);
-      if (absMax < 1000) {
+      var longestValue = this.getLongestValue();
+
+      if (longestValue < 1000) {
         return numberWithCommas(num);
       }
       // thousands
-      else if (absMax < 1000000) {
+      else if (longestValue < 1000000) {
         return numberWithCommas(Math.round(num / 1000 * 10)/10) + 'k';
       }
       // millions
-      else if (absMax < 1000000000) {
+      else if (longestValue < 1000000000) {
         return numberWithCommas(Math.round(num / 1000000 * 10)/10) + 'M';
       }
       // billions
