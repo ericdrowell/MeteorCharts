@@ -2,26 +2,26 @@
   MeteorCharts.XAxis = function(chart) {
     this.chart = chart;
     this.maxNumberOfLabels = chart._view.get('xAxis', 'maxNumberOfLabels');
-    this.units = new MeteorCharts[chart.model.xAxis.units](chart.minX, chart.maxX, this.maxNumberOfLabels);
+    this.formatter = new MeteorCharts[chart._view.get('xAxis', 'formatter')](chart.minX, chart.maxX, this.maxNumberOfLabels);
     this.addXLabels();
   };
 
   MeteorCharts.XAxis.prototype = {
     addXLabels: function() {
       var chart = this.chart,
-          units = this.units,
+          formatter = this.formatter,
           maxNumberOfLabels = this.maxNumberOfLabels,
           maxX = chart.maxX,
           minX = chart.minX,
           scaleX = chart.scaleX,
           range = maxX - minX,
-          increment = units.getIncrement(),
+          increment = formatter.getIncrement(),
           start = Math.ceil(minX/increment) * increment,
           n, x;
 
       for (n=start; n<maxX; n+=increment) {
         x = (n - minX) * scaleX + chart.dataX;
-        this.addXLabel(units.formatShort(n), x);
+        this.addXLabel(formatter.formatShort(n), x);
       }
     }, 
     addXLabel: function(str, x) {

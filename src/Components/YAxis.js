@@ -2,7 +2,7 @@
   MeteorCharts.YAxis = function(chart) {
     this.chart = chart;
     this.maxNumberOfLabels = chart._view.get('yAxis', 'maxNumberOfLabels');
-    this.units = new MeteorCharts[chart.model.yAxis.units](chart.minY, chart.maxY, this.maxNumberOfLabels);
+    this.formatter = new MeteorCharts[chart._view.get('yAxis', 'formatter')](chart.minY, chart.maxY, this.maxNumberOfLabels);
     this.lineGroup = new Kinetic.Group();
     chart.bottomLayer.add(this.lineGroup);
     this.addYLabels();
@@ -11,11 +11,11 @@
   MeteorCharts.YAxis.prototype = {
     addYLabels: function() {
       var chart = this.chart,
-          units = this.units,
+          formatter = this.formatter,
           minY = chart.minY,
           maxY = chart.maxY,
           range = maxY - minY,
-          increment = units.getIncrement(),
+          increment = formatter.getIncrement(),
           dataHeight = chart.dataHeight,
           scaleY = chart.scaleY,
           y = 0, 
@@ -25,7 +25,7 @@
       // draw labels at 0 and above
       while(y <= maxY) {
         if (y >= minY) {
-          width = this.addYLabel(units.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
+          width = this.addYLabel(formatter.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
           maxWidth = Math.max(width, maxWidth);
         }
         y+=increment; 
@@ -35,7 +35,7 @@
       y=-1 * increment;
       while(y >= minY) {
         if (y <= maxY) {
-          width = this.addYLabel(units.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
+          width = this.addYLabel(formatter.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
           maxWidth = Math.max(width, maxWidth);
         }
         y-=increment; 

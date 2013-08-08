@@ -9,15 +9,15 @@ module.exports = function(grunt) {
     // core
     'src/Chart.js',
     'src/Util.js',
-    'src/Unit.js',
+    'src/Formatter.js',
     'src/View.js',
 
-    // units
-    'src/units/Numbers.js',
-    'src/units/Timestamp.js',
-    'src/units/Feet.js',
-    'src/units/Meters.js',
-    'src/units/Seconds.js',
+    // formatters
+    'src/formatters/Numbers.js',
+    'src/formatters/Timestamp.js',
+    'src/formatters/Feet.js',
+    'src/formatters/Meters.js',
+    'src/formatters/Seconds.js',
 
     // components
     'src/components/Legend.js',

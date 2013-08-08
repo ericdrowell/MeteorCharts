@@ -7,12 +7,6 @@ var increment = diff / numDataPoints;
 function getModel() {
   var model = {
     title: 'Example Chart',
-    xAxis: {
-      units: 'Seconds'
-    },
-    yAxis: {
-      units: 'Numbers'
-    },
     lines: []
   };
 

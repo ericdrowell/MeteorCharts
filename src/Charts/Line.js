@@ -184,7 +184,7 @@
       }
 
       var tooltipPos = this.dataToChart(finalPoint.x, finalPoint.y);
-      var str = this.xAxis.units.formatShort(finalPoint.x) + ', ' + this.yAxis.units.formatShort(finalPoint.y)
+      var str = this.xAxis.formatter.formatShort(finalPoint.x) + ', ' + this.yAxis.formatter.formatShort(finalPoint.y)
 
       this.tooltip.group.setPosition(tooltipPos);
       this.tooltip.node.setFill(finalPoint.color);

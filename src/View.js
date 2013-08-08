@@ -28,7 +28,8 @@
       lines: {
         stroke: '#555',
         strokeWidth: 2
-      }
+      },
+      formatter: 'Seconds'
     },
     yAxis: {
       min: 'auto',
@@ -37,7 +38,8 @@
       lines: {
         stroke: '#555',
         strokeWidth: 2
-      }
+      },
+      formatter: 'Numbers'
     },
     data: [
       {

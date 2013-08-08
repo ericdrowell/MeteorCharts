@@ -1,6 +1,6 @@
 (function() {
   MeteorCharts.Seconds = function(min, max, maxNumberOfLabels) {
-    MeteorCharts.Unit.call(this, min, max, maxNumberOfLabels);
+    MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
   };
 
   MeteorCharts.Seconds.prototype = {
@@ -56,5 +56,5 @@
     }
   };
 
-  MeteorCharts.Util.extend(MeteorCharts.Seconds, MeteorCharts.Unit);
+  MeteorCharts.Util.extend(MeteorCharts.Seconds, MeteorCharts.Formatter);
 })();

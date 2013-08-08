@@ -1,11 +1,11 @@
 (function() {
-  MeteorCharts.Unit = function(min, max, maxCount, granularityMap) {
+  MeteorCharts.Formatter = function(min, max, maxCount, granularityMap) {
     this.min = min;
     this.max = max;
     this.maxCount = maxCount;
   };
 
-  MeteorCharts.Unit.prototype = {
+  MeteorCharts.Formatter.prototype = {
     getIncrement: function() {
       var range = this.max - this.min,
           increments = this.increments(),
