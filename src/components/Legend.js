@@ -12,7 +12,7 @@
           model = chart.model,
           _view = chart._view,
           padding = _view.get('padding'),
-          lines = model.lines,
+          lines = model.series,
           len = lines.length,
           x = 0,
           n, dataLine, text, line;
@@ -21,7 +21,7 @@
         dataLine = lines[n];
 
         line = new Kinetic.Line(MeteorCharts.Util.merge(
-          chart._view.getDataStyle(n), 
+          chart._view.getSeriesStyle(n), 
           {
             x: x,
             points: [0, 0, 5, 0],

@@ -41,7 +41,7 @@
       },
       formatter: 'Numbers'
     },
-    data: [
+    series: [
       {
         stroke: '#afe225' // light green
       },
@@ -125,11 +125,11 @@
       }
 
     },
-    getDataStyle: function(n) {
-      var data = this.get('data'),
-          len = data.length;
+    getSeriesStyle: function(n) {
+      var series = this.get('series'),
+          len = series.length;
 
-      return data[n % len];
+      return series[n % len];
     },
   };
 })();

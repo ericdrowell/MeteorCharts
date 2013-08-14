@@ -27,7 +27,7 @@ var DEFAULT_LIGHT = {
       stroke: '#ccc'
     }
   },
-  data: [
+  series: [
     {
       stroke: 'green' // light green
     },

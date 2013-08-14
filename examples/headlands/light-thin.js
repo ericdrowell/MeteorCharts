@@ -39,7 +39,7 @@ var HEADLANDS_LIGHT_THIN = {
       dashArray: [2, 2]
     }
   },
-  data: [
+  series: [
     {
       stroke: 'blue'
     },

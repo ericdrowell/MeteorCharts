@@ -13,13 +13,6 @@
 
   MeteorCharts.Line.prototype = {
     __init: function(config) {
-      var that = this;
-      // NOTE: when Kinetic introduces new clip bounding box, update this
-      this.dataLayer.setClipFunc(function(canvas) {
-          var context = canvas.getContext();
-          context.rect(that.dataX, that.dataY, that.dataWidth, that.dataHeight);
-      });
-
       // interaction components
       this.zoom = new MeteorCharts.Zoom(this);
       this.tooltip = new MeteorCharts.Tooltip(this);
@@ -47,6 +40,7 @@
           stage = this.stage,
           container = stage.getContainer();
 
+      this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
       this.zoom.style();
       this.tooltip.style();
 
@@ -95,7 +89,7 @@
     getAutoMinMax: function() {
       var model = this.model,
           view = this.view,
-          lines = model.lines,
+          lines = model.series,
           len = lines.length,
           firstPoint = lines[0].points[0],
           firstPointX = firstPoint.x,
@@ -140,7 +134,7 @@
           _view = this._view,
           width = _view.get('width'),
           model = this.model,
-          lines = model.lines,
+          lines = model.series,
           minX = this.minX,
           maxX = this.maxX,
           minY = this.minY,
@@ -167,7 +161,7 @@
         var nearestPoint = {
           x: points[0].x,
           y: points[0].y,
-          color: _view.getDataStyle(n).stroke
+          color: _view.getSeriesStyle(n).stroke
         };
         for (var i=0; i<points.length; i++) {
           var point = points[i];
@@ -283,7 +277,7 @@
     },
     addLines: function() {
       var model = this.model,
-        lines = model.lines,
+        lines = model.series,
         len = lines.length,
         minX = this.minX,
         maxX = this.maxX,
@@ -292,7 +286,7 @@
       for (n=0; n<len; n++) {
         line = lines[n];
         points = line.points;
-        style = this._view.getDataStyle(n);
+        style = this._view.getSeriesStyle(n);
         newPoints = [];
         startEnd = this.getStartEnd(points);
         start = startEnd.start;

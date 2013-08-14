@@ -13,10 +13,10 @@ function getModel() {
     yAxis: {
       units: 'Numbers'
     },
-    lines: []
+    series: []
   };
 
-  // create lines
+  // create series
   for (var n=0; n<3; n++) {
     var line = {
       title: 'Line Title ' + n,
@@ -34,29 +34,29 @@ function getModel() {
       });
     }
 
-    model.lines.push(line);
+    model.series.push(line);
   }
 
   return model;
 }
 
 function updateModel(model) {
-  var firstPoints = model.lines[0].points;
+  var firstPoints = model.series[0].points;
   var start = firstPoints[firstPoints.length-1].x;
   var end = start + (1 * 60);
 
-  // create lines
+  // create series
   for (var n=0; n<3; n++) {
-    var points = model.lines[n].points
+    var points = model.series[n].points
     var lastY = points[points.length-1].y;
     
     // create points
     for (var i=start; i<end; i+=increment) {
       var y = Math.round((lastY + (Math.random() * 10000) - 5000) * 1);
       lastY = y;
-      model.lines[n].points.shift();
+      model.series[n].points.shift();
 
-      model.lines[n].points.push({
+      model.series[n].points.push({
           x: i,
           y: y
       });
