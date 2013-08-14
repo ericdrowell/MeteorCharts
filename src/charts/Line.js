@@ -40,7 +40,6 @@
           stage = this.stage,
           container = stage.getContainer();
 
-      this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
       this.zoom.style();
       this.tooltip.style();
 
@@ -60,6 +59,8 @@
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
+
+      this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
 
       this.yAxis.lineGroup.getChildren().each(function(node) {
         node.setPoints([0, 0, that.dataWidth, 0]);
