@@ -19,7 +19,7 @@
 
       this.draw();
     },
-    _draw: function() {
+    _draw: function(disableSeriesTween) {
       var that = this,
           autoMinMax = this.getAutoMinMax(),
           view = this.view,
@@ -60,9 +60,6 @@
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
 
-      this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
-      this.dataLayer.setOpacity(0);
-
       this.yAxis.lineGroup.getChildren().each(function(node) {
         node.setPoints([0, 0, that.dataWidth, 0]);
       });
@@ -92,15 +89,25 @@
         this.clipTween.destroy();
       }
 
-      this.clipTween = new Kinetic.Tween({
-        clipWidth: that.dataWidth,
-        opacity: 1,
-        duration: 1,
-        easing: Kinetic.Easings.Linear,
-        node: that.dataLayer
-      });
+      // TODO: when KineticJS supports Tween setters, there will no longer
+      // be a need to create a new tween each time
+      if (disableSeriesTween) {
+        this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
+      }
+      else {
+        this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
+        this.dataLayer.setOpacity(0);
 
-      this.clipTween.play();
+        this.clipTween = new Kinetic.Tween({
+          clipWidth: that.dataWidth,
+          opacity: 1,
+          duration: 1,
+          easing: Kinetic.Easings.Linear,
+          node: that.dataLayer
+        });
+
+        this.clipTween.play();
+      }
     },
     getAutoMinMax: function() {
       var model = this.model,

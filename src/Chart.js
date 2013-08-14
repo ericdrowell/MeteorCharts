@@ -31,6 +31,7 @@
       this.view = config.view || {};
       this._view = new MeteorCharts.View(this);
       this.events = {};
+      this._setState(HOVERING);
 
       // create stage
       this.stage = new Kinetic.Stage({
@@ -73,10 +74,10 @@
 
       this._bind();
 
-      
+
     },
     batchDraw: function() {
-      this._draw();
+      this._draw(true);
       this.stage.batchDraw();
     },
     draw: function() {
@@ -108,11 +109,14 @@
         }
       }
     },
+    _setState: function(state) {
+      this.state = state;
+      this.fire('stateChange');
+    },
     _bind: function() {
       var stage = this.stage,
           that = this,
-          keydown = false,
-          state = HOVERING;
+          keydown = false;
 
         // manage keydown / up
       document.body.addEventListener('keydown', function(evt) {
@@ -125,13 +129,13 @@
 
       // mouse events
       stage.on(MOUSEDOWN, function() {
-        switch (state) {
+        switch (that.state) {
           case HOVERING:
             if (keydown) {
-              state = PANNING;
+              that._setState(PANNING);
             }
             else {
-              state = ZOOMING;
+              that._setState(ZOOMING);
             }
           case ZOOMING:
             that.zoom._startZoomSelect();
@@ -140,9 +144,10 @@
       });
 
       stage.on(MOUSEMOVE, function() {
-        switch(state) {
+        switch(that.state) {
           case HOVERING:
-            that.pointerMove(); break;
+            that.pointerMove(); 
+            break;
           case ZOOMING:
             that.tooltip.group.hide();
             that.zoom._resizeZoomSelect();
@@ -158,14 +163,14 @@
       });
 
       stage.on(MOUSEUP, function() {
-        switch(state) {
+        switch(that.state) {
           case ZOOMING:
             that.zoom._endZoomSelect();
-            state = HOVERING;
+            that._setState(HOVERING);
             that.tooltip.group.show();
             break;
           case PANNING:
-            state = HOVERING;
+            that._setState(HOVERING);
             that.tooltip.group.show();
             stage.draw();
             that.fire('draw');
@@ -192,6 +197,23 @@
 
       stage.on(TOUCHEND, function() {
         that.hideInteractionLayer();
+      });
+
+      this.on('stateChange', function() {
+        switch(that.state) {
+          case HOVERING:
+            //that.enableSeriesTween = true;
+            break;
+          case PANNING:
+            //that.enableSeriesTween = false;
+            break;
+          case ZOOMING:
+            //that.enableSeriesTween = true;
+            break;
+          default:
+            //that.enableSeriesTween = true;
+            break;
+        }
       });
     }
   };
