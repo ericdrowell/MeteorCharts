@@ -60,7 +60,8 @@
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
 
-      this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
+      this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
+      this.dataLayer.setOpacity(0);
 
       this.yAxis.lineGroup.getChildren().each(function(node) {
         node.setPoints([0, 0, that.dataWidth, 0]);
@@ -86,6 +87,20 @@
 
       // update interaction layer
       this.pointerMove();
+
+      if (this.clipTween) {
+        this.clipTween.destroy();
+      }
+
+      this.clipTween = new Kinetic.Tween({
+        clipWidth: that.dataWidth,
+        opacity: 1,
+        duration: 1,
+        easing: Kinetic.Easings.Linear,
+        node: that.dataLayer
+      });
+
+      this.clipTween.play();
     },
     getAutoMinMax: function() {
       var model = this.model,

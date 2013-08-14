@@ -72,6 +72,8 @@
       });
 
       this._bind();
+
+      
     },
     batchDraw: function() {
       this._draw();
