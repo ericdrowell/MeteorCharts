@@ -77,11 +77,11 @@
 
     },
     batchDraw: function() {
-      this._draw(true);
+      this.enableSeriesTween = false;
       this.stage.batchDraw();
     },
     draw: function() {
-      this._draw();
+      this.enableSeriesTween = true;
       this.stage.draw();
       this.fire('draw');
     },
@@ -197,6 +197,13 @@
 
       stage.on(TOUCHEND, function() {
         that.hideInteractionLayer();
+      });
+
+      // bind before draw event to bottom layer because this is the
+      // first layer in the stage that's drawn.  the _draw() method needs to 
+      // execute immediately before drawing any of the stage layers
+      this.bottomLayer.on('beforeDraw', function() {
+        that._draw();
       });
 
       this.on('stateChange', function() {

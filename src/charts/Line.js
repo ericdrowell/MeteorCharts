@@ -91,10 +91,8 @@
 
       // TODO: when KineticJS supports Tween setters, there will no longer
       // be a need to create a new tween each time
-      if (disableSeriesTween) {
-        this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
-      }
-      else {
+
+      if (this.enableSeriesTween) {
         this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
         this.dataLayer.setOpacity(0);
 
@@ -107,6 +105,10 @@
         });
 
         this.clipTween.play();
+      }
+      else {
+        this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
+        this.dataLayer.setOpacity(1);
       }
     },
     getAutoMinMax: function() {

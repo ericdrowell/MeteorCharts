@@ -5,7 +5,9 @@
       html, body {
         background-color: #eee;
       }
-
+      #container {
+        height: 450px;
+      }
     </style>
   </head>
   <body>
@@ -33,7 +35,7 @@
       // update the chart 10 times per second
       setInterval(function() {
         updateModel(lineChart.model);
-        lineChart.draw();
+        lineChart.batchDraw();
       }, 100);
 
     </script>
