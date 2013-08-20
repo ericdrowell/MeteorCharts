@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     'src/View.js',
 
     // formatters
-    'src/formatters/Numbers.js',
+    'src/formatters/Number.js',
     'src/formatters/Timestamp.js',
     'src/formatters/Feet.js',
     'src/formatters/Meters.js',

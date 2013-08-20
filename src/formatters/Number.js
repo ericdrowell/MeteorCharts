@@ -3,11 +3,11 @@
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  MeteorCharts.Numbers = function(min, max, maxNumberOfLabels) {
+  MeteorCharts.Number = function(min, max, maxNumberOfLabels) {
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
   };
 
-  MeteorCharts.Numbers.prototype = {
+  MeteorCharts.Number.prototype = {
     formatShort: function(num) {
       var longestValue = this.getLongestValue();
 
@@ -51,5 +51,5 @@
     }
   };
 
-  MeteorCharts.Util.extend(MeteorCharts.Numbers, MeteorCharts.Formatter);
+  MeteorCharts.Util.extend(MeteorCharts.Number, MeteorCharts.Formatter);
 })();

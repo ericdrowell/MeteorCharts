@@ -1,5 +1,9 @@
 (function() {
-  var DEFAULT = {
+  MeteorCharts.View = function(chart) {
+    this.chart = chart;
+  };
+
+  MeteorCharts.View.DEFAULT = {
     backgroundColor: 'black',
     width: 900,
     height: 450,
@@ -15,7 +19,7 @@
       }
     },
     legend: {
-      layout: 'top',
+      layout: 'top', // can be top, right, or bottom
       text: {
         fontSize: 20
       },
@@ -29,7 +33,7 @@
         stroke: '#555',
         strokeWidth: 2
       },
-      formatter: 'Seconds'
+      formatter: 'Seconds' // can be Number, Seconds, or Date
     },
     yAxis: {
       min: 'auto',
@@ -39,7 +43,7 @@
         stroke: '#555',
         strokeWidth: 2
       },
-      formatter: 'Numbers'
+      formatter: 'Number' // can be Number, Seconds, or Date
     },
     series: [
       {
@@ -71,10 +75,6 @@
     }
   };
 
-  MeteorCharts.View = function(chart) {
-    this.chart = chart;
-  };
-
   MeteorCharts.View.prototype = {
     get: function() {
       var arr = Array.prototype.slice.call(arguments),
@@ -82,11 +82,12 @@
           get = util.get,
           view = this.chart.view,
           len = arr.length,
-          lastIndex = len - 1;
+          lastIndex = len - 1,
+          def = MeteorCharts.View.DEFAULT;
 
       return util.merge(
-        get(DEFAULT, [arr[lastIndex]]),
-        get(DEFAULT, arr),
+        get(def, [arr[lastIndex]]),
+        get(def, arr),
         get(view, [arr[lastIndex]]),
         get(view, arr)
       );
