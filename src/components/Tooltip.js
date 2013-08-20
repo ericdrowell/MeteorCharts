@@ -14,7 +14,7 @@ var EMPTY_STRING = '',
         text = this.text = new Kinetic.Text({}),
         tag = this.tag = new Kinetic.Tag(),
         label = this.label = new Kinetic.Label({
-          y: -5
+          y: -8
         });
 
     this.chart = chart;

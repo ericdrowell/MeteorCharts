@@ -29,7 +29,7 @@ var DEFAULT_LIGHT = {
   },
   series: [
     {
-      stroke: 'green' // light green
+      stroke: 'red' // light green,
     },
     {
       stroke: 'blue' // light blue

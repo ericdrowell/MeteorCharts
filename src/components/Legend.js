@@ -21,11 +21,11 @@
         dataLine = lines[n];
 
         line = new Kinetic.Line(MeteorCharts.Util.merge(
-          chart._view.getSeriesStyle(n), 
           {
             x: x,
-            points: [0, 0, 5, 0],
-            scale: 2,
+            points: [0, 0, 10, 0],
+            stroke: chart._view.getSeriesStyle(n).stroke,
+            strokeWidth: 3,
             listening: false,
             lineCap: 'round'
           }
