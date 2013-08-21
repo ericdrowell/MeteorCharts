@@ -35,8 +35,6 @@
           minY = this.minY = viewMinY === 'auto' ? autoMinMax.minY : viewMinY,
           maxX = this.maxX = viewMaxX === 'auto' ? autoMinMax.maxX : viewMaxX,
           maxY = this.maxY = viewMaxY === 'auto' ? autoMinMax.maxY : viewMaxY,
-          dataBottomGroup = this.dataBottomGroup = new Kinetic.Group(),
-          dataTopGroup = this.dataTopGroup = new Kinetic.Group(),
           stage = this.stage,
           container = stage.getContainer();
 
@@ -52,8 +50,6 @@
 
       container.style.backgroundColor = _view.get('backgroundColor');
 
-      this.dataLayer.add(dataBottomGroup).add(dataTopGroup);
-
       this.dataY = _view.get('title', 'text', 'fontSize') + _view.get('spacing') + padding;
       this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - _view.get('spacing') - padding;
       this.scaleY = this.dataHeight / (maxY - minY);
@@ -65,6 +61,7 @@
       });
 
       this.scaleX = this.dataWidth / (maxX - minX);
+
       this.xAxis = new MeteorCharts.XAxis(this);
 
       this.legend = new MeteorCharts.Legend(this);
@@ -73,11 +70,6 @@
       if (this.title.getWidth() + this.legend.getWidth() + (padding*2) + _view.get('spacing')> _view.get('width')) {
         this.legend.hide();
       }
-
-      // transform data layer
-      this.dataBottomGroup.setY(this.dataHeight + this.dataY + (this.minY * this.scaleY));
-      this.dataBottomGroup.setX(this.dataX);
-      this.dataBottomGroup.setScale(this.scaleX, -1 * this.scaleY);
 
       // add lines and labels
       this.addLines();
@@ -228,44 +220,51 @@
         y: this.dataToChartY(y)
       };
     },
+    dataToChartPoints: function(points) {
+      var arr = [],
+          scaleX = this.scaleX,
+          scaleY = this.scaleY,
+          len = points.length,
+          n, point;
+
+      for (n=0; n<len; n++) {
+        point = points[n];
+
+        arr.push(this.dataToChart(point.x, point.y));
+      }
+
+      return arr;
+    },
     chartToData: function(x, y) {
       return {
         x: ((x - this.dataX) / this.scaleX) + this.minX,
         y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
       };
     },
-    addLine: function(newPoints, style, addNode) {
+    addLine: function(points, style, addNode) {
       var lineObj = new Kinetic.Line(MeteorCharts.Util.merge(
-        // defaults
-        {
-          strokeWidth: 2,
-          lineJoin: 'round'
-        },
         style,
         {
-          points: newPoints,
-          strokeScaleEnabled: false,
-          offsetX: this.minX,
+          points: points,
           listening: false
         }));
-      this.dataBottomGroup.add(lineObj);
+      this.dataLayer.add(lineObj);
 
       if (addNode) {
-        this.addNodes(newPoints, style);
+        this.addNodes(points, style);
       }
     },
     addNodes: function(points, style) {
       var _view = this._view,
           len = points.length,
-          dataTopGroup = this.dataTopGroup,
+          dataLayer = this.dataLayer,
           n, point, chartPoint;
 
       for (n=0; n<len; n++) {
         point = points[n];
-        chartPoint = this.dataToChart(point.x, point.y);
-        dataTopGroup.add(new Kinetic.Circle({
-          x: chartPoint.x,
-          y: chartPoint.y,
+        dataLayer.add(new Kinetic.Circle({
+          x: point.x,
+          y: point.y,
           radius: 5,
           stroke: _view.get('backgroundColor'),
           strokeWidth: 3,
@@ -306,7 +305,20 @@
         len = lines.length,
         minX = this.minX,
         maxX = this.maxX,
-        addNodesThreshold, style, backgroundColor, n, line, lineObj, points, pointsLen, point, addNodes, startEnd, start, end, chartRange;
+        addNodesThreshold, 
+        style, 
+        backgroundColor, 
+        n, 
+        line, 
+        lineObj, 
+        points, 
+        pointsLen, 
+        point, 
+        addNodes, 
+        startEnd, 
+        start, 
+        end, 
+        chartRange;
 
       for (n=0; n<len; n++) {
         line = lines[n];
@@ -326,7 +338,7 @@
         newPoints = points.slice(start, end + 1);
 
         if (newPoints.length > 1) {
-          this.addLine(newPoints, style, addNodes);
+          this.addLine(this.dataToChartPoints(newPoints), style, addNodes);
         }
       }
     },

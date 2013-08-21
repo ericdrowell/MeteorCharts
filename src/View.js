@@ -47,13 +47,19 @@
     },
     series: [
       {
-        stroke: '#afe225' // light green
+        stroke: '#afe225', // light green
+        strokeWidth: 2,
+        lineJoin: 'round'
       },
       {
-        stroke: '#76d0ff' // light blue
+        stroke: '#76d0ff', // light blue
+        strokeWidth: 2,
+        lineJoin: 'round'
       },
       {
-        stroke: '#fc009a' // pink
+        stroke: '#fc009a', // pink
+        strokeWidth: 2,
+        lineJoin: 'round'
       }
     ],
     tooltip: {

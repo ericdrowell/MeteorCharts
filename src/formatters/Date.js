@@ -15,8 +15,6 @@
       var range = this.range,
           date = new Date(seconds * 1000);
 
-          console.log(range)
-
       if (range < SECONDS_IN_MINUTE) {
         return date.format('MM:sstt'); // seconds
       }
