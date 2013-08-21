@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
     // formatters
     'src/formatters/Number.js',
-    'src/formatters/Timestamp.js',
+    'src/formatters/Date.js',
     'src/formatters/Feet.js',
     'src/formatters/Meters.js',
     'src/formatters/Seconds.js',

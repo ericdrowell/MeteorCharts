@@ -1,5 +1,3 @@
-var start = 0; // 0 seconds
-var end = start + (Math.round(Math.random() * 50) + 5) * 60;
 var diff = end - start;
 var numDataPoints = 500;
 var increment = diff / numDataPoints;

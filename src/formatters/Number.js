@@ -5,6 +5,7 @@
 
   MeteorCharts.Number = function(min, max, maxNumberOfLabels) {
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
+    this.base = 10;
   };
 
   MeteorCharts.Number.prototype = {
@@ -26,28 +27,6 @@
       else {
         return numberWithCommas(Math.round(num / 1000000000 * 10)/10) + 'B';
       }
-    },
-    increments: function() {
-      var arr = [
-        1,
-        2,
-        3,
-        5,
-        10,
-        20,
-        25,
-        50
-      ],
-      len = arr.length,
-      n, i;
-
-      for (n=2; n<7; n++) {
-        for (i=0; i<len; i++) {
-          arr.push(arr[i] * Math.pow(10, n));
-        }
-      }
-
-      return arr;
     }
   };
 

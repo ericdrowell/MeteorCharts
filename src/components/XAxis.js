@@ -10,7 +10,6 @@
     addXLabels: function() {
       var chart = this.chart,
           formatter = this.formatter,
-          maxNumberOfLabels = this.maxNumberOfLabels,
           maxX = chart.maxX,
           minX = chart.minX,
           scaleX = chart.scaleX,

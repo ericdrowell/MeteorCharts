@@ -1,6 +1,13 @@
 (function() {
+  var SECONDS_IN_MINUTE = 60,
+      SECONDS_IN_HOUR = 3600,
+      SECONDS_IN_DAY = 86400,
+      SECONDS_IN_MONTH = 2628000,
+      SECONDS_IN_YEAR = 31500000;
+
   MeteorCharts.Seconds = function(min, max, maxNumberOfLabels) {
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
+    this.base = 60
   };
 
   MeteorCharts.Seconds.prototype = {
@@ -11,48 +18,23 @@
           str = '',
           longestValue = this.getLongestValue();
 
-      // seconds in minute
-      if (longestValue < 60) {
+      if (longestValue < SECONDS_IN_MINUTE) {
         str = date.format('UTC:ss"s"');
       }
-      // seconds in hour
-      else if (longestValue < 3600) {
+      else if (longestValue < SECONDS_IN_HOUR) {
         str = date.format('UTC:MM:ss"m"');
       }
-      // seconds in day
-      else if (longestValue < 86400) {
+      else if (longestValue < SECONDS_IN_DAY) {
         str = date.format('UTC:HH:MM"h"');
       }
-      // seconds in month
-      else if (longestValue < 2628000) {
+      else if (longestValue < SECONDS_IN_MONTH) {
         str = date.format('UTC:d"d" H"h"'); 
       }
-      // seconds in year
       else { 
         str = date.format('UTC:m"m" d"d"'); 
       }
 
       return polarity + str;
-    },
-    increments: function() {
-      return [
-        0,
-        1, // 1 second
-        2,
-        5,
-        10, 
-        15, 
-        30,
-        60, // 1 minute
-        90, 
-        60 * 2,
-        60 * 5,
-        60 * 10,
-        60 * 15,
-        60 * 20,
-        60 * 30, 
-        60 * 60, // 1 hour
-      ]
     }
   };
 
