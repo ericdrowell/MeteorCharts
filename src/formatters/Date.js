@@ -28,7 +28,7 @@
         return date.format('mmm dd'); // day
       }
       else if (range < SECONDS_IN_YEAR) {
-        return date.format('yy mmm');  // month
+        return date.format('mmm yyyy');  // month
       }
       else {
         return date.format('yyyy'); // year

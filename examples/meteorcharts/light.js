@@ -29,13 +29,13 @@ var DEFAULT_LIGHT = {
   },
   series: [
     {
-      stroke: 'red' // light green,
+      stroke: 'red',
     },
     {
-      stroke: 'blue' // light blue
+      stroke: 'blue',
     },
     {
-      stroke: '#fc009a' // pink
+      stroke: 'green'
     }
   ],
   tooltip: {

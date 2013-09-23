@@ -53,10 +53,10 @@
       this.topLayer = new Kinetic.Layer({listening: false});
 
       // add meteor classes
-      this.bottomLayer.getCanvas().getElement().className = 'meteorcharts-bottom-layer';
-      this.dataLayer.getCanvas().getElement().className = 'meteorcharts-data-layer';
-      this.topLayer.getCanvas().getElement().className = 'meteorcharts-top-layer';
-      this.interactionLayer.getCanvas().getElement().className = 'meteorcharts-interaction-layer';
+      this.bottomLayer.getCanvas()._canvas.className = 'meteorcharts-bottom-layer';
+      this.dataLayer.getCanvas()._canvas.className = 'meteorcharts-data-layer';
+      this.topLayer.getCanvas()._canvas.className = 'meteorcharts-top-layer';
+      this.interactionLayer.getCanvas()._canvas.className = 'meteorcharts-interaction-layer';
 
       this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
@@ -87,7 +87,6 @@
     },
     showInteractionLayer: function() {
       this.interactionShow.play();
-      this.interactionLayer.setOpacity(1);
     },
     hideInteractionLayer: function() {
       this.interactionShow.reverse();

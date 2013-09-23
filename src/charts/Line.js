@@ -86,11 +86,9 @@
 
       if (this.enableSeriesTween) {
         this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
-        this.dataLayer.setOpacity(0);
 
         this.clipTween = new Kinetic.Tween({
           clipWidth: that.dataWidth,
-          opacity: 1,
           duration: 1,
           easing: Kinetic.Easings.Linear,
           node: that.dataLayer
@@ -100,8 +98,10 @@
       }
       else {
         this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
-        this.dataLayer.setOpacity(1);
       }
+
+
+
     },
     getAutoMinMax: function() {
       var model = this.model,

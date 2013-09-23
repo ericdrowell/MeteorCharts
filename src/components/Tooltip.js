@@ -14,7 +14,7 @@ var EMPTY_STRING = '',
         text = this.text = new Kinetic.Text({}),
         tag = this.tag = new Kinetic.Tag(),
         label = this.label = new Kinetic.Label({
-          y: -8
+          y: -12
         });
 
     this.chart = chart;
@@ -46,13 +46,6 @@ var EMPTY_STRING = '',
         _view.get('tooltip', 'tag'),
         {
           pointerDirection: 'down',
-          pointerWidth: 10,
-          pointerHeight: 10,
-          lineJoin: 'round',
-          shadowColor: 'black',
-          shadowBlur: 10,
-          shadowOffset: 5,
-          shadowOpacity: 0.5,
           listening: false
         }
       ));

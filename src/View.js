@@ -33,7 +33,7 @@
         stroke: '#555',
         strokeWidth: 2
       },
-      formatter: 'Seconds' // can be Number, Seconds, or Date
+      formatter: 'Date' // can be Number, Seconds, or Date
     },
     yAxis: {
       min: 'auto',
@@ -66,10 +66,17 @@
       text: {
         fill: 'black',
         fontSize: 16,
-        padding: 2
+        padding: 4
       },
       tag: {
-        fill: '#e8e8e8'
+        fill: '#e8e8e8',
+        pointerWidth: 10,
+        pointerHeight: 10,
+        lineJoin: 'round',
+        shadowColor: 'black',
+        shadowBlur: 10,
+        shadowOffset: 5,
+        shadowOpacity: 0.5
       }
     },
     zoom: {
