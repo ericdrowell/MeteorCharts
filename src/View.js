@@ -66,17 +66,29 @@
       text: {
         fill: 'black',
         fontSize: 16,
-        padding: 4
+        padding: 6
       },
       tag: {
         fill: '#e8e8e8',
-        pointerWidth: 10,
-        pointerHeight: 10,
         lineJoin: 'round',
         shadowColor: 'black',
         shadowBlur: 10,
         shadowOffset: 5,
-        shadowOpacity: 0.5
+        shadowOpacity: 0.5,
+        strokeWidth: 4
+      }
+    },
+    connector: {
+      node: {
+        stroke: '#e8e8e8',
+        radius: 5,
+        strokeWidth: 2
+      },
+      line: {
+        strokeWidth: 3,
+        opacity: 0.3,
+        points: [0, 0, 0, 0],
+        dashArray: [10, 8]
       }
     },
     zoom: {

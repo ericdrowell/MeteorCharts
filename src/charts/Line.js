@@ -14,9 +14,9 @@
   MeteorCharts.Line.prototype = {
     __init: function(config) {
       // interaction components
-      this.zoom = new MeteorCharts.Zoom(this);
+      this.connector = new MeteorCharts.Connector(this);
       this.tooltip = new MeteorCharts.Tooltip(this);
-
+      this.zoom = new MeteorCharts.Zoom(this);
       this.draw();
     },
     _draw: function(disableSeriesTween) {
@@ -38,8 +38,9 @@
           stage = this.stage,
           container = stage.getContainer();
 
-      this.zoom.style();
-      this.tooltip.style();
+      this.zoom.reset();
+      this.tooltip.reset();
+      this.connector.reset();
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();
@@ -99,9 +100,6 @@
       else {
         this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
       }
-
-
-
     },
     getAutoMinMax: function() {
       var model = this.model,
@@ -163,25 +161,27 @@
           dataHeight = this.dataHeight,
           scaleX = this.scaleX,
           scaleY = this.scaleY,
-          height = _view.get('height');
+          height = _view.get('height'),
+          normalizedX = (pos.x - dataX) / this.dataWidth,
+          normalizedY = (pos.y - dataY) / this.dataHeight,
+          idealX = (rangeX * normalizedX) + minX,
+          idealY = maxY - (rangeY * normalizedY),
+          tooltip = this.tooltip,
+          label = tooltip.label, 
+          connector = this.connector,
+          nearestPoints = [],
+          n, line, points, nearestPoint, i, point, finalPoint;
 
-
-      var normalizedX = (pos.x - dataX) / this.dataWidth;
-      var normalizedY = (pos.y - dataY) / this.dataHeight;
-      var idealX = (rangeX * normalizedX) + minX;
-      var idealY = maxY - (rangeY * normalizedY);
-      var nearestPoints = [];
-
-      for (var n=0; n<lines.length; n++) {
-        var line = lines[n];
-        var points = line.points;
-        var nearestPoint = {
+      for (n=0; n<lines.length; n++) {
+        line = lines[n];
+        points = line.points;
+        nearestPoint = {
           x: points[0].x,
           y: points[0].y,
           color: _view.getSeriesStyle(n).stroke
         };
-        for (var i=0; i<points.length; i++) {
-          var point = points[i];
+        for (i=0; i<points.length; i++) {
+          point = points[i];
           if (Math.max(idealX, point.x) - Math.min(idealX, point.x) < Math.max(idealX, nearestPoint.x) - Math.min(idealX, nearestPoint.x)) {
             nearestPoint.x = point.x;
             nearestPoint.y = point.y;
@@ -191,10 +191,10 @@
         nearestPoints.push(nearestPoint);
       }
 
-      var finalPoint = nearestPoints[0];
+      finalPoint = nearestPoints[0];
 
-      for (var n=1; n<nearestPoints.length; n++) {
-        var point = nearestPoints[n];
+      for (n=1; n<nearestPoints.length; n++) {
+        point = nearestPoints[n];
         if (Math.max(idealY, point.y) - Math.min(idealY, point.y) < Math.max(idealY, finalPoint.y) - Math.min(idealY, finalPoint.y)) {
           finalPoint = point;
         }
@@ -203,9 +203,14 @@
       var tooltipPos = this.dataToChart(finalPoint.x, finalPoint.y);
       var str = this.xAxis.formatter.formatShort(finalPoint.x) + ', ' + this.yAxis.formatter.formatShort(finalPoint.y)
 
-      this.tooltip.group.setPosition(tooltipPos);
-      this.tooltip.node.setFill(finalPoint.color);
-      this.tooltip.text.setText(str);
+      label.setPosition(tooltipPos.x, dataY);
+      label.setOffsetX(label.getWidth() / 2);
+      tooltip.tag.setStroke(finalPoint.color);
+      connector.node.setFill(finalPoint.color);
+      connector.node.setPosition(tooltipPos.x, tooltipPos.y);
+      connector.line.setPoints([tooltipPos.x, tooltipPos.y, tooltipPos.x, dataY]);
+      connector.line.setStroke(finalPoint.color);
+      tooltip.text.setText(str);
 
     },
     dataToChartX: function(x) {
@@ -241,7 +246,7 @@
         y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
       };
     },
-    addLine: function(points, style, addNode) {
+    addLine: function(points, style, addNodes) {
       var lineObj = new Kinetic.Line(MeteorCharts.Util.merge(
         style,
         {
@@ -250,7 +255,7 @@
         }));
       this.dataLayer.add(lineObj);
 
-      if (addNode) {
+      if (addNodes) {
         this.addNodes(points, style);
       }
     },

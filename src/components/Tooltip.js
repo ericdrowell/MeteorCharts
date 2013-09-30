@@ -9,46 +9,27 @@ var EMPTY_STRING = '',
     TOUCHEND = 'touchend';
 
   MeteorCharts.Tooltip = function(chart) {
-    var group = this.group = new Kinetic.Group(),
-        node = this.node = new Kinetic.Circle(),
-        text = this.text = new Kinetic.Text({}),
+    var text = this.text = new Kinetic.Text({}),
         tag = this.tag = new Kinetic.Tag(),
-        label = this.label = new Kinetic.Label({
-          y: -12
-        });
+        label = this.label = new Kinetic.Label();
 
     this.chart = chart;
     label.add(tag).add(text);
-    group.add(node).add(label);
-    chart.interactionLayer.add(group);
+    chart.interactionLayer.add(label);
   };
 
   MeteorCharts.Tooltip.prototype = {
-    style: function() {
+    reset: function() {
       var _view = this.chart._view;
-
-      this.node.setAttrs({
-        radius: 5,
-        stroke: _view.get('backgroundColor'),
-        strokeWidth: 3,
-        listening: false
-      });
 
       this.text.setAttrs(MeteorCharts.Util.merge(
         _view.get('tooltip', 'text'),
         {
-          text: '',
-          listening: false
+          text: ''
         }
       ));
 
-      this.tag.setAttrs(MeteorCharts.Util.merge(
-        _view.get('tooltip', 'tag'),
-        {
-          pointerDirection: 'down',
-          listening: false
-        }
-      ));
+      this.tag.setAttrs(_view.get('tooltip', 'tag'));
     }
   };
 })();

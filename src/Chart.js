@@ -6,15 +6,15 @@
       EMPTY_STRING = '',
       TEXT = 'Text',
       SPACE = ' ',
-      MOUSEMOVE = 'mousemove',
-      MOUSEOUT = 'mouseout',
-      MOUSEOVER = 'mouseover',
-      TOUCHMOVE = 'touchmove',
-      TOUCHSTART = 'touchstart',
-      TOUCHEND = 'touchend',
-      MOUSEDOWN = 'mousedown',
-      MOUSEMOVE = 'mousemove',
-      MOUSEUP = 'mouseup',
+      CONTENT_MOUSEMOVE = 'contentMousemove',
+      CONTENT_MOUSEOUT = 'contentMouseout',
+      CONTENT_MOUSEOVER = 'contentMouseover',
+      CONTENT_TOUCHMOVE = 'contentTouchmove',
+      CONTENT_TOUCHSTART = 'contentTouchstart',
+      CONTENT_TOUCHEND = 'contentTouchend',
+      CONTENT_MOUSEDOWN = 'contentMousedown',
+      CONTENT_MOUSEMOVE = 'contentMousemove',
+      CONTENT_MOUSEUP = 'contentMouseup',
       HOVERING = 'hovering',
       ZOOMING = 'zooming',
       PANNING = 'panning';
@@ -127,7 +127,7 @@
       });
 
       // mouse events
-      stage.on(MOUSEDOWN, function() {
+      stage.on(CONTENT_MOUSEDOWN, function() {
         switch (that.state) {
           case HOVERING:
             if (keydown) {
@@ -142,18 +142,20 @@
         }
       });
 
-      stage.on(MOUSEMOVE, function() {
+      stage.on(CONTENT_MOUSEMOVE, function() {
         switch(that.state) {
           case HOVERING:
             that.pointerMove(); 
             break;
           case ZOOMING:
-            that.tooltip.group.hide();
+            that.tooltip.label.hide();
+            that.connector.group.hide();
             that.zoom._resizeZoomSelect();
             break;
           case PANNING:
             that._pan();
-            that.tooltip.group.hide();
+            that.tooltip.label.hide();
+            that.connector.group.hide();
             break;
         }
 
@@ -161,40 +163,38 @@
         that.interactionLayer.batchDraw();
       });
 
-      stage.on(MOUSEUP, function() {
+      stage.on(CONTENT_MOUSEUP, function() {
         switch(that.state) {
           case ZOOMING:
             that.zoom._endZoomSelect();
             that._setState(HOVERING);
-            that.tooltip.group.show();
+            that.tooltip.label.show();
+            that.connector.group.show();
             break;
           case PANNING:
             that._setState(HOVERING);
-            that.tooltip.group.show();
+            that.tooltip.label.show();
+            that.connector.group.show();
             stage.draw();
             that.fire('draw');
             break;
         }
       });
 
-      stage.on(MOUSEOVER, function(evt) {
-        if (!evt.targetNode) {
-          that.showInteractionLayer();
-        }
-      });
-
-      stage.on(MOUSEOUT, function(evt) {
-        if (!evt.targetNode) {
-          that.hideInteractionLayer();
-        }
-      });
-
-      // touch events
-      stage.on(TOUCHSTART, function() {
+      stage.on(CONTENT_MOUSEOVER, function() {
         that.showInteractionLayer();
       });
 
-      stage.on(TOUCHEND, function() {
+      stage.on(CONTENT_MOUSEOUT, function() {
+        that.hideInteractionLayer();
+      });
+
+      // touch events
+      stage.on(CONTENT_TOUCHSTART, function() {
+        that.showInteractionLayer();
+      });
+
+      stage.on(CONTENT_TOUCHEND, function() {
         that.hideInteractionLayer();
       });
 

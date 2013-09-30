@@ -48,6 +48,11 @@ var DEFAULT_LIGHT = {
       fill: '#e8e8e8'
     }
   },
+  connector: {
+    node: {
+      stroke: '#222'
+    }
+  },
   zoom: {
     type: 'box',
     selection: {

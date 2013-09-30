@@ -1,5 +1,5 @@
 (function() {
-  var DBLCLICK = 'dblclick',
+  var CONTENT_DBLCLICK = 'contentDblclick',
       MIN_ZOOM_SIZE = 20;
 
   MeteorCharts.Zoom = function(chart) {
@@ -15,7 +15,7 @@
   };
 
   MeteorCharts.Zoom.prototype = {
-    style: function() {
+    reset: function() {
       this.rect.setAttrs(MeteorCharts.Util.merge(
         this.chart._view.get('zoom', 'selection'),
         {
@@ -27,13 +27,14 @@
     _bind: function() {
       var that = this,
           chart = this.chart,
-          stage = chart.stage;
+          stage = chart.stage,
+          _view = chart._view;
 
-      stage.on(DBLCLICK, function() {
-        chart.view.xAxis.min = 'auto';
-        chart.view.xAxis.max = 'auto';
-        chart.view.yAxis.min = 'auto';
-        chart.view.yAxis.max = 'auto';
+      stage.on(CONTENT_DBLCLICK, function() {
+        _view.set('xAxis', 'min', 'auto');
+        _view.set('xAxis', 'max', 'auto');
+        _view.set('yAxis', 'min', 'auto');
+        _view.set('yAxis', 'max', 'auto');
         chart.draw();
       });
     },
