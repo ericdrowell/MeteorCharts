@@ -14,14 +14,15 @@
           minX = chart.minX,
           scaleX = chart.scaleX,
           range = maxX - minX,
-          increment = formatter.getIncrement(),
-          start = Math.ceil(minX/increment) * increment,
-          n, x;
+          n = formatter.start(minX), 
+          x;
 
-      for (n=start; n<maxX; n+=increment) {
+      while (n < maxX) {
         x = (n - minX) * scaleX + chart.dataX;
         this.addXLabel(formatter.formatShort(n), x);
+        n = formatter.next();
       }
+      
     }, 
     addXLabel: function(str, x) {
       var chart = this.chart,

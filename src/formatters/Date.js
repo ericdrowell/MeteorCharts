@@ -3,7 +3,9 @@
       SECONDS_IN_HOUR = 3600,
       SECONDS_IN_DAY = 86400,
       SECONDS_IN_MONTH = 2628000,
-      SECONDS_IN_YEAR = 31500000;
+      SECONDS_IN_YEAR = 31500000,
+
+  mn;
 
   MeteorCharts.Date = function(min, max, maxNumberOfLabels) {
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
@@ -33,6 +35,14 @@
       else {
         return date.format('yyyy'); // year
       }
+    },
+    start: function(ts) {
+      mn = moment(ts * 1000).startOf('month');
+      return mn.format('X');
+    },
+    next: function() {
+      mn.add('month', 2);
+      return mn.format('X');
     }
   };
 

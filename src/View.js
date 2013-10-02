@@ -71,10 +71,6 @@
       tag: {
         fill: '#e8e8e8',
         lineJoin: 'round',
-        shadowColor: 'black',
-        shadowBlur: 10,
-        shadowOffset: 5,
-        shadowOpacity: 0.5,
         strokeWidth: 4
       }
     },

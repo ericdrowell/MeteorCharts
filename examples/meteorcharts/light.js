@@ -41,11 +41,10 @@ var DEFAULT_LIGHT = {
   tooltip: {
     text: {
       fill: 'black',
-      fontSize: 16,
-      padding: 2
+      fontSize: 16
     },
     tag: {
-      fill: '#e8e8e8'
+      fill: 'white'
     }
   },
   connector: {
