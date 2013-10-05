@@ -13,7 +13,6 @@
           maxX = chart.maxX,
           minX = chart.minX,
           scaleX = chart.scaleX,
-          range = maxX - minX,
           n = formatter.start(minX), 
           x;
 

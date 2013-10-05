@@ -18,33 +18,18 @@
           increment = formatter.getIncrement(),
           dataHeight = chart.dataHeight,
           scaleY = chart.scaleY,
-          y = 0, 
+          n = formatter.start(minY), 
           maxWidth = 0,
           width;
 
-      // draw labels at 0 and above
-      while(y <= maxY) {
-        if (y >= minY) {
-          width = this.addYLabel(formatter.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
-          maxWidth = Math.max(width, maxWidth);
-        }
-        y+=increment; 
-      }
-      
-      // draw labels below 0
-      y=-1 * increment;
-      while(y >= minY) {
-        if (y <= maxY) {
-          width = this.addYLabel(formatter.formatShort(y), Math.round(dataHeight + (minY - y) * scaleY));
-          maxWidth = Math.max(width, maxWidth);
-        }
-        y-=increment; 
+      while (n < maxY) {
+        width = this.addYLabel(formatter.formatShort(n), Math.round(dataHeight + (minY - n) * scaleY));
+        maxWidth = Math.max(width, maxWidth);
+        n = formatter.next();
       }
 
       chart.dataX = maxWidth + 10 + chart._view.get('padding');
-
       this.lineGroup.setX(chart.dataX);
-
     },
     addYLabel: function(str, y) {
       var chart = this.chart,

@@ -3,46 +3,61 @@
       SECONDS_IN_HOUR = 3600,
       SECONDS_IN_DAY = 86400,
       SECONDS_IN_MONTH = 2628000,
-      SECONDS_IN_YEAR = 31500000,
-
-  mn;
+      SECONDS_IN_YEAR = 31500000;
 
   MeteorCharts.Date = function(min, max, maxNumberOfLabels) {
+    this.increment = this.getIncrement(max - min);
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
-    this.base = 60;
   };
 
   MeteorCharts.Date.prototype = {
     formatShort: function(seconds) {
       var range = this.range,
-          date = new Date(seconds * 1000);
+          date = new moment(seconds * 1000);
 
-      if (range < SECONDS_IN_MINUTE) {
-        return date.format('MM:sstt'); // seconds
-      }
-      else if (range < SECONDS_IN_HOUR) {
-        return date.format('h:MMtt'); // minute
+      if (range < SECONDS_IN_HOUR) {
+        return date.format('h:mma'); // minute
       }
       else if (range < SECONDS_IN_DAY) {
-        return date.format('ddd htt'); // hour
+        return date.format('ddd ha'); // hour
       }
       else if (range < SECONDS_IN_MONTH) {
-        return date.format('mmm dd'); // day
+        return date.format('MMM D'); // day
       }
       else if (range < SECONDS_IN_YEAR) {
-        return date.format('mmm yyyy');  // month
+        return date.format('MMM YYYY');  // month
       }
       else {
-        return date.format('yyyy'); // year
+        return date.format('YYYY'); // year
       }
     },
     start: function(ts) {
-      mn = moment(ts * 1000).startOf('month');
-      return mn.format('X');
+      this.mn = moment.utc(ts * 1000).endOf(this.increment);
+      return this.mn.unix();
     },
     next: function() {
-      mn.add('month', 2);
-      return mn.format('X');
+      this.mn.add(this.increment, 1);
+      return this.mn.unix();
+    },
+    getIncrement: function(range) {
+      if (range < SECONDS_IN_MINUTE) {
+        return 'second'; // seconds
+      }
+      else if (range < SECONDS_IN_HOUR) {
+        return 'minute'; // minute
+      }
+      else if (range < SECONDS_IN_DAY) {
+        return 'hour'; // hour
+      }
+      else if (range < SECONDS_IN_MONTH) {
+        return 'day'; // day
+      }
+      else if (range < SECONDS_IN_YEAR) {
+        return 'month';  // month
+      }
+      else {
+        return 'year'; // year
+      }
     }
   };
 

@@ -3,9 +3,6 @@ module.exports = function(grunt) {
     // top level
     'src/MeteorCharts.js',
 
-    // lib
-    'lib/date.js',
-
     // core
     'src/Chart.js',
     'src/Util.js',
