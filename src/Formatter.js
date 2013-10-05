@@ -2,12 +2,7 @@
   var baseIncrements = [
     1,
     2,
-    3,
-    5,
-    10,
-    15,
-    30,
-    50
+    5
   ];
 
   MeteorCharts.Formatter = function(min, max, maxCount) {
@@ -43,7 +38,7 @@
       len = baseIncrements.length,
       n, i;
 
-      for (n=0; n<7; n++) {
+      for (n=0; n<8; n++) {
         for (i=0; i<len; i++) {
           arr.push(baseIncrements[i] * Math.pow(base, n));
         }

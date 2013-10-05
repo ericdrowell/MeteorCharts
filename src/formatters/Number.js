@@ -30,8 +30,9 @@
       }
     },
     start: function(num) {
-      this.number = num;
-      return num;
+      var increment = this.increment;
+      this.number = num + Math.abs(num % this.increment);
+      return this.number;
     },
     next: function() {
       this.number += this.increment;
