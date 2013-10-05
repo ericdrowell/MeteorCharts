@@ -81,8 +81,8 @@
         strokeWidth: 2
       },
       line: {
-        strokeWidth: 3,
-        opacity: 0.3,
+        strokeWidth: 4,
+        opacity: 0.4,
         points: [0, 0, 0, 0],
         dashArray: [10, 8]
       }
