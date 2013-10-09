@@ -14,6 +14,17 @@
 
       this.node.setAttrs(_view.get('connector', 'node'));
       this.line.setAttrs(_view.get('connector', 'line'));
+    },
+    render: function(config) {
+      var chart = this.chart,
+          pos = chart.dataToChart(config.x, config.y),
+          node = this.node,
+          line = this.line;
+
+      node.setFill(config.color);
+      node.setPosition(pos.x, pos.y);
+      line.setPoints([pos.x, pos.y, pos.x, chart.dataY]);
+      line.setStroke(config.color);
     }
   };
 })();

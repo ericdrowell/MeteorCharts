@@ -1,9 +1,5 @@
 (function() {
-  var MOUSEDOWN = 'mousedown',
-      MOUSEUP = 'mouseup',
-      MOUSEMOVE = 'mousemove',
-      // pixels per node
-      ADD_NODES_THRESHOLD = 15;
+  var ADD_NODES_THRESHOLD = 15;
 
   MeteorCharts.Line = function(config) {
     // super
@@ -12,21 +8,18 @@
   };
 
   MeteorCharts.Line.prototype = {
-    __init: function(config) {
+    __init: function() {
       // interaction components
       this.connector = new MeteorCharts.Connector(this);
       this.tooltip = new MeteorCharts.Tooltip(this);
       this.zoom = new MeteorCharts.Zoom(this);
       this.draw();
     },
-    _draw: function(disableSeriesTween) {
+    _draw: function() {
       var that = this,
           autoMinMax = this.getAutoMinMax(),
-          view = this.view,
           _view = this._view,
           padding = _view.get('padding'),
-          xAxisView = view.xAxis,
-          yAxisView = view.yAxis,
           viewMinX = _view.get('xAxis', 'min'),
           viewMinY = _view.get('yAxis', 'min'),
           viewMaxX = _view.get('xAxis', 'max'),
@@ -103,7 +96,6 @@
     },
     getAutoMinMax: function() {
       var model = this.model,
-          view = this.view,
           lines = model.series,
           len = lines.length,
           firstPoint = lines[0].points[0],
@@ -113,7 +105,7 @@
           minY = firstPointY,
           maxX = firstPointX,
           maxY = firstPointY,
-          n, i, pointsLen, point, pointX, pointY;
+          n, i, pointsLen, point, pointX, pointY, line, points;
 
       for (n=0; n<len; n++) {
         line = lines[n];
@@ -136,18 +128,10 @@
         minY: minY,
         maxX: maxX,
         maxY: maxY
-      }
+      };
     },
-    pointerMove: function() {
-      var pos = this.stage.getPointerPosition();
-
-      if (!pos) {
-        return false;
-      }
-
-      var view = this.view,
-          _view = this._view,
-          width = _view.get('width'),
+    _getNearestPoint: function(pos) {
+      var _view = this._view,
           model = this.model,
           lines = model.series,
           minX = this.minX,
@@ -158,17 +142,10 @@
           rangeY = maxY - minY,
           dataX = this.dataX,
           dataY = this.dataY,
-          dataHeight = this.dataHeight,
-          scaleX = this.scaleX,
-          scaleY = this.scaleY,
-          height = _view.get('height'),
           normalizedX = (pos.x - dataX) / this.dataWidth,
           normalizedY = (pos.y - dataY) / this.dataHeight,
           idealX = (rangeX * normalizedX) + minX,
           idealY = maxY - (rangeY * normalizedY),
-          tooltip = this.tooltip,
-          label = tooltip.label, 
-          connector = this.connector,
           nearestPoints = [],
           n, line, points, nearestPoint, i, point, finalPoint;
 
@@ -178,7 +155,8 @@
         nearestPoint = {
           x: points[0].x,
           y: points[0].y,
-          color: _view.getSeriesStyle(n).stroke
+          color: _view.getSeriesStyle(n).stroke,
+          title: line.title
         };
         for (i=0; i<points.length; i++) {
           point = points[i];
@@ -200,18 +178,17 @@
         }
       }
 
-      var tooltipPos = this.dataToChart(finalPoint.x, finalPoint.y);
-      var str = this.xAxis.formatter.formatShort(finalPoint.x) + ', ' + this.yAxis.formatter.formatShort(finalPoint.y)
+      return finalPoint;
+    },
+    pointerMove: function() {
+      var pos = this.stage.getPointerPosition(),
+          nearestPoint;
 
-      label.setPosition(tooltipPos.x, dataY);
-      label.setOffsetX(label.getWidth() / 2);
-      tooltip.tag.setStroke(finalPoint.color);
-      connector.node.setFill(finalPoint.color);
-      connector.node.setPosition(tooltipPos.x, tooltipPos.y);
-      connector.line.setPoints([tooltipPos.x, tooltipPos.y, tooltipPos.x, dataY]);
-      connector.line.setStroke(finalPoint.color);
-      tooltip.text.setText(str);
-
+      if (pos) {
+        nearestPoint = this._getNearestPoint(pos);
+        this.tooltip.render(nearestPoint);
+        this.connector.render(nearestPoint);
+      }
     },
     dataToChartX: function(x) {
       return (x-this.minX) * this.scaleX + this.dataX;
@@ -227,8 +204,6 @@
     },
     dataToChartPoints: function(points) {
       var arr = [],
-          scaleX = this.scaleX,
-          scaleY = this.scaleY,
           len = points.length,
           n, point;
 
@@ -263,7 +238,7 @@
       var _view = this._view,
           len = points.length,
           dataLayer = this.dataLayer,
-          n, point, chartPoint;
+          n, point;
 
       for (n=0; n<len; n++) {
         point = points[n];
@@ -282,7 +257,7 @@
       var minX = this.minX,
           maxX = this.maxX,
           len = points.length,
-          start, end, i;
+          start, end, i, point;
 
       for (i=0; i<len; i++) {
         point = points[i];
@@ -308,22 +283,16 @@
       var model = this.model,
         lines = model.series,
         len = lines.length,
-        minX = this.minX,
-        maxX = this.maxX,
-        addNodesThreshold, 
         style, 
-        backgroundColor, 
         n, 
         line, 
-        lineObj, 
         points, 
-        pointsLen, 
-        point, 
         addNodes, 
         startEnd, 
         start, 
         end, 
-        chartRange;
+        chartRange,
+        newPoints;
 
       for (n=0; n<len; n++) {
         line = lines[n];
@@ -349,9 +318,8 @@
     },
     _pan: function() {
       var pos = this.stage.getPointerPosition(),
-          view = this.view,
           _view = this._view,
-          diffX, diffY, minX, maxX, minY, maxY;
+          diffX, diffY;
 
       if (this.lastPos) {
         diffX = (pos.x - this.lastPos.x) / this.scaleX;

@@ -148,13 +148,13 @@
             that.pointerMove(); 
             break;
           case ZOOMING:
-            that.tooltip.label.hide();
+            that.tooltip.group.hide();
             that.connector.group.hide();
             that.zoom._resizeZoomSelect();
             break;
           case PANNING:
             that._pan();
-            that.tooltip.label.hide();
+            that.tooltip.group.hide();
             that.connector.group.hide();
             break;
         }
@@ -168,12 +168,12 @@
           case ZOOMING:
             that.zoom._endZoomSelect();
             that._setState(HOVERING);
-            that.tooltip.label.show();
+            that.tooltip.group.show();
             that.connector.group.show();
             break;
           case PANNING:
             that._setState(HOVERING);
-            that.tooltip.label.show();
+            that.tooltip.group.show();
             that.connector.group.show();
             stage.draw();
             that.fire('draw');

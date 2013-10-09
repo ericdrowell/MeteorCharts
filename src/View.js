@@ -63,15 +63,21 @@
       }
     ],
     tooltip: {
-      text: {
+      title: {
+        fill: '#444',
+        fontSize: 16,
+        fontStyle: 'italic'
+      },
+      content: {
         fill: 'black',
         fontSize: 16,
-        padding: 6
+        fontStyle: 'bold'
       },
-      tag: {
+      rect: {
         fill: '#e8e8e8',
         lineJoin: 'round',
-        strokeWidth: 4
+        strokeWidth: 4,
+        padding: 8
       }
     },
     connector: {
