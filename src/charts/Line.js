@@ -138,18 +138,15 @@
           maxX = this.maxX,
           minY = this.minY,
           maxY = this.maxY,
-          rangeX = maxX - minX,
-          rangeY = maxY - minY,
-          dataX = this.dataX,
-          dataY = this.dataY,
-          normalizedX = (pos.x - dataX) / this.dataWidth,
-          normalizedY = (pos.y - dataY) / this.dataHeight,
-          idealX = (rangeX * normalizedX) + minX,
-          idealY = maxY - (rangeY * normalizedY),
+          dataPoint = this.chartToData(pos.x, pos.y),
+          dataX = dataPoint.x,
+          dataY = dataPoint.y,
           nearestPoints = [],
-          n, line, points, nearestPoint, i, point, finalPoint, pointX, pointY, pointDataX, pointDataY;
+          n, line, points, nearestPoint, i, point, finalPoint, pointX, pointY, diff, smallestDiff;
+
 
       for (n=0; n<lines.length; n++) {
+        smallestDiff = Infinity;
         line = lines[n];
         points = line.points;
         nearestPoint = {
@@ -162,11 +159,13 @@
           point = points[i];
           pointX = point.x;
           pointY = point.y;
-          pointDataX = this.dataToChartX(pointX);
-          pointDataY = this.dataToChartY(pointY);
+          diff = Math.abs(dataX - pointX);
 
-          if (pointX >= minX && pointX <= maxX
-            && Math.max(idealX, pointX) - Math.min(idealX, pointX) < Math.max(idealX, nearestPoint.x) - Math.min(idealX, nearestPoint.x)) {
+          if (pointX >= minX && pointX <= maxX 
+            && pointY >= minY && pointY <=maxY
+            && diff < smallestDiff) { 
+            //&& Math.max(idealX, pointX) - Math.min(idealX, pointX) < Math.max(idealX, nearestPoint.x) - Math.min(idealX, nearestPoint.x)) {
+            smallestDiff = diff;
             nearestPoint.x = pointX;
             nearestPoint.y = pointY;
           }
@@ -177,9 +176,15 @@
 
       finalPoint = nearestPoints[0];
 
-      for (n=1; n<nearestPoints.length; n++) {
+      smallestDiff = Infinity;
+
+      for (n=0; n<nearestPoints.length; n++) {
         point = nearestPoints[n];
-        if (Math.max(idealY, point.y) - Math.min(idealY, point.y) < Math.max(idealY, finalPoint.y) - Math.min(idealY, finalPoint.y)) {
+        diff = Math.abs(dataY - point.y);
+
+        //if (Math.max(idealY, point.y) - Math.min(idealY, point.y) < Math.max(idealY, finalPoint.y) - Math.min(idealY, finalPoint.y)) {
+        if (diff < smallestDiff) {
+          smallestDiff = diff;
           finalPoint = point;
         }
       }
