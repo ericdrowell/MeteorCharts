@@ -23,7 +23,7 @@
 
       node.setFill(config.color);
       node.setPosition(pos.x, pos.y);
-      line.setPoints([pos.x, pos.y, pos.x, chart.dataY]);
+      line.setPoints([pos.x, pos.y, pos.x, chart.tooltip.group.getY()]);
       line.setStroke(config.color);
     }
   };

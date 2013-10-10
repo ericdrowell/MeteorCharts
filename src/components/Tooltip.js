@@ -7,7 +7,8 @@ var EMPTY_STRING = '',
     TOUCHMOVE = 'touchmove',
     TOUCHSTART = 'touchstart',
     TOUCHEND = 'touchend',
-    LINE_SPACING = 10;
+    LINE_SPACING = 10,
+    Y_LOCK_DURATION = 500;
 
   MeteorCharts.Tooltip = function(chart) {
     this.chart = chart;
@@ -15,8 +16,9 @@ var EMPTY_STRING = '',
     this.title = new Kinetic.Text({});
     this.content = new Kinetic.Text({});
     this.rect = new Kinetic.Rect();
+    this.yTop = true;
+    this.yLock = false;
 
-    
     this.group.add(this.rect).add(this.title).add(this.content);
     chart.interactionLayer.add(this.group);
   };
@@ -58,14 +60,17 @@ var EMPTY_STRING = '',
           padding = _view.get('tooltip', 'rect', 'padding'),
           strokeWidth = _view.get('tooltip', 'rect', 'strokeWidth'),
           chartWidth = _view.get('width'),
-          width, x;
+          width, height, x, y;
 
       title.setText(config.title);
       content.setText(contentStr);
 
-      width = Math.max(title.getWidth(), content.getWidth()) + (padding * 2);
-      x = pos.x - (width / 2);
 
+      width = Math.max(title.getWidth(), content.getWidth()) + (padding * 2);
+      height = title.getHeight() + content.getHeight() + LINE_SPACING + (padding);
+      x = pos.x - (width / 2);
+      
+      // set x
       if (x < strokeWidth) {
         x = strokeWidth;
       }
@@ -73,10 +78,35 @@ var EMPTY_STRING = '',
         x = chartWidth - width - strokeWidth;
       }
 
-      group.setPosition(x, chart.dataY);
+      group.setX(x);
+
+      // set y
+      if (pos.y < (chart.dataY + height + 10)) {
+        this.setY(chart.dataY + height + 40);
+      }
+      else {
+        this.setY(chart.dataY);
+      }
+
       rect.setStroke(config.color);
       rect.setWidth(width);
-      rect.setHeight(title.getHeight() + content.getHeight() + LINE_SPACING + (padding));
+      rect.setHeight(height);
+    },
+    setY: function(y) {
+      var group = this.group;
+
+      if (y !== group.getY() && !this.yLock) {
+        group.setY(y);
+        this.lockY();
+      }
+    },
+    lockY: function() {
+      var that = this;
+
+      this.yLock = true;
+      setTimeout(function() {
+        that.yLock = false;
+      }, Y_LOCK_DURATION);
     }
   };
 })();

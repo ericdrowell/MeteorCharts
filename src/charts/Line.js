@@ -150,8 +150,6 @@
         line = lines[n];
         points = line.points;
         nearestPoint = {
-          x: points[0].x,
-          y: points[0].y,
           color: _view.getSeriesStyle(n).stroke,
           title: line.title
         };
@@ -164,14 +162,16 @@
           if (pointX >= minX && pointX <= maxX 
             && pointY >= minY && pointY <=maxY
             && diff < smallestDiff) { 
-            //&& Math.max(idealX, pointX) - Math.min(idealX, pointX) < Math.max(idealX, nearestPoint.x) - Math.min(idealX, nearestPoint.x)) {
+           
             smallestDiff = diff;
             nearestPoint.x = pointX;
             nearestPoint.y = pointY;
           }
         }
 
-        nearestPoints.push(nearestPoint);
+        if (nearestPoint.x !== undefined && nearestPoint.y !== undefined) {
+          nearestPoints.push(nearestPoint);
+        }
       }
 
       finalPoint = nearestPoints[0];
