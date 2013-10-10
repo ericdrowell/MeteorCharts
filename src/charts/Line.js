@@ -147,7 +147,7 @@
           idealX = (rangeX * normalizedX) + minX,
           idealY = maxY - (rangeY * normalizedY),
           nearestPoints = [],
-          n, line, points, nearestPoint, i, point, finalPoint;
+          n, line, points, nearestPoint, i, point, finalPoint, pointX, pointY, pointDataX, pointDataY;
 
       for (n=0; n<lines.length; n++) {
         line = lines[n];
@@ -160,9 +160,15 @@
         };
         for (i=0; i<points.length; i++) {
           point = points[i];
-          if (Math.max(idealX, point.x) - Math.min(idealX, point.x) < Math.max(idealX, nearestPoint.x) - Math.min(idealX, nearestPoint.x)) {
-            nearestPoint.x = point.x;
-            nearestPoint.y = point.y;
+          pointX = point.x;
+          pointY = point.y;
+          pointDataX = this.dataToChartX(pointX);
+          pointDataY = this.dataToChartY(pointY);
+
+          if (pointX >= minX && pointX <= maxX
+            && Math.max(idealX, pointX) - Math.min(idealX, pointX) < Math.max(idealX, nearestPoint.x) - Math.min(idealX, nearestPoint.x)) {
+            nearestPoint.x = pointX;
+            nearestPoint.y = pointY;
           }
         }
 

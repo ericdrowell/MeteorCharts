@@ -23,7 +23,7 @@
           width;
 
       while (n <= maxY) {
-        width = this.addYLabel(formatter.formatShort(n), Math.round(dataHeight + (minY - n) * scaleY));
+        width = this.addYLabel(formatter.short(n), Math.round(dataHeight + (minY - n) * scaleY));
         maxWidth = Math.max(width, maxWidth);
         n = formatter.next();
       }

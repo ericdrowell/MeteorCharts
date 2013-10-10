@@ -54,7 +54,7 @@ var EMPTY_STRING = '',
           title = this.title,
           content = this.content,
           pos = chart.dataToChart(config.x, config.y),
-          contentStr = chart.xAxis.formatter.formatShort(config.x) + ', ' + chart.yAxis.formatter.formatShort(config.y),
+          contentStr = chart.xAxis.formatter.long(config.x) + ', ' + chart.yAxis.formatter.long(config.y),
           padding = _view.get('tooltip', 'rect', 'padding'),
           width;
 

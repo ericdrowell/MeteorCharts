@@ -18,7 +18,7 @@
 
       while (n < maxX) {
         x = (n - minX) * scaleX + chart.dataX;
-        this.addXLabel(formatter.formatShort(n), x);
+        this.addXLabel(formatter.short(n), x);
         n = formatter.next();
       }
       

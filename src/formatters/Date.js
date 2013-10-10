@@ -11,7 +11,7 @@
   };
 
   MeteorCharts.Date.prototype = {
-    formatShort: function(seconds) {
+    short: function(seconds) {
       var range = this.range,
           date = new moment(seconds * 1000);
 
@@ -30,6 +30,10 @@
       else {
         return date.format('YYYY'); // year
       }
+    },
+    long: function(seconds) {
+      var date = date = new moment(seconds * 1000);
+      return date.format('MMM D YYYY h:mma'); // day
     },
     start: function(ts) {
       this.mn = moment.utc(ts * 1000).endOf(this.increment);

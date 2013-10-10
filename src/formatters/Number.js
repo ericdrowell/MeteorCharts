@@ -1,4 +1,11 @@
 (function() {
+  function addCommas(val){
+    while (/(\d+)(\d{3})/.test(val.toString())){
+      val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+    }
+    return val;
+  }
+
   MeteorCharts.Number = function(min, max, maxNumberOfLabels) {
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
     this.base = 10;
@@ -6,7 +13,7 @@
   };
 
   MeteorCharts.Number.prototype = {
-    formatShort: function(num) {
+    short: function(num) {
       var longestValue = this.getLongestValue();
 
       if (longestValue < 10) {
@@ -27,6 +34,9 @@
       else {
         return (Math.round(num / 1000000000 * 10)/10) + 'B';
       }
+    },
+    long: function(num) {
+      return addCommas(num);
     },
     start: function(num) {
       var increment = this.increment;
