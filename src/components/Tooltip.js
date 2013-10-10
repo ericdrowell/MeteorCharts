@@ -56,15 +56,24 @@ var EMPTY_STRING = '',
           pos = chart.dataToChart(config.x, config.y),
           contentStr = chart.xAxis.formatter.long(config.x) + ', ' + chart.yAxis.formatter.long(config.y),
           padding = _view.get('tooltip', 'rect', 'padding'),
-          width;
+          strokeWidth = _view.get('tooltip', 'rect', 'strokeWidth'),
+          chartWidth = _view.get('width'),
+          width, x;
 
       title.setText(config.title);
       content.setText(contentStr);
 
       width = Math.max(title.getWidth(), content.getWidth()) + (padding * 2);
+      x = pos.x - (width / 2);
 
-      group.setPosition(pos.x, chart.dataY);
-      group.setOffsetX(width / 2);
+      if (x < strokeWidth) {
+        x = strokeWidth;
+      }
+      else if (x > chartWidth - width - strokeWidth) {
+        x = chartWidth - width - strokeWidth;
+      }
+
+      group.setPosition(x, chart.dataY);
       rect.setStroke(config.color);
       rect.setWidth(width);
       rect.setHeight(title.getHeight() + content.getHeight() + LINE_SPACING + (padding));
