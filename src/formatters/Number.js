@@ -38,8 +38,9 @@
     long: function(num) {
       return addCommas(num);
     },
-    start: function(num) {
-      var increment = this.increment;
+    start: function() {
+      var num = this.min,
+          increment = this.increment;
       this.number = num + Math.abs(num % this.increment);
       return this.number;
     },

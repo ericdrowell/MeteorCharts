@@ -10,23 +10,20 @@
 
   MeteorCharts.YAxis.prototype = {
     addYLabels: function() {
-      var chart = this.chart,
+      var that = this,
+          chart = this.chart,
           formatter = this.formatter,
           minY = chart.minY,
-          maxY = chart.maxY,
-          range = maxY - minY,
           increment = formatter.getIncrement(),
           dataHeight = chart.dataHeight,
           scaleY = chart.scaleY,
-          n = formatter.start(minY), 
           maxWidth = 0,
           width;
 
-      while (n <= maxY) {
-        width = this.addYLabel(formatter.short(n), Math.round(dataHeight + (minY - n) * scaleY));
+      formatter.each(function(n) {
+        width = that.addYLabel(formatter.short(n), Math.round(dataHeight + (minY - n) * scaleY));
         maxWidth = Math.max(width, maxWidth);
-        n = formatter.next();
-      }
+      });
 
       chart.dataX = maxWidth + 10 + chart._view.get('padding');
       this.lineGroup.setX(chart.dataX);

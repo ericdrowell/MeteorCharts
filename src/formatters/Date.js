@@ -6,8 +6,10 @@
       SECONDS_IN_YEAR = 31500000;
 
   MeteorCharts.Date = function(min, max, maxNumberOfLabels) {
-    this.increment = this.getIncrement(max - min);
     MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
+    this.increment = this.getIncrement(max - min);
+    this.incrementMultiplier = 1;
+    this._setIncrementMultiplier();
   };
 
   MeteorCharts.Date.prototype = {
@@ -35,12 +37,12 @@
       var date = date = new moment(seconds * 1000);
       return date.format('MMM D YYYY h:mma'); // day
     },
-    start: function(ts) {
-      this.mn = moment.utc(ts * 1000).endOf(this.increment);
+    start: function() {
+      this.mn = moment.utc(this.min * 1000).endOf(this.increment);
       return this.mn.unix();
     },
     next: function() {
-      this.mn.add(this.increment, 1);
+      this.mn.add(this.increment, this.incrementMultiplier);
       return this.mn.unix();
     },
     getIncrement: function(range) {
@@ -61,6 +63,18 @@
       }
       else {
         return 'year'; // year
+      }
+    },
+    _setIncrementMultiplier: function() {
+      var numIncrements = 0;
+
+      this.each(function() {
+        numIncrements++;
+      });
+
+      if (numIncrements > this.maxNumberOfLabels) {
+        this.incrementMultiplier++;
+        this._setIncrementMultiplier();
       }
     }
   };

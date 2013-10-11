@@ -197,8 +197,11 @@
 
       if (pos) {
         nearestPoint = this._getNearestPoint(pos);
-        this.tooltip.render(nearestPoint);
-        this.connector.render(nearestPoint);
+
+        if (nearestPoint) {
+          this.tooltip.render(nearestPoint);
+          this.connector.render(nearestPoint);
+        }
       }
     },
     dataToChartX: function(x) {

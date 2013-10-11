@@ -8,20 +8,17 @@
 
   MeteorCharts.XAxis.prototype = {
     addXLabels: function() {
-      var chart = this.chart,
-          formatter = this.formatter,
-          maxX = chart.maxX,
-          minX = chart.minX,
+      var that = this,
+          chart = this.chart,
+          min = chart.minX,
           scaleX = chart.scaleX,
-          n = formatter.start(minX), 
+          formatter = this.formatter,
           x;
 
-      while (n < maxX) {
-        x = (n - minX) * scaleX + chart.dataX;
-        this.addXLabel(formatter.short(n), x);
-        n = formatter.next();
-      }
-      
+      formatter.each(function(n) {
+        x = (n - min) * scaleX + chart.dataX;
+        that.addXLabel(formatter.short(n), x);
+      });      
     }, 
     addXLabel: function(str, x) {
       var chart = this.chart,

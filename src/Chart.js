@@ -46,12 +46,12 @@
       // layers
       this.bottomLayer = new Kinetic.Layer({listening: false});
       this.dataLayer = new Kinetic.Layer({listening: false});
+      this.topLayer = new Kinetic.Layer({listening: false});
       this.interactionLayer = new Kinetic.Layer({
         opacity: 0,
         listening: false
       });
-      this.topLayer = new Kinetic.Layer({listening: false});
-
+      
       // add meteor classes
       this.bottomLayer.getCanvas()._canvas.className = 'meteorcharts-bottom-layer';
       this.dataLayer.getCanvas()._canvas.className = 'meteorcharts-data-layer';
