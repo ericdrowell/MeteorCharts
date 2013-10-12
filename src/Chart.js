@@ -51,7 +51,7 @@
         opacity: 0,
         listening: false
       });
-      
+
       // add meteor classes
       this.bottomLayer.getCanvas()._canvas.className = 'meteorcharts-bottom-layer';
       this.dataLayer.getCanvas()._canvas.className = 'meteorcharts-data-layer';
@@ -84,6 +84,9 @@
       this.enableSeriesTween = true;
       this.stage.draw();
       this.fire('draw');
+    },
+    getView: function() {
+      return this._view;
     },
     showInteractionLayer: function() {
       this.interactionShow.play();

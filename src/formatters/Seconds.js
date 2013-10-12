@@ -1,4 +1,5 @@
 (function() {
+  /*
   var SECONDS_IN_MINUTE = 60,
       SECONDS_IN_HOUR = 3600,
       SECONDS_IN_DAY = 86400,
@@ -39,4 +40,5 @@
   };
 
   MeteorCharts.Util.extend(MeteorCharts.Seconds, MeteorCharts.Formatter);
+  */
 })();

@@ -28,22 +28,20 @@
     xAxis: {
       min: 'auto',
       max: 'auto',
-      maxNumberOfLabels: 10,
       lines: {
         stroke: '#555',
         strokeWidth: 2
       },
-      formatter: 'Date' // can be Number, Seconds, or Date
+      formatter: 'Date' // can be Number or Date
     },
     yAxis: {
       min: 'auto',
       max: 'auto',
-      maxNumberOfLabels: 8,
       lines: {
         stroke: '#555',
         strokeWidth: 2
       },
-      formatter: 'Number' // can be Number, Seconds, or Date
+      formatter: 'Number' // can be Number or Date
     },
     series: [
       {

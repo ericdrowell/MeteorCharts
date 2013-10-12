@@ -6,10 +6,10 @@
     return val;
   }
 
-  MeteorCharts.Number = function(min, max, maxNumberOfLabels) {
-    MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
+  MeteorCharts.Number = function() {
+    MeteorCharts.Formatter.apply(this, arguments);
     this.base = 10;
-    this.increment = this.getIncrement(max - min);
+    this.increment = this.getIncrement();
   };
 
   MeteorCharts.Number.prototype = {

@@ -1,8 +1,11 @@
 (function() {
+  var APPROX_LABEL_MAX_DISTANCE = 50;
+
   MeteorCharts.YAxis = function(chart) {
+    var maxNumLabels = chart._view.get('height') / APPROX_LABEL_MAX_DISTANCE;
     this.chart = chart;
     this.maxNumberOfLabels = chart._view.get('yAxis', 'maxNumberOfLabels');
-    this.formatter = new MeteorCharts[chart._view.get('yAxis', 'formatter')](chart.minY, chart.maxY, this.maxNumberOfLabels);
+    this.formatter = new MeteorCharts[chart._view.get('yAxis', 'formatter')](chart.minY, chart.maxY, maxNumLabels);
     this.lineGroup = new Kinetic.Group();
     chart.bottomLayer.add(this.lineGroup);
     this.addYLabels();

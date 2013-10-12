@@ -5,9 +5,9 @@
       SECONDS_IN_MONTH = 2628000,
       SECONDS_IN_YEAR = 31500000;
 
-  MeteorCharts.Date = function(min, max, maxNumberOfLabels) {
-    MeteorCharts.Formatter.call(this, min, max, maxNumberOfLabels);
-    this.increment = this.getIncrement(max - min);
+  MeteorCharts.Date = function() {
+    MeteorCharts.Formatter.apply(this, arguments);
+    this.increment = this.getIncrement();
     this.incrementMultiplier = 1;
     this._setIncrementMultiplier();
   };
@@ -45,7 +45,8 @@
       this.mn.add(this.increment, this.incrementMultiplier);
       return this.mn.unix();
     },
-    getIncrement: function(range) {
+    getIncrement: function() {
+      var range = this.range;
       if (range < SECONDS_IN_MINUTE) {
         return 'second'; // seconds
       }
