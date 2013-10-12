@@ -201,6 +201,12 @@
         if (nearestPoint) {
           this.tooltip.render(nearestPoint);
           this.connector.render(nearestPoint);
+          this.tooltip.group.show();
+          this.connector.group.show();
+        }
+        else {
+          this.tooltip.group.hide();
+          this.connector.group.hide();
         }
       }
     },
