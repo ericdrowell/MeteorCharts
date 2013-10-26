@@ -14,6 +14,7 @@
       this.tooltip = new MeteorCharts.Tooltip(this);
       this.zoom = new MeteorCharts.Zoom(this);
       this.draw();
+      this._addContent();
     },
     _draw: function() {
       var that = this,
@@ -93,6 +94,8 @@
       else {
         this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
       }
+
+
     },
     getAutoMinMax: function() {
       var model = this.model,
@@ -350,6 +353,37 @@
         _view.set('yAxis', 'max', this.maxY + diffY);
         this.batchDraw();
       }
+    },
+    _getContent: function() {
+      var _view = this._view,
+          model = this.model,
+          series = model.series,
+          len = series.length,
+          n, line, points, firstPoint, lastPoint, change,
+          xFormatter = this.xAxis.formatter,
+          yFormatter = this.yAxis.formatter,
+          content = [
+            '<h2>MeteorCharts Line Chart Description</h2>',
+            '<p>',
+            'The title of the chart is "' + model.title + '". ',
+            'The x axis begins at "' + xFormatter.short(this.minX) + '" and ends at "' + xFormatter.short(this.maxX) + '" from left to right. ',
+            'The y axis begins at "' + yFormatter.short(this.minY) + '" and ends at "' + yFormatter.short(this.maxY) + '" from bottom to top. ',
+            'There are ' + model.series.length + ' series lines. ',
+          ];
+
+      for (n=0; n<len; n++) {
+        line = series[n];
+        points = line.points;
+        firstPoint = points[0];
+        lastPoint = points[points.length - 1];
+        change = lastPoint.y >= firstPoint.y ? 'rises' : 'falls';
+        content.push('The line titled "' + series[n].title + '" begins at ' + yFormatter.short(firstPoint.y) + ' ');
+        content.push('and ' + change + ' to ' + yFormatter.short(lastPoint.y) + '. ');
+      }
+
+      content.push('</p>');
+
+      return content.join('');
     }
   };
 

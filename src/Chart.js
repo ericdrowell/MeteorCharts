@@ -42,6 +42,7 @@
       });
 
       this.stage.getContainer().style.display = 'inline-block';
+      this.stage.getContent().setAttribute('role', 'presentation');
 
       // layers
       this.bottomLayer = new Kinetic.Layer({listening: false});
@@ -52,16 +53,24 @@
         listening: false
       });
 
+      // description
+      this.content = document.createElement('div');
+      this.content.style.textIndent = '-999999px';
+      this.content.style.position = 'absolute';
+
       // add meteor classes
       this.bottomLayer.getCanvas()._canvas.className = 'meteorcharts-bottom-layer';
       this.dataLayer.getCanvas()._canvas.className = 'meteorcharts-data-layer';
       this.topLayer.getCanvas()._canvas.className = 'meteorcharts-top-layer';
       this.interactionLayer.getCanvas()._canvas.className = 'meteorcharts-interaction-layer';
+      this.content.className = 'meteorcharts-content';
 
       this.stage.add(this.bottomLayer);
       this.stage.add(this.dataLayer);
       this.stage.add(this.topLayer);
       this.stage.add(this.interactionLayer);
+
+      this.stage.getContainer().insertBefore(this.content, this.stage.getContent());
 
       this.title = new MeteorCharts.Title(this);
 
@@ -73,6 +82,7 @@
       });
 
       this._bind();
+      
 
 
     },
@@ -114,6 +124,12 @@
     _setState: function(state) {
       this.state = state;
       this.fire('stateChange');
+    },
+    _getContent: function() {
+      return '';
+    },
+    _addContent: function() {
+      this.content.innerHTML = this._getContent();
     },
     _bind: function() {
       var stage = this.stage,
