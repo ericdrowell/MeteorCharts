@@ -6,15 +6,6 @@
       EMPTY_STRING = '',
       TEXT = 'Text',
       SPACE = ' ',
-      CONTENT_MOUSEMOVE = 'contentMousemove',
-      CONTENT_MOUSEOUT = 'contentMouseout',
-      CONTENT_MOUSEOVER = 'contentMouseover',
-      CONTENT_TOUCHMOVE = 'contentTouchmove',
-      CONTENT_TOUCHSTART = 'contentTouchstart',
-      CONTENT_TOUCHEND = 'contentTouchend',
-      CONTENT_MOUSEDOWN = 'contentMousedown',
-      CONTENT_MOUSEMOVE = 'contentMousemove',
-      CONTENT_MOUSEUP = 'contentMouseup',
       HOVERING = 'hovering',
       ZOOMING = 'zooming',
       PANNING = 'panning';
@@ -145,8 +136,12 @@
         keydown = false;
       });
 
+      stage.on('contentTouchstart contentTouchend contentTouchmove', function(evt) {
+        evt.preventDefault();
+      });
+
       // mouse events
-      stage.on(CONTENT_MOUSEDOWN, function() {
+      stage.on('contentMousedown', function() {
         switch (that.state) {
           case HOVERING:
             if (keydown) {
@@ -161,7 +156,7 @@
         }
       });
 
-      stage.on(CONTENT_MOUSEMOVE, function() {
+      stage.on('contentMousemove contentTouchmove contentTouchstart', function() {
         switch(that.state) {
           case HOVERING:
             that.pointerMove(); 
@@ -182,7 +177,7 @@
         that.interactionLayer.batchDraw();
       });
 
-      stage.on(CONTENT_MOUSEUP, function() {
+      stage.on('contentMouseup', function() {
         switch(that.state) {
           case ZOOMING:
             that.zoom._endZoomSelect();
@@ -200,22 +195,14 @@
         }
       });
 
-      stage.on(CONTENT_MOUSEOVER, function() {
+      stage.on('contentMouseover contentTouchstart', function() {
         that.showInteractionLayer();
       });
 
-      stage.on(CONTENT_MOUSEOUT, function() {
+      stage.on('contentMouseout contentTouchend', function() {
         that.hideInteractionLayer();
       });
 
-      // touch events
-      stage.on(CONTENT_TOUCHSTART, function() {
-        that.showInteractionLayer();
-      });
-
-      stage.on(CONTENT_TOUCHEND, function() {
-        that.hideInteractionLayer();
-      });
 
       // bind before draw event to bottom layer because this is the
       // first layer in the stage that's drawn.  the _draw() method needs to 

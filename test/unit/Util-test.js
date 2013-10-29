@@ -1,6 +1,3 @@
-var assert = require('assert');
-var MeteorCharts = require('../../dist/meteorcharts-dev');
-
 suite('Util', function(){
   var util;
 
@@ -8,8 +5,6 @@ suite('Util', function(){
     util = MeteorCharts.Util;
   });
 
-  // =======================================
-  // get()
   // =======================================
   suite('get()', function(){
     test('1 level', function(){
@@ -52,8 +47,6 @@ suite('Util', function(){
   });
 
 
-  // =======================================
-  // get()
   // =======================================
   suite('merge()', function(){
 

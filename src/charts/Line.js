@@ -377,8 +377,8 @@
         firstPoint = points[0];
         lastPoint = points[points.length - 1];
         change = lastPoint.y >= firstPoint.y ? 'rises' : 'falls';
-        content.push('The line titled "' + series[n].title + '" begins at ' + yFormatter.short(firstPoint.y) + ' ');
-        content.push('and ' + change + ' to ' + yFormatter.short(lastPoint.y) + '. ');
+        content.push('The line titled "' + series[n].title + '" begins at "' + yFormatter.short(firstPoint.y) + '" ');
+        content.push('and ' + change + ' to "' + yFormatter.short(lastPoint.y) + '". ');
       }
 
       content.push('</p>');
