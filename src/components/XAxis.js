@@ -26,7 +26,7 @@
     addXLabel: function(str, x) {
       var chart = this.chart,
           _view = chart._view,
-          lines = _view.get('xAxis', 'lines'),
+          lines = _view.get('xAxis', 'gridLines'),
           dataY = chart.dataY,
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,

@@ -40,7 +40,7 @@
           dataY = chart.dataY,
           bottomLayer = chart.bottomLayer,
           topLayer = chart.topLayer,
-          lines = _view.get('yAxis', 'lines'),
+          lines = _view.get('yAxis', 'gridLines'),
           text = new Kinetic.Text(MeteorCharts.Util.merge(
             _view.get('text'),
             {

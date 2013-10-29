@@ -19,7 +19,6 @@
       }
     },
     legend: {
-      layout: 'top', // can be top, right, or bottom
       text: {
         fontSize: 20
       },
@@ -28,7 +27,7 @@
     xAxis: {
       min: 'auto',
       max: 'auto',
-      lines: {
+      gridLines: {
         stroke: '#555',
         strokeWidth: 2
       },
@@ -37,7 +36,7 @@
     yAxis: {
       min: 'auto',
       max: 'auto',
-      lines: {
+      gridLines: {
         stroke: '#555',
         strokeWidth: 2
       },
@@ -90,7 +89,7 @@
       }
     },  
     zoom: {
-      type: 'box',
+      type: 'box', // can be box or range
       selection: {
         fill: 'white',
         opacity: 0.3
@@ -99,6 +98,9 @@
   };
 
   MeteorCharts.View.prototype = {
+    /**
+    * @example get('legend', 'text', 'fontSize');
+    */
     get: function() {
       var arr = Array.prototype.slice.call(arguments),
           util = MeteorCharts.Util,
@@ -115,7 +117,7 @@
         get(view, arr)
       );
     },
-    /*
+    /**
     * @example set('legend', 'text', 'fontSize', 16);
     */
     set: function() {
