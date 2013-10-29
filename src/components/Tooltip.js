@@ -13,13 +13,24 @@ var EMPTY_STRING = '',
   MeteorCharts.Tooltip = function(chart) {
     this.chart = chart;
     this.group = new Kinetic.Group();
+    this.textGroup = new Kinetic.Group();
     this.title = new Kinetic.Text({});
     this.content = new Kinetic.Text({});
     this.rect = new Kinetic.Rect();
+    this.node = new Kinetic.Circle();
+    this.connector = new Kinetic.Line();
     this.yTop = true;
     this.yLock = false;
 
-    this.group.add(this.rect).add(this.title).add(this.content);
+    this.group      
+      .add(this.connector)
+      .add(this.node)
+      .add(this.textGroup
+        .add(this.rect)
+        .add(this.title)
+        .add(this.content)
+      );
+
     chart.interactionLayer.add(this.group);
   };
 
@@ -47,14 +58,18 @@ var EMPTY_STRING = '',
       ));
 
       this.rect.setAttrs(_view.get('tooltip', 'rect'));
+      this.node.setAttrs(_view.get('tooltip', 'node'));
+      this.connector.setAttrs(_view.get('tooltip', 'connector'));
     },
     render: function(config) {
       var chart = this.chart,
           _view = chart._view,
-          group = this.group,
+          textGroup = this.textGroup,
           rect = this.rect,
           title = this.title,
           content = this.content,
+          node = this.node,
+          connector = this.connector,
           pos = chart.dataToChart(config.x, config.y),
           contentStr = chart.xAxis.formatter.long(config.x) + ', ' + chart.yAxis.formatter.long(config.y),
           padding = _view.get('tooltip', 'rect', 'padding'),
@@ -64,7 +79,6 @@ var EMPTY_STRING = '',
 
       title.setText(config.title);
       content.setText(contentStr);
-
 
       width = Math.max(title.getWidth(), content.getWidth()) + (padding * 2);
       height = title.getHeight() + content.getHeight() + LINE_SPACING + (padding);
@@ -78,7 +92,7 @@ var EMPTY_STRING = '',
         x = chartWidth - width - strokeWidth;
       }
 
-      group.setX(x);
+      textGroup.setX(x);
 
       // set y
       if (pos.y < (chart.dataY + height + 10)) {
@@ -91,12 +105,17 @@ var EMPTY_STRING = '',
       rect.setStroke(config.color);
       rect.setWidth(width);
       rect.setHeight(height);
+
+      node.setFill(config.color);
+      node.setPosition(pos.x, pos.y);
+      connector.setPoints([pos.x, pos.y, pos.x, textGroup.getY()]);
+      connector.setStroke(config.color);
     },
     setY: function(y) {
-      var group = this.group;
+      var textGroup = this.textGroup;
 
-      if (y !== group.getY() && !this.yLock) {
-        group.setY(y);
+      if (y !== textGroup.getY() && !this.yLock) {
+        textGroup.setY(y);
         this.lockY();
       }
     },

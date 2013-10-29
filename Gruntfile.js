@@ -23,7 +23,6 @@ module.exports = function(grunt) {
     'src/components/YAxis.js',
     'src/components/Tooltip.js',
     'src/components/Zoom.js',
-    'src/components/Connector.js',
 
     // charts
     'src/charts/Line.js'

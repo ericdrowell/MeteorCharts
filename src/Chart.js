@@ -140,7 +140,7 @@
         evt.preventDefault();
       });
 
-      // mouse events
+
       stage.on('contentMousedown', function() {
         switch (that.state) {
           case HOVERING:
@@ -163,13 +163,11 @@
             break;
           case ZOOMING:
             that.tooltip.group.hide();
-            that.connector.group.hide();
             that.zoom._resizeZoomSelect();
             break;
           case PANNING:
             that._pan();
             that.tooltip.group.hide();
-            that.connector.group.hide();
             break;
         }
 
@@ -183,12 +181,10 @@
             that.zoom._endZoomSelect();
             that._setState(HOVERING);
             that.tooltip.group.show();
-            that.connector.group.show();
             break;
           case PANNING:
             that._setState(HOVERING);
             that.tooltip.group.show();
-            that.connector.group.show();
             stage.draw();
             that.fire('draw');
             break;

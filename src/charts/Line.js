@@ -10,7 +10,6 @@
   MeteorCharts.Line.prototype = {
     __init: function() {
       // interaction components
-      this.connector = new MeteorCharts.Connector(this);
       this.tooltip = new MeteorCharts.Tooltip(this);
       this.zoom = new MeteorCharts.Zoom(this);
       this.draw();
@@ -34,7 +33,6 @@
 
       this.zoom.reset();
       this.tooltip.reset();
-      this.connector.reset();
 
       this.bottomLayer.destroyChildren();
       this.dataLayer.destroyChildren();
@@ -203,13 +201,10 @@
 
         if (nearestPoint) {
           this.tooltip.render(nearestPoint);
-          this.connector.render(nearestPoint);
           this.tooltip.group.show();
-          this.connector.group.show();
         }
         else {
           this.tooltip.group.hide();
-          this.connector.group.hide();
         }
       }
     },

@@ -76,21 +76,19 @@
         lineJoin: 'round',
         strokeWidth: 4,
         padding: 8
-      }
-    },
-    connector: {
+      },
       node: {
         stroke: '#e8e8e8',
         radius: 5,
         strokeWidth: 2
       },
-      line: {
+      connector: {
         strokeWidth: 4,
         opacity: 0.4,
         points: [0, 0, 0, 0],
         dashArray: [10, 8]
       }
-    },
+    },  
     zoom: {
       type: 'box',
       selection: {
