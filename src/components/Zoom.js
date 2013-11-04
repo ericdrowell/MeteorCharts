@@ -90,7 +90,7 @@
 
         diff = startDistance - dist;
 
-        alert(diff);
+        //alert(diff);
       }
     },
     _endZoomSelect: function() {
