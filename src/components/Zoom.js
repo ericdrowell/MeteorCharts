@@ -1,6 +1,8 @@
 (function() {
   var CONTENT_DBLCLICK = 'contentDblclick',
-      MIN_ZOOM_SIZE = 20;
+      MIN_ZOOM_SIZE = 20,
+
+      startDistance = null;
 
   MeteorCharts.Zoom = function(chart) {
     this.chart = chart;
@@ -65,6 +67,30 @@
         if (!rect.isVisible()) {
           rect.setVisible(true);
         }
+      }
+    },
+    _pinch: function(evt) {
+      var touch1 = evt.touches[0],
+          touch2 = evt.touches[1],
+          dist = 0,
+          diff = 0;
+
+      if(touch1 && touch2) {
+        dist = MeteorCharts.Util.getDistance({
+          x: touch1.clientX,
+          y: touch1.clientY
+        }, {
+          x: touch2.clientX,
+          y: touch2.clientY
+        });
+
+        if (startDistance === null) {
+          startDistance = dist;
+        }
+
+        diff = startDistance - dist;
+
+        alert(diff);
       }
     },
     _endZoomSelect: function() {

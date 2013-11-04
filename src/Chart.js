@@ -125,7 +125,8 @@
     _bind: function() {
       var stage = this.stage,
           that = this,
-          keydown = false;
+          keydown = false,
+          startDistance = null;
 
         // manage keydown / up
       document.body.addEventListener('keydown', function(evt) {
@@ -189,6 +190,14 @@
             that.fire('draw');
             break;
         }
+      });
+
+      stage.on('contentTouchmove', function(evt) {
+        that.zoom._pinch(evt);
+      });
+
+      stage.on('contentTouchend', function() {
+        startDistance = null;
       });
 
       stage.on('contentMouseover contentTouchstart', function() {

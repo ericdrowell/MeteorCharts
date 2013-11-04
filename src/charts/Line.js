@@ -44,7 +44,7 @@
       container.style.backgroundColor = _view.get('backgroundColor');
 
       this.dataY = _view.get('title', 'text', 'fontSize') + _view.get('spacing') + padding;
-      this.dataHeight = _view.get('height') - this.dataY - _view.get('text', 'fontSize') - _view.get('spacing') - padding;
+      this.dataHeight = _view.get('height') - this.dataY - _view.get('xAxis', 'text', 'fontSize') - _view.get('spacing') - padding;
       this.scaleY = this.dataHeight / (maxY - minY);
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
@@ -70,13 +70,16 @@
       // update interaction layer
       this.pointerMove();
 
+      /*
       if (this.clipTween) {
         this.clipTween.destroy();
       }
+      */
 
       // TODO: when KineticJS supports Tween setters, there will no longer
       // be a need to create a new tween each time
 
+      /*
       if (this.enableSeriesTween) {
         this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
 
@@ -90,8 +93,9 @@
         this.clipTween.play();
       }
       else {
-        this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
-      }
+        */
+      this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
+      //}
 
 
     },

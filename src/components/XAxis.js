@@ -30,9 +30,9 @@
           dataY = chart.dataY,
           dataHeight = chart.dataHeight,
           bottomLayer = chart.bottomLayer,
-          y = _view.get('height') - _view.get('text', 'fontSize') - _view.get('padding'),
+          y = _view.get('height') - _view.get('xAxis', 'text', 'fontSize') - _view.get('padding'),
           text = new Kinetic.Text(MeteorCharts.Util.merge(
-            _view.get('text'),
+            _view.get('xAxis', 'text'),
             {
               text: str,
               x: x,

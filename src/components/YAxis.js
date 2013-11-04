@@ -42,7 +42,7 @@
           topLayer = chart.topLayer,
           lines = _view.get('yAxis', 'gridLines'),
           text = new Kinetic.Text(MeteorCharts.Util.merge(
-            _view.get('text'),
+            _view.get('yAxis', 'text'),
             {
               text: str,
               x: padding,

@@ -9,24 +9,26 @@
     height: 450,
     padding: 10,
     spacing: 10,
-    text: {
-      fill: '#ccc',
-      fontSize: 16
-    },
     title: {
       text: {
-        fontSize: 24
+        fill: '#ccc',
+        fontSize: 20
       }
     },
     legend: {
       text: {
-        fontSize: 20
+        fill: '#ccc',
+        fontSize: 18
       },
       spacing: 20
     },
     xAxis: {
       min: 'auto',
       max: 'auto',
+      text: {
+        fill: '#ccc',
+        fontSize: 14
+      },
       gridLines: {
         stroke: '#555',
         strokeWidth: 2
@@ -36,6 +38,10 @@
     yAxis: {
       min: 'auto',
       max: 'auto',
+      text: {
+        fill: '#ccc',
+        fontSize: 14
+      },
       gridLines: {
         stroke: '#555',
         strokeWidth: 2
@@ -62,12 +68,12 @@
     tooltip: {
       title: {
         fill: '#444',
-        fontSize: 16,
+        fontSize: 14,
         fontStyle: 'italic'
       },
       content: {
         fill: 'black',
-        fontSize: 16,
+        fontSize: 14,
         fontStyle: 'bold'
       },
       rect: {
@@ -106,14 +112,10 @@
           util = MeteorCharts.Util,
           get = util.get,
           view = this.chart.view,
-          len = arr.length,
-          lastIndex = len - 1,
           def = MeteorCharts.View.DEFAULT;
 
       return util.merge(
-        get(def, [arr[lastIndex]]),
         get(def, arr),
-        get(view, [arr[lastIndex]]),
         get(view, arr)
       );
     },
