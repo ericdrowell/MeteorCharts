@@ -3,6 +3,7 @@
 
   MeteorCharts.XAxis = function(chart) {
     var maxNumLabels = chart._view.get('width') / APPROX_LABEL_MAX_DISTANCE;
+
     this.chart = chart;
     this.maxNumberOfLabels = chart._view.get('xAxis', 'maxNumberOfLabels');
     this.formatter = new MeteorCharts[chart._view.get('xAxis', 'formatter')](chart.minX, chart.maxX, maxNumLabels);

@@ -3,6 +3,7 @@
 
   MeteorCharts.YAxis = function(chart) {
     var maxNumLabels = chart._view.get('height') / APPROX_LABEL_MAX_DISTANCE;
+
     this.chart = chart;
     this.maxNumberOfLabels = chart._view.get('yAxis', 'maxNumberOfLabels');
     this.formatter = new MeteorCharts[chart._view.get('yAxis', 'formatter')](chart.minY, chart.maxY, maxNumLabels);
@@ -21,7 +22,7 @@
           dataHeight = chart.dataHeight,
           scaleY = chart.scaleY,
           maxWidth = 0,
-          width;
+          width = 0;
 
       formatter.each(function(n) {
         width = that.addYLabel(formatter.short(n), Math.round(dataHeight + (minY - n) * scaleY));

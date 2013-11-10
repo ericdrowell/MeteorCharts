@@ -1,5 +1,6 @@
 (function() {
   MeteorCharts.View = function(chart) {
+    this.overrides = {};
     this.chart = chart;
   };
 
@@ -63,6 +64,26 @@
         stroke: '#fc009a', // pink
         strokeWidth: 2,
         lineJoin: 'round'
+      },
+      {
+        stroke: '#ffff00', // yellow
+        strokeWidth: 2,
+        lineJoin: 'round'
+      },
+      {
+        stroke: '#d200ff', // light purple
+        strokeWidth: 2,
+        lineJoin: 'round'
+      },
+      {
+        stroke: '#ff9000', // orange
+        strokeWidth: 2,
+        lineJoin: 'round'
+      },
+      {
+        stroke: '#00fcff', // turquoise
+        strokeWidth: 2,
+        lineJoin: 'round'
       }
     ],
     tooltip: {
@@ -111,12 +132,14 @@
       var arr = Array.prototype.slice.call(arguments),
           util = MeteorCharts.Util,
           get = util.get,
+          def = MeteorCharts.View.DEFAULT,
           view = this.chart.view,
-          def = MeteorCharts.View.DEFAULT;
+          overrides = this.overrides;
 
       return util.merge(
         get(def, arr),
-        get(view, arr)
+        get(view, arr),
+        get(overrides, arr)
       );
     },
     /**

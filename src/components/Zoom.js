@@ -33,10 +33,10 @@
           _view = chart._view;
 
       stage.on(CONTENT_DBLCLICK, function() {
-        _view.set('xAxis', 'min', 'auto');
-        _view.set('xAxis', 'max', 'auto');
-        _view.set('yAxis', 'min', 'auto');
-        _view.set('yAxis', 'max', 'auto');
+        chart.minX = null;
+        chart.minY = null;
+        chart.maxX = null;
+        chart.maxY = null;
         chart.draw();
       });
     },
@@ -103,6 +103,7 @@
     },
     _updateMinMax: function() {
       var chart = this.chart,
+          bounds = chart.bounds,
           view = chart.view,
           _view = chart._view,
           type = chart._view.get('zoom', 'type');
@@ -121,10 +122,10 @@
       //console.log(min.y + ',' + max.y)
 
       if (Math.abs(chartMaxX - chartMinX) > MIN_ZOOM_SIZE && Math.abs(chartMaxY - chartMinY) > MIN_ZOOM_SIZE) {
-        _view.set('xAxis', 'min', min.x);
-        _view.set('yAxis', 'min', min.y);
-        _view.set('xAxis', 'max', max.x);
-        _view.set('yAxis', 'max', max.y);
+        chart.minX = min.x;
+        chart.minY = min.y;
+        chart.maxX = max.x;
+        chart.maxY = max.y;
         chart.draw();
       }
 

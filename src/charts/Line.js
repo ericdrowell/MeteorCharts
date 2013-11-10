@@ -15,19 +15,26 @@
       this.draw();
       this._addContent();
     },
-    _draw: function() {
+    setBounds: function() {
       var that = this,
           autoMinMax = this.getAutoMinMax(),
           _view = this._view,
-          padding = _view.get('padding'),
           viewMinX = _view.get('xAxis', 'min'),
           viewMinY = _view.get('yAxis', 'min'),
           viewMaxX = _view.get('xAxis', 'max'),
-          viewMaxY = _view.get('yAxis', 'max'),
-          minX = this.minX = viewMinX === 'auto' ? autoMinMax.minX : viewMinX,
-          minY = this.minY = viewMinY === 'auto' ? autoMinMax.minY : viewMinY,
-          maxX = this.maxX = viewMaxX === 'auto' ? autoMinMax.maxX : viewMaxX,
-          maxY = this.maxY = viewMaxY === 'auto' ? autoMinMax.maxY : viewMaxY,
+          viewMaxY = _view.get('yAxis', 'max');
+
+        if (!this.minX && !this.minY && !this.maxX && !this.maxY) {
+          this.minX = viewMinX === 'auto' ? autoMinMax.minX : viewMinX;
+          this.minY = viewMinY === 'auto' ? autoMinMax.minY : viewMinY;
+          this.maxX = viewMaxX === 'auto' ? autoMinMax.maxX : viewMaxX;
+          this.maxY = viewMaxY === 'auto' ? autoMinMax.maxY : viewMaxY;
+        }
+    },
+    _draw: function() {
+      var that = this,
+          _view = this._view,
+          padding = _view.get('padding'),
           stage = this.stage,
           container = stage.getContainer();
 
@@ -41,11 +48,13 @@
       // TODO: width and height should be cached
       //stage.setSize(view.width, view.height);
 
+      this.setBounds();
+
       container.style.backgroundColor = _view.get('backgroundColor');
 
       this.dataY = _view.get('title', 'text', 'fontSize') + _view.get('spacing') + padding;
       this.dataHeight = _view.get('height') - this.dataY - _view.get('xAxis', 'text', 'fontSize') - _view.get('spacing') - padding;
-      this.scaleY = this.dataHeight / (maxY - minY);
+      this.scaleY = this.dataHeight / (this.maxY - this.minY);
       this.yAxis = new MeteorCharts.YAxis(this);
       this.dataWidth = _view.get('width') - this.dataX - padding;
 
@@ -53,10 +62,8 @@
         node.setPoints([0, 0, that.dataWidth, 0]);
       });
 
-      this.scaleX = this.dataWidth / (maxX - minX);
-
+      this.scaleX = this.dataWidth / (this.maxX - this.minX);
       this.xAxis = new MeteorCharts.XAxis(this);
-
       this.legend = new MeteorCharts.Legend(this);
       this.title = new MeteorCharts.Title(this);
 
@@ -69,35 +76,7 @@
 
       // update interaction layer
       this.pointerMove();
-
-      /*
-      if (this.clipTween) {
-        this.clipTween.destroy();
-      }
-      */
-
-      // TODO: when KineticJS supports Tween setters, there will no longer
-      // be a need to create a new tween each time
-
-      /*
-      if (this.enableSeriesTween) {
-        this.dataLayer.setClip([this.dataX, this.dataY, 1, this.dataHeight]);
-
-        this.clipTween = new Kinetic.Tween({
-          clipWidth: that.dataWidth,
-          duration: 1,
-          easing: Kinetic.Easings.Linear,
-          node: that.dataLayer
-        });
-
-        this.clipTween.play();
-      }
-      else {
-        */
       this.dataLayer.setClip([this.dataX, this.dataY, this.dataWidth, this.dataHeight]);
-      //}
-
-
     },
     getAutoMinMax: function() {
       var model = this.model,
@@ -346,10 +325,10 @@
       if (this.lastPos) {
         diffX = (pos.x - this.lastPos.x) / this.scaleX;
         diffY = (pos.y - this.lastPos.y) / this.scaleY;
-        _view.set('xAxis', 'min', this.minX - diffX);
-        _view.set('xAxis', 'max', this.maxX - diffX);
-        _view.set('yAxis', 'min', this.minY + diffY);
-        _view.set('yAxis', 'max', this.maxY + diffY);
+        this.minX = this.minX - diffX;
+        this.minY = this.minY + diffY;
+        this.maxX = this.maxX - diffX;
+        this.maxY = this.maxY + diffY;
         this.batchDraw();
       }
     },
