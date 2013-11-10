@@ -44,7 +44,7 @@ suite('Manual', function(){
     });
   });
 
-  test.only('Grapher', function(){
+  test('Grapher', function(){
     function Grapher(config) {
       var minX = config.minX,
           minY = config.minY,

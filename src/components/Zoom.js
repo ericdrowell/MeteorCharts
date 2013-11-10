@@ -115,8 +115,8 @@
           chartMinY = type === 'box' ? Math.max(startY, pos.y) : chart.dataY + chart.dataHeight,
           chartMaxX = Math.max(startX, pos.x),
           chartMaxY = type === 'box' ? Math.min(startY, pos.y) : chart.dataY,
-          min = chart.chartToData(chartMinX, chartMinY),
-          max = chart.chartToData(chartMaxX, chartMaxY);
+          min = chart.chartToData({x:chartMinX, y:chartMinY}),
+          max = chart.chartToData({x:chartMaxX, y:chartMaxY});
 
       //console.log(min.x + ',' + max.x);
       //console.log(min.y + ',' + max.y)

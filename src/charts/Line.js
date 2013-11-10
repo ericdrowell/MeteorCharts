@@ -118,62 +118,44 @@
       var _view = this._view,
           model = this.model,
           lines = model.series,
+          lineLen = lines.length,
           minX = this.minX,
           maxX = this.maxX,
           minY = this.minY,
           maxY = this.maxY,
-          dataPoint = this.chartToData(pos.x, pos.y),
-          dataX = dataPoint.x,
-          dataY = dataPoint.y,
-          nearestPoints = [],
-          n, line, points, nearestPoint, i, point, finalPoint, pointX, pointY, diff, smallestDiff;
+          nearestPoint = null,
+          smallestDiff = Infinity,
+          n, i, line, points, pointsLen, color, title, point, pointX, pointY, diff;
 
-
-      for (n=0; n<lines.length; n++) {
-        smallestDiff = Infinity;
+      for (n=0; n<lineLen; n++) {
         line = lines[n];
         points = line.points;
-        nearestPoint = {
-          color: _view.getSeriesStyle(n).stroke,
-          title: line.title
-        };
-        for (i=0; i<points.length; i++) {
+        pointsLen = points.length;
+        color = _view.getSeriesStyle(n).stroke;
+        title = line.title;
+
+        for (i=0; i<pointsLen; i++) {
           point = points[i];
           pointX = point.x;
           pointY = point.y;
-          diff = Math.abs(dataX - pointX);
+          diff = MeteorCharts.Util.getDistance(pos, this.dataToChart(point));
 
           if (pointX >= minX && pointX <= maxX 
-            && pointY >= minY && pointY <=maxY
-            && diff < smallestDiff) { 
-           
+              && pointY >= minY && pointY <=maxY
+              && diff < smallestDiff) { 
+
             smallestDiff = diff;
-            nearestPoint.x = pointX;
-            nearestPoint.y = pointY;
+            nearestPoint = {
+              color: color,
+              title: title,
+              x: pointX,
+              y: pointY
+            };
           }
         }
-
-        if (nearestPoint.x !== undefined && nearestPoint.y !== undefined) {
-          nearestPoints.push(nearestPoint);
-        }
       }
 
-      finalPoint = nearestPoints[0];
-
-      smallestDiff = Infinity;
-
-      for (n=0; n<nearestPoints.length; n++) {
-        point = nearestPoints[n];
-        diff = Math.abs(dataY - point.y);
-
-        //if (Math.max(idealY, point.y) - Math.min(idealY, point.y) < Math.max(idealY, finalPoint.y) - Math.min(idealY, finalPoint.y)) {
-        if (diff < smallestDiff) {
-          smallestDiff = diff;
-          finalPoint = point;
-        }
-      }
-
-      return finalPoint;
+      return nearestPoint;
     },
     pointerMove: function() {
       var pos = this.stage.getPointerPosition(),
@@ -197,10 +179,10 @@
     dataToChartY: function(y) {
       return this.dataHeight - ((y - this.minY) * this.scaleY) + this.dataY;
     },
-    dataToChart: function(x, y) {
+    dataToChart: function(point) {
       return {
-        x: this.dataToChartX(x),
-        y: this.dataToChartY(y)
+        x: this.dataToChartX(point.x),
+        y: this.dataToChartY(point.y)
       };
     },
     dataToChartPoints: function(points) {
@@ -211,15 +193,15 @@
       for (n=0; n<len; n++) {
         point = points[n];
 
-        arr.push(this.dataToChart(point.x, point.y));
+        arr.push(this.dataToChart(point));
       }
 
       return arr;
     },
-    chartToData: function(x, y) {
+    chartToData: function(point) {
       return {
-        x: ((x - this.dataX) / this.scaleX) + this.minX,
-        y: this.minY - ((y - this.dataHeight - this.dataY) / this.scaleY)
+        x: ((point.x - this.dataX) / this.scaleX) + this.minX,
+        y: this.minY - ((point.y - this.dataHeight - this.dataY) / this.scaleY)
       };
     },
     addLine: function(points, style, addNodes) {
