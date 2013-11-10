@@ -44,7 +44,7 @@ suite('Manual', function(){
     });
   });
 
-  test.only('grapher', function(){
+  test.only('Grapher', function(){
     function Grapher(config) {
       var minX = config.minX,
           minY = config.minY,
@@ -65,7 +65,7 @@ suite('Manual', function(){
         };
 
         for (x=minX; x<=maxX; x+=increment) {
-          y = func(x);
+          y = Math.round(func(x) * 100) / 100;
           if (y>=minY && y<=maxY) {
             currentSeries.points.push({
               x: x,
@@ -106,7 +106,7 @@ suite('Manual', function(){
         },
    
         {
-          title: 'n^2',
+          title: 'O(n^2)',
           func: function(x) {
             return x * x;
           }

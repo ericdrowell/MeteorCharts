@@ -1,11 +1,4 @@
 (function() {
-  function addCommas(val){
-    while (/(\d+)(\d{3})/.test(val.toString())){
-      val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
-    }
-    return val;
-  }
-
   MeteorCharts.Number = function() {
     MeteorCharts.Formatter.apply(this, arguments);
     this.base = 10;
@@ -36,7 +29,7 @@
       }
     },
     long: function(num) {
-      return addCommas(num);
+      return this.addCommas(num);
     },
     start: function() {
       var num = this.min,
