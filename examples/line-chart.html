@@ -17,6 +17,7 @@
     <!-- <script src="../../lib/kinetic-v4.7.0-beta.js"></script> -->
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
+    <script src="themes.js"></script>
     
     <script type="text/javascript">
       var lineChart = new MeteorChart({
@@ -25,29 +26,7 @@
         height: 300,
 
         // theme defines colors and fonts
-        theme: {
-          background: {
-            color: 'white',
-            fonts: {
-              medium: {
-                family: 'Arial',
-                size: 30,
-                color: 'black'
-              }
-            }
-          },
-          foreground: {
-            color: 'black',
-            fonts: {
-              medium: {
-                family: 'Arial',
-                size: 30,
-                color: 'white'
-              }
-            }
-          },
-          data: ['red', 'green', 'blue']
-        },
+        theme: MeteorChart.Themes.Light,
 
         // components used in the chart
         components: [

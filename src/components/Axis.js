@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.define('XAxis', {
+  MeteorChart.Component.define('Axis', {
     build: function() {
       var that = this,
           data = this.data(),

@@ -20,10 +20,12 @@
     <script src="themes.js"></script>
     
     <script type="text/javascript">
+      var padding = 20;
+
       var lineChart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 300,
+        height: 290,
 
         // theme defines colors and fonts
         theme: MeteorChart.Themes.Light,
@@ -33,10 +35,12 @@
           {
             id: 'line',
             type: 'Line',
-            x: 20,
-            y: 20,
-            width: 460,
-            height: 220,
+            x: 80,
+            y: padding,
+            width: function() {
+              return this.chart.width - this.x() - padding;
+            },
+            height: 210,
             data: [
               {
                 // red
@@ -61,11 +65,22 @@
           },
           {
             id: 'xAxis',
-            type: 'XAxis',
-            x: 20,
-            y: 260,
-            width: 400,
+            type: 'Axis',
+            x: function() {
+              // bind axis x position to line x position
+              return this.chart.components.line.x();
+            },
+            y: function() {
+              var line = this.chart.components.line;
+
+              return line.y() + line.height() + padding;
+            },
+            width: function() {
+              // bind axis width to line width
+              return this.chart.components.line.width();
+            },
             data: function() {
+              // bind axis data to line min and max values
               var lineComponent = this.chart.components.line;
               return {
                 min: lineComponent.minX,

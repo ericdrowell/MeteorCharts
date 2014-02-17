@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
     // components
     'src/components/Line.js',
-    'src/components/XAxis.js',
+    'src/components/Axis.js',
 
     // formatters
     'src/formatters/Date.js',
