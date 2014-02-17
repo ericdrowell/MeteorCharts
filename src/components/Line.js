@@ -10,6 +10,9 @@
           len = data.length,
           n, line, series;
 
+      // disable hit graph to improve draw performance since
+      // we won't bee needing it
+      this.layer.enableHitGraph(false);
       this.minX = Infinity;
       this.maxX = -1 * Infinity;
       this.minY = Infinity;
@@ -35,16 +38,24 @@
 
     },
     _scale: function() {
-      var diffX = this.maxX - this.minX,
-          diffY = this.maxY - this.minY,
-          scaleX = this.width() / diffX,
-          scaleY = this.height() / diffY;
+      var x = this.x(),
+          y = this.y(),
+          width = this.width(),
+          height = this.height(),
+          minX = this.minX,
+          maxX = this.maxX,
+          minY = this.minY,
+          maxY = this.maxY,
+          diffX = maxX - minX,
+          diffY = maxY - minY,
+          scaleX = width / diffX,
+          scaleY = height / diffY;
 
-      console.log(this.width)
-
-      this.layer.getChildren().scale({
-        x: scaleX,
-        y: scaleY * -1
+      this.layer.getChildren().setAttrs({
+        offsetX: minX,
+        offsetY: minY,
+        scaleX: scaleX,
+        scaleY: -1 * scaleY
       });
     },
     _updateMinMax: function(series) {

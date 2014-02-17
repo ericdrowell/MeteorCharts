@@ -26,6 +26,9 @@
           len = themeData.length;
 
       return themeData[n % len];
+    },
+    draw: function() {
+      this.layer.draw();
     }
   };
 
