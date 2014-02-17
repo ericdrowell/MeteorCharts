@@ -25,7 +25,7 @@
         increment = increments[n];
 
         if (increment >= range / maxIncrements) {
-          return increment
+          return increment;
         }
       }
 
@@ -48,10 +48,11 @@
     },
     each: function(fun) {
       var n = this.start(),
+          i = 0,
           max = this.max;
 
       while (n < max) {
-        fun(n);
+        fun(i++, n);
         n = this.next();
       }
     },

@@ -17,7 +17,7 @@
     <!-- <script src="../../lib/kinetic-v4.7.0-beta.js"></script> -->
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
-    <script src="themes.js"></script>
+    <script src="../src/Themes.js"></script>
     
     <script type="text/javascript">
       var padding = 20;
@@ -28,7 +28,7 @@
         height: 290,
 
         // theme defines colors and fonts
-        theme: MeteorChart.Themes.Light,
+        theme: MeteorChart.Themes.CoteAzur,
 
         // components used in the chart
         components: [
@@ -62,6 +62,33 @@
                 ]
               }
             ]
+          },
+          {
+            id: 'yAxis',
+            type: 'Axis',
+            x: padding,
+            y: 0,
+            width: function() {
+              // bind axis width to line x position
+              return this.chart.components.line.x();
+            },
+            height: function() {
+              // bind axis height to line height
+              return this.chart.components.line.height();
+            },
+            data: function() {
+              // bind axis data to line min and max values
+              var lineComponent = this.chart.components.line;
+              return {
+                min: lineComponent.minY,
+                max: lineComponent.maxY
+              }
+            },
+            options: {
+              formatter: 'Number',
+              maxIncrements: 5,
+              orientation: 'vertical'
+            }
           },
           {
             id: 'xAxis',
