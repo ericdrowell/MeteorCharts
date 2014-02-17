@@ -22,7 +22,7 @@
       var lineChart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 300,
+        height: 340,
 
         // theme defines colors and fonts
         theme: {
@@ -62,7 +62,7 @@
               {
                 // red
                 title: 'Series 1',
-                series: [
+                points: [
                   -100, -100,
                   100, 100,
                   200, 50
@@ -71,7 +71,7 @@
               { 
                 // green
                 title: 'Series 2',
-                series: [
+                points: [
                   0, 100,
                   100, 200,
                   200, 150,
@@ -79,6 +79,20 @@
                 ]
               }
             ]
+          },
+          {
+            id: 'xAxis',
+            type: 'XAxis',
+            x: 50,
+            y: 250,
+            width: 400,
+            data: function() {
+              var lineComponent = this.chart.components.line;
+              return {
+                min: lineComponent.minX,
+                max: lineComponent.maxX
+              }
+            }
           }
         ]
       });

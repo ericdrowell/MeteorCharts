@@ -4,9 +4,15 @@ module.exports = function(grunt) {
     'src/Chart.js',
     'src/Util.js',
     'src/Component.js',
+    'src/Formatter.js',
 
     // components
     'src/components/Line.js',
+    'src/components/XAxis.js',
+
+    // formatters
+    'src/formatters/Date.js',
+    'src/formatters/Number.js'
   ];
 
   // Project configuration.

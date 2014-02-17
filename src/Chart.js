@@ -43,7 +43,8 @@
 
   MeteorChart.prototype = {
     add: function(component) {
-      component.theme = this.theme;
+      component.chart = this;
+      this.components[component.id] = component;
       this.components.push(component); 
       component.layer.x(component.x());
       component.layer.y(component.y());
@@ -52,9 +53,6 @@
     },
     remove: function(config) {
 
-    },
-    component: function(id) {
- 
     }
   };
 
