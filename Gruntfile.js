@@ -1,31 +1,12 @@
 module.exports = function(grunt) {
   var sourceFiles = [
-    // top level
-    'src/MeteorCharts.js',
-
     // core
     'src/Chart.js',
     'src/Util.js',
-    'src/Formatter.js',
-    'src/View.js',
-
-    // formatters
-    'src/formatters/Number.js',
-    'src/formatters/Date.js',
-    'src/formatters/Feet.js',
-    'src/formatters/Meters.js',
-    'src/formatters/Seconds.js',
+    'src/Component.js',
 
     // components
-    'src/components/Legend.js',
-    'src/components/Title.js',
-    'src/components/XAxis.js',
-    'src/components/YAxis.js',
-    'src/components/Tooltip.js',
-    'src/components/Zoom.js',
-
-    // charts
-    'src/charts/Line.js'
+    'src/components/Line.js',
   ];
 
   // Project configuration.

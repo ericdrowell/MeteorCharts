@@ -5,11 +5,13 @@
  * License http://www.meteorcharts.com/terms-of-use.html
  * Date: @@date
  */
- var MeteorCharts;
+ var MeteorChart;
 (function() {
-  MeteorCharts = {
-  	version: '@@version'
+  MeteorChart = function(config) {
+
   };
+
+  MeteorChart.version = '@@version';
 })();
 
 // Uses Node, AMD or browser globals to create a module.

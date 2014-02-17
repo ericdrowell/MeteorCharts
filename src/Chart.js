@@ -1,237 +1,104 @@
+/*
+ * Meteor Charts v@@version
+ * http://www.meteorcharts.com
+ * Copyright 2013, Eric Rowell
+ * License http://www.meteorcharts.com/terms-of-use.html
+ * Date: @@date
+ */
+ var MeteorChart;
 (function() {
-  // constants
-  var LEFT = 'left',
-      CENTER = 'center',
-      AUTO = 'auto',
-      EMPTY_STRING = '',
-      TEXT = 'Text',
-      SPACE = ' ',
-      HOVERING = 'hovering',
-      ZOOMING = 'zooming',
-      PANNING = 'panning';
+  MeteorChart = function(config) {
+    var that = this,
+        container = config.container,
+        components = config.components,
+        len = components.length,
+        n, conf;
 
-  MeteorCharts.Chart = function(config) {
-    this._init(config);
-  };
+    this.width = config.width;
+    this.height = config.height;
+    this.theme = config.theme;
+    this.components = [];
 
-  MeteorCharts.Chart.prototype = {
-    _init: function(config) {
-      var that = this;
+    this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
+    this.kineticContainer = document.createElement('div');
+    this.kineticContainer.className = 'meteorchart-content';
+    this.kineticContainer.style.width = this.width;
+    this.kineticContainer.style.height = this.height;
+    this.kineticContainer.style.display = 'inline-block';
+    this.kineticContainer.style.backgroundColor = this.theme.background.color;
+    this.container.appendChild(this.kineticContainer);
 
-      this.model = config.model || {};
-      this.view = config.view || {};
-      this._view = new MeteorCharts.View(this);
-      this.events = {};
-      this._setState(HOVERING);
+    this.stage = new Kinetic.Stage({
+      width: that.width,
+      height: that.height,
+      container: that.kineticContainer
+    });
 
-      // create stage
-      this.stage = new Kinetic.Stage({
-        container: config.container,
-        listening: false,
-        width: this._view.get('width'),
-        height: this._view.get('height'),
-      });
-
-      this.stage.getContainer().style.display = 'inline-block';
-      this.stage.getContent().setAttribute('role', 'presentation');
-
-      // layers
-      this.bottomLayer = new Kinetic.Layer({listening: false});
-      this.dataLayer = new Kinetic.Layer({listening: false});
-      this.topLayer = new Kinetic.Layer({listening: false});
-      this.interactionLayer = new Kinetic.Layer({
-        opacity: 0,
-        listening: false
-      });
-
-      // description
-      this.content = document.createElement('div');
-      this.content.style.textIndent = '-999999px';
-      this.content.style.position = 'absolute';
-
-      // add meteor classes
-      this.bottomLayer.getCanvas()._canvas.className = 'meteorcharts-bottom-layer';
-      this.dataLayer.getCanvas()._canvas.className = 'meteorcharts-data-layer';
-      this.topLayer.getCanvas()._canvas.className = 'meteorcharts-top-layer';
-      this.interactionLayer.getCanvas()._canvas.className = 'meteorcharts-interaction-layer';
-      this.content.className = 'meteorcharts-content';
-
-      this.stage.add(this.bottomLayer);
-      this.stage.add(this.dataLayer);
-      this.stage.add(this.topLayer);
-      this.stage.add(this.interactionLayer);
-
-      this.stage.getContainer().insertBefore(this.content, this.stage.getContent());
-
-      this.title = new MeteorCharts.Title(this);
-
-      this.interactionShow = new Kinetic.Tween({
-        node: that.interactionLayer,
-        duration: 0.3,
-        opacity: 1,
-        easing: Kinetic.Easings.EaseInOut
-      });
-
-      this._bind();
-      
-
-
-    },
-    batchDraw: function() {
-      this.enableSeriesTween = false;
-      this.stage.batchDraw();
-    },
-    draw: function() {
-      this.enableSeriesTween = true;
-      this.stage.draw();
-      this.fire('draw');
-    },
-    getView: function() {
-      return this._view;
-    },
-    showInteractionLayer: function() {
-      this.interactionShow.play();
-    },
-    hideInteractionLayer: function() {
-      this.interactionShow.reverse();
-    },
-    on: function(evt, handler) {
-      if (!this.events[evt]) {
-        this.events[evt] = [];
-      }
-      this.events[evt].push(handler);
-    },
-    fire: function(evt) {
-      var events = this.events[evt],
-          len, n;
-
-      if (events) {
-        len = events.length;
-        for (n=0; n<len; n++) {
-          events[n]();
-        }
-      }
-    },
-    _setState: function(state) {
-      this.state = state;
-      this.fire('stateChange');
-    },
-    _getContent: function() {
-      return '';
-    },
-    _addContent: function() {
-      this.content.innerHTML = this._getContent();
-    },
-    _bind: function() {
-      var stage = this.stage,
-          that = this,
-          keydown = false,
-          startDistance = null;
-
-        // manage keydown / up
-      document.body.addEventListener('keydown', function(evt) {
-        keydown = true;
-      });
-
-      document.body.addEventListener('keyup', function(evt) {
-        keydown = false;
-      });
-
-      stage.on('contentTouchstart contentTouchend contentTouchmove', function(evt) {
-        evt.preventDefault();
-      });
-
-
-      stage.on('contentMousedown', function() {
-        switch (that.state) {
-          case HOVERING:
-            if (keydown) {
-              that._setState(PANNING);
-            }
-            else {
-              that._setState(ZOOMING);
-            }
-          case ZOOMING:
-            that.zoom._startZoomSelect();
-
-        }
-      });
-
-      stage.on('contentMousemove contentTouchmove contentTouchstart', function() {
-        switch(that.state) {
-          case HOVERING:
-            that.pointerMove(); 
-            break;
-          case ZOOMING:
-            that.tooltip.group.hide();
-            that.zoom._resizeZoomSelect();
-            break;
-          case PANNING:
-            that._pan();
-            that.tooltip.group.hide();
-            break;
-        }
-
-        that.lastPos = stage.getPointerPosition();
-        that.interactionLayer.batchDraw();
-      });
-
-      stage.on('contentMouseup', function() {
-        switch(that.state) {
-          case ZOOMING:
-            that.zoom._endZoomSelect();
-            that._setState(HOVERING);
-            that.tooltip.group.show();
-            break;
-          case PANNING:
-            that._setState(HOVERING);
-            that.tooltip.group.show();
-            stage.draw();
-            that.fire('draw');
-            break;
-        }
-      });
-
-      stage.on('contentTouchmove', function(evt) {
-        that.zoom._pinch(evt);
-      });
-
-      stage.on('contentTouchend', function() {
-        startDistance = null;
-      });
-
-      stage.on('contentMouseover contentTouchstart', function() {
-        that.showInteractionLayer();
-      });
-
-      stage.on('contentMouseout contentTouchend', function() {
-        that.hideInteractionLayer();
-      });
-
-
-      // bind before draw event to bottom layer because this is the
-      // first layer in the stage that's drawn.  the _draw() method needs to 
-      // execute immediately before drawing any of the stage layers
-      this.bottomLayer.on('beforeDraw', function() {
-        that._draw();
-      });
-
-      this.on('stateChange', function() {
-        switch(that.state) {
-          case HOVERING:
-            //that.enableSeriesTween = true;
-            break;
-          case PANNING:
-            //that.enableSeriesTween = false;
-            break;
-          case ZOOMING:
-            //that.enableSeriesTween = true;
-            break;
-          default:
-            //that.enableSeriesTween = true;
-            break;
-        }
-      });
+    for (n=0; n<len; n++) {
+      conf = components[n];
+      component = new MeteorChart.Components[conf.type](conf);
+      this.add(component);
     }
   };
+
+  MeteorChart.prototype = {
+    add: function(component) {
+      component.theme = this.theme;
+      this.components.push(component); 
+      component.layer.x(component.x());
+      component.layer.y(component.y());
+      component.build();
+      this.stage.add(component.layer); 
+    },
+    remove: function(config) {
+
+    },
+    component: function(id) {
+ 
+    }
+  };
+
+  MeteorChart.version = '@@version';
+  MeteorChart.Components = {};
+
 })();
+
+// Uses Node, AMD or browser globals to create a module.
+
+// If you want something that will work in other stricter CommonJS environments,
+// or if you need to create a circular dependency, see commonJsStrict.js
+
+// Defines a module "returnExports" that depends another module called "b".
+// Note that the name of the module is implied by the file name. It is best
+// if the file name and the exported global have matching names.
+
+// If the 'b' module also uses this type of boilerplate, then
+// in the browser, it will create a global .b that is used below.
+
+// If you do not want to support the browser global path, then you
+// can remove the `root` use and the passing `this` as the first arg to
+// the top function.
+
+// if the module has no dependencies, the above pattern can be simplified to
+( function(root, factory) {
+    if( typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like enviroments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    }
+    else if( typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(factory);
+    }
+    else {
+        // Browser globals (root is window)
+        root.returnExports = factory();
+    }
+}(this, function() {
+
+    // Just return a value to define the module export.
+    // This example returns an object, but the module
+    // can return a function as the exported value.
+    return MeteorChart;
+}));
