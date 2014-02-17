@@ -1,4 +1,5 @@
 MeteorChart.Themes = {
+  // =====================================
   Light: {
     background: {
       color: 'white',
@@ -23,6 +24,7 @@ MeteorChart.Themes = {
     data: ['red', 'green', 'blue']
   },
 
+  // =====================================
   CoteAzur: {
     background: {
       color: '#fffefb',
@@ -46,5 +48,31 @@ MeteorChart.Themes = {
     },
     // red, green
     data: ['#eb5233', '#419091']
+  },
+
+  // =====================================
+  Lollapalooza: {
+    background: {
+      color: '#0a2634',
+      fonts: {
+        medium: {
+          fontFamily: 'Arial',
+          fontSize: 15,
+          fill: '#efe5c0'
+        }
+      }
+    },
+    foreground: {
+      color: '#efe5c0',
+      fonts: {
+        medium: {
+          fontFamily: 'Arial',
+          fontSize: 15,
+          fill: '#0a2634'
+        }
+      }
+    },
+    // red, orange
+    data: ['#9d3132', '#cd7d39']
   }
 };
