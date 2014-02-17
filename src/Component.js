@@ -35,7 +35,13 @@
 
   MeteorChart.Component.define = function(type, methods) {
     MeteorChart.Components[type] = function(config) {
+      var init = this.init;
+
       MeteorChart.Component.call(this, config);
+
+      if (init) {
+        this.init();
+      }
     };
 
     MeteorChart.Components[type].prototype = methods;

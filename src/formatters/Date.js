@@ -5,14 +5,14 @@
       SECONDS_IN_MONTH = 2628000,
       SECONDS_IN_YEAR = 31500000;
 
-  MeteorChart.Date = function() {
+  MeteorChart.Formatters.Date = function() {
     MeteorChart.Formatter.apply(this, arguments);
     this.increment = this.getIncrement();
     this.incrementMultiplier = 1;
     this._setIncrementMultiplier();
   };
 
-  MeteorChart.Date.prototype = {
+  MeteorChart.Formatters.Date.prototype = {
     short: function(seconds) {
       var range = this.range,
           date = new moment(seconds * 1000);
@@ -80,5 +80,5 @@
     }
   };
 
-  Kinetic.Util.extend(MeteorChart.Date, MeteorChart.Formatter);
+  Kinetic.Util.extend(MeteorChart.Formatters.Date, MeteorChart.Formatter);
 })();

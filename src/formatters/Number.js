@@ -1,11 +1,11 @@
 (function() {
-  MeteorChart.Number = function() {
+  MeteorChart.Formatters.Number = function() {
     MeteorChart.Formatter.apply(this, arguments);
     this.base = 10;
     this.increment = this.getIncrement();
   };
 
-  MeteorChart.Number.prototype = {
+  MeteorChart.Formatters.Number.prototype = {
     short: function(num) {
       var longestValue = this.getLongestValue();
 
@@ -43,5 +43,5 @@
     },
   };
 
-  Kinetic.Util.extend(MeteorChart.Number, MeteorChart.Formatter);
+  Kinetic.Util.extend(MeteorChart.Formatters.Number, MeteorChart.Formatter);
 })();
