@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     // components
     'src/components/Line.js',
     'src/components/Axis.js',
+    'src/components/Title.js',
 
     // formatters
     'src/formatters/Date.js',

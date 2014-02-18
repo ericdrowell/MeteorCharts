@@ -2,7 +2,7 @@ MeteorChart.Themes = {
   // =====================================
   Light: {
     background: {
-      color: 'white',
+      fill: 'white',
       fonts: {
         medium: {
           fontFamily: 'Arial',
@@ -12,7 +12,7 @@ MeteorChart.Themes = {
       }
     },
     foreground: {
-      color: 'black',
+      fill: 'black',
       fonts: {
         medium: {
           fontFamily: 'Arial',
@@ -27,7 +27,7 @@ MeteorChart.Themes = {
   // =====================================
   CoteAzur: {
     background: {
-      color: '#fffefb',
+      fill: '#fffefb',
       fonts: {
         medium: {
           fontFamily: 'Arial',
@@ -37,7 +37,7 @@ MeteorChart.Themes = {
       }
     },
     foreground: {
-      color: '#31353d',
+      fill: '#31353d',
       fonts: {
         medium: {
           fontFamily: 'Arial',
@@ -53,8 +53,13 @@ MeteorChart.Themes = {
   // =====================================
   Lollapalooza: {
     background: {
-      color: '#0a2634',
+      fill: '#0a2634',
       fonts: {
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
+          fill: '#efe5c0'
+        },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
@@ -63,7 +68,7 @@ MeteorChart.Themes = {
       }
     },
     foreground: {
-      color: '#efe5c0',
+      fill: '#efe5c0',
       fonts: {
         medium: {
           fontFamily: 'Arial',
