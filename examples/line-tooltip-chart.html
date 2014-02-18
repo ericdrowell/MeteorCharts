@@ -1,0 +1,81 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: #eee;
+      }
+      #container {
+        height: 450px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>
+    <!-- <script src="../../lib/kinetic-v4.7.0-beta.js"></script> -->
+    <script src="../lib/moment.min.js"></script>
+    <script src="../dist/meteorcharts-dev.js"></script>
+    <script src="../src/Themes.js"></script>
+    
+    <script type="text/javascript">
+      var padding = 15;
+
+      var lineChart = new MeteorChart({
+        container: 'container',
+        width: 500,
+        height: 280,
+
+        // theme defines colors and fonts
+        theme: MeteorChart.Themes.CoteAzur,
+
+        // components used in the chart
+        components: [
+          {
+            id: 'line',
+            type: 'Line',
+            x: 15,
+            y: 60,
+            width: 470,
+            height: 200,
+            data: [
+              {
+                // red
+                title: 'Series 1',
+                points: [
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
+                ]
+              }
+            ]
+          },
+          {
+            id: 'tooltip',
+            type: 'Tooltip',
+            x: 15,
+            y: 15,
+            data: {
+              title: 'Captivating Title',
+              content: 'Some interesting info about the data'
+            }
+          }
+        ]
+      });
+
+   
+      console.log(lineChart);
+    </script>
+  </body>
+</html>

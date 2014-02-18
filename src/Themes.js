@@ -2,21 +2,41 @@ MeteorChart.Themes = {
   // =====================================
   Light: {
     background: {
-      fill: 'white',
+      primary: 'white',
       fonts: {
+        small: {
+          fontFamily: 'Arial',
+          fontSize: 12,
+          fill: '#333'
+        },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
+          fill: '#333'
+        },
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
           fill: '#333'
         }
       }
     },
     foreground: {
-      fill: 'black',
+      primary: 'black',
       fonts: {
+        small: {
+          fontFamily: 'Arial',
+          fontSize: 12,
+          fill: 'white'
+        },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
+          fill: 'white'
+        },
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
           fill: 'white'
         }
       }
@@ -27,21 +47,42 @@ MeteorChart.Themes = {
   // =====================================
   CoteAzur: {
     background: {
-      fill: '#fffefb',
+      primary: '#fffefb',
       fonts: {
+        small: {
+          fontFamily: 'Arial',
+          fontSize: 12,
+          fill: '#31353d'
+        },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
+          fill: '#31353d'
+        },
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
           fill: '#31353d'
         }
       }
     },
     foreground: {
-      fill: '#31353d',
+      primary: 'rgba(49, 53, 61, 0.8)',
+      secondary: 'black',
       fonts: {
+        small: {
+          fontFamily: 'Arial',
+          fontSize: 12,
+          fill: '#fffefb'
+        },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
+          fill: '#fffefb'
+        },
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
           fill: '#fffefb'
         }
       }
@@ -53,26 +94,41 @@ MeteorChart.Themes = {
   // =====================================
   Lollapalooza: {
     background: {
-      fill: '#0a2634',
+      primary: '#0a2634',
       fonts: {
-        large: {
+        small: {
           fontFamily: 'Arial',
-          fontSize: 30,
+          fontSize: 12,
           fill: '#efe5c0'
         },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
           fill: '#efe5c0'
+        },
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
+          fill: '#efe5c0'
         }
       }
     },
     foreground: {
-      fill: '#efe5c0',
+      primary: '#efe5c0',
       fonts: {
+        small: {
+          fontFamily: 'Arial',
+          fontSize: 12,
+          fill: '#0a2634'
+        },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
+          fill: '#0a2634'
+        },
+        large: {
+          fontFamily: 'Arial',
+          fontSize: 30,
           fill: '#0a2634'
         }
       }

@@ -10,6 +10,7 @@ module.exports = function(grunt) {
     'src/components/Line.js',
     'src/components/Axis.js',
     'src/components/Title.js',
+    'src/components/Tooltip.js',
 
     // formatters
     'src/formatters/Date.js',

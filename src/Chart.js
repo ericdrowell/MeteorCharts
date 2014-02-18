@@ -25,7 +25,7 @@
     this.kineticContainer.style.width = this.width;
     this.kineticContainer.style.height = this.height;
     this.kineticContainer.style.display = 'inline-block';
-    this.kineticContainer.style.backgroundColor = this.theme.background.fill;
+    this.kineticContainer.style.backgroundColor = this.theme.background.primary;
     this.container.appendChild(this.kineticContainer);
 
     this.stage = new Kinetic.Stage({
