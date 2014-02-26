@@ -26,12 +26,32 @@
         container: 'container',
         width: 500,
         height: 290,
-
-        // theme defines colors and fonts
         theme: MeteorChart.Themes.CoteAzur,
         //theme: MeteorChart.Themes.Lollapalooza,
 
-        // components used in the chart
+        data: {
+          line: [
+            {
+              // red
+              title: 'Series 1',
+              points: [
+                -100, -100,
+                100, 100,
+                200, 50
+              ]
+            },
+            { 
+              // green
+              title: 'Series 2',
+              points: [
+                0, 100,
+                100, 200,
+                200, 150,
+                300, 200
+              ]
+            }
+          ]
+        },
         layout: [
           {
             id: 'line',
@@ -41,28 +61,7 @@
             width: function() {
               return this.chart.width - this.x() - padding;
             },
-            height: 210,
-            data: [
-              {
-                // red
-                title: 'Series 1',
-                points: [
-                  -100, -100,
-                  100, 100,
-                  200, 50
-                ]
-              },
-              { 
-                // green
-                title: 'Series 2',
-                points: [
-                  0, 100,
-                  100, 200,
-                  200, 150,
-                  300, 200
-                ]
-              }
-            ]
+            height: 210
           },
           {
             id: 'yAxis',

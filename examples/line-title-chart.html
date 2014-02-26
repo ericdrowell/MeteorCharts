@@ -27,6 +27,31 @@
         width: 500,
         height: 280,
 
+        data: {
+          title: 'Awesome blossom possum',
+          line: [
+            {
+              // red
+              title: 'Series 1',
+              points: [
+                -100, -100,
+                100, 100,
+                200, 50
+              ]
+            },
+            { 
+              // green
+              title: 'Series 2',
+              points: [
+                0, 100,
+                100, 200,
+                200, 150,
+                300, 200
+              ]
+            }
+          ]
+        },
+        
         // theme defines colors and fonts
         theme: MeteorChart.Themes.Lollapalooza,
 
@@ -38,28 +63,7 @@
             x: 15,
             y: 60,
             width: 470,
-            height: 200,
-            data: [
-              {
-                // red
-                title: 'Series 1',
-                points: [
-                  -100, -100,
-                  100, 100,
-                  200, 50
-                ]
-              },
-              { 
-                // green
-                title: 'Series 2',
-                points: [
-                  0, 100,
-                  100, 200,
-                  200, 150,
-                  300, 200
-                ]
-              }
-            ]
+            height: 200
           },
           {
             id: 'title',
@@ -67,8 +71,7 @@
             x: 15,
             y: 15,
             width: 470,
-            height: 30,
-            data: 'Awesome blossom possum'
+            height: 30
           }
         ]
       });

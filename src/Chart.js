@@ -12,11 +12,13 @@
         container = config.container,
         components = config.layout,
         len = components.length,
-        n, conf;
+        n, conf, componentData;
 
     this.width = config.width;
     this.height = config.height;
     this.theme = config.theme;
+    this.data = config.data || {};
+    this.options = config.options || {};
     this.components = [];
 
     this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
@@ -36,6 +38,13 @@
 
     for (n=0; n<len; n++) {
       conf = components[n];
+      componentData = this.data[conf.id]
+
+      // add data if it's in the chart data object
+      if (componentData) {
+        conf.data = componentData;
+      }
+
       component = new MeteorChart.Components[conf.type](conf);
       this.add(component);
     }

@@ -14,10 +14,32 @@ The fastest way to get a chart up and running is to use a pre-built theme and la
       var lineChart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 280,
-        data: [1, 2, 3, 4, 5, 6],
-        theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.SimpleLineChart
+        height: 300,
+        data: {
+          line: [
+            {
+              // red
+              title: 'Series 1',
+              points: [
+                -100, -100,
+                100, 100,
+                200, 50
+              ]
+            },
+            { 
+              // green
+              title: 'Series 2',
+              points: [
+                0, 100,
+                100, 200,
+                200, 150,
+                300, 200
+              ]
+            }
+          ]
+        },
+        theme: MeteorChart.Themes.Light,
+        layout: MeteorChart.Layouts.LineSparkChart
       });
 
 ## Full Examples
