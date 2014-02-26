@@ -15,9 +15,6 @@ MeteorChart.Layouts = {
       },
       height: function() {
         return this.chart.height - (this.chart.options.padding * 2);
-      },
-      data: function() {
-        return this.chart.data;
       }
     }
   ]
