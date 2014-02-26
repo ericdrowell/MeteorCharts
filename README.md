@@ -18,7 +18,6 @@ The fastest way to get a chart up and running is to use a pre-built theme and la
         data: {
           line: [
             {
-              // red
               title: 'Series 1',
               points: [
                 -100, -100,
@@ -27,7 +26,6 @@ The fastest way to get a chart up and running is to use a pre-built theme and la
               ]
             },
             { 
-              // green
               title: 'Series 2',
               points: [
                 0, 100,
