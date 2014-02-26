@@ -1,6 +1,6 @@
 MeteorChart.Layouts = {
   // =====================================
-  LineSparkChart: [
+  SparkChart: [
     {
       id: 'line',
       type: 'Line',
@@ -28,13 +28,14 @@ MeteorChart.Layouts = {
         return this.chart.components.yAxis.width();
       },
       y: function() {
-        return this.chart.options.padding;
+        var title = this.chart.components.title;
+        return title.x() + title.height() + this.chart.options.padding;
       },
       width: function() {
         return this.chart.width - this.x() - this.chart.options.padding;
       },
       height: function() {
-        return 210
+        return this.chart.height - this.y() - (this.chart.options.padding * 2) - this.chart.components.xAxis.height();
       }
     },
     {
@@ -44,7 +45,8 @@ MeteorChart.Layouts = {
         return this.chart.options.padding;
       },
       y: function() {
-        return 0;
+        var title = this.chart.components.title;
+        return title.y() + title.height();
       },
       width: function() {
         // bind axis width to line x position
@@ -84,6 +86,9 @@ MeteorChart.Layouts = {
         // bind axis width to line width
         return this.chart.components.line.width();
       },
+      height: function() {
+        return this.chart.theme.background.fonts.medium.fontSize;
+      },
       data: function() {
         // bind axis data to line min and max values
         var lineComponent = this.chart.components.line;
@@ -95,6 +100,22 @@ MeteorChart.Layouts = {
       options: {
         formatter: 'Number',
         maxIncrements: 5
+      }
+    },
+    {
+      id: 'title',
+      type: 'Title',
+      x: function() {
+        return this.chart.options.padding;
+      },
+      y: function() {
+        return this.chart.options.padding;
+      },
+      width: function() {
+        return this.chart.width;
+      },
+      height: function() {
+        return 30;
       }
     }
   ]
