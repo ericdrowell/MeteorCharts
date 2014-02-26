@@ -10,7 +10,7 @@
   MeteorChart = function(config) {
     var that = this,
         container = config.container,
-        components = config.components,
+        components = config.layout,
         len = components.length,
         n, conf;
 
