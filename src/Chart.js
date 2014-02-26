@@ -74,6 +74,8 @@
   MeteorChart.version = '@@version';
   MeteorChart.Components = {};
   MeteorChart.Formatters = {};
+  MeteorChart.Layouts = {};
+  MeteorChart.Themes = {};
 
 })();
 
