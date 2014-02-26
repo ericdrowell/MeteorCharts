@@ -36,6 +36,8 @@
       container: that.kineticContainer
     });
 
+    // first add all the components so that the initializers can bind
+    // attributes to other component attributes
     for (n=0; n<len; n++) {
       conf = components[n];
       componentData = this.data[conf.id]
@@ -46,15 +48,19 @@
       }
 
       component = new MeteorChart.Components[conf.type](conf);
-      this.add(component);
+      component.chart = this;
+      this.components[component.id] = component;
+      this.components.push(component); 
+    }
+
+    // now instantiate each one
+    for (n=0; n<this.components.length; n++) {
+      this.add(this.components[n]);
     }
   };
 
   MeteorChart.prototype = {
     add: function(component) {
-      component.chart = this;
-      this.components[component.id] = component;
-      this.components.push(component); 
       component.layer.x(component.x());
       component.layer.y(component.y());
       component.build();
