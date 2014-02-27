@@ -24,15 +24,6 @@ The fastest way to get a chart up and running is to use a pre-built theme and la
                 100, 100,
                 200, 50
               ]
-            },
-            { 
-              title: 'Series 2',
-              points: [
-                0, 100,
-                100, 200,
-                200, 150,
-                300, 200
-              ]
             }
           ]
         },
