@@ -8,10 +8,12 @@
       // disable hit graph to improve draw performance since
       // we won't bee needing it
       this.layer.enableHitGraph(false);
-      this.minX = Infinity;
-      this.maxX = -1 * Infinity;
-      this.minY = Infinity;
-      this.maxY = -1 * Infinity;
+
+      // public properties
+      this.state.minX = Infinity;
+      this.state.maxX = -1 * Infinity;
+      this.state.minY = Infinity;
+      this.state.maxY = -1 * Infinity;
 
       for (n=0; n<len; n++) {
         points = data[n].points;
@@ -36,10 +38,11 @@
           y = this.y(),
           width = this.width(),
           height = this.height(),
-          minX = this.minX,
-          maxX = this.maxX,
-          minY = this.minY,
-          maxY = this.maxY,
+          state = this.state,
+          minX = state.minX,
+          maxX = state.maxX,
+          minY = state.minY,
+          maxY = state.maxY,
           diffX = maxX - minX,
           diffY = maxY - minY,
           scaleX = width / diffX,
@@ -54,15 +57,16 @@
     },
     _updateMinMax: function(points) {
       var len = points.length,
+          state = this.state,
           n, x, y;
 
       for (n=0; n<len; n+=2) {
         x = points[n];
         y = points[n+1];
-        this.minX = Math.min(this.minX, x);
-        this.maxX = Math.max(this.maxX, x);
-        this.minY = Math.min(this.minY, y);
-        this.maxY = Math.max(this.maxY, y);
+        state.minX = Math.min(state.minX, x);
+        state.maxX = Math.max(state.maxX, x);
+        state.minY = Math.min(state.minY, y);
+        state.maxY = Math.max(state.maxY, y);
       }
     }
   });

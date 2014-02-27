@@ -5,6 +5,7 @@
     this.id = config.id;
     this.type = config.type;
     this.options = config.options;
+    this.state = {};
 
     this.x(config.x);
     this.y(config.y);

@@ -34,10 +34,10 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var lineComponent = this.chart.components.line;
+      var state = this.chart.components.line.state;
       return {
-        min: lineComponent.minY,
-        max: lineComponent.maxY
+        min: state.minY,
+        max: state.maxY
       }
     },
     options: {
@@ -67,10 +67,10 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var lineComponent = this.chart.components.line;
+      var state = this.chart.components.line.state;
       return {
-        min: lineComponent.minX,
-        max: lineComponent.maxX
+        min: state.minX,
+        max: state.maxX
       }
     },
     options: {

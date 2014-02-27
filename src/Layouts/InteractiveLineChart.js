@@ -34,10 +34,10 @@ MeteorChart.Layouts.InteractiveLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var lineComponent = this.chart.components.line;
+      var state = this.chart.components.line.state;
       return {
-        min: lineComponent.minY,
-        max: lineComponent.maxY
+        min: state.minY,
+        max: state.maxY
       }
     },
     options: {
@@ -67,10 +67,11 @@ MeteorChart.Layouts.InteractiveLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var lineComponent = this.chart.components.line;
+      var state = this.chart.components.line.state;
+
       return {
-        min: lineComponent.minX,
-        max: lineComponent.maxX
+        min: state.minX,
+        max: state.maxX
       }
     },
     options: {
@@ -81,11 +82,20 @@ MeteorChart.Layouts.InteractiveLineChart = [
   {
     id: 'tooltip',
     type: 'Tooltip',
-    x: 15,
-    y: 15,
-    data: {
-      title: 'Captivating Title',
-      content: 'Some interesting info about the data'
+    visible: function() {
+      return !!this.chart.components.line.focusedElement;
+    },
+    x: function() {
+      return 15; //this.chart.components.line.focusedElement.x;
+    },
+    y: function() {
+      return 15; //this.chart.components.line.focusedElement.y;
+    },
+    data: function() {
+      return {
+        title: 'Captivating Title',
+        content: 'Some interesting info about the data'
+      };
     }
   }
 ];
