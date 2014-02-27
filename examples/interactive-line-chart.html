@@ -18,6 +18,7 @@
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
     <script src="../src/Themes/CoteAzur.js"></script>
+    <script src="../src/Layouts/InteractiveLineChart.js"></script>
     
     <script type="text/javascript">
       var padding = 15;
@@ -54,27 +55,10 @@
           ]
         },
 
-        // components used in the chart
-        layout: [
-          {
-            id: 'line',
-            type: 'Line',
-            x: 15,
-            y: 60,
-            width: 470,
-            height: 200
-          },
-          {
-            id: 'tooltip',
-            type: 'Tooltip',
-            x: 15,
-            y: 15,
-            data: {
-              title: 'Captivating Title',
-              content: 'Some interesting info about the data'
-            }
-          }
-        ]
+        layout: MeteorChart.Layouts.InteractiveLineChart,
+        options: {
+          padding: 20
+        }
       });
 
    

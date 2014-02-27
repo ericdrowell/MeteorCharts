@@ -6,7 +6,8 @@ MeteorChart.Layouts.StandardLineChart = [
       return this.chart.components.yAxis.width();
     },
     y: function() {
-      return this.chart.options.padding;
+      var title = this.chart.components.title;
+      return title.x() + title.height() + this.chart.options.padding;
     },
     width: function() {
       return this.chart.width - this.x() - this.chart.options.padding;
@@ -22,7 +23,8 @@ MeteorChart.Layouts.StandardLineChart = [
       return this.chart.options.padding;
     },
     y: function() {
-      return this.chart.options.padding;
+      var title = this.chart.components.title;
+      return title.y() + title.height();
     },
     width: function() {
       // bind axis width to line x position
@@ -76,6 +78,22 @@ MeteorChart.Layouts.StandardLineChart = [
     options: {
       formatter: 'Number',
       maxIncrements: 5
+    }
+  },
+  {
+    id: 'title',
+    type: 'Title',
+    x: function() {
+      return this.chart.options.padding;
+    },
+    y: function() {
+      return this.chart.options.padding;
+    },
+    width: function() {
+      return this.chart.width;
+    },
+    height: function() {
+      return 30;
     }
   }
 ];

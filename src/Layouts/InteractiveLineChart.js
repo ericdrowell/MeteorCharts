@@ -1,4 +1,4 @@
-MeteorChart.Layouts.StandardLineChart = [
+MeteorChart.Layouts.InteractiveLineChart = [
   {
     id: 'line',
     type: 'Line',
@@ -76,6 +76,16 @@ MeteorChart.Layouts.StandardLineChart = [
     options: {
       formatter: 'Number',
       maxIncrements: 5
+    }
+  },
+  {
+    id: 'tooltip',
+    type: 'Tooltip',
+    x: 15,
+    y: 15,
+    data: {
+      title: 'Captivating Title',
+      content: 'Some interesting info about the data'
     }
   }
 ];
