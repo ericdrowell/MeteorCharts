@@ -6,26 +6,31 @@
         minY: Infinity,
         maxX: -1 * Infinity,
         maxY: -1 * Infinity,
-        focusedElement: {
-          x: 0,
-          y: 0,
-          data: {}
-        }
+        focusedElement: null
       };
     },
     bind: function() {
       var that = this,
           stage = this.chart.stage;
 
-      stage.on('contentMousemove', function() {
+      stage.on('contentMouseover contentMousemove', function() {
         var pos = stage.getPointerPosition();
 
-        that.state.focusedElement = {
-          x: pos.x,
-          y: pos.y,
-          data: {}
-        };
+        //console.log(pos.x)
+        if (pos) {
+          that.state.focusedElement = {
+            x: pos.x,
+            y: pos.y,
+            data: {}
+          };
 
+          that.changed();
+        }
+      });
+
+      stage.on('contentMouseout', function() {
+        //console.log(stage.getPointerPosition());
+        that.state.focusedElement = null;
         that.changed();
       });
     },

@@ -6,7 +6,11 @@
           smallFont = fonts.small,
           mediumFont = fonts.medium,
           padding = 10,
-          rect, title, content;
+          group, rect, title, content;
+
+      this.layer.enableHitGraph(false); 
+
+      group = new Kinetic.Group();
 
       rect = new Kinetic.Rect({
         fill: foreground.primary,
@@ -14,7 +18,7 @@
         strokeWidth: 2
       });
 
-      this.layer.add(rect);
+      group.add(rect);
 
       title = new Kinetic.Text({
         x: padding,
@@ -26,7 +30,7 @@
         stroke: mediumFont.stroke
       });
 
-      this.layer.add(title); 
+      group.add(title); 
 
       content = new Kinetic.Text({
         x: padding,
@@ -40,14 +44,18 @@
         stroke: smallFont.stroke
       });
 
-      this.layer.add(content);
+      group.add(content);
 
       rect.width(Math.max(title.width(), content.width()) + (padding*2));
       rect.height(title.height() + content.height() + (padding*3));
+
+      group.offsetX(rect.width() / 2);
+      group.offsetY(rect.height() + 10);
+
+      this.layer.add(group);
     },
     update: function() {
-      this.layer.x(this.x());
-      this.layer.y(this.y());
+
     },
     destroy: function() {
 

@@ -16,6 +16,8 @@
           offset = 0,
           increment = formatter.increment;
 
+      this.layer.enableHitGraph(false);
+
       formatter.each(function(n, val) {
         offset = n * increment * scale;
         that._addLabel(offset, val);

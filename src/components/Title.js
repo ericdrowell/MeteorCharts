@@ -3,6 +3,8 @@
     build: function() {
       var font = this.chart.theme.background.fonts.large;
 
+      this.layer.enableHitGraph(false);
+      
       this.layer.add(new Kinetic.Text({
         text: this.data(),
         fontFamily: font.fontFamily,

@@ -87,12 +87,26 @@ MeteorChart.Layouts.InteractiveLineChart = [
       return !!this.chart.components.line.state.focusedElement;
     },
     x: function() {
-      var line = this.chart.components.line;
-      return line.state.focusedElement.x;
+      var line = this.chart.components.line,
+          focusedElement = line.state.focusedElement;
+
+      if (focusedElement) {
+        return focusedElement.x;
+      }
+      else {
+        return 0;
+      }
     },
     y: function() {
-      var line = this.chart.components.line;
-      return line.state.focusedElement.y;
+      var line = this.chart.components.line,
+          focusedElement = line.state.focusedElement;
+
+      if (focusedElement) {
+        return focusedElement.y;
+      }
+      else {
+        return 0;
+      }
     },
     data: function() {
       return {

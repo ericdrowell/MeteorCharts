@@ -13,6 +13,7 @@
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
+    this.visible(config.visible);
 
     this.layer = new Kinetic.Layer({
       name: this.className,
@@ -49,6 +50,8 @@
       return themeData[n % len];
     },
     batchDraw: function() {
+      this._update();
+
       if (this.update) {
         this.update();
       }
@@ -59,7 +62,16 @@
     },
     changed: function() {
       this.chart.stage.fire('meteorchart-component-update-' + this.id);
-    }
+    },
+    _update: function() {
+      var layer = this.layer;
+      if (this.visible) {
+        layer.visible(this.visible());
+      }
+
+      this.layer.x(this.x());
+      this.layer.y(this.y());
+    },
   };
 
   MeteorChart.Component.define = function(type, methods) {
@@ -89,14 +101,13 @@
         method = 'get' + Kinetic.Util._capitalize(attr);
 
     constructor.prototype[method] = function() {
-      var val = this.attrs[attr];
-      val === undefined ? def : val;
+      var func = this.attrs[attr];
 
-      if (Kinetic.Util._isFunction(val)) {
-        return val.call(this);
+      if (func) {
+        return func.call(this);
       }
       else {
-        return val;
+        return def;
       }
     };
   };
@@ -107,4 +118,5 @@
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'width', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'height', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'data');
+  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'visible', true);
 })();

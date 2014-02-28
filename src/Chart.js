@@ -39,12 +39,10 @@
     // instantiate components and add them to the hash
     for (n=0; n<len; n++) {
       conf = components[n];
-      componentData = this.data[conf.id]
+      
 
       // add data if it's in the chart data object
-      if (componentData) {
-        conf.data = componentData;
-      }
+      this._addData(conf);
 
       component = new MeteorChart.Components[conf.type](conf);
       component.chart = this;
@@ -55,8 +53,7 @@
     // now add each one to the stage
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
-      component.layer.x(component.x());
-      component.layer.y(component.y());
+      component._update()
       component.build();
       this.stage.add(component.layer); 
     }
@@ -76,7 +73,15 @@
   };
 
   MeteorChart.prototype = {
+    _addData: function(conf) {
+      var componentData = this.data[conf.id];
 
+      if (componentData) {
+        conf.data = function() {
+          return componentData;
+        };
+      }
+    }
   };
 
   MeteorChart.version = '@@version';
