@@ -82,14 +82,17 @@ MeteorChart.Layouts.InteractiveLineChart = [
   {
     id: 'tooltip',
     type: 'Tooltip',
+    bindings: ['line'],
     visible: function() {
-      return !!this.chart.components.line.focusedElement;
+      return !!this.chart.components.line.state.focusedElement;
     },
     x: function() {
-      return 15; //this.chart.components.line.focusedElement.x;
+      var line = this.chart.components.line;
+      return line.x() + line.state.focusedElement.x;
     },
     y: function() {
-      return 15; //this.chart.components.line.focusedElement.y;
+      var line = this.chart.components.line;
+      return line.y() + line.state.focusedElement.y;
     },
     data: function() {
       return {

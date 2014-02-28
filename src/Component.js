@@ -4,7 +4,8 @@
     this.className = config.type;
     this.id = config.id;
     this.type = config.type;
-    this.options = config.options;
+    this.options = config.options || {};
+    this.bindings = config.bindings || [];
     this.state = {};
 
     this.x(config.x);
@@ -23,14 +24,39 @@
     _setAttr: function(attr, val) {
       this.attrs[attr] = val;
     },
+    _bind: function() {
+      var bindings = this.bindings,
+          len = bindings.length,
+          n;
+
+      for (n=0; n<len; n++) {
+        this._bindSingle(bindings[n]);  
+      }
+    },
+    _bindSingle: function(componentId) {
+      var that = this,
+          chart = this.chart,
+          stage = chart.stage;
+
+      stage.on('meteorchart-component-update-' + componentId, function() {
+        chart.components[that.id].batchDraw(); 
+      });
+    },
     getDataColor: function(n) {
       var themeData = this.chart.theme.data,
           len = themeData.length;
 
       return themeData[n % len];
     },
+    batchDraw: function() {
+      console.log(this.id)
+      this.layer.batchDraw();
+    },
     draw: function() {
       this.layer.draw();
+    },
+    update: function() {
+      this.chart.stage.fire('meteorchart-component-update-' + this.id);
     }
   };
 

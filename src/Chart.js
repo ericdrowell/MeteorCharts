@@ -36,8 +36,7 @@
       container: that.kineticContainer
     });
 
-    // first add all the components so that the initializers can bind
-    // attributes to other component attributes
+    // instantiate components and add them to the hash
     for (n=0; n<len; n++) {
       conf = components[n];
       componentData = this.data[conf.id]
@@ -53,22 +52,31 @@
       this.components.push(component); 
     }
 
-    // now instantiate each one
+    // now add each one to the stage
     for (n=0; n<this.components.length; n++) {
-      this.add(this.components[n]);
-    }
-  };
-
-  MeteorChart.prototype = {
-    add: function(component) {
+      component = this.components[n];
       component.layer.x(component.x());
       component.layer.y(component.y());
       component.build();
       this.stage.add(component.layer); 
-    },
-    remove: function(config) {
-
     }
+
+    // now add bindings
+    for (n=0; n<this.components.length; n++) {
+      component = this.components[n];
+
+      // abstract component bindings
+      component._bind();
+
+      // component subclass bindings
+      if (component.bind) {
+        component.bind();
+      }
+    }
+  };
+
+  MeteorChart.prototype = {
+
   };
 
   MeteorChart.version = '@@version';
