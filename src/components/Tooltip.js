@@ -1,4 +1,6 @@
 (function() {
+  var POINTER_SPACING = 15;
+  
   MeteorChart.Component.define('Tooltip', {
     build: function() {
       var foreground = this.chart.theme.foreground,
@@ -50,7 +52,7 @@
       rect.height(title.height() + content.height() + (padding*3));
 
       group.offsetX(rect.width() / 2);
-      group.offsetY(rect.height() + 10);
+      group.offsetY(rect.height() + POINTER_SPACING);
 
       this.layer.add(group);
     },

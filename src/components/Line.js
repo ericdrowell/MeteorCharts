@@ -36,7 +36,8 @@
     },
     build: function() {
       var data = this.data(),
-          len = data.length,
+          series = data.series,
+          len = series.length,
           n, line, points;
 
       // disable hit graph to improve draw performance since
@@ -44,7 +45,7 @@
       this.layer.enableHitGraph(false);
 
       for (n=0; n<len; n++) {
-        points = data[n].points;
+        points = series[n].points;
 
         this.layer.add(new Kinetic.Line({
           points: points,
