@@ -26,7 +26,7 @@
           data: {}
         };
 
-        that.update();
+        that.changed();
       });
     },
     build: function() {
@@ -53,7 +53,7 @@
 
       this._scale();
 
-      this.update();
+      this.changed();
     },
     destroy: function() {
 

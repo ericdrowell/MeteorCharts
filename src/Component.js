@@ -49,13 +49,15 @@
       return themeData[n % len];
     },
     batchDraw: function() {
-      console.log(this.id)
+      if (this.update) {
+        this.update();
+      }
       this.layer.batchDraw();
     },
     draw: function() {
       this.layer.draw();
     },
-    update: function() {
+    changed: function() {
       this.chart.stage.fire('meteorchart-component-update-' + this.id);
     }
   };

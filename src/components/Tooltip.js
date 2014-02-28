@@ -45,6 +45,10 @@
       rect.width(Math.max(title.width(), content.width()) + (padding*2));
       rect.height(title.height() + content.height() + (padding*3));
     },
+    update: function() {
+      this.layer.x(this.x());
+      this.layer.y(this.y());
+    },
     destroy: function() {
 
     }
