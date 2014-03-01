@@ -1,13 +1,10 @@
 (function() {
   MeteorChart.Component.define('Line', {
     init: function() {
-      this.state = {
-        minX: Infinity,
-        minY: Infinity,
-        maxX: -1 * Infinity,
-        maxY: -1 * Infinity,
-        focusedElement: null
-      };
+      this.minX = Infinity;
+      this.minY = Infinity;
+      this.maxX = -1 * Infinity;
+      this.maxY = -1 * Infinity;
     },
     bind: function() {
       var that = this,
@@ -18,11 +15,7 @@
 
         //console.log(pos.x)
         if (pos) {
-          that.state.focusedElement = {
-            x: pos.x,
-            y: pos.y,
-            data: {}
-          };
+          that.selected = {};
 
           that.changed();
         }
@@ -30,7 +23,7 @@
 
       stage.on('contentMouseout', function() {
         //console.log(stage.getPointerPosition());
-        that.state.focusedElement = null;
+        that.selected = {};
         that.changed();
       });
     },
@@ -69,15 +62,16 @@
           y = this.y(),
           width = this.width(),
           height = this.height(),
-          state = this.state,
-          minX = state.minX,
-          maxX = state.maxX,
-          minY = state.minY,
-          maxY = state.maxY,
+          minX = this.minX,
+          maxX = this.maxX,
+          minY = this.minY,
+          maxY = this.maxY,
           diffX = maxX - minX,
           diffY = maxY - minY,
           scaleX = width / diffX,
           scaleY = height / diffY;
+
+      //debugger;
 
       this.layer.getChildren().setAttrs({
         offsetX: minX,
@@ -88,16 +82,15 @@
     },
     _updateMinMax: function(points) {
       var len = points.length,
-          state = this.state,
           n, x, y;
 
       for (n=0; n<len; n+=2) {
         x = points[n];
         y = points[n+1];
-        state.minX = Math.min(state.minX, x);
-        state.maxX = Math.max(state.maxX, x);
-        state.minY = Math.min(state.minY, y);
-        state.maxY = Math.max(state.maxY, y);
+        this.minX = Math.min(this.minX, x);
+        this.maxX = Math.max(this.maxX, x);
+        this.minY = Math.min(this.minY, y);
+        this.maxY = Math.max(this.maxY, y);
       }
     }
   });

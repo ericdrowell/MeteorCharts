@@ -19,6 +19,7 @@
     this.theme = config.theme;
     this.data = config.data || {};
     this.options = config.options || {};
+    this.padding = config.padding || 0;
     this.components = [];
 
     this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;

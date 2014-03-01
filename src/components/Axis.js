@@ -5,9 +5,9 @@
     },
     build: function() {
       var that = this,
+          chart = this.chart,
           data = this.data(),
-          options = this.options,
-          formatter = new MeteorChart.Formatters[options.formatter](data.min, data.max, options.maxIncrements),
+          formatter = new MeteorChart.Formatters['Number'](data.min, data.max, 5),
           min = data.min,
           max = data.max,
           diff = max - min,

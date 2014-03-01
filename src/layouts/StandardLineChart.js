@@ -6,23 +6,26 @@ MeteorChart.Layouts.StandardLineChart = [
       return this.chart.components.yAxis.width();
     },
     y: function() {
-      return this.chart.options.padding;
+      return this.chart.padding;
     },
     width: function() {
-      return this.chart.width - this.x() - this.chart.options.padding;
+      var chart = this.chart;
+      console.log(chart.padding);
+      return chart.width - this.x() - chart.padding;
     },
     height: function() {
-      return this.chart.height - this.y() - (this.chart.options.padding * 2) - this.chart.components.xAxis.height();
+      var chart = this.chart;
+      return chart.height - this.y() - (chart.padding * 2) - chart.components.xAxis.height();
     }
   },
   {
     id: 'yAxis',
     type: 'Axis',
     x: function() {
-      return this.chart.options.padding;
+      return this.chart.padding;
     },
     y: function() {
-      return this.chart.options.padding;
+      return this.chart.padding;
     },
     width: function() {
       // bind axis width to line x position
@@ -34,15 +37,13 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var state = this.chart.components.line.state;
+      var line = this.chart.components.line;
       return {
-        min: state.minY,
-        max: state.maxY
+        min: line.minY,
+        max: line.maxY
       }
     },
     options: {
-      formatter: 'Number',
-      maxIncrements: 5,
       orientation: 'vertical'
     }
   },
@@ -56,7 +57,7 @@ MeteorChart.Layouts.StandardLineChart = [
     y: function() {
       var line = this.chart.components.line;
 
-      return line.y() + line.height() + this.chart.options.padding;
+      return line.y() + line.height() + this.chart.padding;
     },
     width: function() {
       // bind axis width to line width
@@ -67,14 +68,13 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var state = this.chart.components.line.state;
+      var line = this.chart.components.line;
       return {
-        min: state.minX,
-        max: state.maxX
+        min: line.minX,
+        max: line.maxX
       }
     },
     options: {
-      formatter: 'Number',
       maxIncrements: 5
     }
   }

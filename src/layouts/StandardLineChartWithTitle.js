@@ -7,20 +7,20 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     y: function() {
       var title = this.chart.components.title;
-      return title.x() + title.height() + this.chart.options.padding;
+      return title.x() + title.height() + this.chart.padding;
     },
     width: function() {
-      return this.chart.width - this.x() - this.chart.options.padding;
+      return this.chart.width - this.x() - this.chart.padding;
     },
     height: function() {
-      return this.chart.height - this.y() - (this.chart.options.padding * 2) - this.chart.components.xAxis.height();
+      return this.chart.height - this.y() - (this.chart.padding * 2) - this.chart.components.xAxis.height();
     }
   },
   {
     id: 'yAxis',
     type: 'Axis',
     x: function() {
-      return this.chart.options.padding;
+      return this.chart.padding;
     },
     y: function() {
       var title = this.chart.components.title;
@@ -36,10 +36,10 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var state = this.chart.components.line.state;
+      var line = this.chart.components.line;
       return {
-        min: state.minY,
-        max: state.maxY
+        min: line.minY,
+        max: line.maxY
       }
     },
     options: {
@@ -58,7 +58,7 @@ MeteorChart.Layouts.StandardLineChart = [
     y: function() {
       var line = this.chart.components.line;
 
-      return line.y() + line.height() + this.chart.options.padding;
+      return line.y() + line.height() + this.chart.padding;
     },
     width: function() {
       // bind axis width to line width
@@ -69,10 +69,10 @@ MeteorChart.Layouts.StandardLineChart = [
     },
     data: function() {
       // bind axis data to line min and max values
-      var state = this.chart.components.line.state;
+      var line = this.chart.components.line;
       return {
-        min: state.minX,
-        max: state.maxX
+        min: line.minX,
+        max: line.maxX
       }
     },
     options: {
@@ -84,10 +84,10 @@ MeteorChart.Layouts.StandardLineChart = [
     id: 'title',
     type: 'Title',
     x: function() {
-      return this.chart.options.padding;
+      return this.chart.padding;
     },
     y: function() {
-      return this.chart.options.padding;
+      return this.chart.padding;
     },
     width: function() {
       return this.chart.width;

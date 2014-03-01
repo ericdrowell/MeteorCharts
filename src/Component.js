@@ -13,7 +13,6 @@
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
-    this.visible(config.visible);
 
     this.layer = new Kinetic.Layer({
       name: this.className,
@@ -65,9 +64,6 @@
     },
     _update: function() {
       var layer = this.layer;
-      if (this.visible) {
-        layer.visible(this.visible());
-      }
 
       this.layer.x(this.x());
       this.layer.y(this.y());
@@ -118,5 +114,4 @@
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'width', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'height', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'data');
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'visible', true);
 })();
