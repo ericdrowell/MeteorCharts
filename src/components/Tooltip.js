@@ -1,31 +1,29 @@
 (function() {
-  var POINTER_SPACING = 15;
+  var POINTER_SPACING = 15,
+      PADDING = 10;
   
   MeteorChart.Component.define('Tooltip', {
     build: function() {
-      console.log('build')
       var foreground = this.chart.theme.foreground,
           fonts = foreground.fonts,
           smallFont = fonts.small,
-          mediumFont = fonts.medium,
-          padding = 10,
-          group, rect, title, content;
+          mediumFont = fonts.medium;
 
       this.layer.enableHitGraph(false); 
 
-      group = new Kinetic.Group();
+      this.group = new Kinetic.Group();
 
-      rect = new Kinetic.Rect({
+      this.rect = new Kinetic.Rect({
         fill: foreground.primary,
         stroke: foreground.secondary,
         strokeWidth: 2
       });
 
-      group.add(rect);
+      this.group.add(this.rect);
 
-      title = new Kinetic.Text({
-        x: padding,
-        y: padding,
+      this.title = new Kinetic.Text({
+        x: PADDING,
+        y: PADDING,
         text: this.data().title,
         fontFamily: mediumFont.fontFamily,
         fontSize: mediumFont.fontSize,
@@ -33,12 +31,12 @@
         stroke: mediumFont.stroke
       });
 
-      group.add(title); 
+      this.group.add(this.title); 
 
-      content = new Kinetic.Text({
-        x: padding,
+      this.content = new Kinetic.Text({
+        x: PADDING,
         // set y position to title height + spacing
-        y: title.height() + (padding*2),
+        y: this.title.height() + (PADDING*2),
         lineHeight: 1.5,
         text: this.data().content,
         fontFamily: smallFont.fontFamily,
@@ -47,18 +45,26 @@
         stroke: smallFont.stroke
       });
 
-      group.add(content);
+      this.group.add(this.content);
 
-      rect.width(Math.max(title.width(), content.width()) + (padding*2));
-      rect.height(title.height() + content.height() + (padding*3));
+      this._setSize();
 
-      group.offsetX(rect.width() / 2);
-      group.offsetY(rect.height() + POINTER_SPACING);
+      this.layer.add(this.group);
+    },
+    _setSize: function() {
+      this.rect.width(Math.max(this.title.width(), this.content.width()) + (PADDING*2));
+      this.rect.height(this.title.height() + this.content.height() + (PADDING*3));
 
-      this.layer.add(group);
+      this.group.offsetX(this.rect.width() / 2);
+      this.group.offsetY(this.rect.height() + POINTER_SPACING);
     },
     update: function() {
+      var data = this.data();
 
+      this.title.text(data.title);
+      this.content.text(data.content);
+
+      this._setSize();
     },
     destroy: function() {
 
