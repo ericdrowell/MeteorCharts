@@ -14,7 +14,6 @@
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
-    this.selected(config.selected);
 
     this.layer = new Kinetic.Layer({
       name: this.className,
@@ -41,7 +40,9 @@
           stage = chart.stage;
 
       stage.on(event, function() {
-        chart.components[that.id].batchDraw(); 
+        var component = chart.components[that.id];
+        component.update(); 
+        component.batchDraw();
       });
     },
     getDataColor: function(n) {
@@ -51,11 +52,6 @@
       return themeData[n % len];
     },
     batchDraw: function() {
-      this._update();
-
-      if (this.update) {
-        this.update();
-      }
       this.layer.batchDraw();
     },
     draw: function() {
@@ -64,7 +60,8 @@
     changed: function() {
       this.chart.stage.fire('meteorchart-component-update-' + this.id);
     },
-    _update: function() {
+    update: function() {
+      // abstract component update
       var layer = this.layer,
           visible = this.visible();
 
@@ -77,6 +74,11 @@
 
       this.layer.x(this.x());
       this.layer.y(this.y());
+
+      // concrete component update
+      if (this._update) {
+        this._update();
+      }
     },
   };
 
@@ -107,13 +109,16 @@
         method = 'get' + Kinetic.Util._capitalize(attr);
 
     constructor.prototype[method] = function() {
-      var func = this.attrs[attr];
+      var val = this.attrs[attr];
 
-      if (func) {
-        return func.call(this);
+      if (val === undefined) {
+        return def;
+      }
+      else if (Kinetic.Util._isFunction(val)) {
+        return val.call(this);
       }
       else {
-        return def;
+        return val;
       }
     };
   };
@@ -124,6 +129,5 @@
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'width', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'height', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'data');
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'selected', null);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'visible', true);
 })();

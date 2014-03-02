@@ -10,7 +10,8 @@
   MeteorChart = function(config) {
     var that = this,
         container = config.container,
-        components = config.layout,
+        layout = config.layout,
+        components = layout.components,
         len = components.length,
         n, conf, componentData;
 
@@ -54,7 +55,7 @@
     // now add each one to the stage
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
-      component._update()
+      component.update()
       component.build();
       this.stage.add(component.layer); 
     }
@@ -70,6 +71,11 @@
       if (component.bind) {
         component.bind();
       }
+    }
+
+    // add layout bindings
+    if (layout.bind) {
+      layout.bind.call(this);
     }
   };
 

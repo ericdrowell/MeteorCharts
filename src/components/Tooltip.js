@@ -24,7 +24,6 @@
       this.title = new Kinetic.Text({
         x: PADDING,
         y: PADDING,
-        text: this.data().title,
         fontFamily: mediumFont.fontFamily,
         fontSize: mediumFont.fontSize,
         fill: mediumFont.fill,
@@ -38,7 +37,6 @@
         // set y position to title height + spacing
         y: this.title.height() + (PADDING*2),
         lineHeight: 1.5,
-        text: this.data().content,
         fontFamily: smallFont.fontFamily,
         fontSize: smallFont.fontSize,
         fill: smallFont.fill,
@@ -47,7 +45,7 @@
 
       this.group.add(this.content);
 
-      this._setSize();
+      this.update();
 
       this.layer.add(this.group);
     },
@@ -58,13 +56,15 @@
       this.group.offsetX(this.rect.width() / 2);
       this.group.offsetY(this.rect.height() + POINTER_SPACING);
     },
-    update: function() {
+    _update: function() {
       var data = this.data();
 
-      this.title.text(data.title);
-      this.content.text(data.content);
+      if (data) {
+        this.title.text(data.title || '');
+        this.content.text(data.content || '');
 
-      this._setSize();
+        this._setSize();
+      }
     },
     destroy: function() {
 
