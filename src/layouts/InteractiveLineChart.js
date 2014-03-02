@@ -5,12 +5,17 @@ MeteorChart.Layouts.InteractiveLineChart = [
     updateOn: ['xAxisHeightChange', 'yAxisWidthChange'],
     selected: function() {
       var pos = this.chart.stage.getPointerPosition();
-      
-      return {
-        title: 'foobar',
-        x: pos ? pos.x : 0,
-        y: pos ? pos.y : 0
-      };
+
+      if (pos) {
+        return {
+          title: 'foobar',
+          x: pos.x,
+          y: pos.y
+        };
+      }
+      else {
+        return null;
+      }
     },
     x: function() {
       return this.chart.components.yAxis.width();
@@ -89,7 +94,7 @@ MeteorChart.Layouts.InteractiveLineChart = [
     id: 'tooltip',
     type: 'Tooltip',
     // data bindings
-    updateOn: ['contentMousemove'],
+    updateOn: ['contentMouseover', 'contentMousemove', 'contentMouseout'],
     x: function() {
       var selected = this.chart.components.line.selected();
 
@@ -109,6 +114,9 @@ MeteorChart.Layouts.InteractiveLineChart = [
       else {
         return 0;
       }
+    },
+    visible: function() {
+      return !!this.chart.components.line.selected();
     },
     data: function() {
       return {

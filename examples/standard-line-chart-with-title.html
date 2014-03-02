@@ -27,37 +27,37 @@
         container: 'container',
         width: 500,
         height: 290,
+        padding: 20,
         theme: MeteorChart.Themes.CoteAzur,
         //theme: MeteorChart.Themes.Lollapalooza,
 
         data: {
           title: 'Awesome blossom possum',
-          line: [
-            {
-              // red
-              title: 'Series 1',
-              points: [
-                -100, -100,
-                100, 100,
-                200, 50
-              ]
-            },
-            { 
-              // green
-              title: 'Series 2',
-              points: [
-                0, 100,
-                100, 200,
-                200, 150,
-                300, 200
-              ]
-            }
-          ]
+          line: {
+            series: [
+              {
+                // red
+                title: 'Series 1',
+                points: [
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
+                ]
+              }
+            ]
+          },
         },
-        layout: MeteorChart.Layouts.StandardLineChart,
-        options: {
-          padding: 20
-        }
+        layout: MeteorChart.Layouts.StandardLineChart
       });
 
    

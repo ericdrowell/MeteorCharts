@@ -65,7 +65,15 @@
       this.chart.stage.fire('meteorchart-component-update-' + this.id);
     },
     _update: function() {
-      var layer = this.layer;
+      var layer = this.layer,
+          visible = this.visible();
+
+      if (visible) {
+        this.layer.show();
+      }
+      else {
+        this.layer.hide();
+      }
 
       this.layer.x(this.x());
       this.layer.y(this.y());
@@ -117,4 +125,5 @@
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'height', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'data');
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'selected', null);
+  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'visible', true);
 })();

@@ -25,34 +25,35 @@
         container: 'container',
         width: 400,
         height: 80,
+        padding: 10,
         data: {
-          line: [
-            {
-              // red
-              title: 'Series 1',
-              points: [
-                -100, -100,
-                100, 100,
-                200, 50
-              ]
-            },
-            { 
-              // green
-              title: 'Series 2',
-              points: [
-                0, 100,
-                100, 200,
-                200, 150,
-                300, 200
-              ]
-            }
-          ]
+          title: 'Awesome blossom possum',
+          line: {
+            series: [
+              {
+                // red
+                title: 'Series 1',
+                points: [
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
+                ]
+              }
+            ]
+          },
         },
         theme: MeteorChart.Themes.Light,
-        layout: MeteorChart.Layouts.SparkChart,
-        options: {
-          padding: 10
-        }
+        layout: MeteorChart.Layouts.SparkChart
       });
 
    
