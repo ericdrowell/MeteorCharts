@@ -9,20 +9,20 @@
         },
         y: function() {
           var title = this.chart.components.title;
-          return title.x() + title.height() + this.chart.padding;
+          return title.x() + title.height() + this.chart.padding();
         },
         width: function() {
-          return this.chart.width - this.x() - this.chart.padding;
+          return this.chart.width() - this.x() - this.chart.padding();
         },
         height: function() {
-          return this.chart.height - this.y() - (this.chart.padding * 2) - this.chart.components.xAxis.height();
+          return this.chart.height() - this.y() - (this.chart.padding() * 2) - this.chart.components.xAxis.height();
         }
       },
       {
         id: 'yAxis',
         type: 'Axis',
         x: function() {
-          return this.chart.padding;
+          return this.chart.padding();
         },
         y: function() {
           var title = this.chart.components.title;
@@ -60,14 +60,14 @@
         y: function() {
           var line = this.chart.components.line;
 
-          return line.y() + line.height() + this.chart.padding;
+          return line.y() + line.height() + this.chart.padding();
         },
         width: function() {
           // bind axis width to line width
           return this.chart.components.line.width();
         },
         height: function() {
-          return this.chart.theme.background.fonts.medium.fontSize;
+          return this.chart.theme().background.fonts.medium.fontSize;
         },
         data: function() {
           // bind axis data to line min and max values
@@ -86,13 +86,13 @@
         id: 'title',
         type: 'Title',
         x: function() {
-          return this.chart.padding;
+          return this.chart.padding();
         },
         y: function() {
-          return this.chart.padding;
+          return this.chart.padding();
         },
         width: function() {
-          return this.chart.width;
+          return this.chart.width();
         },
         height: function() {
           return 30;

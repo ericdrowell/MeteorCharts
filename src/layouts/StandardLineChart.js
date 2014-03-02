@@ -8,26 +8,26 @@
           return this.chart.components.yAxis.width();
         },
         y: function() {
-          return this.chart.padding;
+          return this.chart.padding();
         },
         width: function() {
           var chart = this.chart;
-          console.log(chart.padding);
-          return chart.width - this.x() - chart.padding;
+          console.log(chart.padding());
+          return chart.width() - this.x() - chart.padding();
         },
         height: function() {
           var chart = this.chart;
-          return chart.height - this.y() - (chart.padding * 2) - chart.components.xAxis.height();
+          return chart.height() - this.y() - (chart.padding() * 2) - chart.components.xAxis.height();
         }
       },
       {
         id: 'yAxis',
         type: 'Axis',
         x: function() {
-          return this.chart.padding;
+          return this.chart.padding();
         },
         y: function() {
-          return this.chart.padding;
+          return this.chart.padding();
         },
         width: function() {
           // bind axis width to line x position
@@ -59,14 +59,14 @@
         y: function() {
           var line = this.chart.components.line;
 
-          return line.y() + line.height() + this.chart.padding;
+          return line.y() + line.height() + this.chart.padding();
         },
         width: function() {
           // bind axis width to line width
           return this.chart.components.line.width();
         },
         height: function() {
-          return this.chart.theme.background.fonts.medium.fontSize;
+          return this.chart.theme().background.fonts.medium.fontSize;
         },
         data: function() {
           // bind axis data to line min and max values

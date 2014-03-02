@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Component.define('Title', {
     build: function() {
-      var font = this.chart.theme.background.fonts.large;
+      var font = this.chart.theme().background.fonts.large;
 
       this.layer.enableHitGraph(false);
       

@@ -24,7 +24,7 @@
       });  
     },
     _addLabel: function(offset, val) {
-      var mediumFont = this.chart.theme.background.fonts.medium,
+      var mediumFont = this.chart.theme().background.fonts.medium,
           orientation = this.orientation;
           
       this.layer.add(new Kinetic.Text({

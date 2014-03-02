@@ -15,26 +15,28 @@
         len = components.length,
         n, conf, componentData;
 
-    this.width = config.width;
-    this.height = config.height;
-    this.theme = config.theme;
-    this.data = config.data || {};
-    this.options = config.options || {};
-    this.padding = config.padding || 0;
+    this.attrs= {};
+    this.width(config.width);
+    this.height(config.height);
+    this.theme(config.theme);
+    this.data(config.data);
+    this.options(config.options);
+    this.padding(config.padding);
+
     this.components = [];
 
     this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
     this.kineticContainer = document.createElement('div');
     this.kineticContainer.className = 'meteorchart-content';
-    this.kineticContainer.style.width = this.width;
-    this.kineticContainer.style.height = this.height;
+    this.kineticContainer.style.width = this.width();
+    this.kineticContainer.style.height = this.height();
     this.kineticContainer.style.display = 'inline-block';
-    this.kineticContainer.style.backgroundColor = this.theme.background.primary;
+    this.kineticContainer.style.backgroundColor = this.theme().background.primary;
     this.container.appendChild(this.kineticContainer);
 
     this.stage = new Kinetic.Stage({
-      width: that.width,
-      height: that.height,
+      width: that.width(),
+      height: that.height(),
       container: that.kineticContainer
     });
 
@@ -81,7 +83,7 @@
 
   MeteorChart.prototype = {
     _addData: function(conf) {
-      var componentData = this.data[conf.id];
+      var componentData = this.data()[conf.id];
 
       if (componentData) {
         conf.data = function() {
@@ -103,7 +105,6 @@
   MeteorChart.Formatters = {};
   MeteorChart.Layouts = {};
   MeteorChart.Themes = {};
-
 })();
 
 // Uses Node, AMD or browser globals to create a module.

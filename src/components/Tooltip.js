@@ -4,7 +4,7 @@
   
   MeteorChart.Component.define('Tooltip', {
     build: function() {
-      var foreground = this.chart.theme.foreground,
+      var foreground = this.chart.theme().foreground,
           fonts = foreground.fonts,
           smallFont = fonts.small,
           mediumFont = fonts.medium;
