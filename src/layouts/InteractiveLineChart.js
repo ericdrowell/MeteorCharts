@@ -2,9 +2,15 @@ MeteorChart.Layouts.InteractiveLineChart = [
   {
     id: 'line',
     type: 'Line',
-    bindings: {
-      xAxis: ['height'],
-      yAxis: ['width']
+    updateOn: ['xAxisHeightChange', 'yAxisWidthChange'],
+    selected: function() {
+      var pos = this.chart.stage.getPointerPosition();
+      
+      return {
+        title: 'foobar',
+        x: pos ? pos.x : 0,
+        y: pos ? pos.y : 0
+      };
     },
     x: function() {
       return this.chart.components.yAxis.width();
@@ -22,9 +28,7 @@ MeteorChart.Layouts.InteractiveLineChart = [
   {
     id: 'yAxis',
     type: 'Axis',
-    bindings: {
-      line: ['height']
-    },
+    updateOn: ['lineHeightChange'],
     x: function() {
       return this.chart.padding;
     },
@@ -54,9 +58,7 @@ MeteorChart.Layouts.InteractiveLineChart = [
   {
     id: 'xAxis',
     type: 'Axis',
-    bindings: {
-      line: ['x', 'y', 'width', 'height']
-    },
+    updateOn: ['lineXChange', 'lineYChange', 'lineWidthChange', 'lineHeightChange'],
     x: function() {
       // bind axis x position to line x position
       return this.chart.components.line.x();
@@ -87,20 +89,26 @@ MeteorChart.Layouts.InteractiveLineChart = [
     id: 'tooltip',
     type: 'Tooltip',
     // data bindings
-    bindings: {
-      line: ['selected']
-    },
+    updateOn: ['contentMousemove'],
     x: function() {
-      var line = this.chart.components.line,
-          selected = line.state.selected;
+      var selected = this.chart.components.line.selected();
 
-      return 0;
+      if (selected) {
+        return selected.x;
+      }
+      else {
+        return 0;
+      }
     },
     y: function() {
-      var line = this.chart.components.line,
-          selected = line.state.selected;
+      var selected = this.chart.components.line.selected();
 
-      return 0;
+      if (selected) {
+        return selected.y;
+      }
+      else {
+        return 0;
+      }
     },
     data: function() {
       return {

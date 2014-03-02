@@ -5,14 +5,16 @@
     this.id = config.id;
     this.type = config.type;
     this.options = config.options || {};
-    this.bindings = config.bindings || [];
+    this.updateOn = config.updateOn || [];
     this.state = {};
 
+    // binding functions
     this.x(config.x);
     this.y(config.y);
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
+    this.selected(config.selected);
 
     this.layer = new Kinetic.Layer({
       name: this.className,
@@ -25,20 +27,20 @@
       this.attrs[attr] = val;
     },
     _bind: function() {
-      var bindings = this.bindings,
-          len = bindings.length,
+      var updateOn = this.updateOn,
+          len = updateOn.length,
           n;
 
       for (n=0; n<len; n++) {
-        this._bindSingle(bindings[n]);  
+        this._bindSingle(updateOn[n]);  
       }
     },
-    _bindSingle: function(componentId) {
+    _bindSingle: function(event) {
       var that = this,
           chart = this.chart,
           stage = chart.stage;
 
-      stage.on('meteorchart-component-update-' + componentId, function() {
+      stage.on(event, function() {
         chart.components[that.id].batchDraw(); 
       });
     },
@@ -114,4 +116,5 @@
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'width', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'height', 0);
   MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'data');
+  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'selected', null);
 })();

@@ -6,27 +6,6 @@
       this.maxX = -1 * Infinity;
       this.maxY = -1 * Infinity;
     },
-    bind: function() {
-      var that = this,
-          stage = this.chart.stage;
-
-      stage.on('contentMouseover contentMousemove', function() {
-        var pos = stage.getPointerPosition();
-
-        //console.log(pos.x)
-        if (pos) {
-          that.selected = {};
-
-          that.changed();
-        }
-      });
-
-      stage.on('contentMouseout', function() {
-        //console.log(stage.getPointerPosition());
-        that.selected = {};
-        that.changed();
-      });
-    },
     build: function() {
       var data = this.data(),
           series = data.series,
@@ -51,8 +30,6 @@
       }
 
       this._scale();
-
-      this.changed();
     },
     destroy: function() {
 
