@@ -22,9 +22,6 @@
   };
 
   MeteorChart.Component.prototype = {
-    _setAttr: function(attr, val) {
-      this.attrs[attr] = val;
-    },
     _bind: function() {
       var updateOn = this.updateOn,
           len = updateOn.length,
@@ -97,37 +94,11 @@
     Kinetic.Util.extend(MeteorChart.Components[type], MeteorChart.Component);
   };
 
-  // Factory methods
-  MeteorChart.Component.addGetterSetter = Kinetic.Factory.addGetterSetter;
-  MeteorChart.Component.addSetter = Kinetic.Factory.addSetter;
-  MeteorChart.Component.addOverloadedGetterSetter = Kinetic.Factory.addOverloadedGetterSetter;
-
-  // the addGetter method needs to be slightly different from the Kinetic.Factory.addGetter method
-  // because MeteorChart component attrs can be functions which are bound to other component data
-  MeteorChart.Component.addGetter = function(constructor, attr, def) {
-    var that = this,
-        method = 'get' + Kinetic.Util._capitalize(attr);
-
-    constructor.prototype[method] = function() {
-      var val = this.attrs[attr];
-
-      if (val === undefined) {
-        return def;
-      }
-      else if (Kinetic.Util._isFunction(val)) {
-        return val.call(this);
-      }
-      else {
-        return val;
-      }
-    };
-  };
-
   // getters setters
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'x', 0);
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'y', 0);
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'width', 0);
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'height', 0);
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'data');
-  MeteorChart.Component.addGetterSetter(MeteorChart.Component, 'visible', true);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'x', 0);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'y', 0);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'width', 0);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'height', 0);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'data');
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'visible', true);
 })();
