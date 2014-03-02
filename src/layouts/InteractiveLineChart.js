@@ -1,11 +1,10 @@
 (function() {
   MeteorChart.Layouts.InteractiveLineChart = {
     bind: function() {
-      var stage = this.stage,
-          tooltip = this.components.tooltip;
+      var tooltip = this.components.tooltip;
 
-      stage.on('contentMouseover contentMousemove', function() {
-        var pos = stage.getPointerPosition();
+      this.on('contentMouseover contentMousemove', function() {
+        var pos = this.getPointerPosition();
 
         if (pos) {
           tooltip.visible(true);
@@ -21,7 +20,7 @@
         }
       });
 
-      stage.on('contentMouseout', function() {
+      this.on('contentMouseout', function() {
         tooltip.visible(false);
         tooltip.update();
         tooltip.batchDraw();
@@ -33,13 +32,13 @@
         type: 'Line',
         updateOn: ['xAxisHeightChange', 'yAxisWidthChange'],
         x: function() {
-          return this.chart.components.yAxis.width();
+          return this.chart.components.yAxis.width() + this.chart.padding;
         },
         y: function() {
           return this.chart.padding;
         },
         width: function() {
-          return this.chart.width - this.x() - this.chart.padding;
+          return this.chart.width - this.chart.components.yAxis.width() - (this.chart.padding * 2);
         },
         height: function() {
           return this.chart.height - this.y() - (this.chart.padding * 2) - this.chart.components.xAxis.height();
@@ -57,7 +56,7 @@
         },
         width: function() {
           // bind axis width to line x position
-          return 80;
+          return 60;
         },
         height: function() {
           // bind axis height to line height

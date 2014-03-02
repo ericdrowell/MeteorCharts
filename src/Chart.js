@@ -88,6 +88,13 @@
           return componentData;
         };
       }
+    },
+    // KineticJS stage pass throughs
+    on: function() {
+      return this.stage.on.apply(this.stage, arguments);
+    },
+    getPointerPosition: function() {
+      return this.stage.getPointerPosition.appy(this.stage, arguments);
     }
   };
 
