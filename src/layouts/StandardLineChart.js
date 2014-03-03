@@ -12,7 +12,6 @@
         },
         width: function() {
           var chart = this.chart;
-          console.log(chart.padding());
           return chart.width() - this.x() - chart.padding();
         },
         height: function() {

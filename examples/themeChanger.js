@@ -14,7 +14,6 @@
   select.onchange = function() {
     var val = select.options[select.selectedIndex].value;
     chart.destroy();
-    console.log(MeteorChart.Themes[val])
     config.theme = MeteorChart.Themes[val];
     chart = new MeteorChart(config);
   };

@@ -1,26 +1,52 @@
 (function() {
-  MeteorChart.Layouts.InteractiveLineChart = {
-    bind: function() {
-      var tooltip = this.components.tooltip;
+  function chartToData(pos, line) {
+    return {
+      x: (pos.x / line.scaleX) + line.minX,
+      y: line.minY - ((pos.y - line.height()) / line.scaleY)
+    };
+  }
 
-      this.on('contentMouseover contentMousemove', function() {
-        var pos = this.getPointerPosition();
+  MeteorChart.Layouts.InteractiveLineChart = {
+    init: function(chart) {
+      var stage = chart.stage,
+          tooltip = chart.components.tooltip,
+          line = chart.components.line,
+          relPos, dataPos;
+
+      stage.on('contentMouseover contentMousemove', function() {
+        var pos = stage.getPointerPosition();
 
         if (pos) {
-          tooltip.visible(true);
-          tooltip.x(pos.x);
-          tooltip.y(pos.y);
-          tooltip.data({
-            title: 'foobar',
-            content: pos.x + ',' + pos.y
-          });
+          relPos = {
+            x: pos.x - line.x(),
+            y: pos.y - line.y()
+          }
 
-          tooltip.update();
-          tooltip.batchDraw();
+          // make sure the position is inside the line component
+          if (relPos.x >=0 && relPos.x <= line.width() && relPos.y >=0 && relPos.y <= line.height()) {
+            tooltip.visible(true);
+            tooltip.x(pos.x);
+            tooltip.y(pos.y);
+
+            dataPos = chartToData(relPos, line);
+
+            tooltip.data({
+              title: 'foobar',
+              content: dataPos.x + ',' + dataPos.y
+            });
+
+            tooltip.update();
+            tooltip.batchDraw();
+          }
+          else {
+            tooltip.visible(false);
+            tooltip.update();
+            tooltip.batchDraw();   
+          }
         }
       });
 
-      this.on('contentMouseout', function() {
+      stage.on('contentMouseout', function() {
         tooltip.visible(false);
         tooltip.update();
         tooltip.batchDraw();

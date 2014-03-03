@@ -75,9 +75,9 @@
       }
     }
 
-    // add layout bindings
-    if (layout.bind) {
-      layout.bind.call(this);
+    // init layout if one is defined
+    if (layout.init) {
+      layout.init(this);
     }
   };
 
@@ -90,13 +90,6 @@
           return componentData;
         };
       }
-    },
-    // KineticJS stage pass throughs
-    on: function() {
-      return this.stage.on.apply(this.stage, arguments);
-    },
-    getPointerPosition: function() {
-      return this.stage.getPointerPosition.appy(this.stage, arguments);
     },
     destroy: function() {
       var components = this.components,

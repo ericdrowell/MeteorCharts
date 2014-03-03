@@ -48,7 +48,8 @@
           scaleX = width / diffX,
           scaleY = height / diffY;
 
-      //debugger;
+      this.scaleX = scaleX;
+      this.scaleY = scaleY;
 
       this.layer.getChildren().setAttrs({
         offsetX: minX,
