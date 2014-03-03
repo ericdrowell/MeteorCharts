@@ -32,7 +32,7 @@
 
             tooltip.data({
               title: 'foobar',
-              content: dataPos.x + ',' + dataPos.y
+              content: line.formatterX.short(dataPos.x) + ',' + line.formatterY.short(dataPos.y)
             });
 
             tooltip.update();
@@ -93,7 +93,8 @@
           var line = this.chart.components.line;
           return {
             min: line.minY,
-            max: line.maxY
+            max: line.maxY,
+            unit: line.data().unit.y
           }
         },
         options: {
@@ -126,7 +127,8 @@
 
           return {
             min: line.minX,
-            max: line.maxX
+            max: line.maxX,
+            unit: line.data().unit.x
           }
         }
       },

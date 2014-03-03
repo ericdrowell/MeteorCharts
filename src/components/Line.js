@@ -8,6 +8,7 @@
     },
     build: function() {
       var data = this.data(),
+          unit = data.unit || {},
           series = data.series,
           len = series.length,
           n, line, points;
@@ -28,6 +29,9 @@
 
         this._updateMinMax(points);
       }
+
+      this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
+      this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
 
       this._scale();
     },

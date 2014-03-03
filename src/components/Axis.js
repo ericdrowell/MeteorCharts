@@ -7,7 +7,7 @@
       var that = this,
           chart = this.chart,
           data = this.data(),
-          formatter = new MeteorChart.Formatters['Number'](data.min, data.max, 5),
+          formatter = new MeteorChart.Formatters[data.unit || 'Number'](data.min, data.max, 5),
           min = data.min,
           max = data.max,
           diff = max - min,
