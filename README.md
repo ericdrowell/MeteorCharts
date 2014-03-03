@@ -29,6 +29,12 @@ var lineChart = new MeteorChart({
 });
 ```
 
+## Terminology
+  * Component - a component is a graphical element inside of a chart.  Some examples of pre-built components include Title, Line, Axis, Tooltip, Scatter, etc.  It's also really easy to create your own components
+  * Layout - layouts define the position, size, and data source of components in the chart through data binding.  Some examples of pre-built layouts include StandardLineChart, StandardLineChartWithTitle, SparkChart, and InteractiveLineChart.  It's also really easy to create your own layouts.
+  * Theme - themes define the color palette and fonts used for your chart.  Some exmaples of pre-built themes include CoteAzure and Lollapallooza.  It's easy to create your own themes as well.
+  * Data - most components require data to render.  For example, if you're creating a standard line chart, the data for the line component is a series of data points.  The data for the x and y axis is bound to the line component data.  And the data for the title component is just a string, like "This is my chart title".
+
 ## Building the Project
 
 In the root directory, run `npm install`.  Once that finishes, you can run `grunt dev` to build the development version.
