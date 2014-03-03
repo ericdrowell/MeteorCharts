@@ -77,6 +77,12 @@
         this._update();
       }
     },
+    destroy: function() {
+
+      if (this._destroy) {
+        this._destroy();
+      }
+    }
   };
 
   MeteorChart.Component.define = function(type, methods) {

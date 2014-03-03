@@ -17,11 +17,16 @@
     <!-- <script src="../../lib/kinetic-v4.7.0-beta.js"></script> -->
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
+    
     <script src="../src/themes/CoteAzur.js"></script>
+    <script src="../src/themes/Light.js"></script>
+    <script src="../src/themes/Lollapalooza.js"></script>
+
     <script src="../src/layouts/StandardLineChart.js"></script>
+    <script src="themeChanger.js"></script>
     
     <script type="text/javascript">
-      var chart = new MeteorChart({
+      var config = {
         container: 'container',
         width: 500,
         height: 290,
@@ -63,7 +68,9 @@
             maxIncrements: 5
           }
         }
-      });
+      };
+
+      var chart = new MeteorChart(config);
    
       console.log(chart);
     </script>

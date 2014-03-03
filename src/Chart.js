@@ -97,6 +97,25 @@
     },
     getPointerPosition: function() {
       return this.stage.getPointerPosition.appy(this.stage, arguments);
+    },
+    destroy: function() {
+      var components = this.components,
+          len = components.length,
+          n;
+
+      // destroy components
+      for (n=0; n<len; n++) {
+        components[n].destroy();
+      }
+
+      // destroy stage
+      this.stage.destroy();
+
+      // clear any leftover DOM
+      this.container.innerHTML = '';
+
+      
+
     }
   };
 
