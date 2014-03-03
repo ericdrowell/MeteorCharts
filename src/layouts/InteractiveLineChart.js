@@ -6,12 +6,19 @@
     };
   }
 
+  function getNearestPoint(pos, line) {
+    return {
+      x: pos.x,
+      y: pos.y
+    }
+  }
+
   MeteorChart.Layouts.InteractiveLineChart = {
     init: function(chart) {
       var stage = chart.stage,
           tooltip = chart.components.tooltip,
           line = chart.components.line,
-          relPos, dataPos;
+          relPos, nearestPoint;
 
       stage.on('contentMouseover contentMousemove', function() {
         var pos = stage.getPointerPosition();
@@ -24,15 +31,15 @@
 
           // make sure the position is inside the line component
           if (relPos.x >=0 && relPos.x <= line.width() && relPos.y >=0 && relPos.y <= line.height()) {
+            nearestPoint = getNearestPoint(chartToData(relPos, line), line);
+
             tooltip.visible(true);
             tooltip.x(pos.x);
             tooltip.y(pos.y);
-
-            dataPos = chartToData(relPos, line);
-
+            
             tooltip.data({
               title: 'foobar',
-              content: line.formatterX.short(dataPos.x) + ',' + line.formatterY.short(dataPos.y)
+              content: line.formatterX.short(nearestPoint.x) + ',' + line.formatterY.short(nearestPoint.y)
             });
 
             tooltip.update();
