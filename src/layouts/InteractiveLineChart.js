@@ -105,8 +105,11 @@
               content: line.formatterX.short(nearestPoint.x) + ', ' + line.formatterY.short(nearestPoint.y)
             });
 
+
             tooltip.update();
             tooltip.batchDraw();
+
+
           }
           else {
             tooltip.visible(false);
@@ -117,6 +120,7 @@
       });
 
       stage.on('contentMouseout', function() {
+        console.log('mouseout')
         tooltip.visible(false);
         tooltip.update();
         tooltip.batchDraw();

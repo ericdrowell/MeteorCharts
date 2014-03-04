@@ -63,10 +63,10 @@
           visible = this.visible();
 
       if (visible) {
-        this.layer.show();
+        this.layer.opacity(1);
       }
       else {
-        this.layer.hide();
+        this.layer.opacity(0);
       }
 
       this.layer.x(this.x());
