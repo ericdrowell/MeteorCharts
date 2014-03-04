@@ -13,7 +13,7 @@
         layout = config.layout,
         components = layout.components,
         len = components.length,
-        n, conf, componentData;
+        n, componentId, conf, componentData;
 
     this.attrs= {};
     this.width(config.width);
@@ -54,12 +54,17 @@
       this.components.push(component); 
     }
 
-    // now add each one to the stage
-    for (n=0; n<this.components.length; n++) {
-      component = this.components[n];
-      
+    // initialize each component based on init order
+    for (n=0; n<layout.initOrder.length; n++) {
+      componentId = layout.initOrder[n];
+      component = this.components[componentId];
       component.init();
       component.update();
+    }
+
+    // add each component to the stage based on the order of the component config
+    for (n=0; n<this.components.length; n++) {
+      component = this.components[n];
       this.stage.add(component.layer); 
     }
 

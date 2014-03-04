@@ -12,10 +12,18 @@
       }
     },
     _addLine: function(offset) {
-      var data = this.data();
+      var data = this.data(),
+          points;
+
+      if (this.orientation === 'horizontal') {
+        points = [0, offset, this.width(), offset];
+      }
+      else {
+        points = [offset, 0, offset, this.height()]
+      }
 
       this.layer.add(new Kinetic.Line({
-        points: [offset, 0, offset, this.height()],
+        points: points,
         stroke: this.chart.theme().ternary,
         strokeWidth: this.options.lineWidth
       }));

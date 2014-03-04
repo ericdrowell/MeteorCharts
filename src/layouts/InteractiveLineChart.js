@@ -125,6 +125,7 @@
         tooltip.batchDraw();
       });
     },
+    initOrder: ['line', 'yAxis', 'xAxis', 'tooltip'],
     components: [
       {
         id: 'line',

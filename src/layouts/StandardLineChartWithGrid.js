@@ -1,6 +1,53 @@
 (function() {
   MeteorChart.Layouts.StandardLineChartWithGrid = {
+    initOrder: ['line', 'xAxis', 'yAxis', 'verticalGridLines', 'horizontalGridLines'],
     components: [  
+      {
+        id: 'verticalGridLines',
+        type: 'GridLines',
+        x: function() {
+          return this.chart.components.line.x();
+        },
+        y: function() {
+          return this.chart.components.line.y();
+        },
+        width: function() {
+          return this.chart.components.line.width();
+        },
+        height: function() {
+          return this.chart.components.line.height();
+        },
+        data: function() {
+          return this.chart.components.xAxis.labelOffsets;
+        },
+        options: {
+          orientation: 'vertical',
+          lineWidth: 2
+        }
+      },
+      {
+        id: 'horizontalGridLines',
+        type: 'GridLines',
+        x: function() {
+          return this.chart.components.line.x();
+        },
+        y: function() {
+          return this.chart.components.line.y();
+        },
+        width: function() {
+          return this.chart.components.line.width();
+        },
+        height: function() {
+          return this.chart.components.line.height();
+        },
+        data: function() {
+          return this.chart.components.yAxis.labelOffsets;
+        },
+        options: {
+          orientation: 'horizontal',
+          lineWidth: 2
+        }
+      },
       {
         id: 'line',
         type: 'Line',
@@ -79,29 +126,6 @@
         },
         options: {
           maxIncrements: 5
-        }
-      },
-      {
-        id: 'verticalGridLines',
-        type: 'GridLines',
-        x: function() {
-          return this.chart.components.line.x();
-        },
-        y: function() {
-          return this.chart.components.line.y();
-        },
-        width: function() {
-          return this.chart.components.line.width();
-        },
-        height: function() {
-          return this.chart.components.line.height();
-        },
-        data: function() {
-          return this.chart.components.xAxis.labelOffsets;
-        },
-        options: {
-          orientation: 'vertical',
-          lineWidth: 2
         }
       }
     ]

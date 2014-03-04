@@ -54,7 +54,7 @@
           i = 0,
           max = this.max;
 
-      while (n < max) {
+      while (n <= max) {
         fun(i++, n);
         n = this.next();
       }
