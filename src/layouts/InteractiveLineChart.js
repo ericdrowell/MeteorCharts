@@ -1,4 +1,8 @@
 (function() {
+  var SQRT = Math.sqrt,
+      POINTER_SPACING = 8,
+      MIN_NEAREST_DISTANCE = 50;
+
   function chartToData(pos, line) {
     return {
       x: (pos.x / line.scaleX) + line.minX,
@@ -6,11 +10,68 @@
     };
   }
 
-  function getNearestPoint(pos, line) {
+  function dataToChart(pos, line) {
     return {
-      x: pos.x,
-      y: pos.y
+      x: (pos.x - line.minX) * line.scaleX + line.x(),
+      y: line.height() - ((pos.y - line.minY) * line.scaleY) + line.y()
+    }; 
+  }
+
+  function distanceBetweenPoints(p1, p2) {
+    var diffX = p2.x - p1.x,
+        diffY = p2.y - p1.y;
+    return SQRT((diffX*diffX) + (diffY*diffY));
+  }
+
+  function pointBounded(point, line, tooltip) {
+    var retX = point.x,
+        retY = point.y;
+
+    if (retX + (tooltip.width() / 2) > line.chart.width()) {
+      retX = line.chart.width() - (tooltip.width() / 2);
     }
+
+    if (retY - tooltip.height() - POINTER_SPACING < 0) {
+      retY = tooltip.height() + POINTER_SPACING;
+    }
+    return {
+      x: retX,
+      y: retY
+    };
+  }
+
+  function getNearestPoint(pos, line) {
+    var data = line.data(),
+        series = data.series,
+        len = series.length,
+        shortestDistance = MIN_NEAREST_DISTANCE,
+        nearestPoint = null,
+        n, i, ser, points, point, distance, pointsLen, title;
+
+    for (n=0; n<len; n++) {
+      ser = series[n];
+      points = ser.points;
+      title = ser.title;
+      pointsLen = points.length;
+
+
+      for (i=0; i<pointsLen; i+=2) {
+        point = {
+          x: points[i], 
+          y: points[i+1]
+        };
+
+        distance = distanceBetweenPoints(pos, point);
+
+        if (distance < shortestDistance) {
+          nearestPoint = point;
+          nearestPoint.title = title;
+          shortestDistance = distance;
+        }
+      }
+    }
+
+    return nearestPoint;
   }
 
   MeteorChart.Layouts.InteractiveLineChart = {
@@ -18,7 +79,7 @@
       var stage = chart.stage,
           tooltip = chart.components.tooltip,
           line = chart.components.line,
-          relPos, nearestPoint;
+          relPos, nearestPoint, nearestPointData;
 
       stage.on('contentMouseover contentMousemove', function() {
         var pos = stage.getPointerPosition();
@@ -29,17 +90,19 @@
             y: pos.y - line.y()
           }
 
-          // make sure the position is inside the line component
-          if (relPos.x >=0 && relPos.x <= line.width() && relPos.y >=0 && relPos.y <= line.height()) {
-            nearestPoint = getNearestPoint(chartToData(relPos, line), line);
+          nearestPoint = getNearestPoint(chartToData(relPos, line), line);
+
+          if (nearestPoint) {
+            nearestPointChart = dataToChart(nearestPoint, line);
+            nearestPointBounded = pointBounded(nearestPointChart, line, tooltip);
 
             tooltip.visible(true);
-            tooltip.x(pos.x);
-            tooltip.y(pos.y);
-            
+            tooltip.x(nearestPointBounded.x);
+            tooltip.y(nearestPointBounded.y - POINTER_SPACING);
+
             tooltip.data({
-              title: 'foobar',
-              content: line.formatterX.short(nearestPoint.x) + ',' + line.formatterY.short(nearestPoint.y)
+              title: nearestPoint.title,
+              content: line.formatterX.short(nearestPoint.x) + ', ' + line.formatterY.short(nearestPoint.y)
             });
 
             tooltip.update();
@@ -141,7 +204,13 @@
       },
       {
         id: 'tooltip',
-        type: 'Tooltip'
+        type: 'Tooltip',
+        width: function() {
+          return this.rect.width();
+        },
+        height: function() {
+          return this.rect.height();
+        }
       }
     ]
   };
