@@ -57,12 +57,13 @@
     // now add each one to the stage
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
-      component.update()
+      
       component.build();
+      component.update();
       this.stage.add(component.layer); 
     }
 
-    // now add bindings
+    // add bindings and tweens
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
 
@@ -73,6 +74,9 @@
       if (component.bind) {
         component.bind();
       }
+
+      // add tweens
+      component._addTweens();
     }
 
     // init layout if one is defined

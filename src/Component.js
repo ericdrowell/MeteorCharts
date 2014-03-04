@@ -17,11 +17,21 @@
 
     this.layer = new Kinetic.Layer({
       name: this.className,
-      id: this.id
+      id: this.id,
+      opacity: 0
     });
   };
 
   MeteorChart.Component.prototype = {
+    _addTweens: function(){
+      // tweens
+      this.opacityTween = new Kinetic.Tween({
+        node: this.layer,
+        opacity: 0,
+        easing: Kinetic.Easings.EaseInOut,
+        duration: 0.3
+      });
+    },
     _bind: function() {
       var updateOn = this.updateOn,
           len = updateOn.length,
@@ -63,10 +73,20 @@
           visible = this.visible();
 
       if (visible) {
-        this.layer.opacity(1);
+        if (this.opacityTween) {
+          this.opacityTween.reverse();
+        }
+        else {
+          this.layer.opacity(1);
+        } 
       }
       else {
-        this.layer.opacity(0);
+        if (this.opacityTween) {
+          this.opacityTween.play();
+        }
+        else {
+          this.layer.opacity(0);
+        } 
       }
 
       this.layer.x(this.x());

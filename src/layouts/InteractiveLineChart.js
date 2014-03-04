@@ -120,7 +120,6 @@
       });
 
       stage.on('contentMouseout', function() {
-        console.log('mouseout')
         tooltip.visible(false);
         tooltip.update();
         tooltip.batchDraw();
