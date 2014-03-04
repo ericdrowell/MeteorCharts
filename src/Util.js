@@ -1,4 +1,8 @@
 (function() {
+  var HASH = '#',
+      EMPTY_STRING = '',
+      COMMA = ', ';
+
   MeteorChart.Util = {
     addMethod: function(constructor, attr, def) {
       constructor.prototype[attr] = function() {
@@ -27,25 +31,21 @@
         }
       };
     },
-    brighten: function(hex, lum) {
-      var rgb = "#", c, i;
+    hexToRgba: function(hex, alpha) {
+        hex = hex.replace(HASH, EMPTY_STRING);
 
-      // validate hex string
-      hex = String(hex).replace(/[^0-9a-f]/gi, '');
-      if (hex.length < 6) {
-        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-      }
-      lum = lum || 0;
+        if (alpha === undefined) {
+          alpha = 1;
+        }
 
-      // convert to decimal and change luminosity
-      for (i = 0; i < 3; i++) {
-        c = parseInt(hex.substr(i*2,2), 16);
-        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-        rgb += ("00"+c).substr(c.length);
-      }
+        var bigint = parseInt(hex, 16),
+            r = (bigint >> 16) & 255,
+            g = (bigint >> 8) & 255,
+            b = bigint & 255,
+            a = alpha;
 
-      return rgb;
-    }
+        return 'rgba(' + r + COMMA + g + COMMA + b + COMMA + a + ')';
+    },
   };
 
   // add methods to MeteorChart class. 

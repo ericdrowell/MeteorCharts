@@ -7,8 +7,7 @@
   MeteorChart.Themes.CoteAzur = {
     primary: LIGHT_YELLOW,
     secondary: DARK_BLUE,
-    // negative values will darken the color
-    ternary: MeteorChart.Util.brighten(LIGHT_YELLOW, -0.06),
+    ternary: MeteorChart.Util.hexToRgba(DARK_BLUE, 0.2),
     font: {
       family: 'Arial',
       size: 12
