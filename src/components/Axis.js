@@ -25,7 +25,7 @@
     },
     _addLabel: function(offset, val) {
       var theme = this.chart.theme(),
-          font = theme.font.size.medium,
+          font = theme.font,
           orientation = this.orientation;
           
       this.layer.add(new Kinetic.Text({
@@ -33,7 +33,7 @@
         y: orientation === 'vertical' ? this.height() - offset : 0,
         text: val,
         fontFamily: font.family,
-        fontSize: font.size,
+        fontSize: font.size.medium,
         fill: theme.secondary
       }));  
     },

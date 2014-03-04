@@ -11,8 +11,8 @@
     font: {
       family: 'Arial',
       size: {
-        small: 12,
-        medium: 15,
+        small: 15,
+        medium: 20,
         large: 30
       }
     },
