@@ -3,19 +3,16 @@
   
   MeteorChart.Component.define('Tooltip', {
     build: function() {
-      var foreground = this.chart.theme().foreground,
-          fonts = foreground.fonts,
-          smallFont = fonts.small,
-          mediumFont = fonts.medium;
+      var theme = this.chart.theme(),
+          font = theme.font;
 
       this.layer.enableHitGraph(false); 
 
       this.group = new Kinetic.Group();
 
       this.rect = new Kinetic.Rect({
-        fill: foreground.primary,
-        stroke: foreground.secondary,
-        strokeWidth: 2
+        fill: theme.secondary,
+        opacity: 0.85
       });
 
       this.group.add(this.rect);
@@ -23,10 +20,9 @@
       this.title = new Kinetic.Text({
         x: PADDING,
         y: PADDING,
-        fontFamily: mediumFont.fontFamily,
-        fontSize: mediumFont.fontSize,
-        fill: mediumFont.fill,
-        stroke: mediumFont.stroke
+        fontFamily: font.family,
+        fontSize: font.size.medium,
+        fill: theme.primary
       });
 
       this.group.add(this.title); 
@@ -36,10 +32,9 @@
         // set y position to title height + spacing
         y: this.title.height() + (PADDING*2),
         lineHeight: 1.5,
-        fontFamily: smallFont.fontFamily,
-        fontSize: smallFont.fontSize,
-        fill: smallFont.fill,
-        stroke: smallFont.stroke
+        fontFamily: font.family,
+        fontSize: font.size.small,
+        fill: theme.primary
       });
 
       this.group.add(this.content);

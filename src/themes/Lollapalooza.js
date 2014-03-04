@@ -5,47 +5,16 @@
       LIGHT_YELLOW = '#efe5c0';
 
   MeteorChart.Themes.Lollapalooza = {
-    background: {
-      primary: DARK_BLUE,
-      fonts: {
-        small: {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: LIGHT_YELLOW
-        },
-        medium: {
-          fontFamily: 'Arial',
-          fontSize: 15,
-          fill: LIGHT_YELLOW
-        },
-        large: {
-          fontFamily: 'Arial',
-          fontSize: 30,
-          fill: LIGHT_YELLOW
-        }
+    primary: DARK_BLUE,
+    secondary: LIGHT_YELLOW,
+    font: {
+      family: 'Arial',
+      size: {
+        small: 12,
+        medium: 15,
+        large: 30
       }
     },
-    foreground: {
-      primary: LIGHT_YELLOW,
-      fonts: {
-        small: {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: DARK_BLUE
-        },
-        medium: {
-          fontFamily: 'Arial',
-          fontSize: 15,
-          fill: DARK_BLUE
-        },
-        large: {
-          fontFamily: 'Arial',
-          fontSize: 30,
-          fill: DARK_BLUE
-        }
-      }
-    },
-    // red, orange
     data: [RED, ORANGE]
   };
 })();

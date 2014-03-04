@@ -1,52 +1,21 @@
 (function() {
-  var RED = '#833218',
+  var RED = '#882405',
       GREEN = '#598465',
       LIGHT_YELLOW = '#feeda9',
       ORANGE = '#f5b04e',
       BURNT_ORANGE = '#a95234';
 
   MeteorChart.Themes.Firenze = {
-    background: {
-      primary: RED,
-      fonts: {
-        small: {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: LIGHT_YELLOW
-        },
-        medium: {
-          fontFamily: 'Arial',
-          fontSize: 15,
-          fill: LIGHT_YELLOW
-        },
-        large: {
-          fontFamily: 'Arial',
-          fontSize: 30,
-          fill: LIGHT_YELLOW
-        }
+    primary: RED,
+    secondary: LIGHT_YELLOW,
+    font: {
+      family: 'Arial',
+      size: {
+        small: 12,
+        medium: 15,
+        large: 30
       }
     },
-    foreground: {
-      primary: LIGHT_YELLOW,
-      secondary: 'black',
-      fonts: {
-        small: {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: RED
-        },
-        medium: {
-          fontFamily: 'Arial',
-          fontSize: 15,
-          fill: RED
-        },
-        large: {
-          fontFamily: 'Arial',
-          fontSize: 30,
-          fill: RED
-        }
-      }
-    },
-    data: [GREEN, ORANGE]
+    data: [ORANGE]
   };
 })();

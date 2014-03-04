@@ -24,17 +24,17 @@
       });  
     },
     _addLabel: function(offset, val) {
-      var mediumFont = this.chart.theme().background.fonts.medium,
+      var theme = this.chart.theme(),
+          font = theme.font.size.medium,
           orientation = this.orientation;
           
       this.layer.add(new Kinetic.Text({
         x: orientation === 'horizontal' ? offset : 0,
         y: orientation === 'vertical' ? this.height() - offset : 0,
         text: val,
-        fontFamily: mediumFont.fontFamily,
-        fontSize: mediumFont.fontSize,
-        fill: mediumFont.fill,
-        stroke: mediumFont.stroke
+        fontFamily: font.family,
+        fontSize: font.size,
+        fill: theme.secondary
       }));  
     },
     destroy: function() {

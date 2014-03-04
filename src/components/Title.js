@@ -1,16 +1,16 @@
 (function() {
   MeteorChart.Component.define('Title', {
     build: function() {
-      var font = this.chart.theme().background.fonts.large;
+      var theme = this.chart.theme(),
+          font = theme.font.large;
 
       this.layer.enableHitGraph(false);
       
       this.layer.add(new Kinetic.Text({
         text: this.data(),
-        fontFamily: font.fontFamily,
-        fontSize: font.fontSize,
-        fill: font.fill,
-        stroke: font.stroke
+        fontFamily: font.family,
+        fontSize: font.size,
+        fill: theme.secondary
       })); 
     },
     destroy: function() {

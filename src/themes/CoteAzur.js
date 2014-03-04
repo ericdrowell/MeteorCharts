@@ -5,45 +5,14 @@
       DARK_BLUE = '#31353d';
 
   MeteorChart.Themes.CoteAzur = {
-    background: {
-      primary: LIGHT_YELLOW,
-      fonts: {
-        small: {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: DARK_BLUE
-        },
-        medium: {
-          fontFamily: 'Arial',
-          fontSize: 15,
-          fill: DARK_BLUE
-        },
-        large: {
-          fontFamily: 'Arial',
-          fontSize: 30,
-          fill: DARK_BLUE
-        }
-      }
-    },
-    foreground: {
-      primary: 'rgba(49, 53, 61, 0.8)',
-      secondary: 'black',
-      fonts: {
-        small: {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: LIGHT_YELLOW
-        },
-        medium: {
-          fontFamily: 'Arial',
-          fontSize: 15,
-          fill: LIGHT_YELLOW
-        },
-        large: {
-          fontFamily: 'Arial',
-          fontSize: 30,
-          fill: LIGHT_YELLOW
-        }
+    primary: LIGHT_YELLOW,
+    secondary: DARK_BLUE,
+    font: {
+      family: 'Arial',
+      size: {
+        small: 12,
+        medium: 15,
+        large: 30
       }
     },
     data: [RED, GREEN]

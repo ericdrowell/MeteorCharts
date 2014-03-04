@@ -21,6 +21,11 @@
   for (n=0; n<len; n++) {
     opt = document.createElement('option');
     opt.value = opt.innerHTML = themes[n];
+
+    if (themes[n] === 'CoteAzur') {
+      opt.selected = 'selected';
+    }
+
     select.appendChild(opt);
   }
 
