@@ -5,9 +5,16 @@
       SECONDS_IN_MONTH = 2628000,
       SECONDS_IN_YEAR = 31500000;
 
+  var UNIT_MAP = {};
+  UNIT_MAP[1] = 'second';
+  UNIT_MAP[SECONDS_IN_MINUTE] = 'minute';
+  UNIT_MAP[SECONDS_IN_HOUR] = 'hour';
+  UNIT_MAP[SECONDS_IN_DAY] = 'day';
+  UNIT_MAP[SECONDS_IN_MONTH] = 'month';
+  UNIT_MAP[SECONDS_IN_YEAR] = 'year';
+
   MeteorChart.Formatters.Date = function() {
     MeteorChart.Formatter.apply(this, arguments);
-    this.increment = this.getIncrement();
     this.incrementMultiplier = 1;
     this._setIncrementMultiplier();
   };
@@ -38,33 +45,37 @@
       return date.format('MMM D YYYY h:mma'); // day
     },
     start: function() {
-      this.mn = moment.utc(this.min * 1000).endOf(this.increment);
+      this.mn = moment.utc(this.min * 1000).endOf(UNIT_MAP[this.increment]);
       return this.mn.unix();
     },
     next: function() {
-      this.mn.add(this.increment, this.incrementMultiplier);
+      this.mn.add(UNIT_MAP[this.increment], this.incrementMultiplier);
       return this.mn.unix();
     },
-    getIncrement: function() {
-      var range = this.range;
+    _setIncrement: function() {
+      var range = this.range,
+          inc;
+
       if (range < SECONDS_IN_MINUTE) {
-        return 'second'; // seconds
+        inc = 1; // seconds
       }
       else if (range < SECONDS_IN_HOUR) {
-        return 'minute'; // minute
+        inc = SECONDS_IN_MINUTE; // minute
       }
       else if (range < SECONDS_IN_DAY) {
-        return 'hour'; // hour
+        inc = SECONDS_IN_HOUR; // hour
       }
       else if (range < SECONDS_IN_MONTH) {
-        return 'day'; // day
+        inc = SECONDS_IN_DAY; // day
       }
       else if (range < SECONDS_IN_YEAR) {
-        return 'month';  // month
+        inc = SECONDS_IN_MONTH;  // month
       }
       else {
-        return 'year'; // year
+        inc = SECONDS_IN_YEAR; // year
       }
+
+      this.increment = inc;
     },
     _setIncrementMultiplier: function() {
       var numIncrements = 0;

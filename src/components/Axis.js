@@ -16,6 +16,8 @@
           offset = 0,
           increment = formatter.increment;
 
+      this.formatter = formatter;
+
       this.layer.enableHitGraph(false);
 
       formatter.each(function(n, val) {
@@ -31,7 +33,7 @@
       this.layer.add(new Kinetic.Text({
         x: orientation === 'horizontal' ? offset : 0,
         y: orientation === 'vertical' ? this.height() - offset : 0,
-        text: val,
+        text: this.formatter.short(val),
         fontFamily: font.family,
         fontSize: font.size.medium,
         fill: theme.secondary

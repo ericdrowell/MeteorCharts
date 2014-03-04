@@ -10,27 +10,30 @@
     this.max = max;
     this.range = this.max - this.min;
     this.maxIncrements = maxIncrements;
+    this._setIncrement();
   };
 
   MeteorChart.Formatter.prototype = {
-    getIncrement: function() {
+    _setIncrement: function() {
       var range = this.range,
           increments = this._getIncrements(),
           len = increments.length,
           maxIncrements = this.maxIncrements,
-          increment, n;
+          increment, n, inc;
 
       // return largest increment that obeys the max number of labels rule
       for (n=0; n<len; n++) {
         increment = increments[n];
 
         if (increment >= range / maxIncrements) {
-          return increment;
+          this.increment = increment;
+          return true;
         }
       }
 
       // if we can't determine an increment, then return the range
-      return range;
+      this.increment = range;
+      return false;
     },
     _getIncrements: function() {
       var arr = [],

@@ -13,8 +13,8 @@
   <body>
     <div id="container"></div>
 
-    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>
-    <!-- <script src="../../lib/kinetic-v4.7.0-beta.js"></script> -->
+    <!--<script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>-->
+    <script src="../lib/kinetic-v5.0.2-beta.js"></script><!-- -->
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
     <script src="../src/themes/CoteAzur.js"></script>
@@ -34,6 +34,10 @@
         data: {
           title: 'Awesome blossom possum',
           line: {
+            unit: {
+              x: 'Number',
+              y: 'Number'
+            },
             series: [
               {
                 // red

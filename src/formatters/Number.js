@@ -1,8 +1,7 @@
 (function() {
   MeteorChart.Formatters.Number = function() {
-    MeteorChart.Formatter.apply(this, arguments);
     this.base = 10;
-    this.increment = this.getIncrement();
+    MeteorChart.Formatter.apply(this, arguments);
   };
 
   MeteorChart.Formatters.Number.prototype = {

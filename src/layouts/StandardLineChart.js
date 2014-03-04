@@ -41,7 +41,8 @@
           var line = this.chart.components.line;
           return {
             min: line.minY,
-            max: line.maxY
+            max: line.maxY,
+            unit: line.data().unit.y
           }
         },
         options: {
@@ -72,7 +73,8 @@
           var line = this.chart.components.line;
           return {
             min: line.minX,
-            max: line.maxX
+            max: line.maxX,
+            unit: line.data().unit.x
           }
         },
         options: {

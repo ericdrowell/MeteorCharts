@@ -17,20 +17,22 @@
     <script src="../lib/kinetic-v5.0.2-beta.js"></script><!-- -->
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
-    <script src="../src/themes/Lollapalooza.js"></script>
-    <script src="../src/layouts/SparkChart.js"></script>
+    <script src="../src/themes/CoteAzur.js"></script>
+    <script src="../src/layouts/StandardLineChart.js"></script>
     
     <script type="text/javascript">
       var chart = new MeteorChart({
         container: 'container',
-        width: 400,
-        height: 80,
-        padding: 10,
+        width: 500,
+        height: 290,
+        padding: 20,
+        theme: MeteorChart.Themes.CoteAzur,
+        //theme: MeteorChart.Themes.Lollapalooza,
+
         data: {
-          title: 'Awesome blossom possum',
           line: {
             unit: {
-              x: 'Number',
+              x: 'Date',
               y: 'Number'
             },
             series: [
@@ -38,28 +40,24 @@
                 // red
                 title: 'Series 1',
                 points: [
-                  -100, -100,
-                  100, 100,
-                  200, 50
-                ]
-              },
-              { 
-                // green
-                title: 'Series 2',
-                points: [
-                  0, 100,
-                  100, 200,
-                  200, 150,
-                  300, 200
+                  1356998400, -100, // Jan 1 2013
+                  1359676800, 100, // Feb 1 2013
+                  1362096000, 50 // Mar 1 2013
                 ]
               }
             ]
-          },
+          }
         },
-        theme: MeteorChart.Themes.Lollapalooza,
-        layout: MeteorChart.Layouts.SparkChart
+        layout: MeteorChart.Layouts.StandardLineChart,
+        options: {
+          xAxis: {
+            maxIncrements: 5
+          },
+          yAxis: {
+            maxIncrements: 5
+          }
+        }
       });
-
    
       console.log(chart);
     </script>
