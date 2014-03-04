@@ -13,6 +13,7 @@ var lineChart = new MeteorChart({
   width: 500,
   height: 300,
   data: {
+    // data for the line component
     line: {
       unit: {
         x: 'Number',
@@ -30,7 +31,7 @@ var lineChart = new MeteorChart({
       ]
     }
   },
-  theme: MeteorChart.Themes.Light,
+  theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.StandardLineChart
 });
 ```
