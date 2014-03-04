@@ -13,16 +13,22 @@ var lineChart = new MeteorChart({
   width: 500,
   height: 300,
   data: {
-    line: [
-      {
-        title: 'Series 1',
-        points: [
-          -100, -100,
-          100, 100,
-          200, 50
-        ]
-      }
-    ]
+    line: {
+      unit: {
+        x: 'Number',
+        y: 'Number'
+      },
+      series: [
+        {
+          title: 'Series 1',
+          points: [
+            -100, -100,
+            100, 100,
+            200, 50
+          ]
+        }
+      ]
+    }
   },
   theme: MeteorChart.Themes.Light,
   layout: MeteorChart.Layouts.StandardLineChart
