@@ -13,18 +13,25 @@ var lineChart = new MeteorChart({
   width: 500,
   height: 300,
   data: {
-    line: [
-      {
-        title: 'Series 1',
-        points: [
-          -100, -100,
-          100, 100,
-          200, 50
-        ]
-      }
-    ]
+    // data for the line component
+    line: {
+      unit: {
+        x: 'Number',
+        y: 'Number'
+      },
+      series: [
+        {
+          title: 'Series 1',
+          points: [
+            -100, -100,
+            100, 100,
+            200, 50
+          ]
+        }
+      ]
+    }
   },
-  theme: MeteorChart.Themes.Light,
+  theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.StandardLineChart
 });
 ```
