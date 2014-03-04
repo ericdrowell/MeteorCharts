@@ -5,8 +5,8 @@
 
   function chartToData(pos, line) {
     return {
-      x: (pos.x / line.scaleX) + line.minX,
-      y: line.minY - ((pos.y - line.height()) / line.scaleY)
+      x: ((pos.x - line.x()) / line.scaleX) + line.minX,
+      y: line.minY - ((pos.y - line.y() - line.height()) / line.scaleY)
     };
   }
 
@@ -41,12 +41,13 @@
   }
 
   function getNearestPoint(pos, line) {
-    var data = line.data(),
+    var dataPos = chartToData(pos, line),
+        data = line.data(),
         series = data.series,
         len = series.length,
-        shortestDistance = MIN_NEAREST_DISTANCE,
+        shortestDistance = Infinity,
         nearestPoint = null,
-        n, i, ser, points, point, distance, pointsLen, title;
+        n, i, ser, points, point, distance, pointsLen, title, chartDistance;
 
     for (n=0; n<len; n++) {
       ser = series[n];
@@ -61,12 +62,16 @@
           y: points[i+1]
         };
 
-        distance = distanceBetweenPoints(pos, point);
+        
+        chartDistance = distanceBetweenPoints(pos, dataToChart(point, line));
+        if (chartDistance < MIN_NEAREST_DISTANCE) {
+          distance = distanceBetweenPoints(dataPos, point);
 
-        if (distance < shortestDistance) {
-          nearestPoint = point;
-          nearestPoint.title = title;
-          shortestDistance = distance;
+          if (distance < shortestDistance) {
+            nearestPoint = point;
+            nearestPoint.title = title;
+            shortestDistance = distance;
+          }
         }
       }
     }
@@ -79,18 +84,13 @@
       var stage = chart.stage,
           tooltip = chart.components.tooltip,
           line = chart.components.line,
-          relPos, nearestPoint, nearestPointData;
+          nearestPoint, nearestPointData;
 
       stage.on('contentMouseover contentMousemove', function() {
         var pos = stage.getPointerPosition();
 
         if (pos) {
-          relPos = {
-            x: pos.x - line.x(),
-            y: pos.y - line.y()
-          }
-
-          nearestPoint = getNearestPoint(chartToData(relPos, line), line);
+          nearestPoint = getNearestPoint(pos, line);
 
           if (nearestPoint) {
             nearestPointChart = dataToChart(nearestPoint, line);
@@ -102,7 +102,7 @@
 
             tooltip.data({
               title: nearestPoint.title,
-              content: line.formatterX.short(nearestPoint.x) + ', ' + line.formatterY.short(nearestPoint.y)
+              content: line.formatterX.long(nearestPoint.x) + ', ' + line.formatterY.long(nearestPoint.y)
             });
 
 
