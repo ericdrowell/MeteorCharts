@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     'src/components/Axis.js',
     'src/components/Title.js',
     'src/components/Tooltip.js',
+    'src/components/GridLines.js',
 
     // formatters
     'src/formatters/Date.js',

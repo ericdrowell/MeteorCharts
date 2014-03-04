@@ -16,6 +16,7 @@
           offset = 0,
           increment = formatter.increment;
 
+      this.labelOffsets = [];
       this.formatter = formatter;
 
       this.layer.enableHitGraph(false);
@@ -38,6 +39,8 @@
         fontSize: font.size,
         fill: theme.secondary
       }));  
+
+      this.labelOffsets.push(offset);
     },
     destroy: function() {
 

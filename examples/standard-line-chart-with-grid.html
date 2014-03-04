@@ -1,0 +1,75 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: #eee;
+      }
+      #container {
+        height: 450px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <!--<script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>-->
+    <script src="../lib/kinetic-v5.0.2-beta.js"></script><!-- -->
+    <script src="../lib/moment.min.js"></script>
+    <script src="../dist/meteorcharts-dev.js"></script>
+    <script src="../src/themes/CoteAzur.js"></script>
+    <script src="../src/layouts/StandardLineChartWithGrid.js"></script>
+    
+    <script type="text/javascript">
+      var chart = new MeteorChart({
+        container: 'container',
+        width: 500,
+        height: 290,
+        padding: 20,
+        theme: MeteorChart.Themes.CoteAzur,
+        //theme: MeteorChart.Themes.Lollapalooza,
+
+        data: {
+          line: {
+            unit: {
+              x: 'Number',
+              y: 'Number'
+            },
+            series: [
+              {
+                // red
+                title: 'Series 1',
+                points: [
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
+                ]
+              }
+            ]
+          }
+        },
+        layout: MeteorChart.Layouts.StandardLineChartWithGrid,
+        options: {
+          xAxis: {
+            maxIncrements: 5
+          },
+          yAxis: {
+            maxIncrements: 5
+          }
+        }
+      });
+   
+      console.log(chart);
+    </script>
+  </body>
+</html>
