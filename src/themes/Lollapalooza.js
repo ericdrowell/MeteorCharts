@@ -1,46 +1,51 @@
 (function() {
+  var RED = '#9d3132',
+      ORANGE = '#cd7d39',
+      DARK_BLUE = '#0a2634',
+      LIGHT_YELLOW = '#efe5c0';
+
   MeteorChart.Themes.Lollapalooza = {
     background: {
-      primary: '#0a2634',
+      primary: DARK_BLUE,
       fonts: {
         small: {
           fontFamily: 'Arial',
           fontSize: 12,
-          fill: '#efe5c0'
+          fill: LIGHT_YELLOW
         },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
-          fill: '#efe5c0'
+          fill: LIGHT_YELLOW
         },
         large: {
           fontFamily: 'Arial',
           fontSize: 30,
-          fill: '#efe5c0'
+          fill: LIGHT_YELLOW
         }
       }
     },
     foreground: {
-      primary: '#efe5c0',
+      primary: LIGHT_YELLOW,
       fonts: {
         small: {
           fontFamily: 'Arial',
           fontSize: 12,
-          fill: '#0a2634'
+          fill: DARK_BLUE
         },
         medium: {
           fontFamily: 'Arial',
           fontSize: 15,
-          fill: '#0a2634'
+          fill: DARK_BLUE
         },
         large: {
           fontFamily: 'Arial',
           fontSize: 30,
-          fill: '#0a2634'
+          fill: DARK_BLUE
         }
       }
     },
     // red, orange
-    data: ['#9d3132', '#cd7d39']
+    data: [RED, ORANGE]
   };
 })();
