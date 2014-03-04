@@ -5,8 +5,7 @@
       this.minY = Infinity;
       this.maxX = -1 * Infinity;
       this.maxY = -1 * Infinity;
-    },
-    build: function() {
+
       var data = this.data(),
           unit = data.unit || {},
           series = data.series,

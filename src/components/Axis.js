@@ -2,8 +2,7 @@
   MeteorChart.Component.define('Axis', {
     init: function() {
       this.orientation = this.options.orientation || 'horizontal';
-    },
-    build: function() {
+
       var that = this,
           chart = this.chart,
           data = this.data(),

@@ -58,7 +58,7 @@
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
       
-      component.build();
+      component.init();
       component.update();
       this.stage.add(component.layer); 
     }

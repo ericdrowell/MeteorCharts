@@ -2,8 +2,7 @@
   MeteorChart.Component.define('GridLines', {
     init: function() {
       this.orientation = this.options.orientation || 'horizontal';
-    },
-    build: function() {
+
       var data = this.data(),
           len = data.length,
           n;
