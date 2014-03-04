@@ -9,7 +9,7 @@
       this.layer.add(new Kinetic.Text({
         text: this.data(),
         fontFamily: font.family,
-        fontSize: font.size.large,
+        fontSize: font.size * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2,
         fill: theme.secondary
       })); 
     },

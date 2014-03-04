@@ -21,7 +21,7 @@
         x: PADDING,
         y: PADDING,
         fontFamily: font.family,
-        fontSize: font.size.medium,
+        fontSize: font.size * MeteorChart.Constants.TYPOGRAPHIC_SCALE,
         fill: theme.primary
       });
 
@@ -33,7 +33,7 @@
         y: this.title.height() + (PADDING*2),
         lineHeight: 1.5,
         fontFamily: font.family,
-        fontSize: font.size.small,
+        fontSize: font.size,
         fill: theme.primary
       });
 

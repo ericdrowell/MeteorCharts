@@ -121,6 +121,9 @@
   MeteorChart.Formatters = {};
   MeteorChart.Layouts = {};
   MeteorChart.Themes = {};
+  MeteorChart.Constants = {
+    TYPOGRAPHIC_SCALE: 1.2
+  };
 })();
 
 // Uses Node, AMD or browser globals to create a module.

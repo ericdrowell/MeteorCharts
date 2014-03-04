@@ -35,7 +35,7 @@
         y: orientation === 'vertical' ? this.height() - offset : 0,
         text: this.formatter.short(val),
         fontFamily: font.family,
-        fontSize: font.size.medium,
+        fontSize: font.size,
         fill: theme.secondary
       }));  
     },

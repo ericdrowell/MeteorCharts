@@ -66,7 +66,7 @@
           return this.chart.components.line.width();
         },
         height: function() {
-          return this.chart.theme().font.size.medium;
+          return 12;
         },
         data: function() {
           // bind axis data to line min and max values

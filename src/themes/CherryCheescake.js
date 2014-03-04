@@ -10,11 +10,7 @@
     secondary: LIGHT_BROWN,
     font: {
       family: 'Arial',
-      size: {
-        small: 12,
-        medium: 15,
-        large: 30
-      }
+      size: 12
     },
     data: [RED]
   };

@@ -9,11 +9,7 @@
     secondary: LIGHT_YELLOW,
     font: {
       family: 'Arial',
-      size: {
-        small: 12,
-        medium: 15,
-        large: 30
-      }
+      size: 12
     },
     data: [RED, ORANGE]
   };
