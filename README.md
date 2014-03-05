@@ -3,6 +3,13 @@ MeteorCharts
 
 Website: [www.meteorcharts.com](http://www.meteorcharts.com)
 
+## What is this?
+
+MeteorCharts is a next generation charting framework for the web.  MeteorCharts excels in places where other charting libraries fall short, most notably in regards to performance and extensibility
+ 
+  * __Performance__ - MeteorCharts is built on top of KineticJS, a blazing fast HTML5 Canvas library that extends the 2d context.  If you're doing serious charting with thousands of data points, you'd better stick with canvas
+  * __Extensibility__ - Most other charting libraries out there generate charts with giant configurations that enable users to define how certain components look, where they are placed, what colors they are, etc.  Nice in theory, but this absolutely does not scale.  In order for this type of approach to work in real life, the developers of those libraries will have to know in advance all of the possible combinations of components and interactivity for all charts in the universe, in order to make them configurable.  Dumb, right?  MeteorCharts are assembled with layouts which tie together components, and they are styled with themes.  By keeping layouts, themes, and components separate from the MeteorCharts core framework, this makes it really easy for developers all over the world to create their own layouts, themes, and components, and then share them with with MeteorCharts community.
+
 ## Quick Start
 
 The fastest way to get a chart up and running is to use a pre-built theme and layout.  Themes define colors and font sizes in your chart.  Layouts define position, size, and bindings of components inside your chart.
