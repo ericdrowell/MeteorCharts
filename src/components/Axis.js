@@ -20,26 +20,45 @@
 
       this.layer.enableHitGraph(false);
 
+      this.maxWidth = 0;
+      this.maxHeight = 0;
+
       formatter.each(function(n, val) {
         offset = n * increment * scale;
         that._addLabel(offset, val);
       });  
+
+      // this.width(function() {
+      //   return that.maxWidth;
+      // });
+
+      // this.height(function() {
+      //   return that.maxHeight;
+      // });
     },
     _addLabel: function(offset, val) {
       var theme = this.chart.theme(),
           font = theme.font,
-          orientation = this.orientation;
-          
-      this.layer.add(new Kinetic.Text({
+          orientation = this.orientation,
+          text;
+
+      text = new Kinetic.Text({
         x: orientation === 'horizontal' ? offset : 0,
         y: orientation === 'vertical' ? this.height() - offset : 0,
         text: this.formatter.short(val),
         fontFamily: font.family,
         fontSize: font.size,
         fill: theme.secondary
-      }));  
+      });
+          
+      this.layer.add(text);  
 
       this.labelOffsets.push(offset);
+
+      this.maxWidth = Math.max(this.maxWidth, text.width());
+      this.maxHeight = Math.max(this.maxHeight, text.height());
+
+
     },
     destroy: function() {
 
