@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Layouts.StandardLineChart = {
-    initOrder: ['line', 'xAxis', 'yAxis', 'title'],
+    initOrder: ['title', 'line', 'xAxis', 'yAxis'],
     components: [
       {
         id: 'line',
@@ -26,8 +26,7 @@
           return this.chart.padding();
         },
         y: function() {
-          var title = this.chart.components.title;
-          return title.y() + title.height();
+          return this.chart.components.line.y();
         },
         width: function() {
           // bind axis width to line x position
@@ -94,9 +93,6 @@
         },
         width: function() {
           return this.chart.width();
-        },
-        height: function() {
-          return 30;
         }
       }
     ]

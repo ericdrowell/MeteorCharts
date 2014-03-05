@@ -5,13 +5,17 @@
           font = theme.font;
 
       this.layer.enableHitGraph(false);
-      
-      this.layer.add(new Kinetic.Text({
+
+      this.text = new Kinetic.Text({
         text: this.data(),
         fontFamily: font.family,
         fontSize: font.size * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2,
         fill: theme.secondary
-      })); 
+      });
+
+      this.layer.add(this.text); 
+
+      this.height(this.text.height());
     },
     destroy: function() {
 

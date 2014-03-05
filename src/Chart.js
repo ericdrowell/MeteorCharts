@@ -47,7 +47,6 @@
 
       // add data if it's in the chart data object
       this._addData(conf);
-
       component = new MeteorChart.Components[conf.type](conf);
       component.chart = this;
       this.components[component.id] = component;
