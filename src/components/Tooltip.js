@@ -2,7 +2,7 @@
   var PADDING = 10;
   
   MeteorChart.Component.define('Tooltip', {
-    init: function() {
+    build: function() {
       var theme = this.chart.theme(),
           font = theme.font;
 
@@ -59,9 +59,15 @@
 
         this._setSize();
       }
-    },
-    destroy: function() {
-
     }
   });
+
+  MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'width', function() {
+    return this.rect.width();
+  });
+
+  MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'height', function() {
+    return this.rect.height();
+  });
+
 })();

@@ -49,15 +49,20 @@
       this._addData(conf);
       component = new MeteorChart.Components[conf.type](conf);
       component.chart = this;
+
+      if (component.init) {
+        component.init();
+      }
+
       this.components[component.id] = component;
       this.components.push(component); 
     }
 
-    // initialize each component based on init order
+    // build each component based on init order
     for (n=0; n<layout.initOrder.length; n++) {
       componentId = layout.initOrder[n];
       component = this.components[componentId];
-      component.init();
+      component.build();
       
     }
 

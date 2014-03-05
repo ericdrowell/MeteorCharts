@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Component.define('GridLines', {
-    init: function() {
+    build: function() {
       this.orientation = this.options.orientation || 'horizontal';
 
       var data = this.data(),
@@ -27,9 +27,6 @@
         stroke: this.chart.theme().ternary,
         strokeWidth: this.options.lineWidth
       }));
-    },
-    destroy: function() {
-
     }
   });
 })();

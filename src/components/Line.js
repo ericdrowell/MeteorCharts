@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Component.define('Line', {
-    init: function() {
+    build: function() {
       var data = this.data(),
           unit = data.unit || {},
           series = data.series,
@@ -32,9 +32,6 @@
       this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
 
       this._scale();
-    },
-    destroy: function() {
-
     },
     _scale: function() {
       var x = this.x(),

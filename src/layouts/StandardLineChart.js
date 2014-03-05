@@ -38,11 +38,12 @@
         },
         data: function() {
           // bind axis data to line min and max values
-          var line = this.chart.components.line;
+          var data = this.chart.components.line.data(),
+              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
           return {
-            min: line.minY,
-            max: line.maxY,
-            unit: line.data().unit.y
+            min: viewport.minY,
+            max: viewport.maxY,
+            unit: data.unit.y
           }
         },
         options: {
@@ -67,11 +68,12 @@
         },
         data: function() {
           // bind axis data to line min and max values
-          var line = this.chart.components.line;
+          var data = this.chart.components.line.data(),
+              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
           return {
-            min: line.minX,
-            max: line.maxX,
-            unit: line.data().unit.x
+            min: viewport.minX,
+            max: viewport.maxX,
+            unit: data.unit.x
           }
         },
         options: {

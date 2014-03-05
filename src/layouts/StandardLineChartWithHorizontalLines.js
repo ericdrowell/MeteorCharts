@@ -3,29 +3,6 @@
     initOrder: ['line', 'xAxis', 'yAxis', 'horizontalGridLines'],
     components: [  
       {
-        id: 'verticalGridLines',
-        type: 'GridLines',
-        x: function() {
-          return this.chart.components.line.x();
-        },
-        y: function() {
-          return this.chart.components.line.y();
-        },
-        width: function() {
-          return this.chart.components.line.width();
-        },
-        height: function() {
-          return this.chart.components.line.height();
-        },
-        data: function() {
-          return this.chart.components.xAxis.labelOffsets;
-        },
-        options: {
-          orientation: 'vertical',
-          lineWidth: 2
-        }
-      },
-      {
         id: 'horizontalGridLines',
         type: 'GridLines',
         x: function() {
@@ -52,18 +29,21 @@
         id: 'line',
         type: 'Line',
         x: function() {
-          return this.chart.components.yAxis.width();
+          var chart = this.chart;
+          return chart.components.yAxis.width() + (chart.padding() * 2);
         },
         y: function() {
           return this.chart.padding();
         },
         width: function() {
           var chart = this.chart;
-          return chart.width() - this.x() - chart.padding();
+          return chart.width() - chart.components.yAxis.width() - (chart.padding() * 3);
         },
         height: function() {
-          var chart = this.chart;
-          return chart.height() - this.y() - (chart.padding() * 2) - chart.components.xAxis.height();
+          var chart = this.chart,
+              components = chart.components;
+
+          return chart.height() - (chart.padding() * 3) - components.xAxis.height();
         }
       },
       {
@@ -75,21 +55,18 @@
         y: function() {
           return this.chart.padding();
         },
-        width: function() {
-          // bind axis width to line x position
-          return 80;
-        },
         height: function() {
           // bind axis height to line height
           return this.chart.components.line.height();
         },
         data: function() {
           // bind axis data to line min and max values
-          var line = this.chart.components.line;
+          var data = this.chart.components.line.data(),
+              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
           return {
-            min: line.minY,
-            max: line.maxY,
-            unit: line.data().unit.y
+            min: viewport.minY,
+            max: viewport.maxY,
+            unit: data.unit.y
           }
         },
         options: {
@@ -106,22 +83,20 @@
         y: function() {
           var line = this.chart.components.line;
 
-          return line.y() + line.height() + this.chart.padding();
+          return line.y() + line.height() +   this.chart.padding();
         },
         width: function() {
           // bind axis width to line width
           return this.chart.components.line.width();
         },
-        height: function() {
-          return 12;
-        },
         data: function() {
           // bind axis data to line min and max values
-          var line = this.chart.components.line;
+          var data = this.chart.components.line.data(),
+              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
           return {
-            min: line.minX,
-            max: line.maxX,
-            unit: line.data().unit.x
+            min: viewport.minX,
+            max: viewport.maxX,
+            unit: data.unit.x
           }
         },
         options: {
