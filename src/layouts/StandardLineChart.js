@@ -6,18 +6,21 @@
         id: 'line',
         type: 'Line',
         x: function() {
-          return this.chart.components.yAxis.width();
+          var chart = this.chart;
+          return chart.components.yAxis.width() + (chart.padding() * 2);
         },
         y: function() {
           return this.chart.padding();
         },
         width: function() {
           var chart = this.chart;
-          return chart.width() - this.x() - chart.padding();
+          return chart.width() - chart.components.yAxis.width() - (chart.padding() * 3);
         },
         height: function() {
-          var chart = this.chart;
-          return chart.height() - this.y() - (chart.padding() * 2) - chart.components.xAxis.height();
+          var chart = this.chart,
+              components = chart.components;
+
+          return chart.height() - (chart.padding() * 3) - components.xAxis.height();
         }
       },
       {
@@ -28,10 +31,6 @@
         },
         y: function() {
           return this.chart.padding();
-        },
-        width: function() {
-          // bind axis width to line x position
-          return 80;
         },
         height: function() {
           // bind axis height to line height
@@ -60,14 +59,11 @@
         y: function() {
           var line = this.chart.components.line;
 
-          return line.y() + line.height() + this.chart.padding();
+          return line.y() + line.height() +   this.chart.padding();
         },
         width: function() {
           // bind axis width to line width
           return this.chart.components.line.width();
-        },
-        height: function() {
-          return 12;
         },
         data: function() {
           // bind axis data to line min and max values

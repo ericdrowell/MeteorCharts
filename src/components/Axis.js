@@ -20,21 +20,10 @@
 
       this.layer.enableHitGraph(false);
 
-      this.maxWidth = 0;
-      this.maxHeight = 0;
-
       formatter.each(function(n, val) {
         offset = n * increment * scale;
         that._addLabel(offset, val);
       });  
-
-      // this.width(function() {
-      //   return that.maxWidth;
-      // });
-
-      // this.height(function() {
-      //   return that.maxHeight;
-      // });
     },
     _addLabel: function(offset, val) {
       var theme = this.chart.theme(),
@@ -54,14 +43,17 @@
       this.layer.add(text);  
 
       this.labelOffsets.push(offset);
-
-      this.maxWidth = Math.max(this.maxWidth, text.width());
-      this.maxHeight = Math.max(this.maxHeight, text.height());
-
-
     },
     destroy: function() {
 
     }
   });
+
+  MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'width', function() {
+    return 50;
+  });
+  MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {
+    return 20;
+  });
+
 })();

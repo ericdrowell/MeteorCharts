@@ -20,7 +20,12 @@
           val = this.attrs[attr];
 
           if (val === undefined) {
-            return def;
+            if (Kinetic.Util._isFunction(def)) {
+              return def.call(this);
+            }
+            else {
+              return def;
+            }
           }
           else if (Kinetic.Util._isFunction(val)) {
             return val.call(this);

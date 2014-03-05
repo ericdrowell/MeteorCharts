@@ -58,12 +58,13 @@
       componentId = layout.initOrder[n];
       component = this.components[componentId];
       component.init();
-      component.update();
+      
     }
 
-    // add each component to the stage based on the order of the component config
+    // update and add each component to the stage
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
+      component.update();
       this.stage.add(component.layer); 
     }
 
