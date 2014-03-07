@@ -90,6 +90,15 @@ module.exports = function(grunt) {
       },
 
       all: { src: ['test/**/*.js'] }
+    },
+    watch: {
+      scripts: {
+        files: ['src/**/*.js'],
+        tasks: ['dev'],
+        options: {
+          spawn: false,
+        },
+      },
     }
     /*
     shell: {
@@ -114,6 +123,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-simple-mocha');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Tasks
   grunt.registerTask('dev', ['clean', 'concat:dev', 'replace:dev']);

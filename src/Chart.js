@@ -10,22 +10,23 @@
   MeteorChart = function(config) {
     var that = this,
         container = config.container,
-        layout = config.layout,
-        components = layout.components,
-        len = components.length,
-        n, componentId, conf, componentData;
+        components, len, n, componentId, conf, componentData;
 
     this.attrs= {};
+    this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
     this.width(config.width);
     this.height(config.height);
-    this.theme(config.theme);
     this.data(config.data);
+    this.layout(config.layout);
+    this.theme(config.theme);
+    this.interaction = config.interaction;
     this.options(config.options);
     this.padding(config.padding);
-
     this.components = [];
 
-    this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
+    components = this.layout().components;
+    len = components.length;
+
     this.kineticContainer = document.createElement('div');
     this.kineticContainer.className = 'meteorchart-content';
     this.kineticContainer.style.width = this.width();
@@ -59,8 +60,8 @@
     }
 
     // build each component based on init order
-    for (n=0; n<layout.initOrder.length; n++) {
-      componentId = layout.initOrder[n];
+    for (n=0; n<this.layout().initOrder.length; n++) {
+      componentId = this.layout().initOrder[n];
       component = this.components[componentId];
       component.build();
       
@@ -73,7 +74,7 @@
       this.stage.add(component.layer); 
     }
 
-    // add bindings and tweens
+    // add bindings
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
 
@@ -84,14 +85,11 @@
       if (component.bind) {
         component.bind();
       }
-
-      // add tweens
-      component._addTweens();
     }
 
-    // init layout if one is defined
-    if (layout.init) {
-      layout.init(this);
+    // init interaction
+    if (this.interaction) {
+      this.interaction.init(this)
     }
   };
 
@@ -120,9 +118,12 @@
 
       // clear any leftover DOM
       this.container.innerHTML = '';
-
-      
-
+    },
+    add: function(component) {
+      component.chart = this;
+      component.build();
+      component.update();
+      this.stage.add(component.layer); 
     }
   };
 
@@ -131,6 +132,8 @@
   MeteorChart.Formatters = {};
   MeteorChart.Layouts = {};
   MeteorChart.Themes = {};
+  MeteorChart.Interactions = {};
+
   MeteorChart.Constants = {
     TYPOGRAPHIC_SCALE: 1.2
   };

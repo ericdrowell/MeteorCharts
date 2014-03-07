@@ -104,9 +104,9 @@
   // add methods to MeteorChart class. 
   MeteorChart.Util.addMethod(MeteorChart, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart, 'height', 0);
+  MeteorChart.Util.addMethod(MeteorChart, 'data');
   MeteorChart.Util.addMethod(MeteorChart, 'layout');
   MeteorChart.Util.addMethod(MeteorChart, 'theme');
   MeteorChart.Util.addMethod(MeteorChart, 'padding', 0);
-  MeteorChart.Util.addMethod(MeteorChart, 'data', {});
   MeteorChart.Util.addMethod(MeteorChart, 'options');
 })();

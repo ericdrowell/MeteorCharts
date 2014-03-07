@@ -79,13 +79,28 @@
     return nearestPoint;
   }
 
-  MeteorChart.Layouts.InteractiveLineChart = {
+  MeteorChart.Interactions.LineChartTooltip = {
     init: function(chart) {
       var stage = chart.stage,
-          tooltip = chart.components.tooltip,
-          line = chart.components.line,
+          tooltip, line = chart.components.line,
           nearestPoint, nearestPointData;
 
+      tooltip = new MeteorChart.Components.Tooltip({
+        id: 'tooltip',
+        type: 'Tooltip'
+      });
+
+      chart.add(tooltip);
+
+      
+      // tweens
+      tooltip.opacityTween = new Kinetic.Tween({
+        node: tooltip.layer,
+        opacity: 0,
+        easing: Kinetic.Easings.EaseInOut,
+        duration: 0.3
+      });
+   
       stage.on('contentMouseover contentMousemove', function() {
         var pos = stage.getPointerPosition();
 
@@ -124,91 +139,6 @@
         tooltip.update();
         tooltip.batchDraw();
       });
-    },
-    initOrder: ['line', 'yAxis', 'xAxis', 'tooltip'],
-    components: [
-      {
-        id: 'line',
-        type: 'Line',
-        x: function() {
-          var chart = this.chart;
-          return chart.components.yAxis.width() + (chart.padding() * 2);
-        },
-        y: function() {
-          return this.chart.padding();
-        },
-        width: function() {
-          var chart = this.chart;
-          return chart.width() - chart.components.yAxis.width() - (chart.padding() * 3);
-        },
-        height: function() {
-          var chart = this.chart,
-              components = chart.components;
-
-          return chart.height() - (chart.padding() * 3) - components.xAxis.height();
-        }
-      },
-      {
-        id: 'yAxis',
-        type: 'Axis',
-        x: function() {
-          return this.chart.padding();
-        },
-        y: function() {
-          return this.chart.padding();
-        },
-        height: function() {
-          // bind axis height to line height
-          return this.chart.components.line.height();
-        },
-        data: function() {
-          // bind axis data to line min and max values
-          var data = this.chart.components.line.data(),
-              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
-          return {
-            min: viewport.minY,
-            max: viewport.maxY,
-            unit: data.unit.y
-          }
-        },
-        options: {
-          orientation: 'vertical'
-        }
-      },
-      {
-        id: 'xAxis',
-        type: 'Axis',
-        x: function() {
-          // bind axis x position to line x position
-          return this.chart.components.line.x();
-        },
-        y: function() {
-          var line = this.chart.components.line;
-
-          return line.y() + line.height() +   this.chart.padding();
-        },
-        width: function() {
-          // bind axis width to line width
-          return this.chart.components.line.width();
-        },
-        data: function() {
-          // bind axis data to line min and max values
-          var data = this.chart.components.line.data(),
-              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
-          return {
-            min: viewport.minX,
-            max: viewport.maxX,
-            unit: data.unit.x
-          }
-        },
-        options: {
-          maxIncrements: 5
-        }
-      },
-      {
-        id: 'tooltip',
-        type: 'Tooltip'
-      }
-    ]
+    }
   };
 })();

@@ -6,7 +6,6 @@
     this.type = config.type;
     this.options = config.options || {};
     this.updateOn = config.updateOn || [];
-    this.state = {};
 
     // binding functions
     this.x(config.x);
@@ -23,15 +22,6 @@
   };
 
   MeteorChart.Component.prototype = {
-    _addTweens: function(){
-      // tweens
-      this.opacityTween = new Kinetic.Tween({
-        node: this.layer,
-        opacity: 0,
-        easing: Kinetic.Easings.EaseInOut,
-        duration: 0.3
-      });
-    },
     _bind: function() {
       var updateOn = this.updateOn,
           len = updateOn.length,
