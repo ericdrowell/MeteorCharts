@@ -55,7 +55,7 @@ var lineChart = new MeteorChart({
 ## File Size for v0.1.0
 
   * __Core__ - 6kb
-  * __Full__ - 20kb
+  * __Full__ - 21kb
   
 The Core package (meteorcharts-core-vx.x.x.js) includes the barebones JavaScript needed for MeteorCharts to function.  It does not include components, a layout, a theme, interactions, or formatters.  If you want to fully optimize your MeteorCharts payload size, it's recommended that you include the core package, along with your specific components, layout, theme, interactions, and formatters.
 
