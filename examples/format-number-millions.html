@@ -17,8 +17,6 @@
     <script src="../lib/kinetic-v5.0.2-beta.js"></script><!-- -->
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
-    <script src="../src/themes/CoteAzur.js"></script>
-    <script src="../src/layouts/InteractiveLineChart.js"></script>
     
     <script type="text/javascript">
       var chart = new MeteorChart({
@@ -48,7 +46,8 @@
             ]
           }
         },
-        layout: MeteorChart.Layouts.InteractiveLineChart,
+        layout: MeteorChart.Layouts.StandardLineChart,
+        interaction: MeteorChart.Interactions.LineChartTooltip,
         options: {
           xAxis: {
             maxIncrements: 5
