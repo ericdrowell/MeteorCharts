@@ -13,7 +13,8 @@
       this.rect = new Kinetic.Rect({
         fill: theme.primary,
         stroke: MeteorChart.Util.hexToRgba(theme.secondary, 0.5),
-        opacity: 0.85
+        opacity: 0.85,
+        cornerRadius: 3
       });
 
       this.group.add(this.rect);
