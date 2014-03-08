@@ -38,7 +38,7 @@
       var text = this._createText(val);
 
       if (this.options.orientation === 'vertical') {
-        text.y(offset);
+        text.y(this.height() - offset);
       }
       else {
         text.x(offset);
