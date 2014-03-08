@@ -13,11 +13,12 @@
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
+    this.visible(config.visible);
 
     this.layer = new Kinetic.Layer({
       name: this.className,
       id: this.id,
-      opacity: 0
+      opacity: this.visible() ? 1 : 0
     });
   };
 
@@ -64,7 +65,7 @@
 
       if (visible) {
         if (this.opacityTween) {
-          this.opacityTween.reverse();
+          this.opacityTween.play();
         }
         else {
           this.layer.opacity(1);
@@ -72,7 +73,7 @@
       }
       else {
         if (this.opacityTween) {
-          this.opacityTween.play();
+          this.opacityTween.reverse();
         }
         else {
           this.layer.opacity(0);

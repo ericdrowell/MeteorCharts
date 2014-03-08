@@ -1,7 +1,7 @@
       var config = {
         container: 'container',
-        width: 500,
-        height: 290,
+        width: 445,
+        height: 250,
         padding: 20,
         theme: MeteorChart.Themes.CoteAzur,
         //theme: MeteorChart.Themes.Lollapalooza,
@@ -54,7 +54,7 @@
         var theme = themes[n];
         var themeContainer = document.createElement('div');
         themeContainer.className = 'theme';
-        document.getElementById('layoutsAndThemesContainer').appendChild(themeContainer);
+        document.getElementById('themesAndLayoutsContainer').appendChild(themeContainer);
 
         var themeName = document.createElement('h2');
         themeName.innerHTML = theme;

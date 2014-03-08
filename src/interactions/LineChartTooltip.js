@@ -91,7 +91,8 @@
 
       tooltip = new MeteorChart.Components.Tooltip({
         id: 'tooltip',
-        type: 'Tooltip'
+        type: 'Tooltip',
+        visible: false
       });
 
       chart.add(tooltip);
@@ -100,7 +101,7 @@
       // tweens
       tooltip.opacityTween = new Kinetic.Tween({
         node: tooltip.layer,
-        opacity: 0,
+        opacity: 1,
         easing: Kinetic.Easings.EaseInOut,
         duration: 0.3
       });
@@ -112,6 +113,7 @@
           nearestPoint = getNearestPoint(pos, line);
 
           if (nearestPoint) {
+
             nearestPointChart = dataToChart(nearestPoint, line);
             nearestPointBounded = pointBounded(nearestPointChart, line, tooltip);
 
@@ -128,12 +130,14 @@
             tooltip.update();
             tooltip.batchDraw();
 
-
+            
           }
           else {
-            tooltip.visible(false);
-            tooltip.update();
-            tooltip.batchDraw();   
+            if (tooltip.visible()) {
+              tooltip.visible(false);
+              tooltip.update();
+              tooltip.batchDraw(); 
+            }  
           }
         }
       });
