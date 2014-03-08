@@ -38,10 +38,10 @@
       var text = this._createText(val);
 
       if (this.options.orientation === 'vertical') {
-        text.y(this.height() - offset);
+        text.y(this.height() - offset - (text.height() / 2));
       }
       else {
-        text.x(offset);
+        text.x(offset - (text.width() / 2)); 
       }
   
       this.layer.add(text);  
