@@ -98,13 +98,6 @@
       chart.add(tooltip);
 
       
-      // tweens
-      tooltip.opacityTween = new Kinetic.Tween({
-        node: tooltip.layer,
-        opacity: 1,
-        easing: Kinetic.Easings.EaseInOut,
-        duration: 0.3
-      });
    
       stage.on('contentMouseover contentMousemove', function() {
         var pos = stage.getPointerPosition();
@@ -113,6 +106,11 @@
           nearestPoint = getNearestPoint(pos, line);
 
           if (nearestPoint) {
+
+            if (tooltip.opacityTween) {
+              tooltip.opacityTween.destroy();
+              delete tooltip.opacityTween;
+            }
 
             nearestPointChart = dataToChart(nearestPoint, line);
             nearestPointBounded = pointBounded(nearestPointChart, line, tooltip);
@@ -134,6 +132,13 @@
           }
           else {
             if (tooltip.visible()) {
+              tooltip.opacityTween = new Kinetic.Tween({
+                node: tooltip.layer,
+                opacity: 0,
+                easing: Kinetic.Easings.EaseInOut,
+                duration: 0.3
+              });
+
               tooltip.visible(false);
               tooltip.update();
               tooltip.batchDraw(); 

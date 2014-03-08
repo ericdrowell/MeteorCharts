@@ -65,7 +65,7 @@
 
       if (visible) {
         if (this.opacityTween) {
-          this.opacityTween.play();
+          this.opacityTween.reverse();
         }
         else {
           this.layer.opacity(1);
@@ -73,7 +73,7 @@
       }
       else {
         if (this.opacityTween) {
-          this.opacityTween.reverse();
+          this.opacityTween.play();
         }
         else {
           this.layer.opacity(0);
