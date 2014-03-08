@@ -55,20 +55,27 @@ module.exports = function(grunt) {
         src: allSourceFiles,
         dest: 'dist/meteorcharts-dev.js'
       },
-      prod: {
+      prodSrc: {
         src: allSourceFiles,
         dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
       },
-      core: {
-        src: coreSourceFiles,
-        dest: 'dist/meteorcharts-core-v<%= pkg.version %>.js'
+      dev2: {
+        src: ['license.js', 'dist/meteorcharts-dev.js'],
+        dest: 'dist/meteorcharts-dev.js'
       },
+      prodSrcLicense: {
+        src: ['license.js', 'dist/meteorcharts-v<%= pkg.version %>.js'],
+        dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
+      },
+      prodMinLicense: {
+        src: ['license.js', 'dist/meteorcharts-v<%= pkg.version %>.min.js'],
+        dest: 'dist/meteorcharts-v<%= pkg.version %>.min.js'
+      }
     },
     uglify: {
       build: {
         files: {
-          'dist/meteorcharts-v<%= pkg.version %>.min.js': 'dist/meteorcharts-v<%= pkg.version %>.js',
-          'dist/meteorcharts-core-v<%= pkg.version %>.min.js': 'dist/meteorcharts-core-v<%= pkg.version %>.js'
+          'dist/meteorcharts-v<%= pkg.version %>.min.js': 'dist/meteorcharts-v<%= pkg.version %>.js'
         }
       }
     },
@@ -96,7 +103,7 @@ module.exports = function(grunt) {
           dest: 'dist/meteorcharts-dev.js'
         }]
       },
-      prod: {
+      prodSrcLicense: {
         options: {
           variables: {
             version: '<%= pkg.version %>',
@@ -110,7 +117,7 @@ module.exports = function(grunt) {
           dest: 'dist/meteorcharts-v<%= pkg.version %>.js'
         }]
       },
-      core: {
+      prodMinLicense: {
         options: {
           variables: {
             version: '<%= pkg.version %>',
@@ -120,8 +127,8 @@ module.exports = function(grunt) {
         },
 
         files: [{
-          src: ['dist/meteorcharts-core-v<%= pkg.version %>.js'],
-          dest: 'dist/meteorcharts-core-v<%= pkg.version %>.js'
+          src: ['dist/meteorcharts-v<%= pkg.version %>.min.js'],
+          dest: 'dist/meteorcharts-v<%= pkg.version %>.min.js'
         }]
       }
     },
@@ -171,8 +178,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Tasks
-  grunt.registerTask('dev', ['clean', 'concat:dev', 'replace:dev']);
-  grunt.registerTask('full', ['clean', 'concat:prod', 'concat:core', 'replace:prod', 'replace:core', 'uglify']);
+  grunt.registerTask('dev', ['clean', 'concat:dev', 'concat:dev2', 'replace:dev']);
+  grunt.registerTask('full', ['clean', 'concat:prodSrc', 'uglify', 'concat:prodSrcLicense', 'concat:prodMinLicense', 'replace:prodSrcLicense', 'replace:prodMinLicense']);
   grunt.registerTask('test', ['simplemocha']);
   grunt.registerTask('devtest', ['dev', 'test']);
 
