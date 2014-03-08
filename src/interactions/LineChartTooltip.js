@@ -31,6 +31,10 @@
       retX = line.chart.width() - (tooltip.width() / 2);
     }
 
+    if (retX - (tooltip.width() / 2) < 0) {
+      retX = (tooltip.width() / 2);
+    }
+
     if (retY - tooltip.height() - POINTER_SPACING < 0) {
       retY = tooltip.height() + POINTER_SPACING;
     }
