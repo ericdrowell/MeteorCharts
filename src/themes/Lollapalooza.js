@@ -8,7 +8,6 @@
   MeteorChart.Themes.Lollapalooza = {
     primary: DARK_BLUE,
     secondary: LIGHT_YELLOW,
-    ternary: MeteorChart.Util.hexToRgba(WHITE, 0.1),
     font: {
       family: 'Arial',
       size: 12

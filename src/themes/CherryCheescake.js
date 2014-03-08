@@ -8,7 +8,6 @@
   MeteorChart.Themes.CherryCheescake = {
     primary: CREME,
     secondary: LIGHT_BROWN,
-    ternary: MeteorChart.Util.hexToRgba(LIGHT_BROWN, 0.3),
     font: {
       family: 'Arial',
       size: 12

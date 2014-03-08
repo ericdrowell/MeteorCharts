@@ -7,7 +7,6 @@
   MeteorChart.Themes.CoteAzur = {
     primary: LIGHT_YELLOW,
     secondary: DARK_BLUE,
-    ternary: MeteorChart.Util.hexToRgba(DARK_BLUE, 0.2),
     font: {
       family: 'Arial',
       size: 12

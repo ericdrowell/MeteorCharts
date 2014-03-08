@@ -6,7 +6,6 @@
   MeteorChart.Themes.LinkedIn = {
     primary: WHITE,
     secondary: GRAY,
-    ternary: MeteorChart.Util.hexToRgba(GRAY, 0.3),
     font: {
       family: 'Arial',
       size: 12

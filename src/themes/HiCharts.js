@@ -9,7 +9,6 @@
   MeteorChart.Themes.HiCharts = {
     primary: WHITE,
     secondary: GRAY,
-    ternary: MeteorChart.Util.hexToRgba(GRAY, 0.15),
     font: {
       family: 'Arial',
       size: 12

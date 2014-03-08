@@ -8,7 +8,6 @@
   MeteorChart.Themes.Firenze = {
     primary: RED,
     secondary: LIGHT_YELLOW,
-    ternary: MeteorChart.Util.hexToRgba(LIGHT_YELLOW, 0.3),
     font: {
       family: 'Arial',
       size: 12

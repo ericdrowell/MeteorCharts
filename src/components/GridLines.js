@@ -20,11 +20,11 @@
       }
       else {
         points = [offset, 0, offset, this.height()]
-      }
+      } 
 
       this.layer.add(new Kinetic.Line({
         points: points,
-        stroke: this.chart.theme().ternary,
+        stroke: MeteorChart.Util.hexToRgba(this.chart.theme().secondary, 0.2),
         strokeWidth: this.options.lineWidth
       }));
     }
