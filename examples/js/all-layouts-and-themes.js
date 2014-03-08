@@ -48,10 +48,13 @@
         }
       };
 
-      for (var theme in MeteorChart.Themes) {
+      var themes = ['CoteAzur', 'Lollapalooza', 'CherryCheescake', 'Firenze', 'HiCharts', 'LinkedIn'];
+
+      for (var n =0; n<themes.length; n++) {
+        var theme = themes[n];
         var themeContainer = document.createElement('div');
         themeContainer.className = 'theme';
-        document.body.appendChild(themeContainer);
+        document.getElementById('layoutsAndThemesContainer').appendChild(themeContainer);
 
         var themeName = document.createElement('h2');
         themeName.innerHTML = theme;
