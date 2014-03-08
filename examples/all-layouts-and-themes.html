@@ -5,20 +5,29 @@
       html, body {
         background-color: #eee;
       }
-      #container {
-        height: 450px;
+      .layout {
+        padding: 10px;
+        display: inline-block;
+      }
+      .theme {
+
+      }
+
+      .theme h2 {
+        font-family: Arial;
+        font-size: 30px;
+        color: #555;
+        padding: 10px 0 0 10px;
+        margin: 0;
       }
     </style>
   </head>
   <body>
-    <div id="container"></div>
 
-    <!--<script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>-->
-    <script src="../lib/kinetic-v5.0.2-beta.js"></script><!-- -->
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>
     <script src="../lib/moment.min.js"></script>
     <script src="../dist/meteorcharts-dev.js"></script>
-    <script src="themeChanger.js"></script>
-    
+
     <script type="text/javascript">
       var config = {
         container: 'container',
@@ -29,6 +38,7 @@
         //theme: MeteorChart.Themes.Lollapalooza,
 
         data: {
+          title: 'Awesome Blossom Possum',
           line: {
             unit: {
               x: 'Number',
@@ -69,9 +79,30 @@
         }
       };
 
-      var chart = new MeteorChart(config);
-   
-      console.log(chart);
+
+    </script>
+    <script>
+      for (var theme in MeteorChart.Themes) {
+        var themeContainer = document.createElement('div');
+        themeContainer.className = 'theme';
+        document.body.appendChild(themeContainer);
+
+        var themeName = document.createElement('h2');
+        themeName.innerHTML = theme;
+        themeContainer.appendChild(themeName);
+
+        for (var layout in MeteorChart.Layouts) {
+          var container = document.createElement('div');
+          container.className = 'layout';
+          themeContainer.appendChild(container);
+
+          config.container = container;
+          config.layout = MeteorChart.Layouts[layout];
+          config.theme = MeteorChart.Themes[theme];
+          new MeteorChart(config);
+        }
+      }
+
     </script>
   </body>
 </html>
