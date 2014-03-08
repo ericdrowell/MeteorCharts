@@ -148,6 +148,18 @@
       });
 
       stage.on('contentMouseout', function() {
+        if (tooltip.opacityTween) {
+          tooltip.opacityTween.destroy();
+          delete tooltip.opacityTween;
+        }
+            
+        tooltip.opacityTween = new Kinetic.Tween({
+          node: tooltip.layer,
+          opacity: 0,
+          easing: Kinetic.Easings.EaseInOut,
+          duration: 0.3
+        });
+
         tooltip.visible(false);
         tooltip.update();
         tooltip.batchDraw();
