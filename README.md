@@ -21,7 +21,6 @@ var lineChart = new MeteorChart({
   width: 500,
   height: 300,
   data: {
-    // data for the line component
     line: {
       unit: {
         x: 'Number',
