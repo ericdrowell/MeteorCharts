@@ -13,20 +13,18 @@
   <body>
     <div id="container"></div>
 
-    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>
-    <script src="../lib/moment.min.js"></script>
-    <script src="../dist/meteorcharts-dev.js"></script>
+    <script src="@@kinetic"></script>
+    <script src="../../lib/moment.min.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
     
     <script type="text/javascript">
       var chart = new MeteorChart({
         container: 'container',
-        width: 500,
-        height: 290,
-        padding: 20,
-        theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
-
+        width: 200,
+        height: 50,
+        padding: 10,
         data: {
+          title: 'Awesome blossom possum',
           line: {
             unit: {
               x: 'Number',
@@ -53,18 +51,12 @@
                 ]
               }
             ]
-          }
-        },
-        layout: MeteorChart.Layouts.StandardLineChart,
-        options: {
-          xAxis: {
-            maxIncrements: 5
           },
-          yAxis: {
-            maxIncrements: 5
-          }
-        }
+        },
+        theme: MeteorChart.Themes.CoteAzur,
+        layout: MeteorChart.Layouts.SparkChart
       });
+
    
       console.log(chart);
     </script>

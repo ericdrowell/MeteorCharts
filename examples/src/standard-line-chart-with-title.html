@@ -13,11 +13,13 @@
   <body>
     <div id="container"></div>
 
-    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js"></script>
-    <script src="../lib/moment.min.js"></script>
-    <script src="../dist/meteorcharts-dev.js"></script>
+    <script src="@@kinetic"></script>
+    <script src="../../lib/moment.min.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
     
     <script type="text/javascript">
+      var padding = 20;
+
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
@@ -27,9 +29,10 @@
         //theme: MeteorChart.Themes.Lollapalooza,
 
         data: {
+          title: 'Awesome blossom possum',
           line: {
             unit: {
-              x: 'Date',
+              x: 'Number',
               y: 'Number'
             },
             series: [
@@ -37,25 +40,27 @@
                 // red
                 title: 'Series 1',
                 points: [
-                  1356998400, -100, // Jan 1 2013
-                  1359676800, 100, // Feb 1 2013
-                  1362096000, 50 // Mar 1 2013
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
                 ]
               }
             ]
-          }
-        },
-        layout: MeteorChart.Layouts.StandardLineChart,
-        interaction: MeteorChart.Interactions.LineChartTooltip,
-        options: {
-          xAxis: {
-            maxIncrements: 5
           },
-          yAxis: {
-            maxIncrements: 5
-          }
-        }
+        },
+        layout: MeteorChart.Layouts.StandardLineChartWithTitle
       });
+
    
       console.log(chart);
     </script>
