@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: #eee;
+      }
+      #container {
+        height: 450px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script src="@@kinetic"></script>
+    <script src="../../lib/moment.min.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
+    
+    
+    <script type="text/javascript">
+      function getSeries() {
+        var minX = -100,
+            minY = -100,
+            maxX = 500,
+            maxY = 500,
+            rangeX = maxX - minX,
+            rangeY = maxY - minY,
+            numLines = 32,
+            numPoints = 10,
+            series = [],
+            yVariance = 1,
+            xIncrement = Math.round(rangeX / numPoints),
+            lastY = Math.random() * rangeY + minY;
+
+        for (var n=0; n<numLines; n++) {
+          var points = [], y;
+
+          for (var x=minX; x<=maxX; x+=xIncrement) {
+            y = lastY + (Math.random() * yVariance) - (yVariance/2);
+            points.push(x);
+            points.push(y);
+            lastY = y;
+          }
+
+          series.push({
+            title: 'Series ' + n,
+            points: points
+          });
+        }
+
+        return series;
+      }
+
+
+      var padding = 15;
+
+      var chart = new MeteorChart({
+        container: 'container',
+        width: 800,
+        height: 600,
+        padding: 20,
+
+        data: {
+          line: {
+            unit: {
+              x: 'Number',
+              y: 'Number'
+            },
+            series: getSeries()
+          },
+        },
+
+        layout: MeteorChart.Layouts.StandardLineChart,
+        theme: MeteorChart.Themes.Kistler,
+        interaction: MeteorChart.Interactions.LineChartTooltip,
+
+        options: {
+          xAxis: {
+            maxIncrements: 5
+          },
+          yAxis: {
+            maxIncrements: 5
+          }
+        }
+      });
+
+   
+      console.log(chart);
+    </script>
+  </body>
+</html>

@@ -51,7 +51,7 @@
         len = series.length,
         shortestDistance = Infinity,
         nearestPoint = null,
-        n, i, ser, points, point, distance, pointsLen, title, chartDistance;
+        n, i, ser, points, point, pointsLen, title, chartDistance;
 
     for (n=0; n<len; n++) {
       ser = series[n];
@@ -69,13 +69,9 @@
         
         chartDistance = distanceBetweenPoints(pos, dataToChart(point, line));
         if (chartDistance < MIN_NEAREST_DISTANCE) {
-          distance = distanceBetweenPoints(dataPos, point);
-
-          if (distance < shortestDistance) {
-            nearestPoint = point;
-            nearestPoint.title = title;
-            shortestDistance = distance;
-          }
+          nearestPoint = point;
+          nearestPoint.title = title;
+          shortestDistance = chartDistance;
         }
       }
     }
@@ -99,9 +95,8 @@
 
       
    
-      stage.on('contentMouseover contentMousemove', function() {
+      stage.on('contentMouseover contentMousemove', MeteorChart.Util._throttle(function() {
         var pos = stage.getPointerPosition();
-
         if (pos) {
           nearestPoint = getNearestPoint(pos, line);
 
@@ -126,9 +121,7 @@
 
 
             tooltip.update();
-            tooltip.batchDraw();
-
-            
+            tooltip.batchDraw();   
           }
           else {
             if (tooltip.visible()) {
@@ -145,7 +138,7 @@
             }  
           }
         }
-      });
+      }, 100));
 
       stage.on('contentMouseout', function() {
         if (tooltip.opacityTween) {

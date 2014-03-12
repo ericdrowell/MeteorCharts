@@ -19,6 +19,7 @@ module.exports = function(grunt) {
     'src/themes/CherryCheescake.js',
     'src/themes/CoteAzur.js',
     'src/themes/Firenze.js',
+    'src/themes/Kistler.js',
     'src/themes/HiCharts.js',
     'src/themes/LinkedIn.js',
     'src/themes/Lollapalooza.js',

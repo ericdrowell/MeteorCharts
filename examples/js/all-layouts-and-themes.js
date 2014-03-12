@@ -48,7 +48,7 @@
         }
       };
 
-      var themes = ['CoteAzur', 'Lollapalooza', 'CherryCheescake', 'Firenze', 'HiCharts', 'LinkedIn'];
+      var themes = ['CoteAzur', 'Lollapalooza', 'CherryCheescake', 'Firenze', 'HiCharts', 'LinkedIn', 'Kistler'];
 
       for (var n =0; n<themes.length; n++) {
         var theme = themes[n];
