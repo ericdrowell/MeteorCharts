@@ -7,17 +7,19 @@ var MeteorChart;
 
     this.attrs= {};
     this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
+    
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
-    this.layout(config.layout);
-    this.theme(config.theme);
-    this.interaction = config.interaction;
-    this.options(config.options);
     this.padding(config.padding);
+
+    this.layout = config.layout;
+    this.theme = config.theme;
+    this.interaction = config.interaction;
+    this.options = config.options;
     this.components = [];
 
-    components = this.layout().components;
+    components = this.layout.components;
     len = components.length;
 
     this.kineticContainer = document.createElement('div');
@@ -25,7 +27,7 @@ var MeteorChart;
     this.kineticContainer.style.width = this.width();
     this.kineticContainer.style.height = this.height();
     this.kineticContainer.style.display = 'inline-block';
-    this.kineticContainer.style.backgroundColor = this.theme().primary;
+    this.kineticContainer.style.backgroundColor = this.theme.primary;
     this.container.appendChild(this.kineticContainer);
 
     this.stage = new Kinetic.Stage({
@@ -40,7 +42,7 @@ var MeteorChart;
       
 
       // add data if it's in the chart data object
-      this._addData(conf);
+      this._decorateConf(conf);
       component = new MeteorChart.Components[conf.type](conf);
       component.chart = this;
 
@@ -53,8 +55,8 @@ var MeteorChart;
     }
 
     // build each component based on init order
-    for (n=0; n<this.layout().initOrder.length; n++) {
-      componentId = this.layout().initOrder[n];
+    for (n=0; n<this.layout.initOrder.length; n++) {
+      componentId = this.layout.initOrder[n];
       component = this.components[componentId];
       component.build();
       
@@ -87,13 +89,19 @@ var MeteorChart;
   };
 
   MeteorChart.prototype = {
-    _addData: function(conf) {
-      var componentData = this.data()[conf.id];
+    _decorateConf: function(conf) {
+      var id = conf.id,
+          componentData = this.data()[id],
+          componentOptions = (this.options || {})[id];
 
       if (componentData) {
         conf.data = function() {
           return componentData;
         };
+      }
+
+      if (componentOptions) {
+        MeteorChart.Util._merge(conf.options, componentOptions);
       }
     },
     destroy: function() {

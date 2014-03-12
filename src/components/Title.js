@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Component.define('Title', {
     build: function() {
-      var theme = this.chart.theme(),
+      var theme = this.chart.theme,
           font = theme.font;
 
       this.layer.enableHitGraph(false);
@@ -9,7 +9,7 @@
       this.layer.add(this._createTitle()); 
     },
     _createTitle: function() {
-      var theme = this.chart.theme(),
+      var theme = this.chart.theme,
           font = theme.font;
 
       return new Kinetic.Text({

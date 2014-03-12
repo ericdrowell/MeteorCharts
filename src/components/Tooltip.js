@@ -3,7 +3,7 @@
   
   MeteorChart.Component.define('Tooltip', {
     build: function() {
-      var theme = this.chart.theme(),
+      var theme = this.chart.theme,
           font = theme.font;
 
       this.layer.enableHitGraph(false); 

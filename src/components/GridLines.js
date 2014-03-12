@@ -24,7 +24,7 @@
 
       this.layer.add(new Kinetic.Line({
         points: points,
-        stroke: MeteorChart.Util.hexToRgba(this.chart.theme().secondary, 0.2),
+        stroke: MeteorChart.Util.hexToRgba(this.chart.theme.secondary, 0.2),
         strokeWidth: this.options.lineWidth
       }));
     }

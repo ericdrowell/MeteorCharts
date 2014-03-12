@@ -25,7 +25,7 @@
       var chart = new MeteorChart({
         container: 'container',
         width: 800,
-        height: 600,
+        height: 400,
         padding: 20,
 
         data: {
@@ -39,24 +39,24 @@
               minY: -100,
               maxX: 500,
               maxY: 500,
-              yVariance: 1,
+              yVariance: 5,
               numLines: 32,
-              numPoints: 10
+              numPoints: 100
             })
           },
         },
 
         layout: MeteorChart.Layouts.StandardLineChart,
         theme: MeteorChart.Themes.Kistler,
-        interaction: MeteorChart.Interactions.LineChartTooltip,
+        //interaction: MeteorChart.Interactions.LineChartTooltip,
 
         options: {
           xAxis: {
-            maxIncrements: 5
+            maxNumLabels: 10
           },
           yAxis: {
-            maxIncrements: 5
-          }
+            maxNumLabels: 8
+          } 
         }
       });
 

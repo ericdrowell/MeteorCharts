@@ -44,7 +44,7 @@
       });
     },
     getDataColor: function(n) {
-      var themeData = this.chart.theme().data,
+      var themeData = this.chart.theme.data,
           len = themeData.length;
 
       return themeData[n % len];

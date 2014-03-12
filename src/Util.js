@@ -54,8 +54,8 @@
     getPointsMinMax: function(points) {
       var minX = Infinity,
           minY = Infinity,
-          maxX = 0,
-          maxY = 0,
+          maxX = Infinity * -1,
+          maxY = Infinity * -1,
           len = points.length,
           n, x, y;
 
@@ -79,8 +79,8 @@
     getSeriesMinMax: function(series) {
       var minX = Infinity,
           minY = Infinity,
-          maxX = 0,
-          maxY = 0,
+          maxX = Infinity * -1,
+          maxY = Infinity * -1,
           len = series.length,
           n, viewport;
 
@@ -105,33 +105,43 @@
     // but if you'd like to disable the execution on the leading edge, pass
     // `{leading: false}`. To disable execution on the trailing edge, ditto.
     _throttle: function(func, wait, options) {
-        var context, args, result;
-        var timeout = null;
-        var previous = 0;
-        options || (options = {});
-        var later = function() {
-            previous = options.leading === false ? 0 : new Date().getTime();
-            timeout = null;
-            result = func.apply(context, args);
-            context = args = null;
-        };
-        return function() {
-            var now = new Date().getTime();
-            if (!previous && options.leading === false) previous = now;
-            var remaining = wait - (now - previous);
-            context = this;
-            args = arguments;
-            if (remaining <= 0) {
-              clearTimeout(timeout);
-              timeout = null;
-              previous = now;
-              result = func.apply(context, args);
-              context = args = null;
-            } else if (!timeout && options.trailing !== false) {
-              timeout = setTimeout(later, remaining);
-            }
-            return result;
-        };
+      var context, args, result;
+      var timeout = null;
+      var previous = 0;
+      options || (options = {});
+      var later = function() {
+        previous = options.leading === false ? 0 : new Date().getTime();
+        timeout = null;
+        result = func.apply(context, args);
+        context = args = null;
+      };
+      return function() {
+        var now = new Date().getTime();
+        if (!previous && options.leading === false) previous = now;
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0) {
+          clearTimeout(timeout);
+          timeout = null;
+          previous = now;
+          result = func.apply(context, args);
+          context = args = null;
+        } else if (!timeout && options.trailing !== false) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result;
+      };
+    },
+    // add obj2 keys to obj1
+    _merge: function(obj1, obj2) {
+      var key,
+          o1 = obj1 || {},
+          o2 = obj2 || {};
+
+      for (key in o2) {
+        o1[key] = o2[key];
+      }
     }
   };
 
@@ -139,8 +149,5 @@
   MeteorChart.Util.addMethod(MeteorChart, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart, 'height', 0);
   MeteorChart.Util.addMethod(MeteorChart, 'data');
-  MeteorChart.Util.addMethod(MeteorChart, 'layout');
-  MeteorChart.Util.addMethod(MeteorChart, 'theme');
   MeteorChart.Util.addMethod(MeteorChart, 'padding', 0);
-  MeteorChart.Util.addMethod(MeteorChart, 'options');
 })();

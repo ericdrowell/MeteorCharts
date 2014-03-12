@@ -16,7 +16,7 @@ function getSeries(config) {
     var points = [], y;
 
     for (var x=minX; x<=maxX; x+=xIncrement) {
-      y = lastY + (Math.random() * yVariance) - (yVariance/2);
+      y = Math.round(lastY + (Math.random() * yVariance) - (yVariance/2));
       points.push(x);
       points.push(y);
       lastY = y;

@@ -2,7 +2,7 @@
   MeteorChart.Component.define('Axis', {
     init: function() {
       var data = this.data();
-      this.formatter = new MeteorChart.Formatters[data.unit || 'Number'](data.min, data.max, 5);
+      this.formatter = new MeteorChart.Formatters[data.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5);
     },
     build: function() {
       var that = this,
@@ -24,7 +24,7 @@
       });  
     },
     _createText: function(text) {
-      var theme = this.chart.theme(),
+      var theme = this.chart.theme,
           font = theme.font;
 
       return new Kinetic.Text({

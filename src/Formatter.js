@@ -5,11 +5,11 @@
     5
   ];
 
-  MeteorChart.Formatter = function(min, max, maxIncrements) {
+  MeteorChart.Formatter = function(min, max, maxNumLabels) {
     this.min = min;
     this.max = max;
     this.range = this.max - this.min;
-    this.maxIncrements = maxIncrements;
+    this.maxNumLabels = maxNumLabels;
     this._setIncrement();
   };
 
@@ -18,14 +18,14 @@
       var range = this.range,
           increments = this._getIncrements(),
           len = increments.length,
-          maxIncrements = this.maxIncrements,
+          maxNumLabels = this.maxNumLabels,
           increment, n, inc;
 
       // return largest increment that obeys the max number of labels rule
       for (n=0; n<len; n++) {
         increment = increments[n];
 
-        if (increment >= range / maxIncrements) {
+        if (increment >= range / maxNumLabels) {
           this.increment = increment;
           return true;
         }

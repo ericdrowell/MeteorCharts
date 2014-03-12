@@ -18,7 +18,8 @@
           points: points,
           stroke: this.getDataColor(n),
           y: this.height(),
-          strokeScaleEnabled: false
+          strokeScaleEnabled: false,
+          lineJoin: 'round'
         }));
       }
 
