@@ -162,13 +162,20 @@ module.exports = function(grunt) {
       all: { src: ['test/**/*.js'] }
     },
     watch: {
-      scripts: {
+      src: {
         files: ['src/**/*.js'],
         tasks: ['dev'],
         options: {
           spawn: false,
         },
       },
+      examples: {
+        files: ['examples/**/*.html'],
+        tasks: ['examples'],
+        options: {
+          spawn: false,
+        },
+      }
     }
     /*
     shell: {

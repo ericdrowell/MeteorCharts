@@ -52,7 +52,7 @@
         shortestDistance = Infinity,
         nearestPoint = null,
         n, i, ser, points, point, pointsLen, title, chartDistance;
-
+ 
     for (n=0; n<len; n++) {
       ser = series[n];
       points = ser.points;
@@ -66,7 +66,6 @@
           y: points[i+1]
         };
 
-        
         chartDistance = distanceBetweenPoints(pos, dataToChart(point, line));
         if (chartDistance < MIN_NEAREST_DISTANCE) {
           nearestPoint = point;
