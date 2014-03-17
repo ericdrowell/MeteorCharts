@@ -83,12 +83,19 @@
             y: points[i+1]
           };
 
-          chartDistance = squaredDistanceBetweenPoints(pos, this.dataToChart(point));
-          if (chartDistance < MIN_SQUARED_NEAREST_DISTANCE && chartDistance < shortestDistance) {
+          chartDistance = squaredDistanceBetweenPoints(point, dataPos);
+
+          if (chartDistance < shortestDistance) {
             nearestPoint = point;
             nearestPoint.title = title;
             shortestDistance = chartDistance;
           }
+        }
+      }
+
+      if (nearestPoint) {
+        if (squaredDistanceBetweenPoints(nearestPoint, dataPos) > MIN_SQUARED_NEAREST_DISTANCE) {
+          nearestPoint = null;
         }
       }
 
