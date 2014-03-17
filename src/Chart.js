@@ -84,7 +84,10 @@ var MeteorChart;
 
     // init interaction
     if (this.interaction) {
-      this.interaction.init(this)
+      new this.interaction({
+        chart: this,
+        line: this.components.line
+      });
     }
   };
 
