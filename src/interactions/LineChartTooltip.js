@@ -1,12 +1,11 @@
 (function() {
-  var SQRT = Math.sqrt,
-      POINTER_SPACING = 8,
-      MIN_NEAREST_DISTANCE = 50;
+  var POINTER_SPACING = 8,
+      MIN_SQUARED_NEAREST_DISTANCE = Math.pow(50, 2);
 
-  function distanceBetweenPoints(p1, p2) {
+  function squaredDistanceBetweenPoints(p1, p2) {
     var diffX = p2.x - p1.x,
         diffY = p2.y - p1.y;
-    return SQRT((diffX*diffX) + (diffY*diffY));
+    return (diffX*diffX) + (diffY*diffY);
   }
 
   MeteorChart.Interactions.LineChartTooltip = function(config) {
@@ -84,8 +83,8 @@
             y: points[i+1]
           };
 
-          chartDistance = distanceBetweenPoints(pos, this.dataToChart(point));
-          if (chartDistance < MIN_NEAREST_DISTANCE) {
+          chartDistance = squaredDistanceBetweenPoints(pos, this.dataToChart(point));
+          if (chartDistance < MIN_SQUARED_NEAREST_DISTANCE && chartDistance < shortestDistance) {
             nearestPoint = point;
             nearestPoint.title = title;
             shortestDistance = chartDistance;
