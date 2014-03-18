@@ -39,7 +39,6 @@ var MeteorChart;
     // instantiate components and add them to the hash
     for (n=0; n<len; n++) {
       conf = components[n];
-      
 
       // add data if it's in the chart data object
       this._decorateConf(conf);
@@ -86,7 +85,7 @@ var MeteorChart;
     if (this.interaction) {
       new this.interaction({
         chart: this,
-        line: this.components.line
+        lineSeries: this.components.lineSeries
       });
     }
   };

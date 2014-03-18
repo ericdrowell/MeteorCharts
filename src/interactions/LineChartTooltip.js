@@ -16,7 +16,7 @@
     });
 
     this.chart = config.chart;
-    this.line = config.line;
+    this.lineSeries = config.lineSeries;
 
     this.chart.add(this.tooltip);
     this._bind();
@@ -24,7 +24,7 @@
 
   MeteorChart.Interactions.LineChartTooltip.prototype = {
     pointBounded: function(point) {
-      var line = this.line,
+      var line = this.lineSeries,
           tooltip = this.tooltip,
           retX = point.x,
           retY = point.y;
@@ -46,14 +46,14 @@
       };
     },
     dataToChart: function(pos) {
-      var line = this.line;
+      var line = this.lineSeries;
       return {
         x: (pos.x - line.minX) * line.scaleX + line.x(),
         y: line.height() - ((pos.y - line.minY) * line.scaleY) + line.y()
       }; 
     },
     chartToData: function(pos) {
-      var line = this.line;
+      var line = this.lineSeries;
 
       return {
         x: ((pos.x - line.x()) / line.scaleX) + line.minX,
@@ -61,7 +61,7 @@
       };
     },
     getNearestPoint: function(pos) {
-      var line = this.line,
+      var line = this.lineSeries,
           dataPos = this.chartToData(pos),
           data = line.data(),
           series = data.series,
@@ -105,7 +105,7 @@
       var that = this,
           chart = this.chart,
           stage = chart.stage,
-          line = this.line,
+          line = this.lineSeries,
           tooltip = this.tooltip;
 
       stage.on('contentMouseover contentMousemove', MeteorChart.Util._throttle(function() {

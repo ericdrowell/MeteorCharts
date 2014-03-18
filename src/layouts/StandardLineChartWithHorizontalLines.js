@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Layouts.StandardLineChartWithHorizontalLines = {
-    initOrder: ['line', 'xAxis', 'yAxis', 'horizontalGridLines'],
+    initOrder: ['lineChart', 'xAxis', 'yAxis', 'horizontalGridLines'],
     components: [  
       {
         id: 'horizontalGridLines',
@@ -26,8 +26,8 @@
         }
       },
       {
-        id: 'line',
-        type: 'Line',
+        id: 'lineChart',
+        type: 'LineChart',
         x: function() {
           var chart = this.chart;
           return chart.components.yAxis.width() + (chart.padding() * 2);

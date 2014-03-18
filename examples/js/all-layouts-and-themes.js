@@ -8,7 +8,7 @@
 
         data: {
           title: 'Awesome Blossom Possum',
-          line: {
+          lineSeries: {
             unit: {
               x: 'Number',
               y: 'Number'

@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.define('Line', {
+  MeteorChart.Component.define('LineSeries', {
     build: function() {
       var data = this.data(),
           unit = data.unit || {},

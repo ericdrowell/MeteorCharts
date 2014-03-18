@@ -1,10 +1,10 @@
 (function() {
   MeteorChart.Layouts.SparkChart = {
-    initOrder: ['line'],
+    initOrder: ['lineSeries'],
     components: [
       {
-        id: 'line',
-        type: 'Line',
+        id: 'lineSeries',
+        type: 'LineSeries',
         x: function () {
           return this.chart.padding();
         },
