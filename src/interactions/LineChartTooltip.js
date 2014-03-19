@@ -101,6 +101,56 @@
 
       return nearestPoint;
     },
+    _update: function() {
+      var that = this,
+          chart = this.chart,
+          stage = chart.stage,
+          line = this.lineSeries,
+          tooltip = this.tooltip,
+          pos = stage.getPointerPosition();
+          
+      if (pos) {
+        nearestPoint = that.getNearestPoint(pos);
+
+        if (nearestPoint) {
+
+          if (tooltip.opacityTween) {
+            tooltip.opacityTween.destroy();
+            delete tooltip.opacityTween;
+          }
+
+          nearestPointChart = that.dataToChart(nearestPoint);
+          nearestPointBounded = that.pointBounded(nearestPointChart);
+
+          tooltip.visible(true);
+          tooltip.x(nearestPointBounded.x);
+          tooltip.y(nearestPointBounded.y - POINTER_SPACING);
+
+          tooltip.data({
+            title: nearestPoint.title,
+            content: line.formatterX.long(nearestPoint.x) + ', ' + line.formatterY.long(nearestPoint.y)
+          });
+
+
+          tooltip.update();
+          tooltip.batchDraw();   
+        }
+        else {
+          if (tooltip.visible()) {
+            tooltip.opacityTween = new Kinetic.Tween({
+              node: tooltip.layer,
+              opacity: 0,
+              easing: Kinetic.Easings.EaseInOut,
+              duration: 0.3
+            });
+
+            tooltip.visible(false);
+            tooltip.update();
+            tooltip.batchDraw(); 
+          }  
+        }
+      }
+    },
     _bind: function() {
       var that = this,
           chart = this.chart,
@@ -109,48 +159,7 @@
           tooltip = this.tooltip;
 
       stage.on('contentMouseover contentMousemove', MeteorChart.Util._throttle(function() {
-        var pos = stage.getPointerPosition();
-        if (pos) {
-          nearestPoint = that.getNearestPoint(pos);
-
-          if (nearestPoint) {
-
-            if (tooltip.opacityTween) {
-              tooltip.opacityTween.destroy();
-              delete tooltip.opacityTween;
-            }
-
-            nearestPointChart = that.dataToChart(nearestPoint);
-            nearestPointBounded = that.pointBounded(nearestPointChart);
-
-            tooltip.visible(true);
-            tooltip.x(nearestPointBounded.x);
-            tooltip.y(nearestPointBounded.y - POINTER_SPACING);
-
-            tooltip.data({
-              title: nearestPoint.title,
-              content: line.formatterX.long(nearestPoint.x) + ', ' + line.formatterY.long(nearestPoint.y)
-            });
-
-
-            tooltip.update();
-            tooltip.batchDraw();   
-          }
-          else {
-            if (tooltip.visible()) {
-              tooltip.opacityTween = new Kinetic.Tween({
-                node: tooltip.layer,
-                opacity: 0,
-                easing: Kinetic.Easings.EaseInOut,
-                duration: 0.3
-              });
-
-              tooltip.visible(false);
-              tooltip.update();
-              tooltip.batchDraw(); 
-            }  
-          }
-        }
+        that._update();
       }, 100));
 
       stage.on('contentMouseout', function() {
@@ -169,6 +178,10 @@
         tooltip.visible(false);
         tooltip.update();
         tooltip.batchDraw();
+      });
+
+      line.layer.on('draw', function() {
+        that._update();
       });
     }
   };

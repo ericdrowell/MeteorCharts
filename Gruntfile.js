@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
-  var kinetic = 'http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js';
+  //var kinetic = 'http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.1.js';
+  var kinetic = '../../lib/kinetic-v5.0.2-beta.js';
 
   var allSourceFiles = [
     // core

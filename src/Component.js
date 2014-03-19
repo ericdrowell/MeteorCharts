@@ -5,7 +5,7 @@
     this.id = config.id;
     this.type = config.type;
     this.options = config.options || {};
-    this.updateOn = config.updateOn || [];
+    this.dependencies = config.dependencies || {};
 
     // binding functions
     this.x(config.x);
@@ -23,26 +23,6 @@
   };
 
   MeteorChart.Component.prototype = {
-    _bind: function() {
-      var updateOn = this.updateOn,
-          len = updateOn.length,
-          n;
-
-      for (n=0; n<len; n++) {
-        this._bindSingle(updateOn[n]);  
-      }
-    },
-    _bindSingle: function(event) {
-      var that = this,
-          chart = this.chart,
-          stage = chart.stage;
-
-      stage.on(event, function() {
-        var component = chart.components[that.id];
-        component.update(); 
-        component.batchDraw();
-      });
-    },
     getDataColor: function(n) {
       var themeData = this.chart.theme.data,
           len = themeData.length;
@@ -90,9 +70,9 @@
     },
     destroy: function() {
 
-      if (this._destroy) {
-        this._destroy();
-      }
+    },
+    clear: function() {
+      this.layer.destroyChildren(); 
     }
   };
 

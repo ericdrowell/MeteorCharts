@@ -62,15 +62,17 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {
-    var that = this;
-        maxHeight = 0;
+    // var that = this;
+    //     maxHeight = 0;
 
-    this.formatter.each(function(n, val) {
-      var textHeight = that._createText(val).height();
-      maxHeight = Math.max(maxHeight, textHeight);
-    });  
+    // this.formatter.each(function(n, val) {
+    //   var textHeight = that._createText(val).height();
+    //   maxHeight = Math.max(maxHeight, textHeight);
+    // });  
 
-    return maxHeight;
+    // return maxHeight;
+
+    return 12;
   });
 
 })();

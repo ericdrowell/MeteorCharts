@@ -68,6 +68,7 @@
           config.container = container;
           config.layout = MeteorChart.Layouts[layout];
           config.theme = MeteorChart.Themes[theme];
+
           new MeteorChart(config);
         }
       }

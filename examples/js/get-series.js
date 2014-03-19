@@ -30,3 +30,24 @@ function getSeries(config) {
 
   return series;
 }
+
+function shiftSeries(config) {
+  var data = config.data,
+      yVariance = config.yVariance,
+      xIncrement = config.xIncrement,
+      series = data.series,
+      len = series.length,
+      n, points;
+
+  for (n=0; n<len; n++) {
+    points = series[n].points;
+    points.shift();
+    points.shift();
+
+    
+    points.push(points[points.length-2] + xIncrement);
+    points.push(points[points.length-2] + (Math.random() * yVariance) - (yVariance/2));
+  }
+
+  return data;
+}

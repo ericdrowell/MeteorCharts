@@ -68,19 +68,6 @@ var MeteorChart;
       this.stage.add(component.layer); 
     }
 
-    // add bindings
-    for (n=0; n<this.components.length; n++) {
-      component = this.components[n];
-
-      // abstract component bindings
-      component._bind();
-
-      // component subclass bindings
-      if (component.bind) {
-        component.bind();
-      }
-    }
-
     // init interaction
     if (this.interaction) {
       new this.interaction({
@@ -127,6 +114,24 @@ var MeteorChart;
       component.build();
       component.update();
       this.stage.add(component.layer); 
+    },
+    draw: function() {
+      var components = this.components,
+          len = components.length,
+          n, component;
+
+      for (n=0; n<len; n++) {
+        component = components[n];
+
+        // TODO: only redraw components who have an attr that changed
+        component.clear();
+        if (component.init) {
+          component.init();
+        }
+        component.build();
+      }
+
+      this.stage.draw();
     }
   };
 

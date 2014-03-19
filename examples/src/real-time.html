@@ -62,6 +62,17 @@
         }
       });
 
+      setInterval(function() {
+        chart.components.lineSeries.data(shiftSeries({
+          data: data,
+          yVariance: 20,
+          xIncrement: 0.6
+        }));
+
+        chart.draw();
+      }, 100); 
+
+   
       console.log(chart);
     </script>
   </body>

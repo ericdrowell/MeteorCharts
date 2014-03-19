@@ -20,7 +20,7 @@
           var chart = this.chart,
               components = chart.components;
 
-          return chart.height() - (chart.padding() * 3) - components.xAxis.height();
+          return chart.height() - (chart.padding() * 3) - 12; //components.xAxis.height();
         }
       },
       {
