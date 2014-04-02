@@ -1,53 +1,7 @@
 (function() {
-  MeteorChart.Layouts.StandardLineChartWithGrid = {
-    initOrder: ['lineSeries', 'xAxis', 'yAxis', 'verticalGridLines', 'horizontalGridLines'],
+  MeteorChart.Layouts.LineChartWithTitle = {
+    initOrder: ['lineSeries', 'xAxis', 'yAxis', 'title'],
     components: [  
-      {
-        id: 'verticalGridLines',
-        type: 'GridLines',
-        x: function() {
-          return this.chart.components.lineSeries.x();
-        },
-        y: function() {
-          return this.chart.components.lineSeries.y();
-        },
-        width: function() {
-          return this.chart.components.lineSeries.width();
-        },
-        height: function() {
-          return this.chart.components.lineSeries.height();
-        },
-        data: function() {
-          return this.chart.components.xAxis.labelOffsets;
-        },
-        options: {
-          orientation: 'vertical',
-          lineWidth: 2
-        }
-      },
-      {
-        id: 'horizontalGridLines',
-        type: 'GridLines',
-        x: function() {
-          return this.chart.components.lineSeries.x();
-        },
-        y: function() {
-          return this.chart.components.lineSeries.y();
-        },
-        width: function() {
-          return this.chart.components.lineSeries.width();
-        },
-        height: function() {
-          return this.chart.components.lineSeries.height();
-        },
-        data: function() {
-          return this.chart.components.yAxis.labelOffsets;
-        },
-        options: {
-          orientation: 'horizontal',
-          lineWidth: 2
-        }
-      },
       {
         id: 'lineSeries',
         type: 'LineSeries',
@@ -56,7 +10,8 @@
           return chart.components.yAxis.width() + (chart.padding() * 2);
         },
         y: function() {
-          return this.chart.padding();
+          var chart = this.chart;
+          return chart.components.title.height() + (chart.padding() * 2);
         },
         width: function() {
           var chart = this.chart;
@@ -66,7 +21,7 @@
           var chart = this.chart,
               components = chart.components;
 
-          return chart.height() - (chart.padding() * 3) - components.xAxis.height();
+          return chart.height() - (chart.padding() * 4) - components.xAxis.height() - components.title.height();
         }
       },
       {
@@ -76,7 +31,8 @@
           return this.chart.padding();
         },
         y: function() {
-          return this.chart.padding();
+          var chart = this.chart;
+          return chart.components.title.height() + (chart.padding() * 2);
         },
         height: function() {
           // bind axis height to line height
@@ -124,6 +80,19 @@
         },
         options: {
           maxIncrements: 5
+        }
+      },
+      {
+        id: 'title',
+        type: 'Title',
+        x: function() {
+          return this.chart.padding();
+        },
+        y: function() {
+          return this.chart.padding();
+        },
+        width: function() {
+          return this.chart.width();
         }
       }
     ]

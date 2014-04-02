@@ -17,19 +17,17 @@
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
+    
     <script type="text/javascript">
-      var padding = 20;
+      var padding = 15;
 
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 290,
+        height: 280,
         padding: 20,
-        theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
 
         data: {
-          title: 'Awesome blossom possum',
           lineSeries: {
             unit: {
               x: 'Number',
@@ -58,7 +56,23 @@
             ]
           },
         },
-        layout: MeteorChart.Layouts.StandardLineChartWithTitle
+
+        layout: MeteorChart.Layouts.StandardLineChart,
+        theme: MeteorChart.Themes.CoteAzur,
+        interaction: MeteorChart.Interactions.LineChartTooltip,
+
+        options: {
+          xAxis: {
+            maxNumLabels: 5
+          },
+          yAxis: {
+            maxNumLabels: 5
+          }
+        }
+      });
+
+      chart.on('draw', function() {
+        console.log('draw chart');
       });
 
    

@@ -1,7 +1,30 @@
 (function() {
-  MeteorChart.Layouts.StandardLineChartWithHorizontalLines = {
-    initOrder: ['lineSeries', 'xAxis', 'yAxis', 'horizontalGridLines'],
+  MeteorChart.Layouts.LineChartWithGrid = {
+    initOrder: ['lineSeries', 'xAxis', 'yAxis', 'verticalGridLines', 'horizontalGridLines'],
     components: [  
+      {
+        id: 'verticalGridLines',
+        type: 'GridLines',
+        x: function() {
+          return this.chart.components.lineSeries.x();
+        },
+        y: function() {
+          return this.chart.components.lineSeries.y();
+        },
+        width: function() {
+          return this.chart.components.lineSeries.width();
+        },
+        height: function() {
+          return this.chart.components.lineSeries.height();
+        },
+        data: function() {
+          return this.chart.components.xAxis.labelOffsets;
+        },
+        options: {
+          orientation: 'vertical',
+          lineWidth: 2
+        }
+      },
       {
         id: 'horizontalGridLines',
         type: 'GridLines',

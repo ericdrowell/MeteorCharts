@@ -104,10 +104,9 @@
     _update: function() {
       var that = this,
           chart = this.chart,
-          stage = chart.stage,
           line = this.lineSeries,
           tooltip = this.tooltip,
-          pos = stage.getPointerPosition();
+          pos = chart.getPointerPosition();
           
       if (pos) {
         nearestPoint = that.getNearestPoint(pos);
@@ -154,15 +153,14 @@
     _bind: function() {
       var that = this,
           chart = this.chart,
-          stage = chart.stage,
           line = this.lineSeries,
           tooltip = this.tooltip;
 
-      stage.on('contentMouseover contentMousemove', MeteorChart.Util._throttle(function() {
+      chart.on('contentMouseover contentMousemove', MeteorChart.Util._throttle(function() {
         that._update();
       }, 100));
 
-      stage.on('contentMouseout', function() {
+      chart.on('contentMouseout', function() {
         if (tooltip.opacityTween) {
           tooltip.opacityTween.destroy();
           delete tooltip.opacityTween;

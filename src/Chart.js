@@ -129,6 +129,19 @@ var MeteorChart;
       }
 
       this.stage.draw();
+    },
+    // reuse the KineticJS event emitter
+    on: function() {
+      var stage = this.stage;
+      stage.on.apply(stage, arguments);
+    },
+    // reuse the KineticJS event emitter
+    off: function() {
+      var stage = this.stage;
+      stage.off.apply(stage,arguments);
+    },
+    getPointerPosition: function() {
+      return this.stage.getPointerPosition();
     }
   };
 

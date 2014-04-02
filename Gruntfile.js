@@ -15,6 +15,7 @@ module.exports = function(grunt) {
     'src/components/Title.js',
     'src/components/Tooltip.js',
     'src/components/GridLines.js',
+    'src/components/Slider.js',
 
     // themes
     'src/themes/CherryCheescake.js',
@@ -28,9 +29,10 @@ module.exports = function(grunt) {
     // layouts
     'src/layouts/SparkChart.js',
     'src/layouts/StandardLineChart.js',
-    'src/layouts/StandardLineChartWithGrid.js',
-    'src/layouts/StandardLineChartWithHorizontalLines.js',
-    'src/layouts/StandardLineChartWithTitle.js',
+    'src/layouts/LineChartWithGrid.js',
+    'src/layouts/LineChartWithHorizontalLines.js',
+    'src/layouts/LineChartWithTitle.js',
+    'src/layouts/LineChartWithSlider.js',
 
     // interactions
     'src/interactions/LineChartTooltip.js',
