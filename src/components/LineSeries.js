@@ -1,5 +1,8 @@
 (function() {
   MeteorChart.Component.define('LineSeries', {
+    init: function() {
+      this.useFastLayer = true;
+    },
     build: function() {
       var data = this.data(),
           unit = data.unit || {},

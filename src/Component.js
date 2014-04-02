@@ -1,6 +1,7 @@
 (function() {
   MeteorChart.Component = function(config) {
     this.attrs = {};
+    this.chart = config.chart;
     this.className = config.type;
     this.id = config.id;
     this.type = config.type;
@@ -14,12 +15,6 @@
     this.height(config.height);
     this.data(config.data);
     this.visible(config.visible);
-
-    this.layer = new Kinetic.Layer({
-      name: this.className,
-      id: this.id,
-      opacity: this.visible() ? 1 : 0
-    });
   };
 
   MeteorChart.Component.prototype = {
@@ -79,6 +74,19 @@
   MeteorChart.Component.define = function(type, methods) {
     MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
+
+      if (this.init) {
+        this.init.call(this);
+      }
+
+      //var layerClass = this.useFastLayer ? 'FastLayer' : 'Layer';
+      var layerClass = 'Layer';
+
+      this.layer = new Kinetic[layerClass]({
+        name: this.className,
+        id: this.id,
+        opacity: this.visible() ? 1 : 0
+      });
     };
 
     MeteorChart.Components[type].prototype = methods;

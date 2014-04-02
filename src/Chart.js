@@ -43,11 +43,6 @@ var MeteorChart;
       // add data if it's in the chart data object
       this._decorateConf(conf);
       component = new MeteorChart.Components[conf.type](conf);
-      component.chart = this;
-
-      if (component.init) {
-        component.init();
-      }
 
       this.components[component.id] = component;
       this.components.push(component); 
@@ -92,6 +87,8 @@ var MeteorChart;
       if (componentOptions) {
         MeteorChart.Util._merge(conf.options, componentOptions);
       }
+
+      conf.chart = this;
     },
     destroy: function() {
       var components = this.components,
