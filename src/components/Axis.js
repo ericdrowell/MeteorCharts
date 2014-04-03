@@ -1,8 +1,10 @@
 (function() {
   MeteorChart.Component.define('Axis', {
     init: function() {
-      var data = this.data();
-      this.formatter = new MeteorChart.Formatters[data.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5);
+      var data = this.data(),
+          options = this.options;
+          
+      this.formatter = new MeteorChart.Formatters[options.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5);
     },
     build: function() {
       var that = this,

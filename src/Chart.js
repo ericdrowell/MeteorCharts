@@ -37,8 +37,10 @@ var MeteorChart;
     });
 
     // instantiate components and add them to the hash
+    MeteorChart.log('1) INSTANTIATE COMPONENTS');
     for (n=0; n<len; n++) {
       conf = components[n];
+      MeteorChart.log('-- ' + conf.id);
 
       // add data if it's in the chart data object
       this._decorateConf(conf);
@@ -48,17 +50,21 @@ var MeteorChart;
       this.components.push(component); 
     }
 
-    // build each component based on init order
-    for (n=0; n<this.layout.initOrder.length; n++) {
-      componentId = this.layout.initOrder[n];
-      component = this.components[componentId];
+    // build each component based
+    MeteorChart.log('2) BUILD COMPONENTS');
+    for (n=0; n<len; n++) {
+      conf = components[n];
+      MeteorChart.log('-- ' + conf.id);
+      component = this.components[conf.id];
       component.build();
-      
     }
 
-    // update and add each component to the stage
-    for (n=0; n<this.components.length; n++) {
-      component = this.components[n];
+    // update and add each component to the stage based on addOrder
+    MeteorChart.log('3) UPDATE AND ADD COMPONENTS BASED ON ADDORDER');
+    for (n=0; n<this.layout.addOrder.length; n++) {
+      componentId = this.layout.addOrder[n];
+      MeteorChart.log('-- ' + componentId);
+      component = this.components[componentId];
       component.update();
       this.stage.add(component.layer); 
     }
@@ -78,6 +84,10 @@ var MeteorChart;
           componentData = this.data()[id],
           componentOptions = (this.options || {})[id];
 
+      if (!conf.options) {
+        conf.options = {};
+      }
+
       if (componentData) {
         conf.data = function() {
           return componentData;
@@ -86,7 +96,7 @@ var MeteorChart;
 
       if (componentOptions) {
         MeteorChart.Util._merge(conf.options, componentOptions);
-      }
+      }  
 
       conf.chart = this;
     },
@@ -154,6 +164,10 @@ var MeteorChart;
 
   MeteorChart.Constants = {
     TYPOGRAPHIC_SCALE: 1.2
+  };
+
+  MeteorChart.log = function(obj) {
+    console.log(obj);
   };
 })();
 

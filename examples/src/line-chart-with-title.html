@@ -31,10 +31,6 @@
         data: {
           title: 'Awesome blossom possum',
           lineSeries: {
-            unit: {
-              x: 'Number',
-              y: 'Number'
-            },
             series: [
               {
                 // red
@@ -58,7 +54,15 @@
             ]
           },
         },
-        layout: MeteorChart.Layouts.LineChartWithTitle
+        layout: MeteorChart.Layouts.LineChartWithTitle,
+        options: {
+          lineSeries: {
+            unit: {
+              x: 'Date',
+              y: 'Number'
+            }
+          }
+        }
       });
 
    

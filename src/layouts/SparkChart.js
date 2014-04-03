@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Layouts.SparkChart = {
-    initOrder: ['lineSeries'],
+    addOrder: ['lineSeries'],
     components: [
       {
         id: 'lineSeries',

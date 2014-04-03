@@ -3,15 +3,15 @@
     build: function() {
       var that = this,
           theme = this.chart.theme,
+          options = this.options,
           data = this.data();
 
-      console.log('build')
       this.layer.add(new Kinetic.Rect({
-        width: data.width,
-        height: data.height,
+        width: options.width,
+        height: options.height,
         fill: theme.secondary,
         draggable: true,
-        cornerRadius: data.height / 2,
+        cornerRadius: options.height / 2,
         dragBoundFunc: function(pos) {
           var x = pos.x,
               y = this.getAbsolutePosition().y;
@@ -19,8 +19,8 @@
           if (x < that.x()) {
             x = that.x();
           } 
-          else if (x > that.x() + that.width() - data.width) {
-            x = that.x() + that.width() - data.width
+          else if (x > that.x() + that.width() - options.width) {
+            x = that.x() + that.width() - options.width
           }
 
           return {
@@ -33,11 +33,11 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'width', function() {
-    return this.data().width;
+    return this.options.width;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'height', function() {
-    return this.data().height;
+    return this.options.height;
   });
 
 })();

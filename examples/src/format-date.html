@@ -49,10 +49,18 @@
         interaction: MeteorChart.Interactions.LineChartTooltip,
         options: {
           xAxis: {
-            maxNumLabels: 5
+            maxNumLabels: 5,
+            unit: 'Date'
           },
           yAxis: {
-            maxNumLabels: 5
+            maxNumLabels: 5,
+            unit: 'Number'
+          },
+          lineSeries: {
+            unit: {
+              x: 'Date',
+              y: 'Number'
+            }
           }
         }
       });

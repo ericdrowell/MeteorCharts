@@ -9,10 +9,6 @@
         data: {
           title: 'Awesome Blossom Possum',
           lineSeries: {
-            unit: {
-              x: 'Number',
-              y: 'Number'
-            },
             series: [
               {
                 // red
@@ -44,6 +40,10 @@
           },
           yAxis: {
             maxIncrements: 5
+          },
+          slider: {
+            width: 100,
+            height: 20
           }
         }
       };

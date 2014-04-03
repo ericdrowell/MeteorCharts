@@ -26,10 +26,6 @@
         data: {
           title: 'Awesome blossom possum',
           lineSeries: {
-            unit: {
-              x: 'Number',
-              y: 'Number'
-            },
             series: [
               {
                 // red
@@ -54,7 +50,15 @@
           },
         },
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.SparkChart
+        layout: MeteorChart.Layouts.SparkChart,
+        options: {
+          lineSeries: {
+            unit: {
+              x: 'Date',
+              y: 'Number'
+            }
+          }
+        }
       });
 
    

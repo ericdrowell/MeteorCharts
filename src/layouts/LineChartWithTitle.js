@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Layouts.LineChartWithTitle = {
-    initOrder: ['lineSeries', 'xAxis', 'yAxis', 'title'],
+    addOrder: ['lineSeries', 'xAxis', 'yAxis', 'title'],
     components: [  
       {
         id: 'lineSeries',
@@ -40,12 +40,13 @@
         },
         data: function() {
           // bind axis data to line min and max values
-          var data = this.chart.components.lineSeries.data(),
+          var lineSeries = this.chart.components.lineSeries,
+              data = lineSeries.data(),
               viewport = MeteorChart.Util.getSeriesMinMax(data.series);
+
           return {
             min: viewport.minY,
-            max: viewport.maxY,
-            unit: data.unit.y
+            max: viewport.maxY
           }
         },
         options: {
@@ -70,12 +71,13 @@
         },
         data: function() {
           // bind axis data to line min and max values
-          var data = this.chart.components.lineSeries.data(),
+          var lineSeries = this.chart.components.lineSeries,
+              data = lineSeries.data(),
               viewport = MeteorChart.Util.getSeriesMinMax(data.series);
+
           return {
             min: viewport.minX,
-            max: viewport.maxX,
-            unit: data.unit.x
+            max: viewport.maxX
           }
         },
         options: {
