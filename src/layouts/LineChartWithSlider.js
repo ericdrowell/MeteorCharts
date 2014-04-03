@@ -20,7 +20,7 @@
           var chart = this.chart,
               components = chart.components;
 
-          return chart.height() - components.slider.height() - (chart.padding() * 4) - 12; //components.xAxis.height();
+          return chart.height() - components.slider.height() - (chart.padding() * 4) - components.xAxis.height();
         }
       },
       {
@@ -88,9 +88,10 @@
           return this.chart.components.lineSeries.x();
         },
         y: function() {
-          var line = this.chart.components.lineSeries;
+          var components = this.chart.components,
+              line = components.lineSeries;
 
-          return line.y() + line.height() +   this.chart.padding();
+          return line.y() + line.height() + (this.chart.padding() * 2) + components.xAxis.height();
         },
         width: function() {
           // bind axis width to line width
@@ -101,8 +102,8 @@
           var data = this.chart.components.lineSeries.data(),
               viewport = MeteorChart.Util.getSeriesMinMax(data.series);
           return {
-            width: 200,
-            height: 30,
+            width: 100,
+            height: 15,
             position: 0.5
           }
         },
