@@ -30,6 +30,7 @@ var MeteorChart;
     this.content.style.display = 'inline-block';
     this.content.style.backgroundColor = this.theme.primary;
     this.content.style.position = 'relative';
+    this.content.style.overflow = 'hidden';
     this.container.appendChild(this.content);
 
     // instantiate components and add them to the hash

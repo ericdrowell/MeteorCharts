@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Themes.Kistler = {
+  MeteorChart.Themes.Crochet = {
     primary: 'white',
     secondary: '#555',
     font: {

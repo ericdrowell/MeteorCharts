@@ -33,7 +33,7 @@
           maxX: 500,
           maxY: 500,
           yVariance: 20,
-          numLines: 32,
+          numLines: 100,
           numPoints: 1000
         })
       };
@@ -51,7 +51,7 @@
         },
 
         layout: MeteorChart.Layouts.StandardLineChart,
-        theme: MeteorChart.Themes.Kistler,
+        theme: MeteorChart.Themes.Crochet,
         interaction: MeteorChart.Interactions.LineChartTooltip,
 
         options: {
@@ -68,10 +68,11 @@
         chart.components.lineSeries.data(shiftSeries({
           data: data,
           yVariance: 20,
-          xIncrement: 0.6
+          xIncrement: 0.6,
+          numPoints: 1
         }));
 
-        chart.draw();
+        chart.render();
       }, 100); 
 
    

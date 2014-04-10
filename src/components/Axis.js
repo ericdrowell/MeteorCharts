@@ -22,6 +22,8 @@
           offset = 0,
           increment = this.formatter.increment;
 
+      this.innerContent.innerHTML = '';
+
       this.labelOffsets = [];
 
       this.formatter.each(function(n, val) {
@@ -57,12 +59,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'width', function() {
-    var that = this;
-        maxWidth = 0;
-
-
-
-    return 50; //maxWidth;
+    return 50; 
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {

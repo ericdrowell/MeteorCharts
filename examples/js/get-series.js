@@ -36,17 +36,20 @@ function shiftSeries(config) {
       yVariance = config.yVariance,
       xIncrement = config.xIncrement,
       series = data.series,
+      numPoints = config.numPoints,
       len = series.length,
       n, points;
 
-  for (n=0; n<len; n++) {
-    points = series[n].points;
-    points.shift();
-    points.shift();
+  for (var i=0; i<numPoints; i++) {
+    for (n=0; n<len; n++) {
+      points = series[n].points;
+      points.shift();
+      points.shift();
 
-    
-    points.push(points[points.length-2] + xIncrement);
-    points.push(points[points.length-2] + (Math.random() * yVariance) - (yVariance/2));
+      
+      points.push(points[points.length-2] + xIncrement);
+      points.push(points[points.length-2] + (Math.random() * yVariance) - (yVariance/2));
+    }
   }
 
   return data;
