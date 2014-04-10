@@ -6,7 +6,7 @@ var MeteorChart;
         components, len, n, componentId, conf, componentData;
 
     this.attrs= {};
-    this.container = Kinetic.Util._isString(container) ? document.getElementById(container) : container;
+    this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
     
     this.width(config.width);
     this.height(config.height);
@@ -22,19 +22,15 @@ var MeteorChart;
     components = this.layout.components;
     len = components.length;
 
-    this.kineticContainer = document.createElement('div');
-    this.kineticContainer.className = 'meteorchart-content';
-    this.kineticContainer.style.width = this.width();
-    this.kineticContainer.style.height = this.height();
-    this.kineticContainer.style.display = 'inline-block';
-    this.kineticContainer.style.backgroundColor = this.theme.primary;
-    this.container.appendChild(this.kineticContainer);
-
-    this.stage = new Kinetic.Stage({
-      width: that.width(),
-      height: that.height(),
-      container: that.kineticContainer
-    });
+    // build content container
+    this.content = document.createElement('div');
+    this.content.className = 'meteorchart-content';
+    this.content.style.width = this.width();
+    this.content.style.height = this.height();
+    this.content.style.display = 'inline-block';
+    this.content.style.backgroundColor = this.theme.primary;
+    this.content.style.position = 'relative';
+    this.container.appendChild(this.content);
 
     // instantiate components and add them to the hash
     MeteorChart.log('1) INSTANTIATE COMPONENTS');
@@ -50,32 +46,37 @@ var MeteorChart;
       this.components.push(component); 
     }
 
-    // build each component based
-    MeteorChart.log('2) BUILD COMPONENTS');
-    for (n=0; n<len; n++) {
-      conf = components[n];
+    // initialize components and add them to the hash
+    MeteorChart.log('2) INITIALIZE COMPONENTS');
+    for (n=0; n<this.components.length; n++) {
+      component = this.components[n];
       MeteorChart.log('-- ' + conf.id);
-      component = this.components[conf.id];
-      component.build();
+
+      if (component.init) {
+        component.init();
+      }
     }
 
-    // update and add each component to the stage based on addOrder
-    MeteorChart.log('3) UPDATE AND ADD COMPONENTS BASED ON ADDORDER');
+    // add each component to the content container based on add order
+    MeteorChart.log('4) RENDER AND ADD COMPONENTS BASED ON ADDORDER');
     for (n=0; n<this.layout.addOrder.length; n++) {
       componentId = this.layout.addOrder[n];
       MeteorChart.log('-- ' + componentId);
       component = this.components[componentId];
-      component.update();
-      this.stage.add(component.layer); 
+      component.resizeContent();
+      this.content.appendChild(component.content); 
     }
 
+    // render all components
+    this.render();
+
     // init interaction
-    if (this.interaction) {
-      new this.interaction({
-        chart: this,
-        lineSeries: this.components.lineSeries
-      });
-    }
+    // if (this.interaction) {
+    //   new this.interaction({
+    //     chart: this,
+    //     lineSeries: this.components.lineSeries
+    //   });
+    // }
   };
 
   MeteorChart.prototype = {
@@ -110,9 +111,6 @@ var MeteorChart;
         components[n].destroy();
       }
 
-      // destroy stage
-      this.stage.destroy();
-
       // clear any leftover DOM
       this.container.innerHTML = '';
     },
@@ -120,38 +118,16 @@ var MeteorChart;
       component.chart = this;
       component.build();
       component.update();
-      this.stage.add(component.layer); 
+      this.content.appendChild(component.content); 
     },
-    draw: function() {
+    render: function() { 
       var components = this.components,
           len = components.length,
           n, component;
 
       for (n=0; n<len; n++) {
-        component = components[n];
-
-        // TODO: only redraw components who have an attr that changed
-        component.clear();
-        if (component.init) {
-          component.init();
-        }
-        component.build();
+        components[n].render();
       }
-
-      this.stage.draw();
-    },
-    // reuse the KineticJS event emitter
-    on: function() {
-      var stage = this.stage;
-      stage.on.apply(stage, arguments);
-    },
-    // reuse the KineticJS event emitter
-    off: function() {
-      var stage = this.stage;
-      stage.off.apply(stage,arguments);
-    },
-    getPointerPosition: function() {
-      return this.stage.getPointerPosition();
     }
   };
 

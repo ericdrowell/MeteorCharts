@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.define('Title', {
+  MeteorChart.Component.extend('Title', {
     build: function() {
       var theme = this.chart.theme,
           font = theme.font;

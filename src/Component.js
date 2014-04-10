@@ -15,6 +15,14 @@
     this.height(config.height);
     this.data(config.data);
     this.visible(config.visible);
+
+    // build content container
+    this.content = document.createElement('div');
+    this.content.className = 'component-content';
+    this.content.setAttribute('data-component-type', this.type);
+    this.content.setAttribute('data-component-id', this.id);
+    this.content.style.display = 'inline-block';
+    this.content.style.position = 'absolute';
   };
 
   MeteorChart.Component.prototype = {
@@ -24,73 +32,36 @@
 
       return themeData[n % len];
     },
-    batchDraw: function() {
-      this.layer.batchDraw();
-    },
-    draw: function() {
-      this.layer.draw();
-    },
-    changed: function() {
-      this.chart.stage.fire('meteorchart-component-update-' + this.id);
-    },
-    update: function() {
-      // abstract component update
-      var layer = this.layer,
-          visible = this.visible();
+    render: function() {
+      this.content.style.left = this.x();
+      this.content.style.top = this.y();
 
-      if (visible) {
-        if (this.opacityTween) {
-          this.opacityTween.reverse();
-        }
-        else {
-          this.layer.opacity(1);
-        } 
-      }
-      else {
-        if (this.opacityTween) {
-          this.opacityTween.play();
-        }
-        else {
-          this.layer.opacity(0);
-        } 
-      }
-
-      this.layer.x(this.x());
-      this.layer.y(this.y());
-
-      // concrete component update
-      if (this._update) {
-        this._update();
+      // concrete component render
+      if (this._render) {
+        this._render();
       }
     },
     destroy: function() {
 
     },
-    clear: function() {
-      this.layer.destroyChildren(); 
+    resizeContent: function() {
+      this.content.style.width = this.width();
+      this.content.style.height = this.height();
+
+      // call concrete resizeContent()
+      if (this._resizeContent) {
+        this._resizeContent();
+      }
     }
   };
 
-  MeteorChart.Component.define = function(type, methods) {
+  MeteorChart.Component.extend = function(type, methods) {
     MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
-
-      if (this.init) {
-        this.init.call(this);
-      }
-
-      //var layerClass = this.useFastLayer ? 'FastLayer' : 'Layer';
-      var layerClass = 'Layer';
-
-      this.layer = new Kinetic[layerClass]({
-        name: this.className,
-        id: this.id,
-        opacity: this.visible() ? 1 : 0
-      });
     };
 
     MeteorChart.Components[type].prototype = methods;
-    Kinetic.Util.extend(MeteorChart.Components[type], MeteorChart.Component);
+    MeteorChart.Util.extend(MeteorChart.Components[type], MeteorChart.Component);
   };
 
   // getters setters

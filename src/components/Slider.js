@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.define('Slider', {
+  MeteorChart.Component.extend('Slider', {
     build: function() {
       var that = this,
           theme = this.chart.theme,

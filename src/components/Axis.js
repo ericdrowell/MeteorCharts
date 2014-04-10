@@ -1,12 +1,17 @@
 (function() {
-  MeteorChart.Component.define('Axis', {
+  MeteorChart.Component.extend('Axis', {
     init: function() {
       var data = this.data(),
           options = this.options;
+
+      this.innerContent = document.createElement('div');
+      this.innerContent.style.position = 'relative';
+
+      this.content.appendChild(this.innerContent);
           
       this.formatter = new MeteorChart.Formatters[options.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5);
     },
-    build: function() {
+    _render: function() {
       var that = this,
           chart = this.chart,
           data = this.data(),
@@ -18,35 +23,35 @@
           increment = this.formatter.increment;
 
       this.labelOffsets = [];
-      this.layer.enableHitGraph(false);
 
       this.formatter.each(function(n, val) {
         offset = n * increment * scale;
         that._addLabel(offset, val);
       });  
     },
-    _createText: function(text) {
-      var theme = this.chart.theme,
-          font = theme.font;
-
-      return new Kinetic.Text({
-        text: this.formatter.short(text),
-        fontFamily: font.family,
-        fontSize: font.size,
-        fill: theme.secondary
-      })
-    },
     _addLabel: function(offset, val) {
-      var text = this._createText(val);
+      var theme = this.chart.theme,
+          font = theme.font,
+          text;
+
+      text = document.createElement('span');
+      text.innerHTML = val;
+      text.style.position = 'absolute';
+      text.style.fontSize = font.size;
+      text.style.fontFamily = font.family;
+      this.innerContent.appendChild(text);
 
       if (this.options.orientation === 'vertical') {
-        text.y(this.height() - offset - (text.height() / 2));
+        text.style.top = this.height() - offset - (text.clientHeight/2);
+        text.style.left = 0;
       }
+      // horizontal
       else {
-        text.x(offset - (text.width() / 2)); 
+        text.style.top = 0;
+        text.style.left = offset - (text.clientWidth/2); 
       }
-  
-      this.layer.add(text);  
+
+      
       this.labelOffsets.push(offset);
     }
   });
@@ -55,12 +60,9 @@
     var that = this;
         maxWidth = 0;
 
-    this.formatter.each(function(n, val) {
-      var textWidth = that._createText(val).width();
-      maxWidth = Math.max(maxWidth, textWidth);
-    });  
 
-    return maxWidth;
+
+    return 50; //maxWidth;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {

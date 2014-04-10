@@ -20,14 +20,14 @@
           val = this.attrs[attr];
 
           if (val === undefined) {
-            if (Kinetic.Util._isFunction(def)) {
+            if (MeteorChart.Util._isFunction(def)) {
               return def.call(this);
             }
             else {
               return def;
             }
           }
-          else if (Kinetic.Util._isFunction(val)) {
+          else if (MeteorChart.Util._isFunction(val)) {
             return val.call(this);
           }
           else {
@@ -142,6 +142,34 @@
       for (key in o2) {
         o1[key] = o2[key];
       }
+    },
+    extend: function(c1, c2) {
+      for(var key in c2.prototype) {
+        if(!( key in c1.prototype)) {
+          c1.prototype[key] = c2.prototype[key];
+        }
+      }
+    },
+    /*
+     * cherry-picked utilities from underscore.js
+     */
+    _isElement: function(obj) {
+      return !!(obj && obj.nodeType == 1);
+    },
+    _isFunction: function(obj) {
+      return !!(obj && obj.constructor && obj.call && obj.apply);
+    },
+    _isObject: function(obj) {
+      return (!!obj && obj.constructor == Object);
+    },
+    _isArray: function(obj) {
+      return Object.prototype.toString.call(obj) == '[object Array]';
+    },
+    _isNumber: function(obj) {
+      return Object.prototype.toString.call(obj) == '[object Number]';
+    },
+    _isString: function(obj) {
+      return Object.prototype.toString.call(obj) == '[object String]';
     }
   };
 

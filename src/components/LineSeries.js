@@ -1,43 +1,57 @@
 (function() {
-  MeteorChart.Component.define('LineSeries', {
+  MeteorChart.Component.extend('LineSeries', {
     init: function() {
-      this.useFastLayer = true;
+      this.canvas = document.createElement('canvas');
+      this.context = this.canvas.getContext('2d');
+
+      // add canvas to the content container
+      this.content.appendChild(this.canvas);
     },
-    build: function() {
+    _render: function() {
       var data = this.data(),
           unit = data.unit || {},
           series = data.series,
           len = series.length,
-          n, line, points, viewport;
+          context = this.context,
+          n, line, points, i, pointsLen, viewport;
 
-      // disable hit graph to improve draw performance since
-      // we won't bee needing it
-      this.layer.enableHitGraph(false);
-
-      for (n=0; n<len; n++) {
-        points = series[n].points;
-
-        this.layer.add(new Kinetic.Line({
-          points: points,
-          stroke: this.getDataColor(n),
-          y: this.height(),
-          strokeScaleEnabled: false,
-          lineJoin: 'round'
-        }));
-      }
-
+      // recalculate range and scale
       viewport = MeteorChart.Util.getSeriesMinMax(series);
       this.minX = viewport.minX;
       this.minY = viewport.minY;
       this.maxX = viewport.maxX;
       this.maxY = viewport.maxY;
+      this._setScale();
 
+      // update formatters
       this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
       this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
 
-      this._scale();
+      // render
+      context.clearRect(0, 0, this.width(), this.height());
+
+      for (n=0; n<len; n++) {
+        points = series[n].points;
+        pointsLen = points.length;
+
+        context.save();
+        context.translate(0, this.height());
+        context.scale(this.scaleX, this.scaleY * -1);
+        context.translate(this.minX * -1, this.minY * -1);
+        context.beginPath();
+        context.moveTo(points[0], points[1]);
+
+        for (i = 2; i<pointsLen; i+=2) {
+          context.lineTo(points[i], points[i+1]);
+        }
+
+        context.restore();
+        context.strokeStyle = this.getDataColor(n);
+        context.lineWidth = 2;
+        context.stroke();
+      } 
     },
-    _scale: function() {
+    _setScale: function() {
       var x = this.x(),
           y = this.y(),
           width = this.width(),
@@ -53,13 +67,10 @@
 
       this.scaleX = scaleX;
       this.scaleY = scaleY;
-
-      this.layer.getChildren().setAttrs({
-        offsetX: minX,
-        offsetY: minY,
-        scaleX: scaleX,
-        scaleY: -1 * scaleY
-      });
+    },
+    _resizeContent: function() {
+      this.canvas.width = this.width();
+      this.canvas.height = this.height();
     }
   });
 })();

@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.define('GridLines', {
+  MeteorChart.Component.extend('GridLines', {
     build: function() {
       this.orientation = this.options.orientation || 'horizontal';
 

@@ -1,7 +1,7 @@
 (function() {
   var PADDING = 10;
   
-  MeteorChart.Component.define('Tooltip', {
+  MeteorChart.Component.extend('Tooltip', {
     build: function() {
       var theme = this.chart.theme,
           font = theme.font;
