@@ -13,49 +13,66 @@
   <body>
     <div id="container"></div>
 
-    <script src="@@kinetic"></script>
+    <script src="../../lib/kinetic-dev.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
+    
     <script type="text/javascript">
+      var padding = 15;
+
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 290,
+        height: 280,
         padding: 20,
-        theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
 
         data: {
           lineSeries: {
-            unit: {
-              x: 'Number',
-              y: 'Number'
-            },
             series: [
               {
                 // red
                 title: 'Series 1',
                 points: [
-                  1000000, -100, 
-                  2300000, 100, 
-                  3000000, 50
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
                 ]
               }
             ]
-          }
+          },
         },
+
         layout: MeteorChart.Layouts.StandardLineChart,
+        theme: MeteorChart.Themes.CoteAzur,
         interaction: MeteorChart.Interactions.LineChartTooltip,
+
         options: {
           xAxis: {
             maxNumLabels: 5
           },
           yAxis: {
             maxNumLabels: 5
+          },
+          lineSeries: {
+            unit: {
+              x: 'Date',
+              y: 'Number'
+            }
           }
         }
       });
+
    
       console.log(chart);
     </script>

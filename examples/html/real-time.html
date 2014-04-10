@@ -13,7 +13,7 @@
   <body>
     <div id="container"></div>
 
-    <script src="@@kinetic"></script>
+    <script src="../../lib/kinetic-dev.js"></script>
     <script src="../js/get-series.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
@@ -37,6 +37,8 @@
           numPoints: 1000
         })
       };
+
+      console.log(1)
 
       var chart = new MeteorChart({
         container: 'container',
@@ -62,6 +64,17 @@
         }
       });
 
+      setInterval(function() {
+        chart.components.lineSeries.data(shiftSeries({
+          data: data,
+          yVariance: 20,
+          xIncrement: 0.6
+        }));
+
+        chart.draw();
+      }, 100); 
+
+   
       console.log(chart);
     </script>
   </body>

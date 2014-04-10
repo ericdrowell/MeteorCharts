@@ -13,7 +13,7 @@
   <body>
     <div id="container"></div>
 
-    <script src="@@kinetic"></script>
+    <script src="../../lib/kinetic-dev.js"></script>
     <script src="../js/get-series.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
@@ -23,6 +23,10 @@
       var padding = 15;
 
       var data = {
+        unit: {
+          x: 'Number',
+          y: 'Number'
+        },
         series: getSeries({
           minX: -100,
           minY: -100,
@@ -36,43 +40,28 @@
 
       var chart = new MeteorChart({
         container: 'container',
-        width: 500,
-        height: 350,
-        padding: 10,
+        width: 800,
+        height: 400,
+        padding: 20,
 
         data: {
-          slider: data,
+          lineSeries: data
         },
 
-        layout: MeteorChart.Layouts.LineChartWithSlider,
-        theme: MeteorChart.Themes.CoteAzur,
-        //interaction: MeteorChart.Interactions.LineChartTooltip,
+        layout: MeteorChart.Layouts.StandardLineChart,
+        theme: MeteorChart.Themes.Kistler,
+        interaction: MeteorChart.Interactions.LineChartTooltip,
 
         options: {
-          lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
-            }
-          },
           xAxis: {
-            maxNumLabels: 5
+            maxNumLabels: 10
           },
           yAxis: {
-            maxNumLabels: 5
-          },
-          slider: {
-            width: 100,
-            height: 15
-          }
+            maxNumLabels: 8
+          } 
         }
       });
 
-      chart.on('draw', function() {
-        console.log('draw chart');
-      });
-
-   
       console.log(chart);
     </script>
   </body>

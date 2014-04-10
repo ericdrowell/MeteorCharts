@@ -13,23 +13,24 @@
   <body>
     <div id="container"></div>
 
-    <script src="@@kinetic"></script>
+    <script src="../../lib/kinetic-dev.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
+    
     <script type="text/javascript">
+      var padding = 15;
+
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 290,
+        height: 280,
         padding: 20,
-        theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
 
         data: {
           lineSeries: {
             unit: {
-              x: 'Date',
+              x: 'Number',
               y: 'Number'
             },
             series: [
@@ -37,33 +38,43 @@
                 // red
                 title: 'Series 1',
                 points: [
-                  1356998400, -100, // Jan 1 2013
-                  1359676800, 100, // Feb 1 2013
-                  1362096000, 50 // Mar 1 2013
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
                 ]
               }
             ]
-          }
+          },
         },
+
         layout: MeteorChart.Layouts.StandardLineChart,
+        theme: MeteorChart.Themes.CoteAzur,
         interaction: MeteorChart.Interactions.LineChartTooltip,
+
         options: {
           xAxis: {
-            maxNumLabels: 5,
-            unit: 'Date'
+            maxNumLabels: 5
           },
           yAxis: {
-            maxNumLabels: 5,
-            unit: 'Number'
-          },
-          lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
-            }
+            maxNumLabels: 5
           }
         }
       });
+
+      chart.on('draw', function() {
+        console.log('draw chart');
+      });
+
    
       console.log(chart);
     </script>

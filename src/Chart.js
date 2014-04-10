@@ -1,6 +1,6 @@
 var MeteorChart;
 (function() {
-  MeteorChart = function(config) {
+  MeteorChart = function(config) { 
     var that = this,
         container = config.container,
         components, len, n, componentId, conf, componentData;

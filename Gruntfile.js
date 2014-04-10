@@ -109,21 +109,6 @@ module.exports = function(grunt) {
           dest: 'dist/meteorcharts-dev.js'
         }]
       },
-      examples: {
-        options: {
-          variables: {
-            kinetic: kinetic
-          },
-          prefix: '@@'
-        },
-
-        files: [{
-          expand: true,
-          flatten: true,
-          src: ['examples/src/*.html'],
-          dest: 'examples/dist/'
-        }]
-      },
       prodSrcLicense: {
         options: {
           variables: {
@@ -171,13 +156,6 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         },
-      },
-      examples: {
-        files: ['examples/**/*.html'],
-        tasks: ['examples'],
-        options: {
-          spawn: false,
-        },
       }
     }
     /*
@@ -210,6 +188,5 @@ module.exports = function(grunt) {
   grunt.registerTask('full', ['clean', 'concat:prodSrc', 'uglify', 'concat:prodSrcLicense', 'concat:prodMinLicense', 'replace:prodSrcLicense', 'replace:prodMinLicense']);
   grunt.registerTask('test', ['simplemocha']);
   grunt.registerTask('devtest', ['dev', 'test']);
-  grunt.registerTask('examples', ['replace:examples']);
 
 };
