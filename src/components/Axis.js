@@ -41,6 +41,7 @@
       text.style.position = 'absolute';
       text.style.fontSize = font.size;
       text.style.fontFamily = font.family;
+      text.style.color = theme.secondary;
       this.innerContent.appendChild(text);
 
       if (this.options.orientation === 'vertical') {
