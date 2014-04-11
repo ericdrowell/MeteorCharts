@@ -5,7 +5,7 @@ Website: [www.meteorcharts.com](http://www.meteorcharts.com)
 
 ## What is this?
 
-MeteorCharts is the next generation charting framework for the web.  It uses an abstract layer for data binding, and therefore supports any rendering technologies, including HTML5 Canvas, WebGL, SVG, and Dom.  MeteorCharts excels in places where other charting libraries fall short, most notably with performance, extensibility, and mobile support
+MeteorCharts is the next generation charting framework for the web.  It uses an abstract layer for data binding, and therefore supports any rendering technology of your choice, including HTML5 Canvas, WebGL, SVG, VML, and Dom.  MeteorCharts excels in places where other charting libraries fall short, most notably with performance, extensibility, and mobile support
  
   * __Performance__ - Performance is our biggest priority.  Need to render over a million data points per second?  No problem.
   * __Extensibility__ - Most other charting libraries out there generate charts with giant configurations that enable users to define how certain components look, where they are placed, what colors they are, etc.  Nice in theory, but this absolutely does not scale.  In order for this type of approach to work in real life, the developers of those libraries will have to know in advance all of the possible combinations of components and interactivity for all charts in the universe, in order to make them configurable.  Dumb, right?  MeteorCharts decouples components, layouts, and themes so that it's easy to create any kind of chart you can imagine.  It's like having a giant bucket of charting components provided by MeteorCharts and the community, you stick them together, and it just works.
