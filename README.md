@@ -16,30 +16,41 @@ MeteorCharts is a next generation charting framework for the web.  MeteorCharts 
 The fastest way to get a chart up and running is to use a pre-built theme and layout.  Themes define colors and font sizes in your chart.  Layouts define position, size, and bindings of components inside your chart.
 
 ```javascript
-var lineChart = new MeteorChart({
+var chart = new MeteorChart({
   container: 'container',
   width: 500,
-  height: 300,
-  data: {
-    line: {
-      unit: {
-        x: 'Number',
-        y: 'Number'
-      },
-      series: [
+  height: 290,
+  padding: 20,
+
+  theme: MeteorChart.Themes.CoteAzur,
+  layout: MeteorChart.Layouts.StandardLineChart,
+
+  // set components data and options
+  components: {
+    lineSeries: {
+      data: [
         {
+          // red
           title: 'Series 1',
           points: [
             -100, -100,
             100, 100,
             200, 50
           ]
+        },
+        { 
+          // green
+          title: 'Series 2',
+          points: [
+            0, 100,
+            100, 200,
+            200, 150,
+            300, 200
+          ]
         }
       ]
     }
-  },
-  theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.StandardLineChart
+  }
 });
 ```
 
