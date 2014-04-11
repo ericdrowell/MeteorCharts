@@ -10,13 +10,12 @@
     _render: function() {
       var data = this.data(),
           unit = data.unit || {},
-          series = data.series,
-          len = series.length,
+          len = data.length,
           context = this.context,
           n, line, points, i, pointsLen, viewport;
 
       // recalculate range and scale
-      viewport = MeteorChart.Util.getSeriesMinMax(series);
+      viewport = MeteorChart.Util.getSeriesMinMax(data);
       this.minX = viewport.minX;
       this.minY = viewport.minY;
       this.maxX = viewport.maxX;
@@ -31,7 +30,7 @@
       context.clearRect(0, 0, this.width(), this.height());
 
       for (n=0; n<len; n++) {
-        points = series[n].points;
+        points = data[n].points;
         pointsLen = points.length;
 
         context.save();

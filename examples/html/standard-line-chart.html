@@ -22,12 +22,14 @@
         width: 500,
         height: 290,
         padding: 20,
-        theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
 
-        data: {
+        theme: MeteorChart.Themes.CoteAzur,
+        layout: MeteorChart.Layouts.StandardLineChart,
+
+        // set components data and options
+        components: {
           lineSeries: {
-            series: [
+            data: [
               {
                 // red
                 title: 'Series 1',
@@ -48,24 +50,6 @@
                 ]
               }
             ]
-          }
-        },
-        
-
-        layout: MeteorChart.Layouts.StandardLineChart,
-
-        options: {
-          lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
-            }
-          },
-          xAxis: {
-            unit: 'Date'
-          },
-          yAxis: {
-            unit: 'Number'
           }
         }
       });
