@@ -4,7 +4,7 @@
       var data = this.data(),
           options = this.options;
 
-      this.innerContent = document.createElement('div');
+      this.innerContent = MeteorChart.Util.createElement('div');
       this.innerContent.style.position = 'relative';
 
       this.content.appendChild(this.innerContent);
@@ -36,7 +36,7 @@
           font = theme.font,
           text;
 
-      text = document.createElement('span');
+      text = MeteorChart.Util.createElement('span');
       text.innerHTML = val;
       text.style.position = 'absolute';
       text.style.fontSize = font.size;

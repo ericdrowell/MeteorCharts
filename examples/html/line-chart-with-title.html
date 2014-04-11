@@ -26,12 +26,14 @@
         height: 290,
         padding: 20,
         theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
+        layout: MeteorChart.Layouts.LineChartWithTitle,
 
-        data: {
-          title: 'Awesome blossom possum',
+        components: {
+          title: {
+            data: 'Awesome Blossom Possum'
+          },
           lineSeries: {
-            series: [
+            data: [
               {
                 // red
                 title: 'Series 1',
@@ -52,15 +54,6 @@
                 ]
               }
             ]
-          },
-        },
-        layout: MeteorChart.Layouts.LineChartWithTitle,
-        options: {
-          lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
-            }
           }
         }
       });
