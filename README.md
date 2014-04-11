@@ -5,10 +5,10 @@ Website: [www.meteorcharts.com](http://www.meteorcharts.com)
 
 ## What is this?
 
-MeteorCharts is a next generation charting framework for the web.  MeteorCharts excels in places where other charting libraries fall short, most notably with performance, extensibility, and mobile support
+MeteorCharts is the next generation charting framework for the web.  It uses an abstract layer for data binding, and therefore supports any rendering technology of your choice, including HTML5 Canvas, WebGL, SVG, VML, and Dom.  MeteorCharts excels in places where other charting libraries fall short, most notably with performance, extensibility, and mobile support
  
-  * __Performance__ - MeteorCharts is built on top of KineticJS, a blazing fast HTML5 Canvas library that extends the 2d context.  If you're doing serious charting with thousands of data points, you'd better stick with canvas
-  * __Extensibility__ - Most other charting libraries out there generate charts with giant configurations that enable users to define how certain components look, where they are placed, what colors they are, etc.  Nice in theory, but this absolutely does not scale.  In order for this type of approach to work in real life, the developers of those libraries will have to know in advance all of the possible combinations of components and interactivity for all charts in the universe, in order to make them configurable.  Dumb, right?  MeteorCharts decouples components, layouts, and themes so that it's easy to create any kind of chart you can imagine.  It's like having a giant bucket of charting components provided by MeteorCharts and the community, you stick them together, and it just works.
+  * __Performance__ - Performance is our biggest priority.  Need to render over a million data points per second?  No problem.
+  * __Extensibility__ - Most other charting libraries out there generate charts with giant configurations that require users to define how certain components look, where they are placed, what colors they are, etc.  Nice in theory, but this absolutely does not scale.  In order for this type of approach to work in real life, the developers of those libraries will have to know in advance all of the possible combinations of components and interactivity for all charts in the universe, in order to make them configurable.  Not going to happen.  MeteorCharts decouples components, layouts, and themes so that it's easy to create any kind of chart that you can imagine.  It's like having a giant bucket of charting components that you stick together, and it just works.
   * __Mobile__ - MeteorCharts was developed with mobile and tablet experiences as 1st class citizens.  Drop a chart in your website, and it will work great on desktop browsers, mobile devices, and tablets.
 
 ## Quick Start
@@ -16,30 +16,41 @@ MeteorCharts is a next generation charting framework for the web.  MeteorCharts 
 The fastest way to get a chart up and running is to use a pre-built theme and layout.  Themes define colors and font sizes in your chart.  Layouts define position, size, and bindings of components inside your chart.
 
 ```javascript
-var lineChart = new MeteorChart({
+var chart = new MeteorChart({
   container: 'container',
   width: 500,
-  height: 300,
-  data: {
-    line: {
-      unit: {
-        x: 'Number',
-        y: 'Number'
-      },
-      series: [
+  height: 290,
+  padding: 20,
+
+  theme: MeteorChart.Themes.CoteAzur,
+  layout: MeteorChart.Layouts.StandardLineChart,
+
+  // set components data and options
+  components: {
+    lineSeries: {
+      data: [
         {
+          // red
           title: 'Series 1',
           points: [
             -100, -100,
             100, 100,
             200, 50
           ]
+        },
+        { 
+          // green
+          title: 'Series 2',
+          points: [
+            0, 100,
+            100, 200,
+            200, 150,
+            300, 200
+          ]
         }
       ]
     }
-  },
-  theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.StandardLineChart
+  }
 });
 ```
 
