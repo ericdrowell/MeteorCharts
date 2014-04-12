@@ -4,14 +4,6 @@
       COMMA = ', ';
 
   MeteorChart.Util = {
-    createElement: function(tag) {
-      var el = document.createElement(tag);
-
-      // inline resets
-      el.style.padding = 0;
-      el.style.margin = 0;
-      return el;
-    },
     addMethod: function(constructor, attr, def) {
       constructor.prototype[attr] = function() {
         var val;

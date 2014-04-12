@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     // core
     'src/Chart.js',
     'src/Util.js',
+    'src/Dom.js',
     'src/Component.js',
     'src/Formatter.js',
 

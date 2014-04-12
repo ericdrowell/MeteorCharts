@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Component.extend('Title', {
     init: function() {
-      this.text = MeteorChart.Util.createElement('h2');
+      this.text = MeteorChart.Dom.createElement('h2');
       this.content.appendChild(this.text);
     },
     _render: function() {

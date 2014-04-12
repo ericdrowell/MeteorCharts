@@ -4,7 +4,7 @@
       var data = this.data(),
           options = this.options;
 
-      this.innerContent = MeteorChart.Util.createElement('div');
+      this.innerContent = MeteorChart.Dom.createElement('div');
       this.innerContent.style.position = 'relative';
 
       this.content.appendChild(this.innerContent);
@@ -36,7 +36,7 @@
           font = theme.font,
           text;
 
-      text = MeteorChart.Util.createElement('span');
+      text = MeteorChart.Dom.createElement('span');
       text.innerHTML = val;
       text.style.position = 'absolute';
       text.style.fontSize = font.size;
@@ -53,8 +53,7 @@
         text.style.top = 0;
         text.style.left = offset - (text.clientWidth/2); 
       }
-
-      
+  
       this.labelOffsets.push(offset);
     }
   });
