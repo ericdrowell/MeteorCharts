@@ -7,7 +7,7 @@
       // add canvas to the content container
       this.content.appendChild(this.canvas);
     },
-    _render: function() {
+    render: function() {
       var data = this.data(),
           unit = data.unit || {},
           len = data.length,
@@ -50,6 +50,10 @@
         context.stroke();
       } 
     },
+    resizeContent: function() {
+      this.canvas.width = this.width();
+      this.canvas.height = this.height();
+    },
     _setScale: function() {
       var x = this.x(),
           y = this.y(),
@@ -66,10 +70,6 @@
 
       this.scaleX = scaleX;
       this.scaleY = scaleY;
-    },
-    _resizeContent: function() {
-      this.canvas.width = this.width();
-      this.canvas.height = this.height();
     }
   });
 })();

@@ -4,7 +4,7 @@
       this.text = MeteorChart.Dom.createElement('h2');
       this.content.appendChild(this.text);
     },
-    _render: function() {
+    render: function() {
       var theme = this.chart.theme,
           font = theme.font;
 

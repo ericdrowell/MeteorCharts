@@ -7,7 +7,7 @@
       // add canvas to the content container
       this.content.appendChild(this.canvas);
     },
-    _render: function() {
+    render: function() {
       var theme = this.chart.theme,
           font = theme.font,
           orientation = this.options.orientation || 'horizontal',
@@ -38,12 +38,8 @@
           context.stroke();
         } 
       }
-
-
-
-      
     },
-    _resizeContent: function() {
+    resizeContent: function() {
       this.canvas.width = this.width();
       this.canvas.height = this.height();
     }

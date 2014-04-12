@@ -42,9 +42,6 @@
               components = chart.components;
 
           return chart.height() - components.slider.height() - (chart.padding() * 4) - components.xAxis.height();
-        },
-        data: function() {
-          return this.chart.components.slider.data();
         }
       },
       {
@@ -63,7 +60,7 @@
         data: function() {
           // bind axis data to line min and max values
           var data = this.chart.components.lineSeries.data(),
-              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
+              viewport = MeteorChart.Util.getSeriesMinMax(data);
           return {
             min: viewport.minY,
             max: viewport.maxY
@@ -92,7 +89,7 @@
         data: function() {
           // bind axis data to line min and max values
           var data = this.chart.components.lineSeries.data(),
-              viewport = MeteorChart.Util.getSeriesMinMax(data.series);
+              viewport = MeteorChart.Util.getSeriesMinMax(data);
           return {
             min: viewport.minX,
             max: viewport.maxX

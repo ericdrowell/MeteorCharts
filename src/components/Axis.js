@@ -11,7 +11,7 @@
           
       this.formatter = new MeteorChart.Formatters[options.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5);
     },
-    _render: function() {
+    render: function() {
       var that = this,
           chart = this.chart,
           data = this.data(),

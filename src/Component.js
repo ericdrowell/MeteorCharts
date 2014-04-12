@@ -32,25 +32,25 @@
 
       return themeData[n % len];
     },
-    render: function() {
+    _render: function() {
       this.content.style.left = this.x();
       this.content.style.top = this.y();
 
       // concrete component render
-      if (this._render) {
-        this._render();
+      if (this.render) {
+        this.render();
       }
     },
     destroy: function() {
 
     },
-    resizeContent: function() {
+    _resizeContent: function() {
       this.content.style.width = this.width();
       this.content.style.height = this.height();
 
       // call concrete resizeContent()
-      if (this._resizeContent) {
-        this._resizeContent();
+      if (this.resizeContent) {
+        this.resizeContent();
       }
     }
   };

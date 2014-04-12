@@ -65,7 +65,7 @@ var MeteorChart;
       componentId = this.layout.addOrder[n];
       MeteorChart.log('-- ' + componentId);
       component = this.components[componentId];
-      component.resizeContent();
+      component._resizeContent();
       this.content.appendChild(component.content); 
     }
 
@@ -133,7 +133,7 @@ var MeteorChart;
           n, component;
 
       for (n=0; n<len; n++) {
-        components[n].render();
+        components[n]._render();
       }
     }
   };

@@ -1,69 +1,50 @@
 (function() {
   MeteorChart.Event = {
-    on: function(obj) {
-      var type = obj.type,
-          name = obj.name,
-          id = obj.id;
+    on: function(obj, func) {
+      var type = obj.type;
 
-      if (name) {
-
+      if (!this._events[type]) {
+        this._events[type] = [];
       }
+
+      this._events[type].push({
+        name: obj.name,
+        id: obj.id,
+        handler: func
+      });
         
     },
     fire: function(obj) {
       var type = obj.type,
           name = obj.name,
-          id = obj.id;
+          id = obj.id,
+          events = this._events[type],
+          len, n, event;
+
+      if (events) {
+        len = events.length;
+        for (n=0; n<len; n++) {
+          event = events[n];
+          if (this._shouldExecuteHandler(event, name, id)) {
+            event.handler();
+          }
+        }
+      }
+    },
+    _shouldExecuteHandler: function(event, name, id) {
+      // name check
+      if (name && event.name !== name) {
+        return false;
+      }
+
+      // id check
+      if (id && event.id !== id) {
+        return false;
+      }
+
+      // everything is okay, return true
+      return true;
     },
     _events: {}
   };
 })();
-
-/*
-
-
-_events: {
-  click: [
-    {
-      handler: function(){...}
-    },
-    {
-      id: 'xAxis',
-      handler: function(){...} 
-    }
-  ],
-  pointerMove: [
-    {
-      handler: function(){...}
-    }
-  ]  
-}
-
-Event.fire({
-  type: 'click'
-});
-
-Event.fire({
-  type: 'click',
-  id: 'xAxis'
-});
-
-Event.on({
-  type: 'click'
-}, function(evt) {
-  var type = evt.type,
-      name = evt.name,
-      id = evt.id
-  // do stuff
-});
-
-Event.on({
-  componentId: 'xAxis'
-}, function() {...});
-
-Event.on({
-  type: 'click',
-  id: 'xAxis'
-}, function() {...});
-
-*/

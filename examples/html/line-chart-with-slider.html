@@ -37,39 +37,38 @@
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
-        height: 350,
-        padding: 10,
+        height: 290,
+        padding: 20,
 
-        data: {
-          slider: data,
-        },
-
-        layout: MeteorChart.Layouts.LineChartWithSlider,
         theme: MeteorChart.Themes.CoteAzur,
-        //interaction: MeteorChart.Interactions.LineChartTooltip,
+        layout: MeteorChart.Layouts.LineChartWithSlider,
 
-        options: {
+        // set components data and options
+        components: {
           lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
-            }
-          },
-          xAxis: {
-            maxNumLabels: 5
-          },
-          yAxis: {
-            maxNumLabels: 5
-          },
-          slider: {
-            width: 100,
-            height: 15
+            data: [
+              {
+                // red
+                title: 'Series 1',
+                points: [
+                  -100, -100,
+                  100, 100,
+                  200, 50
+                ]
+              },
+              { 
+                // green
+                title: 'Series 2',
+                points: [
+                  0, 100,
+                  100, 200,
+                  200, 150,
+                  300, 200
+                ]
+              }
+            ]
           }
         }
-      });
-
-      chart.on('draw', function() {
-        console.log('draw chart');
       });
 
    
