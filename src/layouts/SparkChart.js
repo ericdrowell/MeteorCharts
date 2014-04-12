@@ -4,7 +4,7 @@
     components: [
       {
         id: 'lineSeries',
-        type: 'LineSeries',
+        name: 'LineSeries',
         x: function () {
           return this.chart.padding();
         },

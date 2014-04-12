@@ -2,9 +2,9 @@
   MeteorChart.Component = function(config) {
     this.attrs = {};
     this.chart = config.chart;
-    this.className = config.type;
+    this.className = config.name;
     this.id = config.id;
-    this.type = config.type;
+    this.name = config.name;
     this.options = config.options || {};
     this.dependencies = config.dependencies || {};
 
@@ -19,7 +19,7 @@
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'component-content';
-    this.content.setAttribute('data-component-type', this.type);
+    this.content.setAttribute('data-component-name', this.name);
     this.content.setAttribute('data-component-id', this.id);
     this.content.style.display = 'inline-block';
     this.content.style.position = 'absolute';
@@ -55,13 +55,13 @@
     }
   };
 
-  MeteorChart.Component.extend = function(type, methods) {
-    MeteorChart.Components[type] = function(config) {
+  MeteorChart.Component.extend = function(name, methods) {
+    MeteorChart.Components[name] = function(config) {
       MeteorChart.Component.call(this, config);
     };
 
-    MeteorChart.Components[type].prototype = methods;
-    MeteorChart.Util.extend(MeteorChart.Components[type], MeteorChart.Component);
+    MeteorChart.Components[name].prototype = methods;
+    MeteorChart.Util.extend(MeteorChart.Components[name], MeteorChart.Component);
   };
 
   // getters setters
