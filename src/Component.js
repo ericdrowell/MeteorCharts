@@ -44,13 +44,13 @@
     destroy: function() {
 
     },
-    _resizeContent: function() {
+    _resize: function() {
       this.content.style.width = this.width();
       this.content.style.height = this.height();
 
-      // call concrete resizeContent()
-      if (this.resizeContent) {
-        this.resizeContent();
+      // call concrete resize()
+      if (this.resize) {
+        this.resize();
       }
     }
   };

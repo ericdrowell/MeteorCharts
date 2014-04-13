@@ -39,7 +39,7 @@
         } 
       }
     },
-    resizeContent: function() {
+    resize: function() {
       this.canvas.width = this.width();
       this.canvas.height = this.height();
     }

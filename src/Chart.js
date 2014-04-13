@@ -65,7 +65,7 @@ var MeteorChart;
       componentId = this.layout.addOrder[n];
       MeteorChart.log('-- ' + componentId);
       component = this.components[componentId];
-      component._resizeContent();
+      component._resize();
       this.content.appendChild(component.content); 
     }
 
@@ -80,6 +80,30 @@ var MeteorChart;
     //   });
     // }
   };
+
+  // UA
+  MeteorChart.UA = (function(root) {
+    var userAgent = (root.navigator && root.navigator.userAgent) || '';
+    var ua = userAgent.toLowerCase(),
+        // jQuery UA regex
+        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+        /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+        /(msie) ([\w.]+)/.exec( ua ) ||
+        ua.indexOf('compatible') < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+        [],
+
+        // adding mobile flag as well
+        mobile = !!(userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i));
+
+    return {
+        browser: match[ 1 ] || '',
+        version: match[ 2 ] || '0',
+
+        // adding mobile flab
+        mobile: mobile
+    };
+  })(this);
 
   MeteorChart.prototype = {
     _decorateConf: function(conf) {
