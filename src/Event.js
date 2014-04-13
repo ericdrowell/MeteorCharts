@@ -26,19 +26,19 @@
         for (n=0; n<len; n++) {
           event = events[n];
           if (this._shouldExecuteHandler(event, name, id)) {
-            event.handler();
+            event.handler(obj);
           }
         }
       }
     },
     _shouldExecuteHandler: function(event, name, id) {
       // name check
-      if (name && event.name !== name) {
+      if (event.name && event.name !== name) {
         return false;
       }
 
       // id check
-      if (id && event.id !== id) {
+      if (event.id && event.id !== id) {
         return false;
       }
 

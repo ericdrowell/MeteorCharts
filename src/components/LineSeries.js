@@ -6,6 +6,8 @@
 
       // add canvas to the content container
       this.content.appendChild(this.canvas);
+
+      this._bind();
     },
     render: function() {
       var data = this.data(),
@@ -53,6 +55,20 @@
     resize: function() {
       this.canvas.width = this.width();
       this.canvas.height = this.height();
+    },
+    _bind: function() {
+      var that = this,
+          content = this.content,
+          contentPos;
+
+      content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
+        contentPos = MeteorChart.Dom.getElementPosition(content);
+
+        that.fire('pointermove', {
+          x: evt.clientX - contentPos.x,
+          y: evt.clientY - contentPos.y
+        });
+      }, 17));
     },
     _setScale: function() {
       var x = this.x(),

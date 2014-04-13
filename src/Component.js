@@ -44,6 +44,14 @@
     destroy: function() {
 
     },
+    fire: function(type, obj) {
+      var that = this;
+      MeteorChart.Event.fire(MeteorChart.Util.merge({
+        type: type,
+        name: this.name,
+        id: this.id
+      }, obj));
+    },
     _resize: function() {
       this.content.style.width = this.width();
       this.content.style.height = this.height();

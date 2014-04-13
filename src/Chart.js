@@ -118,7 +118,7 @@ var MeteorChart;
         }
 
         if (component.options) {
-          MeteorChart.Util._merge(conf.options, component.options);
+          conf.options = MeteorChart.Util.merge(conf.options, component.options);
         }  
 
         // decorate data

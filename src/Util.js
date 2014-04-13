@@ -37,19 +37,19 @@
       };
     },
     hexToRgba: function(hex, alpha) {
-        hex = hex.replace(HASH, EMPTY_STRING);
+      hex = hex.replace(HASH, EMPTY_STRING);
 
-        if (alpha === undefined) {
-          alpha = 1;
-        }
+      if (alpha === undefined) {
+        alpha = 1;
+      }
 
-        var bigint = parseInt(hex, 16),
-            r = (bigint >> 16) & 255,
-            g = (bigint >> 8) & 255,
-            b = bigint & 255,
-            a = alpha;
+      var bigint = parseInt(hex, 16),
+          r = (bigint >> 16) & 255,
+          g = (bigint >> 8) & 255,
+          b = bigint & 255,
+          a = alpha;
 
-        return 'rgba(' + r + COMMA + g + COMMA + b + COMMA + a + ')';
+      return 'rgba(' + r + COMMA + g + COMMA + b + COMMA + a + ')';
     },
     getPointsMinMax: function(points) {
       var minX = Infinity,
@@ -134,14 +134,19 @@
       };
     },
     // add obj2 keys to obj1
-    _merge: function(obj1, obj2) {
-      var key,
-          o1 = obj1 || {},
-          o2 = obj2 || {};
+    merge: function(obj1, obj2) {
+      var obj = {},
+          key;
 
-      for (key in o2) {
-        o1[key] = o2[key];
+      for (key in obj1) {
+        obj[key] = obj1[key];
       }
+
+      for (key in obj2) {
+        obj[key] = obj2[key];
+      }
+
+      return obj;
     },
     extend: function(c1, c2) {
       for(var key in c2.prototype) {

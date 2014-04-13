@@ -49,6 +49,8 @@
 
         startLeftPos = MeteorChart.Dom.getNumber(handle.style.left);
         startPointerPos = evt.clientX;
+
+        that.fire('dragstart');
       }); 
 
       // drag
@@ -68,6 +70,8 @@
           }
           
           handle.style.left = newLeftPos;
+
+          that.fire('dragmove');
         }
       }, 17));
  
@@ -75,6 +79,8 @@
       document.body.addEventListener('mouseup', function(evt) {
         startLeftPos = null;
         startPointerPos = null;
+
+        that.fire('dragend');
       }); 
 
       // cursors

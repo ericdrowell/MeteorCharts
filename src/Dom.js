@@ -14,8 +14,8 @@
     getElementPosition: function(el) {
       var rect = el.getBoundingClientRect ? el.getBoundingClientRect() : { top: 0, left: 0 };
       return {
-          x: rect.top,
-          y: rect.left
+        x: rect.left,
+        y: rect.top
       }
     }
   }
