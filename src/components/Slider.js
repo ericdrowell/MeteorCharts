@@ -1,14 +1,22 @@
 (function() {
   MeteorChart.Component.extend('Slider', {
     init: function() {
-      this.track = MeteorChart.Dom.createElement('div');
-      this.track.style.position = 'absolute';
+      var showTrack = this.options.showTrack;
+
+      // default
+      if (showTrack === undefined) {
+        showTrack = true;
+      }
+
+      if (showTrack) {
+        this.track = MeteorChart.Dom.createElement('div');
+        this.track.style.position = 'absolute';
+        this.content.appendChild(this.track);
+      }
       
       this.handle = MeteorChart.Dom.createElement('span');
       this.handle.style.display = 'inline-block';
       this.handle.style.position = 'absolute';
-
-      this.content.appendChild(this.track)
       this.content.appendChild(this.handle);
 
       this._bind();
@@ -20,7 +28,13 @@
           theme = this.chart.theme,
           handleWidth = options.handleWidth,
           handleHeight = options.handleHeight,
-          trackSize = 2;
+          trackSize = 2,
+          showTrack = this.options.showTrack;
+
+      // default
+      if (showTrack === undefined) {
+        showTrack = true;
+      }
 
       // handle
       handle.style.width = handleWidth;
@@ -29,23 +43,29 @@
       handle.style.borderRadius = Math.min(handleWidth, handleHeight) / 2;
 
       // track
-      track.style.backgroundColor = MeteorChart.Util.hexToRgba(theme.secondary, 0.1);
+      if (showTrack) {
+        track.style.backgroundColor = MeteorChart.Util.hexToRgba(theme.secondary, 0.1);
+      }
 
       if (options.orientation === 'vertical') {
         handle.style.top = 0;
         handle.style.left = 0;
 
-        this.track.style.width = trackSize;
-        this.track.style.height = this.height();
-        this.track.style.left = (this.width() - trackSize) / 2;
+        if (showTrack) {
+          this.track.style.width = trackSize;
+          this.track.style.height = this.height();
+          this.track.style.left = (this.width() - trackSize) / 2;
+        }
       }
       else {
         handle.style.top = 0;
         handle.style.left = 0;
 
-        this.track.style.width = this.width();
-        this.track.style.height = trackSize;
-        this.track.style.top = (this.height() - trackSize) / 2;
+        if (showTrack) {
+          this.track.style.width = this.width();
+          this.track.style.height = trackSize;
+          this.track.style.top = (this.height() - trackSize) / 2;
+        }
       }
 
       
