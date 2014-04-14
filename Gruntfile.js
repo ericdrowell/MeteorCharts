@@ -18,6 +18,7 @@ module.exports = function(grunt) {
     'src/components/Tooltip.js',
     'src/components/GridLines.js',
     'src/components/Slider.js',
+    'src/components/Line.js',
 
     // themes
     'src/themes/CherryCheescake.js',

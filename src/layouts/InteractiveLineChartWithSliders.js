@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Layouts.InteractiveLineChartWithSliders = {
-    addOrder: ['lineSeries', 'xAxis', 'yAxis', 'xSlider', 'ySlider', 'inspectSlider'],
+    addOrder: ['lineSeries', 'xAxis', 'yAxis', 'xSlider', 'ySlider', 'inspectSlider', 'inspectLine'],
     components: [ 
       {
         id: 'xSlider',
@@ -28,10 +28,14 @@
           return this.chart.padding();
         },
         y: function() {
-          return this.chart.padding();
+          var chart = this.chart;
+          return chart.padding();
         },
         height: function() {
-          return this.chart.components.lineSeries.height();
+          var chart = this.chart,
+              components = chart.components;
+
+          return components.lineSeries.height() + chart.padding() + components.inspectSlider.height();
         },
         options: {
           orientation: 'vertical'
@@ -54,6 +58,25 @@
         }
       },
       {
+        id: 'inspectLine',
+        name: 'Line',
+        x: function() {
+          var components = this.chart.components,
+              inspectSlider = components.inspectSlider;
+
+          return inspectSlider.x(); 
+        },
+        y: function() {
+          return this.chart.padding();
+        },
+        width: function() {
+          return 2;
+        },
+        height: function() {
+          return this.chart.components.ySlider.height();
+        }
+      },
+      {
         id: 'lineSeries',
         name: 'LineSeries',
         x: function() {
@@ -63,7 +86,8 @@
           return yAxis.x() + yAxis.width() + chart.padding();
         },
         y: function() {
-          return this.chart.padding();
+          var inspectSlider = this.chart.components.inspectSlider;
+          return inspectSlider.y() + inspectSlider.height() + this.chart.padding();
         },
         width: function() {
           var chart = this.chart,
@@ -75,7 +99,7 @@
           var chart = this.chart,
               components = chart.components;
 
-          return chart.height() - components.xSlider.height() - (chart.padding() * 4) - components.xAxis.height();
+          return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 5) - components.xAxis.height();
         }
       },
       {
@@ -115,7 +139,7 @@
         y: function() {
           var line = this.chart.components.lineSeries;
 
-          return line.y() + line.height() +   this.chart.padding();
+          return line.y() + line.height() + this.chart.padding();
         },
         width: function() {
           // bind axis width to line width
