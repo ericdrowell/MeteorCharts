@@ -30,7 +30,9 @@
 
       // render
       context.clearRect(0, 0, this.width(), this.height());
-
+      this.canvas.width = this.width();
+      this.canvas.height = this.height();
+      
       for (n=0; n<len; n++) {
         points = data[n].points;
         pointsLen = points.length;
@@ -51,10 +53,6 @@
         context.lineWidth = 2;
         context.stroke();
       } 
-    },
-    resize: function() {
-      this.canvas.width = this.width();
-      this.canvas.height = this.height();
     },
     _bind: function() {
       var that = this,

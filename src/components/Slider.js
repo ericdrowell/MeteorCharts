@@ -2,13 +2,14 @@
   MeteorChart.Component.extend('Slider', {
     init: function() {
       this.track = MeteorChart.Dom.createElement('div');
+      this.track.style.position = 'absolute';
       
       this.handle = MeteorChart.Dom.createElement('span');
       this.handle.style.display = 'inline-block';
       this.handle.style.position = 'absolute';
 
-      this.track.appendChild(this.handle)
-      this.content.appendChild(this.track);
+      this.content.appendChild(this.track)
+      this.content.appendChild(this.handle);
 
       this._bind();
     },
@@ -17,8 +18,9 @@
           track = this.track,
           options = this.options,
           theme = this.chart.theme,
-          handleWidth = options.width,
-          handleHeight = options.height;
+          handleWidth = options.handleWidth,
+          handleHeight = options.handleHeight,
+          trackSize = 2;
 
       // handle
       handle.style.width = handleWidth;
@@ -30,10 +32,12 @@
       // track
       track.style.backgroundColor = MeteorChart.Util.hexToRgba(theme.secondary, 0.1);
       track.style.borderRadius = Math.min(handleWidth, handleHeight) / 2;
-    },
-    resize: function() {
       this.track.style.width = this.width();
-      this.track.style.height = this.height();
+      this.track.style.height = trackSize;
+
+
+      this.track.style.top = (this.height() - trackSize) / 2;
+      
     },
     _bind: function() {
       var that = this,
@@ -56,7 +60,7 @@
       // drag
       document.body.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
         if (startLeftPos !== null) {
-          var diff = that.width() - that.options.width,
+          var diff = that.width() - that.options.handleWidth,
               newLeftPos;
 
           pointerPos = evt.clientX;
@@ -95,11 +99,11 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'width', function() {
-    return this.options.width;
+    return this.options.handleWidth;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'height', function() {
-    return this.options.height;
+    return this.options.handleHeight;
   });
 
 })();

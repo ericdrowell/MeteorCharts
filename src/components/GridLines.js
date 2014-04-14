@@ -19,6 +19,8 @@
           height = this.height(),
           n, offset;
 
+      this.canvas.width = this.width();
+      this.canvas.height = this.height();
       context.clearRect(0, 0, width, height);
       context.strokeStyle = MeteorChart.Util.hexToRgba(this.chart.theme.secondary, 0.2);
 
@@ -38,10 +40,6 @@
           context.stroke();
         } 
       }
-    },
-    resize: function() {
-      this.canvas.width = this.width();
-      this.canvas.height = this.height();
     }
   });
 })();

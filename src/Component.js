@@ -55,11 +55,6 @@
     _resize: function() {
       this.content.style.width = this.width();
       this.content.style.height = this.height();
-
-      // call concrete resize()
-      if (this.resize) {
-        this.resize();
-      }
     }
   };
 

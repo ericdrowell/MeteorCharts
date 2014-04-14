@@ -9,31 +9,14 @@
         height: 450px;
       }
     </style>
-  </head>
+  </head> 
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/kinetic-dev.js"></script>
-    <script src="../js/get-series.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
-    
     <script type="text/javascript">
-      var padding = 15;
-
-      var data = {
-        series: getSeries({
-          minX: -100,
-          minY: -100,
-          maxX: 500,
-          maxY: 500,
-          yVariance: 20,
-          numLines: 32,
-          numPoints: 1000
-        })
-      };
-
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
@@ -41,17 +24,10 @@
         padding: 20,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.LineChartWithSlider,
+        layout: MeteorChart.Layouts.StandardLineChart,
 
         // set components data and options
         components: {
-          slider: {
-            options: {
-              orientation: 'horizontal',
-              handleWidth: 60,
-              handleHeight: 15
-            }
-          },
           lineSeries: {
             data: [
               {
@@ -77,7 +53,6 @@
           }
         }
       });
-
    
       console.log(chart);
     </script>
