@@ -27,23 +27,37 @@
       handle.style.height = handleHeight;
       handle.style.backgroundColor = theme.secondary;
       handle.style.borderRadius = Math.min(handleWidth, handleHeight) / 2;
-      handle.style.left = 0;
 
       // track
       track.style.backgroundColor = MeteorChart.Util.hexToRgba(theme.secondary, 0.1);
-      track.style.borderRadius = Math.min(handleWidth, handleHeight) / 2;
-      this.track.style.width = this.width();
-      this.track.style.height = trackSize;
 
+      if (options.orientation === 'vertical') {
+        handle.style.top = 0;
+        handle.style.left = 0;
 
-      this.track.style.top = (this.height() - trackSize) / 2;
+        this.track.style.width = trackSize;
+        this.track.style.height = this.height();
+        this.track.style.left = (this.width() - trackSize) / 2;
+      }
+      else {
+        handle.style.top = 0;
+        handle.style.left = 0;
+
+        this.track.style.width = this.width();
+        this.track.style.height = trackSize;
+        this.track.style.top = (this.height() - trackSize) / 2;
+      }
+
+      
+      
       
     },
     _bind: function() {
       var that = this,
           handle = this.handle,
           chartContent = this.chart.content,
-          startLeftPos = null,
+          orientation = this.options.orientation || 'horizontal',
+          startOffsetPos = null,
           startPointerPos = null;
 
       // start drag & drop
@@ -51,29 +65,49 @@
         // prevent browser from trying to select stuff when dragging
         evt.preventDefault();
 
-        startLeftPos = MeteorChart.Dom.getNumber(handle.style.left);
-        startPointerPos = evt.clientX;
+        if (orientation === 'horizontal') {
+          startOffsetPos = MeteorChart.Dom.getNumber(handle.style.left);
+          startPointerPos = evt.clientX;
+        }
+        else {
+          startOffsetPos = MeteorChart.Dom.getNumber(handle.style.top);
+          startPointerPos = evt.clientY;
+        }
 
         that.fire('dragstart');
       }); 
 
       // drag
       document.body.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        if (startLeftPos !== null) {
-          var diff = that.width() - that.options.handleWidth,
-              newLeftPos;
+        if (startOffsetPos !== null) {
+          var diff, newOffsetPos;
 
-          pointerPos = evt.clientX;
-          newLeftPos = pointerPos - startPointerPos + startLeftPos;
+          if (orientation === 'horizontal') {
+            diff = that.width() - that.options.handleWidth;
+            pointerPos = evt.clientX;
+            newOffsetPos = pointerPos - startPointerPos + startOffsetPos;
+            if (newOffsetPos < 0) {
+              newOffsetPos = 0;
+            }
+            else if (newOffsetPos > diff) {
+              newOffsetPos = diff;
+            }
+            handle.style.left = newOffsetPos;
+          }
+          else {
+            diff = that.height() - that.options.handleHeight;
+            pointerPos = evt.clientY;
+            newOffsetPos = pointerPos - startPointerPos + startOffsetPos;
+            if (newOffsetPos < 0) {
+              newOffsetPos = 0;
+            }
+            else if (newOffsetPos > diff) {
+              newOffsetPos = diff;
+            }
+            handle.style.top = newOffsetPos;    
+          }
 
-          if (newLeftPos < 0) {
-            newLeftPos = 0;
-          }
-          else if (newLeftPos > diff) {
-            newLeftPos = diff;
-          }
-          
-          handle.style.left = newLeftPos;
+
 
           that.fire('dragmove');
         }
@@ -81,7 +115,7 @@
  
       // end drag & drop
       document.body.addEventListener('mouseup', function(evt) {
-        startLeftPos = null;
+        startOffsetPos = null;
         startPointerPos = null;
 
         that.fire('dragend');
