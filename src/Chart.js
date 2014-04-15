@@ -34,7 +34,7 @@ var MeteorChart;
     this.content.style.overflow = 'hidden';
     this.container.appendChild(this.content);
 
-    MeteorChart.log('1) INSTANTIATE COMPONENTS');
+    MeteorChart.log('1) INITIALIZE COMPONENTS');
     for (n=0; n<len; n++) {
       conf = components[n];
       MeteorChart.log('-- ' + conf.id);
@@ -44,19 +44,13 @@ var MeteorChart;
 
       this.components[component.id] = component;
       this.components.push(component); 
-    }
-
-    MeteorChart.log('2) INITIALIZE COMPONENTS');
-    for (n=0; n<this.components.length; n++) {
-      component = this.components[n];
-      MeteorChart.log('-- ' + component.id);
 
       if (component.init) {
         component.init();
       }
     }
 
-    MeteorChart.log('3) RENDER AND ADD COMPONENTS');
+    MeteorChart.log('2) RENDER AND ADD COMPONENTS');
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
       MeteorChart.log('-- ' + component.id);

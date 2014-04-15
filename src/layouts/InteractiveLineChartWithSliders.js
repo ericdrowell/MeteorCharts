@@ -40,41 +40,6 @@
           }
         }, 
         {
-          id: 'inspectSlider',
-          name: 'Slider',
-          x: function() {
-            return chart.components.lineSeries.x() - (this.options.handleWidth) / 2;
-          },
-          y: function() {
-            return chart.padding();
-          },
-          width: function() {
-            return chart.components.lineSeries.width();
-          },
-          options: {
-            orientation: 'horizontal',
-            showTrack: false
-          }
-        },
-        {
-          id: 'inspectLine',
-          name: 'Line',
-          x: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {
-            var offset = evt && evt.offset ? evt.offset : 0,
-                inspectSlider = chart.components.inspectSlider;
-            return offset + inspectSlider.x() + (inspectSlider.options.handleWidth - chart.components.inspectLine.width())/ 2;
-          }, chart, 'inspectLine'),
-          y: function() {
-            return chart.padding();
-          },
-          width: function() {
-            return 1;
-          },
-          height: function() {
-            return chart.components.ySlider.height();
-          }
-        },
-        {
           id: 'lineSeries',
           name: 'LineSeries',
           x: function() {
@@ -151,6 +116,41 @@
           },
           options: {
             maxIncrements: 5
+          }
+        },
+        {
+          id: 'inspectLine',
+          name: 'Line',
+          x: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {
+            var offset = evt && evt.offset ? evt.offset : 0,
+                inspectSlider = chart.components.inspectSlider;
+            return offset + inspectSlider.x() + (inspectSlider.options.handleWidth - chart.components.inspectLine.width())/ 2;
+          }, chart, 'inspectLine'),
+          y: function() {
+            return chart.padding();
+          },
+          width: function() {
+            return 1;
+          },
+          height: function() {
+            return chart.components.ySlider.height();
+          }
+        },
+        {
+          id: 'inspectSlider',
+          name: 'Slider',
+          x: function() {
+            return chart.components.lineSeries.x() - (this.options.handleWidth) / 2;
+          },
+          y: function() {
+            return chart.padding();
+          },
+          width: function() {
+            return chart.components.lineSeries.width();
+          },
+          options: {
+            orientation: 'horizontal',
+            showTrack: false
           }
         }
       ]
