@@ -1,7 +1,6 @@
 (function() {
   MeteorChart.Layouts.InteractiveLineChartWithSliders = function(chart) {
     return {
-      addOrder: ['lineSeries', 'xAxis', 'yAxis', 'xSlider', 'ySlider', 'inspectLine', 'inspectSlider'],
       components: [ 
         {
           id: 'xSlider',

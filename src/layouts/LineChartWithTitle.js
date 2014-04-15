@@ -1,7 +1,6 @@
 (function() {
   MeteorChart.Layouts.LineChartWithTitle = function(chart) {
     return {
-      addOrder: ['lineSeries', 'xAxis', 'yAxis', 'title'],
       components: [  
         {
           id: 'lineSeries',

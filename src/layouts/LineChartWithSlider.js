@@ -1,7 +1,6 @@
 (function() {
   MeteorChart.Layouts.LineChartWithSlider = function(chart) {
     return {
-      addOrder: ['lineSeries', 'xAxis', 'yAxis', 'slider'],
       components: [ 
         {
           id: 'slider',

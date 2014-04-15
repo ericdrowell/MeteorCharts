@@ -35,6 +35,8 @@
     _render: function() {
       this.content.style.left = this.x();
       this.content.style.top = this.y();
+      this.content.style.width = this.width();
+      this.content.style.height = this.height();
 
       // concrete component render
       if (this.render) {
@@ -51,10 +53,6 @@
         name: this.name,
         id: this.id
       }, obj));
-    },
-    _resize: function() {
-      this.content.style.width = this.width();
-      this.content.style.height = this.height();
     }
   };
 

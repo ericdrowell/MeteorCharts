@@ -1,8 +1,53 @@
 (function() {
   MeteorChart.Layouts.LineChartWithGrid = function(chart) {
     return {
-      addOrder: ['verticalGridLines', 'horizontalGridLines', 'lineSeries', 'xAxis', 'yAxis'],
       components: [  
+        {
+          id: 'verticalGridLines',
+          name: 'GridLines',
+          x: function() {
+            return this.chart.components.lineSeries.x();
+          },
+          y: function() {
+            return this.chart.components.lineSeries.y();
+          },
+          width: function() {
+            return this.chart.components.lineSeries.width();
+          },
+          height: function() {
+            return this.chart.components.lineSeries.height();
+          },
+          data: MeteorChart.Event.map({type: 'labelOffsetsChange', id: 'xAxis'}, function(evt) {
+            return evt.labelOffsets;
+          }, chart, 'verticalGridLines'),
+          options: {
+            orientation: 'vertical',
+            lineWidth: 2
+          }
+        },
+        {
+          id: 'horizontalGridLines',
+          name: 'GridLines',
+          x: function() {
+            return this.chart.components.lineSeries.x();
+          },
+          y: function() {
+            return this.chart.components.lineSeries.y();
+          },
+          width: function() {
+            return this.chart.components.lineSeries.width();
+          },
+          height: function() {
+            return this.chart.components.lineSeries.height();
+          },
+          data: MeteorChart.Event.map({type: 'labelOffsetsChange', id: 'yAxis'}, function(evt) {
+            return evt.labelOffsets;
+          }, chart, 'horizontalGridLines'),
+          options: {
+            orientation: 'horizontal',
+            lineWidth: 2
+          }
+        },
         {
           id: 'lineSeries',
           name: 'LineSeries',
@@ -82,53 +127,7 @@
           options: {
             orientation: 'vertical'
           }
-        },
-        {
-          id: 'verticalGridLines',
-          name: 'GridLines',
-          x: function() {
-            return this.chart.components.lineSeries.x();
-          },
-          y: function() {
-            return this.chart.components.lineSeries.y();
-          },
-          width: function() {
-            return this.chart.components.lineSeries.width();
-          },
-          height: function() {
-            return this.chart.components.lineSeries.height();
-          },
-          data: function() {
-            return this.chart.components.xAxis.labelOffsets;
-          },
-          options: {
-            orientation: 'vertical',
-            lineWidth: 2
-          }
-        },
-        {
-          id: 'horizontalGridLines',
-          name: 'GridLines',
-          x: function() {
-            return this.chart.components.lineSeries.x();
-          },
-          y: function() {
-            return this.chart.components.lineSeries.y();
-          },
-          width: function() {
-            return this.chart.components.lineSeries.width();
-          },
-          height: function() {
-            return this.chart.components.lineSeries.height();
-          },
-          data: function() {
-            return this.chart.components.yAxis.labelOffsets;
-          },
-          options: {
-            orientation: 'horizontal',
-            lineWidth: 2
-          }
-        }    
+        }   
       ]
     };
   };

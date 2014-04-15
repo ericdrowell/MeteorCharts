@@ -1,35 +1,35 @@
 (function() {
   MeteorChart.Component.extend('Axis', {
     init: function() {
-      var data = this.data(),
-          options = this.options;
-
       this.innerContent = MeteorChart.Dom.createElement('div');
       this.innerContent.style.position = 'relative';
-
       this.content.appendChild(this.innerContent);
-          
-      this.formatter = new MeteorChart.Formatters[options.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5);
     },
     render: function() {
       var that = this,
           chart = this.chart,
           data = this.data(),
+          options = this.options,
           min = data.min,
           max = data.max,
           diff = max - min,
           scale = (this.options.orientation === 'vertical' ? this.height() : this.width()) / diff,
           offset = 0,
-          increment = this.formatter.increment;
+          formatter = new MeteorChart.Formatters[options.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5),
+          increment = formatter.increment;
 
       this.innerContent.innerHTML = '';
 
       this.labelOffsets = [];
 
-      this.formatter.each(function(n, val) {
+      formatter.each(function(n, val) {
         offset = n * increment * scale;
         that._addLabel(offset, val);
       });  
+
+      this.fire('labelOffsetsChange', {
+        labelOffsets: this.labelOffsets
+      });
     },
     _addLabel: function(offset, val) {
       var theme = this.chart.theme,

@@ -12,33 +12,36 @@
           font = theme.font,
           orientation = this.options.orientation || 'horizontal',
           data = this.data(),
-          len = data.length,
           lineWidth = this.options.lineWidth,
           context = this.context,
           width = this.width(),
           height = this.height(),
-          n, offset;
+          n, offset, len;
 
-      this.canvas.width = this.width();
-      this.canvas.height = this.height();
-      context.clearRect(0, 0, width, height);
-      context.strokeStyle = this.chart.theme.secondary;
+      if (data) {
+        len = data.length;
+      
+        this.canvas.width = this.width();
+        this.canvas.height = this.height();
+        context.clearRect(0, 0, width, height);
+        context.strokeStyle = this.chart.theme.secondary;
 
-      for (n=0; n<len; n++) {
-        offset = data[n];
-        context.beginPath();
-        
-        if (orientation === 'horizontal') {
-          context.moveTo(0, offset);
-          context.lineTo(width, offset);
-          context.stroke();
+        for (n=0; n<len; n++) {
+          offset = data[n];
+          context.beginPath();
+          
+          if (orientation === 'horizontal') {
+            context.moveTo(0, offset);
+            context.lineTo(width, offset);
+            context.stroke();
+          }
+          else {
+            // vertical
+            context.moveTo(offset, 0);
+            context.lineTo(offset, height);
+            context.stroke();
+          } 
         }
-        else {
-          // vertical
-          context.moveTo(offset, 0);
-          context.lineTo(offset, height);
-          context.stroke();
-        } 
       }
     }
   });

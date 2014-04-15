@@ -34,7 +34,6 @@ var MeteorChart;
     this.content.style.overflow = 'hidden';
     this.container.appendChild(this.content);
 
-    // instantiate components and add them to the hash
     MeteorChart.log('1) INSTANTIATE COMPONENTS');
     for (n=0; n<len; n++) {
       conf = components[n];
@@ -47,37 +46,23 @@ var MeteorChart;
       this.components.push(component); 
     }
 
-    // initialize components and add them to the hash
     MeteorChart.log('2) INITIALIZE COMPONENTS');
     for (n=0; n<this.components.length; n++) {
       component = this.components[n];
-      MeteorChart.log('-- ' + conf.id);
+      MeteorChart.log('-- ' + component.id);
 
       if (component.init) {
         component.init();
       }
     }
 
-    // add each component to the content container based on add order
-    MeteorChart.log('3) RENDER AND ADD COMPONENTS BASED ON ADDORDER');
-    for (n=0; n<this.layout.addOrder.length; n++) {
-      componentId = this.layout.addOrder[n];
-      MeteorChart.log('-- ' + componentId);
-      component = this.components[componentId];
-      component._resize();
+    MeteorChart.log('3) RENDER AND ADD COMPONENTS');
+    for (n=0; n<this.components.length; n++) {
+      component = this.components[n];
+      MeteorChart.log('-- ' + component.id);
+      component._render();
       this.content.appendChild(component.content); 
     }
-
-    // render all components
-    this.render();
-
-    // init interaction
-    // if (this.interaction) {
-    //   new this.interaction({
-    //     chart: this,
-    //     lineSeries: this.components.lineSeries
-    //   });
-    // }
   };
 
   // UA

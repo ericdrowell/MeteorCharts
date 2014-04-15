@@ -1,7 +1,6 @@
 (function() {
   MeteorChart.Layouts.StandardLineChart = function(chart) {
     return {
-      addOrder: ['lineSeries', 'xAxis', 'yAxis'],
       components: [  
         {
           id: 'lineSeries',
