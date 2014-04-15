@@ -22,7 +22,7 @@
       this.canvas.width = this.width();
       this.canvas.height = this.height();
       context.clearRect(0, 0, width, height);
-      context.strokeStyle = MeteorChart.Util.hexToRgba(this.chart.theme.secondary, 0.2);
+      context.strokeStyle = this.chart.theme.secondary;
 
       for (n=0; n<len; n++) {
         offset = data[n];

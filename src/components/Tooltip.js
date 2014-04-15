@@ -11,8 +11,8 @@
       this.group = new Kinetic.Group();
 
       this.rect = new Kinetic.Rect({
-        fill: theme.primary,
-        stroke: MeteorChart.Util.hexToRgba(theme.secondary, 0.5),
+        fill: theme.background,
+        stroke: MeteorChart.Util.hexToRgba(theme.primary, 0.5),
         opacity: 0.85,
         cornerRadius: 3
       });
@@ -24,7 +24,7 @@
         y: PADDING,
         fontFamily: font.family,
         fontSize: font.size * MeteorChart.Constants.TYPOGRAPHIC_SCALE,
-        fill: theme.secondary
+        fill: theme.primary
       });
 
       this.group.add(this.title); 
@@ -36,7 +36,7 @@
         lineHeight: 1.5,
         fontFamily: font.family,
         fontSize: font.size,
-        fill: theme.secondary
+        fill: theme.primary
       });
 
       this.group.add(this.content);

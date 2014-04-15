@@ -39,7 +39,7 @@
       // handle
       handle.style.width = handleWidth;
       handle.style.height = handleHeight;
-      handle.style.backgroundColor = theme.secondary;
+      handle.style.backgroundColor = theme.primary;
       handle.style.borderRadius = Math.min(handleWidth, handleHeight) / 2;
 
       // track

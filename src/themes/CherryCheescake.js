@@ -6,8 +6,9 @@
       LIGHT_BROWN = '#9f732f';
 
   MeteorChart.Themes.CherryCheescake = {
-    primary: CREME,
-    secondary: LIGHT_BROWN,
+    background: CREME,
+    primary: LIGHT_BROWN,
+    secondary: MeteorChart.Color.hexToRgba(LIGHT_BROWN, 0.2),
     font: {
       family: 'Arial',
       size: 12

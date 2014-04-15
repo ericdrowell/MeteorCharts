@@ -6,8 +6,9 @@
       WHITE = '#ffffff';
 
   MeteorChart.Themes.Lollapalooza = {
-    primary: DARK_BLUE,
-    secondary: LIGHT_YELLOW,
+    background: DARK_BLUE,
+    primary: LIGHT_YELLOW,
+    secondary: MeteorChart.Color.hexToRgba(LIGHT_YELLOW, 0.2),
     font: {
       family: 'Arial',
       size: 12

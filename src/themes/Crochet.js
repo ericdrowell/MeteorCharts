@@ -1,15 +1,19 @@
 (function() {
+  var WHITE_SMOKE = '#f7f7f7'; 
+      DARK_GRAY = '#b3b3b3';
+
   MeteorChart.Themes.Crochet = {
-    primary: '#f7f7f7', // whitesmoke
-    secondary: '#999999',
+    background: WHITE_SMOKE,
+    primary: DARK_GRAY,
+    secondary: DARK_GRAY,
     font: {
       family: 'Arial',
       size: 12
     },
     data: [
-      '#b76eac',
-      '#999568', 
-      '#60879c', 
+      '#b469a9',
+      '#bcbca1', 
+      '#8fd0ca', 
       '#e59bb2', 
       '#697db7', 
       '#c9a83b', 

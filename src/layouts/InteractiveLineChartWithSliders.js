@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Layouts.InteractiveLineChartWithSliders = function(chart) {
     return {
-      addOrder: ['lineSeries', 'xAxis', 'yAxis', 'xSlider', 'ySlider', 'inspectSlider', 'inspectLine'],
+      addOrder: ['lineSeries', 'xAxis', 'yAxis', 'xSlider', 'ySlider', 'inspectLine', 'inspectSlider'],
       components: [ 
         {
           id: 'xSlider',
@@ -53,7 +53,8 @@
             return chart.components.lineSeries.width();
           },
           options: {
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            showTrack: false
           }
         },
         {

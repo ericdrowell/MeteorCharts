@@ -1,8 +1,4 @@
 (function() {
-  var HASH = '#',
-      EMPTY_STRING = '',
-      COMMA = ', ';
-
   MeteorChart.Util = {
     addMethod: function(constructor, attr, def) {
       constructor.prototype[attr] = function() {
@@ -35,21 +31,6 @@
           }   
         }
       };
-    },
-    hexToRgba: function(hex, alpha) {
-      hex = hex.replace(HASH, EMPTY_STRING);
-
-      if (alpha === undefined) {
-        alpha = 1;
-      }
-
-      var bigint = parseInt(hex, 16),
-          r = (bigint >> 16) & 255,
-          g = (bigint >> 8) & 255,
-          b = bigint & 255,
-          a = alpha;
-
-      return 'rgba(' + r + COMMA + g + COMMA + b + COMMA + a + ')';
     },
     getPointsMinMax: function(points) {
       var minX = Infinity,

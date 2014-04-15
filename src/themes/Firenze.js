@@ -6,8 +6,9 @@
       BURNT_ORANGE = '#a95234';
 
   MeteorChart.Themes.Firenze = {
-    primary: RED,
-    secondary: LIGHT_YELLOW,
+    background: RED,
+    primary: LIGHT_YELLOW,
+    secondary: MeteorChart.Color.hexToRgba(LIGHT_YELLOW, 0.2),
     font: {
       family: 'Arial',
       size: 12

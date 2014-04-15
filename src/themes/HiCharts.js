@@ -7,8 +7,9 @@
       DARK_BLUE = '#102439';
 
   MeteorChart.Themes.HiCharts = {
-    primary: WHITE,
-    secondary: GRAY,
+    background: WHITE,
+    primary: GRAY,
+    secondary: MeteorChart.Color.hexToRgba(GRAY, 0.2),
     font: {
       family: 'Arial',
       size: 12

@@ -29,7 +29,7 @@ var MeteorChart;
     this.content.style.width = this.width();
     this.content.style.height = this.height();
     this.content.style.display = 'inline-block';
-    this.content.style.backgroundColor = this.theme.primary;
+    this.content.style.backgroundColor = this.theme.background;
     this.content.style.position = 'relative';
     this.content.style.overflow = 'hidden';
     this.container.appendChild(this.content);
