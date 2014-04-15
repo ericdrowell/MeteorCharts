@@ -17,6 +17,9 @@
         x: rect.left,
         y: rect.top
       }
+    },
+    setBorderRadius: function(el, radius) {
+      el.style['borderRadius'] = radius;
     }
   }
 })();

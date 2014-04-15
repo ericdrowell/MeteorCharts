@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     'src/Component.js',
     'src/Formatter.js',
 
-    // componentsx
+    // components
     'src/components/LineSeries.js',
     'src/components/Axis.js',
     'src/components/Title.js',
@@ -20,6 +20,7 @@ module.exports = function(grunt) {
     'src/components/GridLines.js',
     'src/components/Slider.js',
     'src/components/Line.js',
+    'src/components/Circle.js',
 
     // themes
     'src/themes/CherryCheescake.js',

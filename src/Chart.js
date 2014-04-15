@@ -40,7 +40,6 @@ var MeteorChart;
       conf = components[n];
       MeteorChart.log('-- ' + conf.id);
 
-      // add data if it's in the chart data object
       this._decorateConf(conf);
       component = new MeteorChart.Components[conf.name](conf);
 
