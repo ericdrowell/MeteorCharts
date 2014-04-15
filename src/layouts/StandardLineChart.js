@@ -1,88 +1,86 @@
 (function() {
-  MeteorChart.Layouts.StandardLineChart = {
-    addOrder: ['lineSeries', 'xAxis', 'yAxis'],
-    components: [  
-      {
-        id: 'lineSeries',
-        name: 'LineSeries',
-        x: function() {
-          var chart = this.chart;
-          return chart.components.yAxis.width() + (chart.padding() * 2);
+  MeteorChart.Layouts.StandardLineChart = function(chart) {
+    return {
+      addOrder: ['lineSeries', 'xAxis', 'yAxis'],
+      components: [  
+        {
+          id: 'lineSeries',
+          name: 'LineSeries',
+          x: function() {
+            return chart.components.yAxis.width() + (chart.padding() * 2);
+          },
+          y: function() {
+            return chart.padding();
+          },
+          width: function() {
+            return chart.width() - chart.components.yAxis.width() - (chart.padding() * 3);
+          },
+          height: function() {
+            var components = chart.components;
+            return chart.height() - (chart.padding() * 3) - components.xAxis.height();
+          }
         },
-        y: function() {
-          return this.chart.padding();
-        },
-        width: function() {
-          var chart = this.chart;
-          return chart.width() - chart.components.yAxis.width() - (chart.padding() * 3);
-        },
-        height: function() {
-          var chart = this.chart,
-              components = chart.components;
+        {
+          id: 'xAxis',
+          name: 'Axis',
+          x: function() {
+            // bind axis x position to line x position
+            return chart.components.lineSeries.x();
+          },
+          y: function() {
+            var line = chart.components.lineSeries;
 
-          return chart.height() - (chart.padding() * 3) - components.xAxis.height();
-        }
-      },
-      {
-        id: 'xAxis',
-        name: 'Axis',
-        x: function() {
-          // bind axis x position to line x position
-          return this.chart.components.lineSeries.x();
+            return line.y() + line.height() + chart.padding();
+          },
+          width: function() {
+            // bind axis width to line width
+            return chart.components.lineSeries.width();
+          },
+          data: function() {
+            // bind axis data to line min and max values
+            var lineSeries = chart.components.lineSeries,
+                data = lineSeries.data(),
+                viewport = MeteorChart.Util.getSeriesMinMax(data);
+          
+            return {
+              min: viewport.minX,
+              max: viewport.maxX
+            };
+          },
+          options: {
+            maxIncrements: 5
+          }
         },
-        y: function() {
-          var line = this.chart.components.lineSeries;
+        {
+          id: 'yAxis',
+          name: 'Axis',
+          x: function() {
+            return chart.padding();
+          },
+          y: function() {
+            return chart.padding();
+          },
+          height: function() {
+            // bind axis height to line height
+            return chart.components.lineSeries.height();
+          },
+          data: function() {
+            // bind axis data to line min and max values
+            var lineSeries = chart.components.lineSeries,
+                data = lineSeries.data(),
+                viewport = MeteorChart.Util.getSeriesMinMax(data);
 
-          return line.y() + line.height() +   this.chart.padding();
-        },
-        width: function() {
-          // bind axis width to line width
-          return this.chart.components.lineSeries.width();
-        },
-        data: function() {
-          // bind axis data to line min and max values
-          var lineSeries = this.chart.components.lineSeries,
-              data = lineSeries.data(),
-              viewport = MeteorChart.Util.getSeriesMinMax(data);
-        
-          return {
-            min: viewport.minX,
-            max: viewport.maxX
-          };
-        },
-        options: {
-          maxIncrements: 5
+            return {
+              min: viewport.minY,
+              max: viewport.maxY
+            };
+          },
+          options: {
+            orientation: 'vertical',
+            maxIncrements: 5
+          }
         }
-      },
-      {
-        id: 'yAxis',
-        name: 'Axis',
-        x: function() {
-          return this.chart.padding();
-        },
-        y: function() {
-          return this.chart.padding();
-        },
-        height: function() {
-          // bind axis height to line height
-          return this.chart.components.lineSeries.height();
-        },
-        data: function() {
-          // bind axis data to line min and max values
-          var lineSeries = this.chart.components.lineSeries,
-              data = lineSeries.data(),
-              viewport = MeteorChart.Util.getSeriesMinMax(data);
-
-          return {
-            min: viewport.minY,
-            max: viewport.maxY
-          };
-        },
-        options: {
-          orientation: 'vertical',
-          maxIncrements: 5
-        }
-      }
-    ]
+      ]
+    };
   };
 })();

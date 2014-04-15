@@ -31,6 +31,18 @@
         }
       }
     },
+    map: function(event, func, chart, id) {
+      var cachedEvt = {};
+
+      this.on(event, function(evt) {
+        cachedEvt = evt;
+        chart.components[id]._render();
+      });
+
+      return function() {
+        return func(cachedEvt);
+      };
+    },
     _shouldExecuteHandler: function(event, name, id) {
       // name check
       if (event.name && event.name !== name) {

@@ -28,7 +28,7 @@
           theme = this.chart.theme,
           handleWidth = options.handleWidth,
           handleHeight = options.handleHeight,
-          trackSize = 2,
+          trackSize = 1,
           showTrack = this.options.showTrack;
 
       // default
@@ -44,7 +44,7 @@
 
       // track
       if (showTrack) {
-        track.style.backgroundColor = MeteorChart.Util.hexToRgba(theme.secondary, 0.1);
+        track.style.backgroundColor = theme.secondary, 0.1;
       }
 
       if (options.orientation === 'vertical') {
@@ -100,36 +100,38 @@
       // drag
       document.body.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
         if (startOffsetPos !== null) {
-          var diff, newOffsetPos;
+          var diff, newOffset;
 
           if (orientation === 'horizontal') {
             diff = that.width() - that.options.handleWidth;
             pointerPos = evt.clientX;
-            newOffsetPos = pointerPos - startPointerPos + startOffsetPos;
-            if (newOffsetPos < 0) {
-              newOffsetPos = 0;
+            newOffset = pointerPos - startPointerPos + startOffsetPos;
+            if (newOffset < 0) {
+              newOffset = 0;
             }
-            else if (newOffsetPos > diff) {
-              newOffsetPos = diff;
+            else if (newOffset > diff) {
+              newOffset = diff;
             }
-            handle.style.left = newOffsetPos;
+            handle.style.left = newOffset;
           }
           else {
             diff = that.height() - that.options.handleHeight;
             pointerPos = evt.clientY;
-            newOffsetPos = pointerPos - startPointerPos + startOffsetPos;
-            if (newOffsetPos < 0) {
-              newOffsetPos = 0;
+            newOffset = pointerPos - startPointerPos + startOffsetPos;
+            if (newOffset < 0) {
+              newOffset = 0;
             }
-            else if (newOffsetPos > diff) {
-              newOffsetPos = diff;
+            else if (newOffset > diff) {
+              newOffset = diff;
             }
-            handle.style.top = newOffsetPos;    
+            handle.style.top = newOffset;    
           }
 
 
 
-          that.fire('dragmove');
+          that.fire('dragmove', {
+            offset: newOffset
+          });
         }
       }, 17));
  

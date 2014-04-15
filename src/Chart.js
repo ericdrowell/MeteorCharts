@@ -13,7 +13,7 @@ var MeteorChart;
     this.data(config.data);
     this.padding(config.padding);
 
-    this.layout = config.layout;
+    this.layout = config.layout(this);
     this.theme = config.theme;
     this.interaction = config.interaction;
     this.options = config.options;
@@ -60,7 +60,7 @@ var MeteorChart;
     }
 
     // add each component to the content container based on add order
-    MeteorChart.log('4) RENDER AND ADD COMPONENTS BASED ON ADDORDER');
+    MeteorChart.log('3) RENDER AND ADD COMPONENTS BASED ON ADDORDER');
     for (n=0; n<this.layout.addOrder.length; n++) {
       componentId = this.layout.addOrder[n];
       MeteorChart.log('-- ' + componentId);
