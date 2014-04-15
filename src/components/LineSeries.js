@@ -11,13 +11,14 @@
     },
     render: function() {
       var data = this.data(),
+          series = data.series,
           unit = data.unit || {},
-          len = data.length,
+          len = series.length,
           context = this.context,
           n, line, points, i, pointsLen, viewport;
 
       // recalculate range and scale
-      viewport = MeteorChart.Util.getSeriesMinMax(data);
+      viewport = MeteorChart.Util.getSeriesMinMax(series);
       this.minX = viewport.minX;
       this.minY = viewport.minY;
       this.maxX = viewport.maxX;
@@ -34,7 +35,7 @@
       this.canvas.height = this.height();
       
       for (n=0; n<len; n++) {
-        points = data[n].points;
+        points = series[n].points;
         pointsLen = points.length;
 
         context.save();
@@ -54,8 +55,56 @@
         context.stroke();
       } 
     },
+    dataToChart: function(pos) {
+      return {
+        x: (pos.x - this.minX) * this.scaleX + this.x(),
+        y: this.height() - ((pos.y - this.minY) * this.scaleY) + this.y()
+      }; 
+    },
+    chartToDataX: function(x) {
+      return ((x - this.x()) / this.scaleX) + this.minX;
+    },
+    chartToDataY:function(y) {
+      return this.minY - ((y - this.y() - this.height()) / this.scaleY);
+    },
+    chartToData: function(pos) {
+      return {
+        x: this.chartToDataX(pos.x),
+        y: this.chartToDataY(pos.y)
+      };
+    },
     getNearestPointX: function(x) {
-      return 100;
+      var dataX = this.chartToDataX(x),
+          data = this.data(),
+          series = data.series,
+          len = series.length,
+          shortestDistance = Infinity,
+          nearestPoint = null,
+          n, i, ser, points, point, pointsLen, title, chartDistance;
+   
+      for (n=0; n<len; n++) {
+        ser = series[n];
+        points = ser.points;
+        title = ser.title;
+        pointsLen = points.length;
+
+        for (i=0; i<pointsLen; i+=2) {
+          point = {
+            x: points[i], 
+            y: points[i+1]
+          };
+
+          chartDistance = dataX - point.x;
+
+          if (chartDistance < shortestDistance) {
+            nearestPoint = point;
+            nearestPoint.title = title;
+            shortestDistance = chartDistance;
+          }
+        }
+      }
+
+      return nearestPoint;
     },
     _bind: function() {
       var that = this,

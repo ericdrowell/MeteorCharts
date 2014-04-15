@@ -60,7 +60,7 @@
           data: function() {
             // bind axis data to line min and max values
             var data = this.chart.components.lineSeries.data(),
-                viewport = MeteorChart.Util.getSeriesMinMax(data);
+                viewport = MeteorChart.Util.getSeriesMinMax(data.series);
             return {
               min: viewport.minY,
               max: viewport.maxY
@@ -89,7 +89,7 @@
           data: function() {
             // bind axis data to line min and max values
             var data = this.chart.components.lineSeries.data(),
-                viewport = MeteorChart.Util.getSeriesMinMax(data);
+                viewport = MeteorChart.Util.getSeriesMinMax(data.series);
             return {
               min: viewport.minX,
               max: viewport.maxX
