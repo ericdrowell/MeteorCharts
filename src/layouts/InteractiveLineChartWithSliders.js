@@ -137,6 +137,30 @@
           }
         },
         {
+          id: 'inspectCircle',
+          name: 'Circle',
+          x: function() {
+            return this.data().x;
+          },
+          y: function() {
+            return this.data().y;
+          },
+          data: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {
+            
+            var nearestPoint = chart.components.lineSeries.getNearestPointX(evt.offset);
+            console.log(nearestPoint);
+
+            return {
+              x: 100,
+              y: 100,
+              fill: 'red',
+              stroke: 'blue',
+              radius: 20,
+              strokeWidth: 10
+            };
+          }, chart, 'inspectCircle')
+        },
+        {
           id: 'inspectSlider',
           name: 'Slider',
           x: function() {
@@ -146,7 +170,7 @@
             return chart.padding();
           },
           width: function() {
-            return chart.components.lineSeries.width();
+            return chart.components.lineSeries.width() + this.options.handleWidth;
           },
           options: {
             orientation: 'horizontal',

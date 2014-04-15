@@ -54,6 +54,9 @@
         context.stroke();
       } 
     },
+    getNearestPointX: function(x) {
+      return 100;
+    },
     _bind: function() {
       var that = this,
           content = this.content,
