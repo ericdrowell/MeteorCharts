@@ -15,22 +15,39 @@
 
     <script src="../../lib/kinetic-dev.js"></script>
     <script src="../js/get-series.js"></script>
+    <script src="../js/Grapher.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
     
     <script type="text/javascript">
-      var padding = 15;
+      // var data = {
+      //   series: getSeries({
+      //     minX: -100,
+      //     minY: -100,
+      //     maxX: 500,
+      //     maxY: 500,
+      //     yVariance: 20,
+      //     numLines: 32,
+      //     numPoints: 1000
+      //   })
+      // };
 
       var data = {
-        series: getSeries({
-          minX: -100,
-          minY: -100,
-          maxX: 500,
+        series: Grapher({
+          minX: -10,
+          minY: -500,
+          maxX: 10,
           maxY: 500,
-          yVariance: 20,
-          numLines: 32,
-          numPoints: 1000
+          increment: 0.1,
+          equations: [
+            {
+              title: 'y=500*sin(x)',
+              func: function(x) {
+                return 500 * Math.sin(x);
+              }
+            }
+          ]
         })
       };
 
@@ -64,29 +81,7 @@
             }
           },
           lineSeries: {
-            data: {
-              series: [
-                {
-                  // red
-                  title: 'Series 1',
-                  points: [
-                    -100, -100,
-                    100, 100,
-                    200, 50
-                  ]
-                },
-                { 
-                  // green
-                  title: 'Series 2',
-                  points: [
-                    0, 100,
-                    100, 200,
-                    200, 150,
-                    300, 200
-                  ]
-                }
-              ]
-            }
+            data: data
           }
         }
       });

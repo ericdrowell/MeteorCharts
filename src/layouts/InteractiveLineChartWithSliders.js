@@ -144,7 +144,7 @@
                 lineSeries = chart.components.lineSeries;
 
             if (data) {
-              return lineSeries.dataToChartX(data.x) + lineSeries.x() - data.radius - data.strokeWidth;
+              return lineSeries.dataToChartX(data.x) + lineSeries.x() - data.radius - (data.strokeWidth/2);
             }
             else {
               return 0;
@@ -155,7 +155,7 @@
                 lineSeries = chart.components.lineSeries;
 
             if (data) {
-              return lineSeries.dataToChartY(data.y) + lineSeries.y() - data.radius - data.strokeWidth;
+              return lineSeries.dataToChartY(data.y) + lineSeries.y() - data.radius - (data.strokeWidth/2);
             }
             else {
               return 0;
