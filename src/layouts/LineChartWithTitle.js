@@ -49,8 +49,10 @@
               max: viewport.maxY
             }
           },
-          options: {
-            orientation: 'vertical'
+          style: function() {
+            return {
+              orientation: 'vertical'
+            };
           }
         },
         {
@@ -80,8 +82,10 @@
               max: viewport.maxX
             }
           },
-          options: {
-            maxIncrements: 5
+          style: function() {
+            return {
+              maxIncrements: 5
+            };
           }
         },
         {

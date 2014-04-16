@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Component.extend('Slider', {
     init: function() {
-      var showTrack = this.options.showTrack;
+      var showTrack = this.style().showTrack;
 
       // default
       if (showTrack === undefined) {
@@ -24,13 +24,12 @@
     render: function() {
       var handle = this.handle,
           track = this.track,
-          options = this.options,
           style = this.style(),
           theme = this.chart.theme,
-          handleWidth = options.handleWidth,
-          handleHeight = options.handleHeight,
+          handleWidth = style.handleWidth,
+          handleHeight = style.handleHeight,
           trackSize = 1,
-          showTrack = this.options.showTrack;
+          showTrack = style.showTrack;
 
       // default
       if (showTrack === undefined) {
@@ -48,7 +47,7 @@
         track.style.backgroundColor = theme.secondary, 0.1;
       }
 
-      if (options.orientation === 'vertical') {
+      if (style.orientation === 'vertical') {
         handle.style.top = 0;
         handle.style.left = 0;
 
@@ -77,7 +76,7 @@
       var that = this,
           handle = this.handle,
           chartContent = this.chart.content,
-          orientation = this.options.orientation || 'horizontal',
+          orientation = this.style().orientation || 'horizontal',
           startOffsetPos = null,
           startPointerPos = null;
 
@@ -104,7 +103,7 @@
           var diff, newOffset;
 
           if (orientation === 'horizontal') {
-            diff = that.width() - that.options.handleWidth;
+            diff = that.width() - that.style().handleWidth;
             pointerPos = evt.clientX;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -116,7 +115,7 @@
             handle.style.left = newOffset;
           }
           else {
-            diff = that.height() - that.options.handleHeight;
+            diff = that.height() - that.style().handleHeight;
             pointerPos = evt.clientY;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -156,11 +155,11 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'width', function() {
-    return this.options.handleWidth;
+    return this.style().handleWidth;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'height', function() {
-    return this.options.handleHeight;
+    return this.style().handleHeight;
   });
 
 })();

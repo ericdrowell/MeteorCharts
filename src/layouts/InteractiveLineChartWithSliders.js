@@ -17,10 +17,12 @@
           width: function() {
             return chart.components.lineSeries.width();
           },
-          options: {
-            orientation: 'horizontal',
-            handleWidth: 30,
-            handleHeight: 12
+          style: function() {
+            return {
+              orientation: 'horizontal',
+              handleWidth: 30,
+              handleHeight: 12
+            }
           }
         }, 
         {
@@ -37,10 +39,12 @@
 
             return components.lineSeries.height() + chart.padding() + components.inspectSlider.height();
           },
-          options: {
-            orientation: 'vertical',
-            handleWidth: 12,
-            handleHeight: 30
+          style: function() {
+            return {
+              orientation: 'vertical',
+              handleWidth: 12,
+              handleHeight: 30
+            }
           }
         }, 
         {
@@ -89,8 +93,10 @@
               max: viewport.maxY
             }
           },
-          options: {
-            orientation: 'vertical'
+          style: function() {
+            return {
+              orientation: 'vertical'
+            }
           }
         },
         {
@@ -118,8 +124,10 @@
               max: viewport.maxX
             }
           },
-          options: {
-            maxIncrements: 5
+          style: function() {
+            return {
+              maxIncrements: 5
+            }
           }
         },
         {
@@ -128,7 +136,7 @@
           x: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {
             var offset = evt && evt.offset ? evt.offset : 0,
                 inspectSlider = chart.components.inspectSlider;
-            return offset + inspectSlider.x() + (inspectSlider.options.handleWidth - chart.components.inspectLine.width())/ 2;
+            return offset + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
           }, chart, 'inspectLine'),
           y: function() {
             return chart.padding();
@@ -150,10 +158,11 @@
           name: 'Circle',
           x: function() {
             var data = this.data(),
+                style = this.style(),
                 lineSeries = chart.components.lineSeries;
 
             if (data) {
-              return lineSeries.dataToChartX(data.x) + lineSeries.x() - data.radius - (data.strokeWidth/2);
+              return lineSeries.dataToChartX(data.x) + lineSeries.x() - style.radius - (style.strokeWidth/2);
             }
             else {
               return 0;
@@ -161,27 +170,32 @@
           },
           y: function() {
             var data = this.data(),
+                style = this.style(),
                 lineSeries = chart.components.lineSeries;
 
             if (data) {
-              return lineSeries.dataToChartY(data.y) + lineSeries.y() - data.radius - (data.strokeWidth/2);
+              return lineSeries.dataToChartY(data.y) + lineSeries.y() - style.radius - (style.strokeWidth/2);
             }
             else {
               return 0;
             }
           },
+          style: function() {
+            var dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
+            return {
+              fill: MeteorChart.Color.hexToRgba(dataColor, 0.3),
+              stroke: dataColor,
+              radius: 16,
+              strokeWidth: 2
+            }
+          },
           data: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {            
-            var nearestPoint = chart.components.lineSeries.getSeriesNearestPointX(0, evt.offset),
-                dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
+            var nearestPoint = chart.components.lineSeries.getSeriesNearestPointX(0, evt.offset);
 
             if (nearestPoint) {
               return {
                 x: nearestPoint.x,
                 y: nearestPoint.y,
-                fill: MeteorChart.Color.hexToRgba(dataColor, 0.3),
-                stroke: dataColor,
-                radius: 16,
-                strokeWidth: 2
               };
             }
             else {
@@ -193,24 +207,22 @@
           id: 'inspectSlider',
           name: 'Slider',
           x: function() {
-            return chart.components.lineSeries.x() - (this.options.handleWidth) / 2;
+            return chart.components.lineSeries.x() - (this.style().handleWidth) / 2;
           },
           y: function() {
             return chart.padding();
           },
           width: function() {
-            return chart.components.lineSeries.width() + this.options.handleWidth;
+            return chart.components.lineSeries.width() + this.style().handleWidth;
           },
           style: function() {
             return {
-              handleFill: '#3fa9f5' // blue
+              handleFill: '#3fa9f5', // blue
+              orientation: 'horizontal',
+              showTrack: false,
+              handleWidth: 12,
+              handleHeight: 30
             }
-          },
-          options: {
-            orientation: 'horizontal',
-            showTrack: false,
-            handleWidth: 12,
-            handleHeight: 30
           }
         }
       ]

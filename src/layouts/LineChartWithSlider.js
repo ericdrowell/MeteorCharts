@@ -19,8 +19,12 @@
             // bind axis width to line width
             return this.chart.components.lineSeries.width();
           },
-          options: {
-            orientation: 'horizontal'
+          style: function() {
+            return {
+              orientation: 'horizontal',
+              handleWidth: 60,
+              handleHeight: 15
+            };
           }
         }, 
         {
@@ -66,8 +70,10 @@
               max: viewport.maxY
             }
           },
-          options: {
-            orientation: 'vertical'
+          style: function() {
+            return {
+              orientation: 'vertical'
+            };
           }
         },
         {
@@ -95,8 +101,10 @@
               max: viewport.maxX
             }
           },
-          options: {
-            maxIncrements: 5
+          style: function() {
+            return {
+              maxIncrements: 5
+            };
           }
         }
       ]

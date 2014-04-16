@@ -9,13 +9,13 @@
       var that = this,
           chart = this.chart,
           data = this.data(),
-          options = this.options,
+          style = this.style(),
           min = data.min,
           max = data.max,
           diff = max - min,
-          scale = (this.options.orientation === 'vertical' ? this.height() : this.width()) / diff,
+          scale = (style.orientation === 'vertical' ? this.height() : this.width()) / diff,
           offset = 0,
-          formatter = new MeteorChart.Formatters[options.unit || 'Number'](data.min, data.max, this.options.maxNumLabels || 5),
+          formatter = new MeteorChart.Formatters[style.unit || 'Number'](data.min, data.max, style.maxNumLabels || 5),
           increment = formatter.increment;
 
       this.innerContent.innerHTML = '';
@@ -44,7 +44,7 @@
       text.style.color = theme.primary;
       this.innerContent.appendChild(text);
 
-      if (this.options.orientation === 'vertical') {
+      if (this.style().orientation === 'vertical') {
         text.style.top = this.height() - offset - (MeteorChart.Dom.getTextHeight(val) /2);
         text.style.left = 0;
       }

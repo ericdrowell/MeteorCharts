@@ -16,7 +16,6 @@ var MeteorChart;
     this.layout = config.layout(this);
     this.theme = config.theme;
     this.interaction = config.interaction;
-    this.options = config.options;
     this._components = config.components;
     this.components = [];
 
@@ -95,18 +94,7 @@ var MeteorChart;
           component = this._components[id];
 
       if (component) {
-
-        // decorate options 
-        if (!conf.options) {
-          conf.options = {};
-        }
-
-        if (component.options) {
-          conf.options = MeteorChart.Util.merge(conf.options, component.options);
-        }  
-
         // decorate data
-
         if (component.data) {
           conf.data = function() {
             return component.data;

@@ -5,7 +5,6 @@
     this.className = config.name;
     this.id = config.id;
     this.name = config.name;
-    this.options = config.options || {};
     this.dependencies = config.dependencies || {};
 
     // binding functions

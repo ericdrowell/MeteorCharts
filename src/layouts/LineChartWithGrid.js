@@ -20,9 +20,11 @@
           data: MeteorChart.Event.map({type: 'labelOffsetsChange', id: 'xAxis'}, function(evt) {
             return evt.labelOffsets;
           }, chart, 'verticalGridLines'),
-          options: {
-            orientation: 'vertical',
-            lineWidth: 2
+          style: function() {
+            return {
+              orientation: 'vertical',
+              lineWidth: 2
+            };
           }
         },
         {
@@ -43,9 +45,11 @@
           data: MeteorChart.Event.map({type: 'labelOffsetsChange', id: 'yAxis'}, function(evt) {
             return evt.labelOffsets;
           }, chart, 'horizontalGridLines'),
-          options: {
-            orientation: 'horizontal',
-            lineWidth: 2
+          style: function() {
+            return {
+              orientation: 'horizontal',
+              lineWidth: 2
+            };
           }
         },
         {
@@ -96,8 +100,10 @@
               max: viewport.maxX,
             }
           },
-          options: {
-            maxIncrements: 5
+          style: function() {
+            return {
+              maxIncrements: 5
+            };
           }
         },
         {
@@ -124,8 +130,10 @@
               max: viewport.maxY
             }
           },
-          options: {
-            orientation: 'vertical'
+          style: function() {
+            return {
+              orientation: 'vertical'
+            };
           }
         }   
       ]

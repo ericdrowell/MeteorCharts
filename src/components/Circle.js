@@ -15,11 +15,12 @@
     },
     render: function() {
       var data = this.data(),
+          style = this.style(),
           strokeWidth, radius;
 
       if (data) {
-        radius = data.radius;
-        strokeWidth = data.strokeWidth;
+        radius = style.radius;
+        strokeWidth = style.strokeWidth;
 
         this.svg.setAttribute('width', (radius * 2) + strokeWidth);
         this.svg.setAttribute('height', (radius * 2) + strokeWidth);
@@ -28,8 +29,8 @@
         this.circle.setAttribute('cx', radius + strokeWidth / 2);
         this.circle.setAttribute('cy', radius + strokeWidth / 2);
         this.circle.setAttribute('r', radius);
-        this.circle.setAttribute('fill', data.fill);
-        this.circle.setAttribute('stroke', data.stroke);
+        this.circle.setAttribute('fill', style.fill);
+        this.circle.setAttribute('stroke', style.stroke);
         this.circle.setAttribute('stroke-width', strokeWidth);
       }
     }
