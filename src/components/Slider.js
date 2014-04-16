@@ -25,6 +25,7 @@
       var handle = this.handle,
           track = this.track,
           options = this.options,
+          style = this.style(),
           theme = this.chart.theme,
           handleWidth = options.handleWidth,
           handleHeight = options.handleHeight,
@@ -39,7 +40,7 @@
       // handle
       handle.style.width = handleWidth;
       handle.style.height = handleHeight;
-      handle.style.backgroundColor = theme.primary;
+      handle.style.backgroundColor = style.handleFill || theme.primary;
       MeteorChart.Dom.setBorderRadius(handle, Math.min(handleWidth, handleHeight) / 2);
 
       // track

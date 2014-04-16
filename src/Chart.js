@@ -34,6 +34,12 @@ var MeteorChart;
     this.content.style.overflow = 'hidden';
     this.container.appendChild(this.content);
 
+    // initialize renderer dummies
+    MeteorChart.Dom.dummy = MeteorChart.Dom.createElement('div');
+    MeteorChart.Dom.dummy.style.display = 'inline-block';
+    MeteorChart.Dom.dummy.className = 'dom-dummy';
+    this.content.appendChild(MeteorChart.Dom.dummy);
+
     MeteorChart.log('1) INITIALIZE COMPONENTS');
     for (n=0; n<len; n++) {
       conf = components[n];

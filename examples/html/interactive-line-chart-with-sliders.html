@@ -13,41 +13,34 @@
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/kinetic-dev.js"></script>
-    <script src="../js/get-series.js"></script>
     <script src="../js/Grapher.js"></script>
-    <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
     
     <script type="text/javascript">
-      // var data = {
-      //   series: getSeries({
-      //     minX: -100,
-      //     minY: -100,
-      //     maxX: 500,
-      //     maxY: 500,
-      //     yVariance: 20,
-      //     numLines: 32,
-      //     numPoints: 1000
-      //   })
-      // };
 
       var data = {
         series: Grapher({
-          minX: -10,
-          minY: -500,
+          minX: 0,
           maxX: 10,
-          maxY: 500,
-          increment: 0.1,
-          equations: [
-            {
-              title: 'y=500*sin(x)',
-              func: function(x) {
-                return 500 * Math.sin(x);
-              }
+          increment: 0.05,
+          equations: (function() {
+            var arr = [];
+
+            for (var n=0; n<160; n++) {
+              (function(i) {
+                var rand = Math.random() + 0.9;
+                arr.push({
+                  title: 'sine ' + i,
+                  func: function(x) {
+                    return 500 * Math.sin(rand * x / 2);
+                  }
+                });
+              })(n);
             }
-          ]
+
+            return arr;
+          })()
         })
       };
 
@@ -62,24 +55,6 @@
 
         // set components data and options
         components: {
-          xSlider: {
-            options: {
-              handleWidth: 30,
-              handleHeight: 15
-            }
-          },
-          ySlider: {
-            options: {
-              handleWidth: 15,
-              handleHeight: 30
-            }
-          },
-          inspectSlider: {
-            options: {
-              handleWidth: 15,
-              handleHeight: 30
-            }
-          },
           lineSeries: {
             data: data
           }

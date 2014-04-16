@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Component.extend('Line', {
     render: function() {
-      this.content.style.backgroundColor = this.chart.theme.primary;
+      this.content.style.backgroundColor = this.style().stroke || this.chart.theme.primary;
     }
   });
 })();

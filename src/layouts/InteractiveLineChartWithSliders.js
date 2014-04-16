@@ -18,7 +18,9 @@
             return chart.components.lineSeries.width();
           },
           options: {
-            orientation: 'horizontal'
+            orientation: 'horizontal',
+            handleWidth: 30,
+            handleHeight: 12
           }
         }, 
         {
@@ -36,7 +38,9 @@
             return components.lineSeries.height() + chart.padding() + components.inspectSlider.height();
           },
           options: {
-            orientation: 'vertical'
+            orientation: 'vertical',
+            handleWidth: 12,
+            handleHeight: 30
           }
         }, 
         {
@@ -70,7 +74,7 @@
             return chart.padding() + ySlider.x() + ySlider.width();
           },
           y: function() {
-            return chart.padding();
+            return chart.components.lineSeries.y();
           },
           height: function() {
             // bind axis height to line height
@@ -130,10 +134,15 @@
             return chart.padding();
           },
           width: function() {
-            return 1;
+            return 2;
           },
           height: function() {
             return chart.components.ySlider.height();
+          },
+          style: function() {
+            return {
+              stroke: '#3fa9f5' // blue
+            };
           }
         },
         {
@@ -172,7 +181,7 @@
                 fill: MeteorChart.Color.hexToRgba(dataColor, 0.3),
                 stroke: dataColor,
                 radius: 16,
-                strokeWidth: 4
+                strokeWidth: 2
               };
             }
             else {
@@ -192,9 +201,16 @@
           width: function() {
             return chart.components.lineSeries.width() + this.options.handleWidth;
           },
+          style: function() {
+            return {
+              handleFill: '#3fa9f5' // blue
+            }
+          },
           options: {
             orientation: 'horizontal',
-            showTrack: false
+            showTrack: false,
+            handleWidth: 12,
+            handleHeight: 30
           }
         }
       ]

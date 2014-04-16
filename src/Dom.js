@@ -20,6 +20,22 @@
     },
     setBorderRadius: function(el, radius) {
       el.style['borderRadius'] = radius;
+    },
+    getTextWidth: function(text) {
+      var width = 0;
+      this.dummy.innerHTML = text;
+      width = this.dummy.clientWidth;
+      this.dummy.innerHTML = '';
+
+      return width;
+    },
+    getTextHeight: function(text) {
+      var height = 0;
+      this.dummy.innerHTML = text;
+      height = this.dummy.clientHeight;
+      this.dummy.innerHTML = '';
+
+      return height;
     }
   }
 })();

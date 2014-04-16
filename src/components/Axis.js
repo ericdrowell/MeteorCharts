@@ -45,13 +45,13 @@
       this.innerContent.appendChild(text);
 
       if (this.options.orientation === 'vertical') {
-        text.style.top = this.height() - offset - (text.clientHeight/2);
+        text.style.top = this.height() - offset - (MeteorChart.Dom.getTextHeight(val) /2);
         text.style.left = 0;
       }
       // horizontal
       else {
         text.style.top = 0;
-        text.style.left = offset - (text.clientWidth/2); 
+        text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2); 
       }
   
       this.labelOffsets.push(offset);

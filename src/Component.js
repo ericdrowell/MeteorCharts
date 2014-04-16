@@ -14,7 +14,7 @@
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
-    this.visible(config.visible);
+    this.style(config.style);
 
     // build content container
     this.content = document.createElement('div');
@@ -65,5 +65,5 @@
   MeteorChart.Util.addMethod(MeteorChart.Component, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'height', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'data');
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'visible', true);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'style', function() {return {};});
 })();
