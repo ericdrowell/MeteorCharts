@@ -140,24 +140,44 @@
           id: 'inspectCircle',
           name: 'Circle',
           x: function() {
-            return this.data().x;
+            var data = this.data(),
+                lineSeries = chart.components.lineSeries;
+
+            if (data) {
+              return lineSeries.dataToChartX(data.x) + lineSeries.x() - data.radius - data.strokeWidth;
+            }
+            else {
+              return 0;
+            }
           },
           y: function() {
-            return this.data().y;
-          },
-          data: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {
-            
-            var nearestPoint = chart.components.lineSeries.getNearestPointX(evt.offset);
-            console.log(nearestPoint);
+            var data = this.data(),
+                lineSeries = chart.components.lineSeries;
 
-            return {
-              x: 100,
-              y: 100,
-              fill: 'red',
-              stroke: 'blue',
-              radius: 20,
-              strokeWidth: 10
-            };
+            if (data) {
+              return lineSeries.dataToChartY(data.y) + lineSeries.y() - data.radius - data.strokeWidth;
+            }
+            else {
+              return 0;
+            }
+          },
+          data: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {            
+            var nearestPoint = chart.components.lineSeries.getSeriesNearestPointX(0, evt.offset),
+                dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
+
+            if (nearestPoint) {
+              return {
+                x: nearestPoint.x,
+                y: nearestPoint.y,
+                fill: MeteorChart.Color.hexToRgba(dataColor, 0.3),
+                stroke: dataColor,
+                radius: 16,
+                strokeWidth: 4
+              };
+            }
+            else {
+              return null;
+            }
           }, chart, 'inspectCircle')
         },
         {

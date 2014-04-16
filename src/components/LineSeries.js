@@ -50,22 +50,28 @@
         }
 
         context.restore();
-        context.strokeStyle = this.getDataColor(n);
+        context.strokeStyle = MeteorChart.Color.getDataColor(this.chart.theme.data, n);
         context.lineWidth = 2;
         context.stroke();
       } 
     },
+    dataToChartX: function(x) {
+      return (x - this.minX) * this.scaleX;
+    },
+    dataToChartY: function(y) {
+      return this.height() - ((y - this.minY) * this.scaleY);
+    },
     dataToChart: function(pos) {
       return {
-        x: (pos.x - this.minX) * this.scaleX + this.x(),
-        y: this.height() - ((pos.y - this.minY) * this.scaleY) + this.y()
+        x: this.dataToChartX(pos.x),
+        y: this.dataToChartY(pos.y)
       }; 
     },
     chartToDataX: function(x) {
-      return ((x - this.x()) / this.scaleX) + this.minX;
+      return (x / this.scaleX) + this.minX;
     },
     chartToDataY:function(y) {
-      return this.minY - ((y - this.y() - this.height()) / this.scaleY);
+      return this.minY - ((y - this.height()) / this.scaleY);
     },
     chartToData: function(pos) {
       return {
@@ -73,34 +79,36 @@
         y: this.chartToDataY(pos.y)
       };
     },
-    getNearestPointX: function(x) {
+    getSeriesNearestPointX: function(n, x) {
       var dataX = this.chartToDataX(x),
           data = this.data(),
           series = data.series,
-          len = series.length,
           shortestDistance = Infinity,
           nearestPoint = null,
-          n, i, ser, points, point, pointsLen, title, chartDistance;
-   
-      for (n=0; n<len; n++) {
-        ser = series[n];
-        points = ser.points;
-        title = ser.title;
-        pointsLen = points.length;
+          i, ser, points, point, pointsLen, title, chartDistance;
 
-        for (i=0; i<pointsLen; i+=2) {
-          point = {
-            x: points[i], 
-            y: points[i+1]
+      ser = series[n];
+      points = ser.points;
+      title = ser.title;
+      pointsLen = points.length;
+
+      for (i=0; i<pointsLen; i+=2) {
+        point = {
+          x: points[i], 
+          y: points[i+1]
+        };
+
+        chartDistance = Math.abs(dataX - point.x);
+
+        if (chartDistance < shortestDistance) {
+          nearestPoint = {
+            x: point.x,
+            y: point.y,
+            title: title
           };
 
-          chartDistance = dataX - point.x;
+          shortestDistance = chartDistance;
 
-          if (chartDistance < shortestDistance) {
-            nearestPoint = point;
-            nearestPoint.title = title;
-            shortestDistance = chartDistance;
-          }
         }
       }
 

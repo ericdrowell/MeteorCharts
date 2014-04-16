@@ -14,6 +14,9 @@
           a = alpha;
 
       return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-    } 
+    },
+    getDataColor: function(colors, n) {
+      return colors[n % colors.length];
+    },
   }
 })();

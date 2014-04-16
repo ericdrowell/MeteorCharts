@@ -26,12 +26,6 @@
   };
 
   MeteorChart.Component.prototype = {
-    getDataColor: function(n) {
-      var themeData = this.chart.theme.data,
-          len = themeData.length;
-
-      return themeData[n % len];
-    },
     _render: function() {
       this.content.style.left = this.x();
       this.content.style.top = this.y();

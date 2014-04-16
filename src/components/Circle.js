@@ -37,11 +37,21 @@
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'width', function() {
     var data = this.data();
-    return (data.radius * 2) + data.strokeWidth;
+    if (data) {
+      return (data.radius * 2) + data.strokeWidth;
+    }
+    else {
+      return 0;
+    }
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'height', function() {
     var data = this.data();
-    return (data.radius * 2) + data.strokeWidth;
+    if (data) {
+      return (data.radius * 2) + data.strokeWidth;
+    }
+    else {
+      return 0;
+    }
   });
 })();
