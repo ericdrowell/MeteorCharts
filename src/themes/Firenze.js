@@ -9,10 +9,9 @@
     background: RED,
     primary: LIGHT_YELLOW,
     secondary: MeteorChart.Color.hexToRgba(LIGHT_YELLOW, 0.2),
-    font: {
-      family: 'Arial',
-      size: 12
-    },
+    fontFamily: 'Arial',
+    fontSize: 12,
+    padding: 20,
     data: [ORANGE]
   };
 })();

@@ -13,7 +13,6 @@
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/kinetic-dev.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
@@ -22,11 +21,15 @@
         container: 'container',
         width: 200,
         height: 50,
-        padding: 10,
 
         theme: MeteorChart.Themes.CoteAzur,
         layout: MeteorChart.Layouts.SparkChart,
 
+        style: function() {
+          return {
+            padding: 10
+          };
+        },
         components: {
           lineSeries: {
             data: {

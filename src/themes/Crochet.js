@@ -6,10 +6,9 @@
     background: WHITE_SMOKE,
     primary: DARK_GRAY,
     secondary: DARK_GRAY,
-    font: {
-      family: 'Arial',
-      size: 12
-    },
+    fontFamily: 'Arial',
+    fontSize: 12,
+    padding: 20,
     data: [
       '#b469a9',
       '#bcbca1', 

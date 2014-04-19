@@ -1,75 +1,45 @@
 (function() {
-  var PADDING = 10;
-  
   MeteorChart.Component.extend('Tooltip', {
-    build: function() {
-      var theme = this.chart.theme,
-          font = theme.font;
+    init: function() {
+      this.tooltip = MeteorChart.Dom.createElement('div');
+      this.tooltip.style.display = 'inline-block';
+      this.tooltipTitle = MeteorChart.Dom.createElement('h2');
+      this.tooltipContent = MeteorChart.Dom.createElement('p');
 
-      this.layer.enableHitGraph(false); 
-
-      this.group = new Kinetic.Group();
-
-      this.rect = new Kinetic.Rect({
-        fill: theme.background,
-        stroke: MeteorChart.Util.hexToRgba(theme.primary, 0.5),
-        opacity: 0.85,
-        cornerRadius: 3
-      });
-
-      this.group.add(this.rect);
-
-      this.title = new Kinetic.Text({
-        x: PADDING,
-        y: PADDING,
-        fontFamily: font.family,
-        fontSize: font.size * MeteorChart.Constants.TYPOGRAPHIC_SCALE,
-        fill: theme.primary
-      });
-
-      this.group.add(this.title); 
-
-      this.content = new Kinetic.Text({
-        x: PADDING,
-        // set y position to title height + spacing
-        y: this.title.height() + (PADDING*2),
-        lineHeight: 1.5,
-        fontFamily: font.family,
-        fontSize: font.size,
-        fill: theme.primary
-      });
-
-      this.group.add(this.content);
-
-      this.update();
-
-      this.layer.add(this.group);
+      this.tooltip.appendChild(this.tooltipTitle);
+      this.tooltip.appendChild(this.tooltipContent);
+      this.content.appendChild(this.tooltip);
     },
-    _setSize: function() {
-      this.rect.width(Math.max(this.title.width(), this.content.width()) + (PADDING*2));
-      this.rect.height(this.title.height() + this.content.height() + (PADDING*3));
-
-      this.group.offsetX(this.rect.width() / 2);
-      this.group.offsetY(this.rect.height());
-    },
-    _update: function() {
-      var data = this.data();
+    render: function() {
+      var data = this.data(),
+          style = this.style(),
+          theme = this.chart.theme;
 
       if (data) {
-        this.title.text(data.title || '');
-        this.content.text(data.content || '');
+        // tooltip
+        this.tooltip.style.fontFamily = style.fontFamily || theme.fontFamily;
+        this.tooltip.style.color = style.fontColor || theme.primary;
+        this.tooltip.style.padding = this.padding(-3);
+        this.tooltip.style.border = '2px solid ' + (style.borderColor || theme.secondary);  
 
-        this._setSize();
+        // title
+        this.tooltipTitle.style.fontSize = (style.fontSize || theme.fontSize) * MeteorChart.Constants.TYPOGRAPHIC_SCALE;
+        this.tooltipTitle.innerHTML = data.title;
+
+        // content
+        this.tooltipContent.style.fontSize = style.fontSize || theme.fontSize;
+        this.tooltipContent.style.marginTop = 5;
+        this.tooltipContent.innerHTML = data.content;
       }
     }
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'width', function() {
-    return this.rect.width();
+    return 200;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'height', function() {
-    return this.rect.height();
+    return 50;
   });
 
 })();

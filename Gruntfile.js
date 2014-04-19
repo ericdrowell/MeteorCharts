@@ -39,9 +39,7 @@ module.exports = function(grunt) {
     'src/layouts/LineChartWithTitle.js',
     'src/layouts/LineChartWithSlider.js',
     'src/layouts/InteractiveLineChartWithSliders.js',
-
-    // interactions
-    'src/interactions/LineChartTooltip.js',
+    'src/layouts/StandardLineChartWithTooltip.js',
 
     // formatters
     'src/formatters/Date.js',

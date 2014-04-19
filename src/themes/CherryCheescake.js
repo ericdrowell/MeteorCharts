@@ -9,10 +9,9 @@
     background: CREME,
     primary: LIGHT_BROWN,
     secondary: MeteorChart.Color.hexToRgba(LIGHT_BROWN, 0.2),
-    font: {
-      family: 'Arial',
-      size: 12
-    },
+    fontFamily: 'Arial',
+    fontSize: 12,
+    padding: 20,
     data: [RED]
   };
 })();

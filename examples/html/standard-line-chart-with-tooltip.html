@@ -9,45 +9,51 @@
         height: 450px;
       }
     </style>
-  </head>
+  </head> 
   <body>
     <div id="container"></div>
 
-    <script src="../js/get-series.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
-    
     <script type="text/javascript">
-
-      var data = {
-        series: getSeries({
-          minX: -100,
-          minY: -100,
-          maxX: 500,
-          maxY: 500,
-          yVariance: 20,
-          numLines: 32,
-          numPoints: 1000
-        })
-      };
-
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.LineChartWithSlider,
+        layout: MeteorChart.Layouts.StandardLineChartWithTooltip,
 
         // set components data and options
         components: {
           lineSeries: {
-            data: data          
+            data: {
+              series: [
+                {
+                  // red
+                  title: 'Series 1',
+                  points: [
+                    -100, -100,
+                    100, 100,
+                    200, 50
+                  ]
+                },
+                { 
+                  // green
+                  title: 'Series 2',
+                  points: [
+                    0, 100,
+                    100, 200,
+                    200, 150,
+                    300, 200
+                  ]
+                }
+              ]
+            }
           }
         }
       });
-
    
       console.log(chart);
     </script>

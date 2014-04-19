@@ -33,14 +33,13 @@
     },
     _addLabel: function(offset, val) {
       var theme = this.chart.theme,
-          font = theme.font,
           text;
 
       text = MeteorChart.Dom.createElement('span');
       text.innerHTML = val;
       text.style.position = 'absolute';
-      text.style.fontSize = font.size;
-      text.style.fontFamily = font.family;
+      text.style.fontSize = theme.fontSize;
+      text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
       this.innerContent.appendChild(text);
 
@@ -63,7 +62,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {
-    return this.chart.theme.font.size;
+    return this.chart.theme.fontSize;
   });
 
 })();

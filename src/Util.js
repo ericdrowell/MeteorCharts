@@ -136,6 +136,20 @@
         }
       }
     },
+    _getScale: function(val, scaleFactor) {
+      if (!scaleFactor) {
+        scaleFactor = 1;
+      }
+
+      // more than 0
+      if (scaleFactor > 0) {
+        return val * scaleFactor;
+      }
+      // less than 0
+      else {
+        return val / (-1 * scaleFactor);
+      }
+    },
     /*
      * cherry-picked utilities from underscore.js
      */
@@ -159,9 +173,9 @@
     }
   };
 
-  // add methods to MeteorChart class. 
+  // TODO: add methods to MeteorChart class. 
   MeteorChart.Util.addMethod(MeteorChart, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart, 'height', 0);
   MeteorChart.Util.addMethod(MeteorChart, 'data');
-  MeteorChart.Util.addMethod(MeteorChart, 'padding', 0);
+  MeteorChart.Util.addMethod(MeteorChart, 'style', function() {return {};});
 })();

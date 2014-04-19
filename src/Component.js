@@ -46,6 +46,18 @@
         name: this.name,
         id: this.id
       }, obj));
+    },
+    // render helpers
+    /**
+     * @param {Integer} [scaleFactor] can be -3, -2, -1, 0, 1, 2, etc.  -1, 0, and -1 and
+     *   1 have the same result, and 0 defaults to 1.  If you want to double the padding
+     *   scale, use 2.  If you want to triple it, use 3.  If you want to halve it, use -2
+     */
+    padding: function(scaleFactor) {
+      var chart = this.chart,
+          scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
+
+      return (this.style().padding || chart.style().padding || chart.theme.padding) * scale;
     }
   };
 

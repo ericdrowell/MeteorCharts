@@ -11,11 +11,10 @@ var MeteorChart;
     this.width(config.width);
     this.height(config.height);
     this.data(config.data);
-    this.padding(config.padding);
+    this.style(config.style);
 
     this.layout = config.layout(this);
     this.theme = config.theme;
-    this.interaction = config.interaction;
     this._components = config.components;
     this.components = [];
 
@@ -131,6 +130,11 @@ var MeteorChart;
       for (n=0; n<len; n++) {
         components[n]._render();
       }
+    },
+    // render helpers
+    padding: function(scaleFactor) {
+      var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
+      return (this.style().padding || this.theme.padding) * scale;
     }
   };
 
@@ -139,10 +143,10 @@ var MeteorChart;
   MeteorChart.Formatters = {};
   MeteorChart.Layouts = {};
   MeteorChart.Themes = {};
-  MeteorChart.Interactions = {};
 
   MeteorChart.Constants = {
-    TYPOGRAPHIC_SCALE: 1.2
+    TYPOGRAPHIC_SCALE: 1.2,
+    PADDING_SCALE: 1.2
   };
 
   MeteorChart.log = function(obj) {
