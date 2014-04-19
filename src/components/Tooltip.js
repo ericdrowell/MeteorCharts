@@ -1,8 +1,14 @@
 (function() {
   MeteorChart.Component.extend('Tooltip', {
     init: function() {
+      // NOTE: the pointerEvents style is not supported in IE < 11
+      // therefore, older IE users might have the tooltip stuck under
+      // the cursor from time to time
+      this.content.style.pointerEvents = 'none';
+
       this.tooltip = MeteorChart.Dom.createElement('div');
       this.tooltip.style.display = 'inline-block';
+
       this.tooltipTitle = MeteorChart.Dom.createElement('h2');
       this.tooltipContent = MeteorChart.Dom.createElement('p');
 
