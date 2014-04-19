@@ -4,7 +4,7 @@
     components: [  
       {
         id: 'lineSeries',
-        name: 'LineSeries',
+        type: 'LineSeries',
         x: function() {
           var chart = this.chart;
           return chart.components.yAxis.width() + (chart.padding() * 2);
@@ -25,7 +25,7 @@
       },
       {
         id: 'xAxis',
-        name: 'Axis',
+        type: 'Axis',
         x: function() {
           // bind axis x position to line x position
           return this.chart.components.lineSeries.x();
@@ -55,7 +55,7 @@
       },
       {
         id: 'yAxis',
-        name: 'Axis',
+        type: 'Axis',
         x: function() {
           return this.chart.padding();
         },
@@ -81,7 +81,7 @@
       },
       {
         id: 'horizontalGridLines',
-        name: 'GridLines',
+        type: 'GridLines',
         x: function() {
           return this.chart.components.lineSeries.x();
         },

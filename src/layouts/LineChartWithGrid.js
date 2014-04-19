@@ -4,7 +4,7 @@
       components: [  
         {
           id: 'verticalGridLines',
-          name: 'GridLines',
+          type: 'GridLines',
           x: function() {
             return this.chart.components.lineSeries.x();
           },
@@ -17,7 +17,7 @@
           height: function() {
             return this.chart.components.lineSeries.height();
           },
-          data: MeteorChart.Event.map({type: 'labelOffsetsChange', id: 'xAxis'}, function(evt) {
+          data: MeteorChart.Event.map({event: 'labelOffsetsChange', id: 'xAxis'}, function(evt) {
             return evt.labelOffsets;
           }, chart, 'verticalGridLines'),
           style: function() {
@@ -29,7 +29,7 @@
         },
         {
           id: 'horizontalGridLines',
-          name: 'GridLines',
+          type: 'GridLines',
           x: function() {
             return this.chart.components.lineSeries.x();
           },
@@ -42,7 +42,7 @@
           height: function() {
             return this.chart.components.lineSeries.height();
           },
-          data: MeteorChart.Event.map({type: 'labelOffsetsChange', id: 'yAxis'}, function(evt) {
+          data: MeteorChart.Event.map({event: 'labelOffsetsChange', id: 'yAxis'}, function(evt) {
             return evt.labelOffsets;
           }, chart, 'horizontalGridLines'),
           style: function() {
@@ -54,7 +54,7 @@
         },
         {
           id: 'lineSeries',
-          name: 'LineSeries',
+          type: 'LineSeries',
           x: function() {
             var chart = this.chart;
             return chart.components.yAxis.width() + (chart.padding() * 2);
@@ -75,7 +75,7 @@
         },
         {
           id: 'xAxis',
-          name: 'Axis',
+          type: 'Axis',
           x: function() {
             // bind axis x position to line x position
             return this.chart.components.lineSeries.x();
@@ -108,7 +108,7 @@
         },
         {
           id: 'yAxis',
-          name: 'Axis',
+          type: 'Axis',
           x: function() {
             return this.chart.padding();
           },

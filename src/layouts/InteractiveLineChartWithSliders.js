@@ -4,7 +4,7 @@
       components: [ 
         {
           id: 'xSlider',
-          name: 'Slider',
+          type: 'Slider',
           x: function() {
             return chart.components.lineSeries.x();
           },
@@ -27,7 +27,7 @@
         }, 
         {
           id: 'ySlider',
-          name: 'Slider',
+          type: 'Slider',
           x: function() {
             return chart.padding();
           },
@@ -49,7 +49,7 @@
         }, 
         {
           id: 'lineSeries',
-          name: 'LineSeries',
+          type: 'LineSeries',
           x: function() {
             var yAxis = chart.components.yAxis;
 
@@ -72,7 +72,7 @@
         },
         {
           id: 'yAxis',
-          name: 'Axis',
+          type: 'Axis',
           x: function() {
             var ySlider = chart.components.ySlider;
             return chart.padding() + ySlider.x() + ySlider.width();
@@ -101,7 +101,7 @@
         },
         {
           id: 'xAxis',
-          name: 'Axis',
+          type: 'Axis',
           x: function() {
             // bind axis x position to line x position
             return chart.components.lineSeries.x();
@@ -132,8 +132,8 @@
         },
         {
           id: 'inspectLine',
-          name: 'Line',
-          x: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {
+          type: 'Line',
+          x: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) {
             var offset = evt && evt.offset ? evt.offset : 0,
                 inspectSlider = chart.components.inspectSlider;
             return offset + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
@@ -155,7 +155,7 @@
         },
         {
           id: 'inspectCircle',
-          name: 'Circle',
+          type: 'Circle',
           x: function() {
             var data = this.data(),
                 style = this.style(),
@@ -189,7 +189,7 @@
               strokeWidth: 2
             }
           },
-          data: MeteorChart.Event.map({type: 'dragmove', id: 'inspectSlider'}, function(evt) {            
+          data: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) {            
             var nearestPoint = chart.components.lineSeries.getSeriesNearestPointX(0, evt.offset);
 
             if (nearestPoint) {
@@ -205,7 +205,7 @@
         },
         {
           id: 'inspectSlider',
-          name: 'Slider',
+          type: 'Slider',
           x: function() {
             return chart.components.lineSeries.x() - (this.style().handleWidth) / 2;
           },

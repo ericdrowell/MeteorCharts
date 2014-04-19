@@ -2,9 +2,9 @@
   MeteorChart.Component = function(config) {
     this.attrs = {};
     this.chart = config.chart;
-    this.className = config.name;
+    this.className = config.type;
     this.id = config.id;
-    this.name = config.name;
+    this.type = config.type;
     this.dependencies = config.dependencies || {};
 
     // binding functions
@@ -18,7 +18,7 @@
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'component-content';
-    this.content.setAttribute('data-component-name', this.name);
+    this.content.setAttribute('data-component-type', this.type);
     this.content.setAttribute('data-component-id', this.id);
     this.content.style.display = 'inline-block';
     this.content.style.position = 'absolute';
@@ -39,11 +39,11 @@
     destroy: function() {
 
     },
-    fire: function(type, obj) {
+    fire: function(event, obj) {
       var that = this;
       MeteorChart.Event.fire(MeteorChart.Util.merge({
-        type: type,
-        name: this.name,
+        event: event,
+        type: this.type,
         id: this.id
       }, obj));
     },
@@ -61,13 +61,13 @@
     }
   };
 
-  MeteorChart.Component.extend = function(name, methods) {
-    MeteorChart.Components[name] = function(config) {
+  MeteorChart.Component.extend = function(type, methods) {
+    MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
     };
 
-    MeteorChart.Components[name].prototype = methods;
-    MeteorChart.Util.extend(MeteorChart.Components[name], MeteorChart.Component);
+    MeteorChart.Components[type].prototype = methods;
+    MeteorChart.Util.extend(MeteorChart.Components[type], MeteorChart.Component);
   };
 
   // getters setters

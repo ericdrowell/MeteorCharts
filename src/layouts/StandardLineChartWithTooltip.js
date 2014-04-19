@@ -4,7 +4,7 @@
       components: [  
         {
           id: 'lineSeries',
-          name: 'LineSeries',
+          type: 'LineSeries',
           x: function() {
             return chart.components.yAxis.width() + (chart.padding() * 2);
           },
@@ -21,7 +21,7 @@
         },
         {
           id: 'xAxis',
-          name: 'Axis',
+          type: 'Axis',
           x: function() {
             // bind axis x position to line x position
             return chart.components.lineSeries.x();
@@ -54,7 +54,7 @@
         },
         {
           id: 'yAxis',
-          name: 'Axis',
+          type: 'Axis',
           x: function() {
             return chart.padding();
           },
@@ -85,10 +85,10 @@
         },
         {
           id: 'tooltip',
-          name: 'Tooltip',
-          x: function() {
+          type: 'Tooltip',
+          x: MeteorChart.Event.map({type: 'pointermove', id: 'lineSeries'}, function(evt) {
             return 100;
-          },
+          }, chart, 'tooltip'),
           y: function() {
             return 100;
           },

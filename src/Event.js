@@ -1,40 +1,40 @@
 (function() {
   MeteorChart.Event = {
     on: function(obj, func) {
-      var type = obj.type;
+      var event = obj.event;
 
-      if (!this._events[type]) {
-        this._events[type] = [];
+      if (!this._events[event]) {
+        this._events[event] = [];
       }
 
-      this._events[type].push({
-        name: obj.name,
+      this._events[event].push({
+        type: obj.type,
         id: obj.id,
         handler: func
       });
         
     },
     fire: function(obj) {
-      var type = obj.type,
-          name = obj.name,
+      var event = obj.event,
+          type = obj.type,
           id = obj.id,
-          events = this._events[type],
+          events = this._events[event],
           len, n, event;
 
       if (events) {
         len = events.length;
         for (n=0; n<len; n++) {
           event = events[n];
-          if (this._shouldExecuteHandler(event, name, id)) {
+          if (this._shouldExecuteHandler(event, type, id)) {
             event.handler(obj);
           }
         }
       }
     },
-    map: function(event, func, chart, id) {
+    map: function(eventObj, func, chart, id) {
       var cachedEvt = {};
 
-      this.on(event, function(evt) {
+      this.on(eventObj, function(evt) {
         cachedEvt = evt;
         chart.components[id]._render();
       });
@@ -43,9 +43,9 @@
         return func(cachedEvt);
       };
     },
-    _shouldExecuteHandler: function(event, name, id) {
-      // name check
-      if (event.name && event.name !== name) {
+    _shouldExecuteHandler: function(event, type, id) {
+      // type check
+      if (event.type && event.type !== type) {
         return false;
       }
 

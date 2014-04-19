@@ -44,7 +44,7 @@ var MeteorChart;
       MeteorChart.log('-- ' + conf.id);
 
       this._decorateConf(conf);
-      component = new MeteorChart.Components[conf.name](conf);
+      component = new MeteorChart.Components[conf.type](conf);
 
       this.components[component.id] = component;
       this.components.push(component); 
