@@ -86,18 +86,40 @@
         {
           id: 'tooltip',
           type: 'Tooltip',
-          x: MeteorChart.Event.map({type: 'pointermove', id: 'lineSeries'}, function(evt) {
-            return 100;
+
+          x: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
+            var lineSeries = chart.components.lineSeries,
+                tooltip = chart.components.tooltip,
+                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+                
+            return (nearestPoint ? nearestPoint.x + lineSeries.x() : 0) 
+              - (tooltip.width() / 2);
           }, chart, 'tooltip'),
-          y: function() {
-            return 100;
-          },
-          data: function() {
-            return {
-              title: 'blah blah',
-              content: 'some content'
-            };
-          }
+
+          y: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
+            var lineSeries = chart.components.lineSeries,
+                tooltip = chart.components.tooltip,
+                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+                
+            return (nearestPoint ? nearestPoint.y + lineSeries.y() : 0)
+              - tooltip.height() - tooltip.padding(-3);
+          }, chart, 'tooltip'),
+
+          data: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
+            var lineSeries = chart.components.lineSeries,
+                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+                
+            if (nearestPoint) {
+              return {
+                title: nearestPoint.title,
+                content: nearestPoint.dataX + ', ' + nearestPoint.dataY
+              }
+            }
+            else {
+              return null;
+            }
+          }, chart, 'tooltip')
+
         }
       ]
     };

@@ -136,6 +136,11 @@
         }
       }
     },
+    squaredDistanceBetweenPoints: function(p1, p2) {
+      var diffX = p2.x - p1.x,
+          diffY = p2.y - p1.y;
+      return (diffX*diffX) + (diffY*diffY);
+    },
     _getScale: function(val, scaleFactor) {
       if (!scaleFactor) {
         scaleFactor = 1;

@@ -156,30 +156,33 @@
         {
           id: 'inspectCircle',
           type: 'Circle',
-          x: function() {
-            var data = this.data(),
-                style = this.style(),
-                lineSeries = chart.components.lineSeries;
 
-            if (data) {
-              return lineSeries.dataToChartX(data.x) + lineSeries.x() - style.radius - (style.strokeWidth/2);
+          x: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) { 
+            var lineSeries = chart.components.lineSeries,
+                nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset),
+                style = chart.components.inspectCircle.style();
+
+            if (nearestPoint) {
+              return nearestPoint.x + lineSeries.x() - style.radius - (style.strokeWidth/2);
             }
             else {
               return 0;
             }
-          },
-          y: function() {
-            var data = this.data(),
-                style = this.style(),
-                lineSeries = chart.components.lineSeries;
+          }, chart, 'inspectCircle'),
 
-            if (data) {
-              return lineSeries.dataToChartY(data.y) + lineSeries.y() - style.radius - (style.strokeWidth/2);
+          y: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) { 
+            var lineSeries = chart.components.lineSeries,
+                nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset),
+                style = chart.components.inspectCircle.style();
+
+            if (nearestPoint) {
+              return nearestPoint.y + lineSeries.y() - style.radius - (style.strokeWidth/2);
             }
             else {
               return 0;
             }
-          },
+          }, chart, 'inspectCircle'),
+
           style: function() {
             var dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
             return {
@@ -189,14 +192,12 @@
               strokeWidth: 2
             }
           },
+
           data: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) {            
             var nearestPoint = chart.components.lineSeries.getSeriesNearestPointX(0, evt.offset);
 
             if (nearestPoint) {
-              return {
-                x: nearestPoint.x,
-                y: nearestPoint.y,
-              };
+              return {};
             }
             else {
               return null;

@@ -15,12 +15,13 @@
           style = this.style(),
           theme = this.chart.theme;
 
-      if (data) {
+      if (data && data.title && data.content) {
         // tooltip
         this.tooltip.style.fontFamily = style.fontFamily || theme.fontFamily;
         this.tooltip.style.color = style.fontColor || theme.primary;
         this.tooltip.style.padding = this.padding(-3);
-        this.tooltip.style.border = '2px solid ' + (style.borderColor || theme.secondary);  
+        this.tooltip.style.border = '2px solid ' + (style.borderColor || theme.secondary); 
+        this.tooltip.style.backgroundColor = style.backgroundColor || theme.background; 
 
         // title
         this.tooltipTitle.style.fontSize = (style.fontSize || theme.fontSize) * MeteorChart.Constants.TYPOGRAPHIC_SCALE;
@@ -35,11 +36,11 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'width', function() {
-    return 200;
+    return this.tooltip.offsetWidth;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'height', function() {
-    return 50;
+    return this.tooltip.offsetHeight;
   });
 
 })();

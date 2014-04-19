@@ -61,10 +61,10 @@
     dataToChartY: function(y) {
       return this.height() - ((y - this.minY) * this.scaleY);
     },
-    dataToChart: function(pos) {
+    dataToChart: function(x, y) {
       return {
-        x: this.dataToChartX(pos.x),
-        y: this.dataToChartY(pos.y)
+        x: this.dataToChartX(x),
+        y: this.dataToChartY(y)
       }; 
     },
     chartToDataX: function(x) {
@@ -73,10 +73,10 @@
     chartToDataY:function(y) {
       return this.minY - ((y - this.height()) / this.scaleY);
     },
-    chartToData: function(pos) {
+    chartToData: function(x, y) {
       return {
-        x: this.chartToDataX(pos.x),
-        y: this.chartToDataY(pos.y)
+        x: this.chartToDataX(x),
+        y: this.chartToDataY(y)
       };
     },
     getSeriesNearestPointX: function(n, x) {
@@ -102,8 +102,8 @@
 
         if (chartDistance < shortestDistance) {
           nearestPoint = {
-            x: point.x,
-            y: point.y,
+            dataX: point.x,
+            dataY: point.y,
             title: title
           };
 
@@ -111,6 +111,63 @@
 
         }
       }
+
+      // decorate
+      if (nearestPoint) {
+        nearestPoint.x = this.dataToChartX(nearestPoint.dataX),
+        nearestPoint.y = this.dataToChartY(nearestPoint.dataY)
+      }
+
+      return nearestPoint;
+    },
+    getNearestPoint: function(x, y) {
+      var dataPos = this.chartToData(x, y),
+          data = this.data(),
+          series = data.series,
+          len = series.length,
+          shortestDistance = Infinity,
+          nearestPoint = null,
+          squaredDistanceBetweenPoints = MeteorChart.Util.squaredDistanceBetweenPoints,
+          n, i, ser, points, point, pointsLen, title, chartDistance;
+   
+      for (n=0; n<len; n++) {
+        ser = series[n];
+        points = ser.points;
+        title = ser.title;
+        pointsLen = points.length;
+
+        for (i=0; i<pointsLen; i+=2) {
+          point = {
+            x: points[i], 
+            y: points[i+1]
+          };
+
+          chartDistance = squaredDistanceBetweenPoints(point, dataPos);
+
+          if (chartDistance < shortestDistance) {
+            nearestPoint = {
+              dataX: point.x,
+              dataY: point.y,
+              title: title
+            }
+
+            shortestDistance = chartDistance;
+          }
+        }
+      }
+
+      // decorate
+      if (nearestPoint) {
+        nearestPoint.x = this.dataToChartX(nearestPoint.dataX),
+        nearestPoint.y = this.dataToChartY(nearestPoint.dataY)
+      }
+
+      // don't return nearest point if too far away
+      // if (nearestPoint) {
+      //   if (squaredDistanceBetweenPoints(nearestPoint, dataPos) > 50*50) {
+      //     nearestPoint = null;
+      //   }
+      // }
 
       return nearestPoint;
     },

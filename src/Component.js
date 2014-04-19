@@ -26,15 +26,21 @@
 
   MeteorChart.Component.prototype = {
     _render: function() {
+      // reset width and height so that they do not affect component
+      // width and height methods
+      this.content.style.width = 'auto';
+      this.content.style.height = 'auto';
+
+      // render concrete component first because the component width and height
+      // may depend on it
+      if (this.render) {
+        this.render();
+      }
+
       this.content.style.left = this.x();
       this.content.style.top = this.y();
       this.content.style.width = this.width();
       this.content.style.height = this.height();
-
-      // concrete component render
-      if (this.render) {
-        this.render();
-      }
     },
     destroy: function() {
 
