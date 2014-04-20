@@ -61,31 +61,15 @@ var MeteorChart;
       component._render();
       this.content.appendChild(component.content); 
     }
+
+    // manually re-render components in case a state dependency has changed due
+    // to the initial renderings.  For each component, if the state is unchanged, its
+    // render() method will not be called
+    this.render();
+
+    // store reference to this chart
+    MeteorChart.charts.push(this);
   };
-
-  // UA
-  MeteorChart.UA = (function(root) {
-    var userAgent = (root.navigator && root.navigator.userAgent) || '';
-    var ua = userAgent.toLowerCase(),
-        // jQuery UA regex
-        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
-        /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
-        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
-        /(msie) ([\w.]+)/.exec( ua ) ||
-        ua.indexOf('compatible') < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
-        [],
-
-        // adding mobile flag as well
-        mobile = !!(userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i));
-
-    return {
-        browser: match[ 1 ] || '',
-        version: match[ 2 ] || '0',
-
-        // adding mobile flab
-        mobile: mobile
-    };
-  })(this);
 
   MeteorChart.prototype = {
     _decorateConf: function(conf) {
@@ -125,10 +109,16 @@ var MeteorChart;
     render: function() { 
       var components = this.components,
           len = components.length,
+          stateChanged = false,
           n, component;
 
+      // TODO: implement while loop whenever stateChanged = true
+      // in case rendering a component affects the state of another component.
+      // so far this isn't a problem for any of the existing layouts
       for (n=0; n<len; n++) {
-        components[n]._render();
+        if (components[n]._render()) {
+          stateChanged = true;
+        }
       }
     },
     // render helpers
@@ -149,9 +139,48 @@ var MeteorChart;
     PADDING_SCALE: 1.2
   };
 
+  // global properties
+  MeteorChart.charts = [];
+
+  // UA
+  MeteorChart.UA = (function(root) {
+    var userAgent = (root.navigator && root.navigator.userAgent) || '';
+    var ua = userAgent.toLowerCase(),
+        // jQuery UA regex
+        match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+        /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+        /(msie) ([\w.]+)/.exec( ua ) ||
+        ua.indexOf('compatible') < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+        [],
+
+        // adding mobile flag as well
+        mobile = !!(userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i));
+
+    return {
+        browser: match[ 1 ] || '',
+        version: match[ 2 ] || '0',
+
+        // adding mobile flab
+        mobile: mobile
+    };
+  })(this);
+
   MeteorChart.log = function(obj) {
     console.log(obj);
   };
+
+  MeteorChart.render = function() {
+    var charts = this.charts,
+        len = charts.length,
+        n;
+
+    for (n=0; n<len; n++) {
+      charts[n].render();
+    }
+  }
+
+
 })();
 
 // Uses Node, AMD or browser globals to create a module.

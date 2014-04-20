@@ -58,6 +58,8 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'width', function() {
+    // TODO: need to use .offsetWidth on container.  Need to pre-build the label DOM
+    // and append it in init() so that .offetWidth will work synchronously
     return 50; 
   });
 

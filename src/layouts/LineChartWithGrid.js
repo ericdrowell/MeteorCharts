@@ -19,7 +19,7 @@
           },
           data: MeteorChart.Event.map({event: 'labelOffsetsChange', id: 'xAxis'}, function(evt) {
             return evt.labelOffsets;
-          }, chart, 'verticalGridLines'),
+          }),
           style: function() {
             return {
               orientation: 'vertical',
@@ -44,7 +44,7 @@
           },
           data: MeteorChart.Event.map({event: 'labelOffsetsChange', id: 'yAxis'}, function(evt) {
             return evt.labelOffsets;
-          }, chart, 'horizontalGridLines'),
+          }),
           style: function() {
             return {
               orientation: 'horizontal',

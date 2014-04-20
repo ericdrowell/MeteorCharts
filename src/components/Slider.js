@@ -99,6 +99,7 @@
 
       // drag
       document.body.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
+        
         if (startOffsetPos !== null) {
           var diff, newOffset;
 
@@ -126,8 +127,6 @@
             }
             handle.style.top = newOffset;    
           }
-
-
 
           that.fire('dragmove', {
             offset: newOffset

@@ -15,6 +15,16 @@
     this.data(config.data);
     this.style(config.style);
 
+    // cache
+    this.cache = {
+      x: null,
+      y: null,
+      width: null,
+      height: null,
+      data: null,
+      style: null
+    };
+
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'component-content';
@@ -26,33 +36,63 @@
 
   MeteorChart.Component.prototype = {
     _render: function() {
-      // reset width and height so that they do not affect component
-      // width and height methods
-      this.content.style.width = 'auto';
-      this.content.style.height = 'auto';
+      var state = {
+        x: this.x(),
+        y: this.y(),
+        width: this.width(),
+        height: this.height(),
+        data: this.data(),
+        style: this.style()
+      };
 
-      // render concrete component first because the component width and height
-      // may depend on it
-      if (this.render) {
-        this.render();
+      if (!MeteorChart.Util.isEqual(this.cache, state)) {
+        
+        // reset width and height so that they do not affect component
+        // width and height methods
+        this.content.style.width = 'auto';
+        this.content.style.height = 'auto';
+
+        // render concrete component first because the component width and height
+        // may depend on it
+        if (this.render) {
+          this.render();
+        }
+
+        this.content.style.left = this.x();
+        this.content.style.top = this.y();
+        this.content.style.width = this.width();
+        this.content.style.height = this.height();
+
+        //MeteorChart.log('-- ' + this.id + ' rendered ');
+
+        // set cache to current state
+        this.cache = state;
+
+        // did not use cache
+        return false;
+      }
+      else {
+        //MeteorChart.log('-- ' + this.id + ' state is the same ');
+
+        // used cache
+        return true;
       }
 
-      this.content.style.left = this.x();
-      this.content.style.top = this.y();
-      this.content.style.width = this.width();
-      this.content.style.height = this.height();
+
     },
     destroy: function() {
 
     },
     fire: function(event, obj) {
       var that = this;
-      MeteorChart.Event.fire(MeteorChart.Util.merge({
+      MeteorChart.Event.fire.call(this, MeteorChart.Util.merge({
         event: event,
         type: this.type,
         id: this.id
-      }, obj));
+      }, 
+      obj));
     },
+
     // render helpers
     /**
      * @param {Integer} [scaleFactor] can be -3, -2, -1, 0, 1, 2, etc.  -1, 0, and -1 and

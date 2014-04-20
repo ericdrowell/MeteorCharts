@@ -18,25 +18,25 @@
       var event = obj.event,
           type = obj.type,
           id = obj.id,
-          events = this._events[event],
+          events = MeteorChart.Event._events[event],
           len, n, event;
 
       if (events) {
         len = events.length;
         for (n=0; n<len; n++) {
           event = events[n];
-          if (this._shouldExecuteHandler(event, type, id)) {
+          if (MeteorChart.Event._shouldExecuteHandler(event, type, id)) {
             event.handler(obj);
           }
         }
       }
     },
-    map: function(eventObj, func, chart, id) {
+    map: function(eventObj, func) {
       var cachedEvt = {};
 
       this.on(eventObj, function(evt) {
         cachedEvt = evt;
-        chart.components[id]._render();
+        MeteorChart.render();
       });
 
       return function() {

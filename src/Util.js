@@ -80,6 +80,34 @@
         maxY: maxY
       };
     },
+    isEqual: function(a, b) {
+      var aType = Object.prototype.toString.call(a);
+
+      if (aType === '[object Object]') {
+        for (var key in a) {
+          if (!this.isEqual(a[key], b[key])) {
+            return false;
+          }
+        }
+        return true;
+      }
+      else if (aType === '[object Array]') {
+        // TODO: it's extremely expensive to do a diff of large arrays, which 
+        // are currently only data series data structures.  For now, always return
+        // true.  Need to find a way to detect if two data series are equal or not
+        // in a very fast way.
+
+        // for (var n=0, len=a.length; n<len; n++) {
+        //   if (!this.isEqual(a[n], b[n])) {
+        //     return false;
+        //   }
+        // }
+        return true;
+      }
+      else {
+        return a === b
+      }
+    },
     // Returns a function, that, when invoked, will only be triggered at most once
     // during a given window of time. Normally, the throttled function will run
     // as much as it can, without ever going more than once per `wait` duration;

@@ -1,5 +1,6 @@
 (function() {
   MeteorChart.Layouts.StandardLineChartWithTooltip = function(chart) {
+    console.log(this)
     return {
       components: [  
         {
@@ -91,10 +92,10 @@
             var lineSeries = chart.components.lineSeries,
                 tooltip = chart.components.tooltip,
                 nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
-                
+
             return (nearestPoint ? nearestPoint.x + lineSeries.x() : 0) 
               - (tooltip.width() / 2);
-          }, chart, 'tooltip'),
+          }),
 
           y: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
             var lineSeries = chart.components.lineSeries,
@@ -103,7 +104,7 @@
                 
             return (nearestPoint ? nearestPoint.y + lineSeries.y() : 0)
               - tooltip.height() - tooltip.padding(-3);
-          }, chart, 'tooltip'),
+          }),
 
           data: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
             var lineSeries = chart.components.lineSeries,
@@ -118,7 +119,7 @@
             else {
               return null;
             }
-          }, chart, 'tooltip')
+          })
 
         }
       ]

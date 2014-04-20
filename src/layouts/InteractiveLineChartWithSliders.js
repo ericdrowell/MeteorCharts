@@ -137,7 +137,7 @@
             var offset = evt && evt.offset ? evt.offset : 0,
                 inspectSlider = chart.components.inspectSlider;
             return offset + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
-          }, chart, 'inspectLine'),
+          }),
           y: function() {
             return chart.padding();
           },
@@ -168,7 +168,7 @@
             else {
               return 0;
             }
-          }, chart, 'inspectCircle'),
+          }),
 
           y: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) { 
             var lineSeries = chart.components.lineSeries,
@@ -181,7 +181,7 @@
             else {
               return 0;
             }
-          }, chart, 'inspectCircle'),
+          }),
 
           style: function() {
             var dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
@@ -202,7 +202,7 @@
             else {
               return null;
             }
-          }, chart, 'inspectCircle')
+          })
         },
         {
           id: 'inspectSlider',
