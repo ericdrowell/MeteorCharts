@@ -36,6 +36,18 @@
       this.dummy.innerHTML = '';
 
       return height;
+    },
+    hasClass: function(el, name) {
+      return new RegExp(' ' + name + ' ').test(' ' + elem.className + ' ');
+    },
+    addClass: function(el, name) {
+      if (!this.hasClass(el, name)) {
+        elem.className += ' ' + name;
+      }
+    },
+    removeClass: function(el, name) {
+      var reg = new RegExp('(\\s|^)'+name+'(\\s|$)');
+      el.className = el.className.replace(reg,' ');
     }
   }
 })();

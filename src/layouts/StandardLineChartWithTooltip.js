@@ -97,6 +97,7 @@
             if (nearestPoint) {
               newX = nearestPoint.x + lineSeries.x() - (tooltip.width() / 2);
 
+              // bounds
               if (newX + tooltip.width() > chart.width()) {
                 newX = chart.width() - tooltip.width();
               }
@@ -117,6 +118,7 @@
             if (nearestPoint) {
               newY = nearestPoint.y + lineSeries.y() - tooltip.height() - tooltip.padding(-3);
 
+              // bounds
               if (newY < 0) {
                 newY = 0;
               }
@@ -135,6 +137,8 @@
             var lineSeries = chart.components.lineSeries,
                 nearestPoint;
 
+            // TODO: shouldn't have to clear the cache here.  Need to do this automatically
+            // somehow
             chart.components.tooltip.clearCache();
                 
             if (evt.event === 'mousemove') {
