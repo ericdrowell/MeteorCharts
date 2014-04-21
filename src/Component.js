@@ -39,7 +39,8 @@
       };
 
       if (!MeteorChart.Util.isEqual(this.cache, state)) {
-        
+        //MeteorChart.log('-- ' + this.id + ' render');
+
         // reset width and height so that they do not affect component
         // width and height methods
         this.content.style.width = 'auto';
@@ -56,7 +57,7 @@
         this.content.style.width = this.width();
         this.content.style.height = this.height();
 
-        //MeteorChart.log('-- ' + this.id + ' state changed');
+        
 
         // set cache to current state
         this.cache = state;

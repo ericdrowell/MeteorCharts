@@ -17,9 +17,9 @@
           height: function() {
             return this.chart.components.lineSeries.height();
           },
-          data: MeteorChart.Event.map({event: 'labelOffsetsChange', id: 'xAxis'}, function(evt) {
-            return evt.labelOffsets;
-          }),
+          data: function(evt) {
+            return chart.components.xAxis.labelOffsets;
+          },
           style: function() {
             return {
               orientation: 'vertical',
@@ -42,9 +42,9 @@
           height: function() {
             return this.chart.components.lineSeries.height();
           },
-          data: MeteorChart.Event.map({event: 'labelOffsetsChange', id: 'yAxis'}, function(evt) {
-            return evt.labelOffsets;
-          }),
+          data: function() {
+            return chart.components.yAxis.labelOffsets;
+          },
           style: function() {
             return {
               orientation: 'horizontal',

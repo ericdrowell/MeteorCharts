@@ -26,10 +26,6 @@
         offset = n * increment * scale;
         that._addLabel(offset, val);
       });  
-
-      this.fire('labelOffsetsChange', {
-        labelOffsets: this.labelOffsets
-      });
     },
     _addLabel: function(offset, val) {
       var theme = this.chart.theme,

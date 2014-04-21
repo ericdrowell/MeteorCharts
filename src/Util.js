@@ -102,7 +102,9 @@
         //     return false;
         //   }
         // }
-        return true;
+        //return true;
+
+        return a.join() === b.join();
       }
       else {
         return a === b

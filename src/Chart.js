@@ -66,6 +66,7 @@ var MeteorChart;
     // to the initial renderings.  For each component, if the state is unchanged, its
     // render() method will not be called
     this.render();
+    this.render();
 
     // store reference to this chart
     MeteorChart.charts.push(this);
