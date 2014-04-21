@@ -88,39 +88,67 @@
           id: 'tooltip',
           type: 'Tooltip',
 
-          x: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
+          x: MeteorChart.Event.map({event: 'mousemove', id: 'lineSeries'}, function(evt) {
             var lineSeries = chart.components.lineSeries,
                 tooltip = chart.components.tooltip,
-                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
+                newX;
 
-            return (nearestPoint ? nearestPoint.x + lineSeries.x() : 0) 
-              - (tooltip.width() / 2);
+            if (nearestPoint) {
+              newX = nearestPoint.x + lineSeries.x() - (tooltip.width() / 2);
+
+              if (newX + tooltip.width() > chart.width()) {
+                newX = chart.width() - tooltip.width();
+              }
+
+              return newX;
+            }
+            else {
+              return 0;
+            }
           }),
 
-          y: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
+          y: MeteorChart.Event.map({event: 'mousemove', id: 'lineSeries'}, function(evt) {
             var lineSeries = chart.components.lineSeries,
                 tooltip = chart.components.tooltip,
-                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
+                newY;
+
+            if (nearestPoint) {
+              newY = nearestPoint.y + lineSeries.y() - tooltip.height() - tooltip.padding(-3);
+
+              if (newY < 0) {
+                newY = 0;
+              }
+
+              return newY;
+            }
+            else {
+              return 0;
+            }
                 
             return (nearestPoint ? nearestPoint.y + lineSeries.y() : 0)
               - tooltip.height() - tooltip.padding(-3);
           }),
 
-          data: MeteorChart.Event.map({event: 'pointermove', id: 'lineSeries'}, function(evt) {
+          data: MeteorChart.Event.map([{event: 'mousemove', id: 'lineSeries'}, {event: 'mouseout', id: 'lineSeries'}], function(evt) {
             var lineSeries = chart.components.lineSeries,
-                nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+                nearestPoint;
+
+            chart.components.tooltip.clearCache();
                 
-            if (nearestPoint) {
+            if (evt.event === 'mousemove') {
+              nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
               return {
                 title: nearestPoint.title,
                 content: nearestPoint.dataX + ', ' + nearestPoint.dataY
               }
             }
             else {
-              return null;
+              
+              return {};
             }
           })
-
         }
       ]
     };

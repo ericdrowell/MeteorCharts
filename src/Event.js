@@ -31,13 +31,22 @@
         }
       }
     },
-    map: function(eventObj, func) {
-      var cachedEvt = {};
+    map: function(eventArr, func) {
+      var that = this,
+          cachedEvt = {},
+          n, len;
 
-      this.on(eventObj, function(evt) {
-        cachedEvt = evt;
-        MeteorChart.render();
-      });
+      // convert eventArr into an array if it's not an array
+      if (!MeteorChart.Util._isArray(eventArr)) {
+        eventArr = [eventArr];
+      }
+
+      for (n=0, len=eventArr.length; n<len; n++) {
+        that.on(eventArr[n], function(evt) {
+          cachedEvt = MeteorChart.Util.merge(cachedEvt, evt);
+          MeteorChart.render();
+        });
+      }
 
       return function() {
         return func(cachedEvt);

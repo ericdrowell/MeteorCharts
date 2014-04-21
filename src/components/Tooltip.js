@@ -7,7 +7,6 @@
       this.content.style.pointerEvents = 'none';
 
       this.tooltip = MeteorChart.Dom.createElement('div');
-      this.tooltip.style.display = 'inline-block';
 
       this.tooltipTitle = MeteorChart.Dom.createElement('h2');
       this.tooltipContent = MeteorChart.Dom.createElement('p');
@@ -23,6 +22,7 @@
 
       if (data && data.title && data.content) {
         // tooltip
+        this.tooltip.style.display = 'inline-block';
         this.tooltip.style.fontFamily = style.fontFamily || theme.fontFamily;
         this.tooltip.style.color = style.fontColor || theme.primary;
         this.tooltip.style.padding = this.padding(-3);
@@ -37,6 +37,9 @@
         this.tooltipContent.style.fontSize = style.fontSize || theme.fontSize;
         this.tooltipContent.style.marginTop = 5;
         this.tooltipContent.innerHTML = data.content;
+      }
+      else {
+        this.tooltip.style.display = 'none';
       }
     }
   });

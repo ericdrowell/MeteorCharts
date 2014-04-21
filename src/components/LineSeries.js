@@ -179,11 +179,15 @@
       content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
         contentPos = MeteorChart.Dom.getElementPosition(content);
 
-        that.fire('pointermove', {
+        that.fire('mousemove', {
           x: evt.clientX - contentPos.x,
           y: evt.clientY - contentPos.y
         });
       }, 17));
+
+      content.addEventListener('mouseout', function(evt) {
+        that.fire('mouseout');
+      });
     },
     _setScale: function() {
       var x = this.x(),

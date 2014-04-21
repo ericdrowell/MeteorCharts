@@ -16,14 +16,7 @@
     this.style(config.style);
 
     // cache
-    this.cache = {
-      x: null,
-      y: null,
-      width: null,
-      height: null,
-      data: null,
-      style: null
-    };
+    this.clearCache();
 
     // build content container
     this.content = document.createElement('div');
@@ -63,7 +56,7 @@
         this.content.style.width = this.width();
         this.content.style.height = this.height();
 
-        //MeteorChart.log('-- ' + this.id + ' rendered ');
+        //MeteorChart.log('-- ' + this.id + ' state changed');
 
         // set cache to current state
         this.cache = state;
@@ -72,7 +65,7 @@
         return false;
       }
       else {
-        //MeteorChart.log('-- ' + this.id + ' state is the same ');
+        //MeteorChart.log('-- ' + this.id + ' state is the same');
 
         // used cache
         return true;
@@ -91,6 +84,16 @@
         id: this.id
       }, 
       obj));
+    },
+    clearCache: function() {
+      this.cache = {
+        x: null,
+        y: null,
+        width: null,
+        height: null,
+        data: null,
+        style: null
+      };
     },
 
     // render helpers
