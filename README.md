@@ -20,8 +20,6 @@ var chart = new MeteorChart({
   container: 'container',
   width: 500,
   height: 290,
-  padding: 20,
-
   theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.StandardLineChart,
 
