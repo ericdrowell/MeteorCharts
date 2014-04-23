@@ -1,46 +1,103 @@
 (function() {
   MeteorChart.Component.extend('Paginator', {
     init: function() {
-      this.svg = MeteorChart.Dom.createElement('svg');
-      this.svg.style.display = 'inline-block';
+      this.leftArrowSVG = MeteorChart.SVG.createElement('svg');
+      this.leftArrowSVG.style.position = 'absolute';
+      this.leftArrowSVG.style.left = 0;
+      this.leftArrowSVG.style.top = 0;
 
-      var svgNS = 'http://www.w3.org/2000/svg';
+      this.leftArrow = MeteorChart.SVG.createElement('path');
+      this.leftArrowSVG.appendChild(this.leftArrow);
 
-      this.svg = document.createElementNS(svgNS, 'svg');
-      this.svg.setAttribute('xmlns', svgNS);
-      this.circle = document.createElementNS(svgNS,'circle');
+      this.text = MeteorChart.Dom.createElement('span');
+      this.text.style.display = 'block';
+      this.text.style.textAlign = 'center';
 
-      this.svg.appendChild(this.circle);
-      this.content.appendChild(this.svg);
+      this.rightArrowSVG = MeteorChart.SVG.createElement('svg');
+      this.rightArrowSVG.style.position = 'absolute';
+      this.rightArrowSVG.style.right = 0;
+      this.rightArrowSVG.style.top = 0;
+
+      this.rightArrow = MeteorChart.SVG.createElement('path');
+      this.rightArrowSVG.appendChild(this.rightArrow);
+
+      this.content.appendChild(this.leftArrowSVG);
+      this.content.appendChild(this.text);
+      this.content.appendChild(this.rightArrowSVG);
+
+      this._bind();
     },
     render: function() {
-      var data = this.data(),
-          style = this.style(),
-          strokeWidth, radius;
+      var style = this.style(),
+          theme = this.chart.theme,
+          leftArrowSVG = this.leftArrowSVG,
+          leftArrow = this.leftArrow,
+          text = this.text,
+          rightArrowSVG = this.rightArrowSVG,
+          rightArrow = this.rightArrow,
+          arrowStrokeWidth = 4,
+          arrowWidth = 10,
+          arrowHeight = 12;
 
-      if (data) {
-        radius = style.radius;
-        strokeWidth = style.strokeWidth;
+      // left arrow
+      leftArrowSVG.setAttribute('width', arrowWidth + (arrowStrokeWidth * 2));
+      leftArrowSVG.setAttribute('height', arrowHeight + (arrowStrokeWidth * 2));
+      leftArrow.setAttribute('d', [
+        'M', arrowStrokeWidth, ' ', (arrowHeight / 2) + arrowStrokeWidth, ' ',
+        'L', arrowStrokeWidth + arrowWidth, ' ', arrowStrokeWidth, ' ',
+        'L', arrowStrokeWidth + arrowWidth, ' ', arrowStrokeWidth + arrowHeight, ' ',
+        'Z'
+      ].join(''));
+      leftArrow.setAttribute('fill', theme.secondary);
+      leftArrow.setAttribute('stroke', theme.secondary);
+      leftArrow.setAttribute('stroke-width', arrowStrokeWidth);
+      leftArrow.setAttribute('stroke-linejoin', 'round');
 
-        this.svg.setAttribute('width', (radius * 2) + strokeWidth);
-        this.svg.setAttribute('height', (radius * 2) + strokeWidth);
+      // content
+      text.style.height = arrowHeight + (arrowStrokeWidth * 2);
+      text.style.lineHeight = (arrowHeight + (arrowStrokeWidth * 2)) + 'px';
+      text.innerHTML = this.data().text || '';
+      text.style.fontSize = theme.fontSize;
+      text.style.fontFamily = theme.fontFamily;
+      text.style.color = theme.primary;
 
-        this.circle.setAttribute('id','mycircle');
-        this.circle.setAttribute('cx', radius + strokeWidth / 2);
-        this.circle.setAttribute('cy', radius + strokeWidth / 2);
-        this.circle.setAttribute('r', radius);
-        this.circle.setAttribute('fill', style.fill);
-        this.circle.setAttribute('stroke', style.stroke);
-        this.circle.setAttribute('stroke-width', strokeWidth);
-      }
+      // right arrow
+      rightArrowSVG.setAttribute('width', arrowWidth + (arrowStrokeWidth * 2));
+      rightArrowSVG.setAttribute('height', arrowHeight + (arrowStrokeWidth * 2));
+      rightArrow.setAttribute('d', [
+        'M', arrowStrokeWidth + arrowWidth, ' ', (arrowHeight / 2) + arrowStrokeWidth, ' ',
+        'L', arrowStrokeWidth, ' ', arrowStrokeWidth, ' ',
+        'L', arrowStrokeWidth, ' ', arrowStrokeWidth + arrowHeight, ' ',
+        'Z'
+      ].join(''));
+      rightArrow.setAttribute('fill', theme.secondary);
+      rightArrow.setAttribute('stroke', theme.secondary);
+      rightArrow.setAttribute('stroke-width', arrowStrokeWidth);
+      rightArrow.setAttribute('stroke-linejoin', 'round');   
+    },
+    _bind: function() {
+      var leftArrow = this.leftArrow,
+          rightArrow = this.rightArrow;
+
+      // cursors
+      leftArrow.addEventListener('mouseover', function(evt) {
+        leftArrow.style.cursor = 'pointer';
+      }); 
+      leftArrow.addEventListener('mouseout', function(evt) {
+        leftArrow.style.cursor = 'default';
+      }); 
+
+      // cursors
+      rightArrow.addEventListener('mouseover', function(evt) {
+        rightArrow.style.cursor = 'pointer';
+      }); 
+      rightArrow.addEventListener('mouseout', function(evt) {
+        rightArrow.style.cursor = 'default';
+      });    
     }
   });
 
-  MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'width', function() {
-    return 100;
-  });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'height', function() {
-    return 20;
+  MeteorChart.Util.addMethod(MeteorChart.Components.Paginator, 'height', function() {
+    return this.text.offsetHeight;
   });
 })();

@@ -37,7 +37,7 @@
           height: function() {
             var components = chart.components;
 
-            return components.lineSeries.height() + chart.padding() + components.inspectSlider.height();
+            return components.xAxis.y() - chart.padding();
           },
           style: function() {
             return {
@@ -57,7 +57,7 @@
           },
           y: function() {
             var inspectSlider = chart.components.inspectSlider;
-            return inspectSlider.y() + inspectSlider.height() + chart.padding();
+            return inspectSlider.y() + inspectSlider.height() + chart.padding() + chart.components.paginator.height();
           },
           width: function() {
             var yAxis = chart.components.yAxis;
@@ -66,8 +66,7 @@
           },
           height: function() {
             var components = chart.components;
-
-            return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 5) - components.xAxis.height();
+            return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 6) - components.xAxis.height() - components.paginator.height();
           }
         },
         {
@@ -139,7 +138,7 @@
             return offset + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
           }),
           y: function() {
-            return chart.padding();
+            return chart.padding() + chart.components.paginator.height();
           },
           width: function() {
             return 2;
@@ -211,7 +210,7 @@
             return chart.components.lineSeries.x() - (this.style().handleWidth) / 2;
           },
           y: function() {
-            return chart.padding();
+            return chart.padding() + chart.components.paginator.height();
           },
           width: function() {
             return chart.components.lineSeries.width() + this.style().handleWidth;
@@ -225,7 +224,25 @@
               handleHeight: 30
             }
           }
-        }
+        },
+        {
+          id: 'paginator',
+          type: 'Paginator',
+          x: function() {
+            return chart.width() - chart.theme.padding - this.width();
+          },
+          y: function() {
+            return chart.padding();
+          },
+          width: function() {
+            return 160;
+          },
+          data: function() {
+            return {
+              text: 'Cycle 221 of 1709'
+            }
+          }
+        },
       ]
     };
   };
