@@ -145,7 +145,7 @@
             return 2;
           },
           height: function() {
-            return chart.components.lineSeries.height();
+            return chart.components.lineSeries.height() + chart.padding();
           },
           style: function() {
             return {
