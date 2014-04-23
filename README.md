@@ -20,12 +20,8 @@ var chart = new MeteorChart({
   container: 'container',
   width: 500,
   height: 290,
-  padding: 20,
-
   theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.StandardLineChart,
-
-  // set components data and options
   components: {
     lineSeries: {
       data: [
@@ -60,17 +56,7 @@ var chart = new MeteorChart({
   * __Theme__ - themes define the color palette and fonts used in your chart.  Some exmaples of pre-built themes include CoteAzure and Lollapallooza.  It's easy to create your own themes as well.
   * __Data__ - most components require data to render.  For example, if you're creating a standard line chart, the data for the line component is a series of data points.  The data for the x and y axis is bound to the line component data.  And the data for the title component is just a string, like "This is my chart title".
   * __Formatter__ - formatters are used to format data into human readable strings.  For example, if you're creating a line chart with dates along the x-axis, you'll want to use the Date formatter to convert the unix timestamps into human readable dates.  Formatters can also be used with other components, such as tooltips.
-  * __Interaction__ - interactions give mouse and touch interactivity to charts.  For example, the LineChartTooltip interaction enables users to inspect data for a line chart.
-
-## File Size for v0.1.0
-
-  * __Core__ - 6kb
-  * __Full__ - 21kb
   
-The Core package (meteorcharts-core-vx.x.x.js) includes the barebones JavaScript needed for MeteorCharts to function.  It does not include components, a layout, a theme, interactions, or formatters.  If you want to fully optimize your MeteorCharts payload size, it's recommended that you include the core package, along with your specific components, layout, theme, interactions, and formatters.
-
-The Full package (meteorcharts-vx.x.x.js) includes everything under the sun.  You can use this package if you just want to get a chart up and running as fast as possible.  It includes the core, as well as all curated components, layouts, themes, interactions, and formatters.
-
 ## Building the Project
 
 In the root directory, run `npm install`.  Once that finishes, you can run `grunt dev` to build the development version.
