@@ -57,7 +57,7 @@
           },
           y: function() {
             var inspectSlider = chart.components.inspectSlider;
-            return inspectSlider.y() + inspectSlider.height() + chart.padding() + chart.components.paginator.height();
+            return inspectSlider.y() + inspectSlider.height() + chart.components.paginator.height();
           },
           width: function() {
             var yAxis = chart.components.yAxis;
@@ -138,13 +138,14 @@
             return offset + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
           }),
           y: function() {
-            return chart.padding() + chart.components.paginator.height();
+            var inspectSlider = chart.components.inspectSlider;
+            return inspectSlider.y() + inspectSlider.height();
           },
           width: function() {
             return 2;
           },
           height: function() {
-            return chart.components.ySlider.height();
+            return chart.components.lineSeries.height();
           },
           style: function() {
             return {
@@ -210,7 +211,7 @@
             return chart.components.lineSeries.x() - (this.style().handleWidth) / 2;
           },
           y: function() {
-            return chart.padding() + chart.components.paginator.height();
+            return (chart.padding() * 2)+ chart.components.paginator.height();
           },
           width: function() {
             return chart.components.lineSeries.width() + this.style().handleWidth;
