@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     'src/Util.js',
     'src/Color.js',
     'src/Dom.js',
+    'src/SVG.js',
     'src/Event.js',
     'src/Component.js',
     'src/Formatter.js',
@@ -18,6 +19,7 @@ module.exports = function(grunt) {
     'src/components/Slider.js',
     'src/components/Line.js',
     'src/components/Circle.js',
+    'src/components/Paginator.js',
 
     // themes
     'src/themes/CherryCheescake.js',

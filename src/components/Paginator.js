@@ -1,8 +1,14 @@
 (function() {
-  MeteorChart.Component.extend('Circle', {
+  MeteorChart.Component.extend('Paginator', {
     init: function() {
-      this.svg = MeteorChart.SVG.createElement('svg');
-      this.circle = MeteorChart.SVG.createElement('circle');
+      this.svg = MeteorChart.Dom.createElement('svg');
+      this.svg.style.display = 'inline-block';
+
+      var svgNS = 'http://www.w3.org/2000/svg';
+
+      this.svg = document.createElementNS(svgNS, 'svg');
+      this.svg.setAttribute('xmlns', svgNS);
+      this.circle = document.createElementNS(svgNS,'circle');
 
       this.svg.appendChild(this.circle);
       this.content.appendChild(this.svg);
@@ -31,22 +37,10 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'width', function() {
-    var data = this.data();
-    if (data) {
-      return (data.radius * 2) + data.strokeWidth;
-    }
-    else {
-      return 0;
-    }
+    return 100;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'height', function() {
-    var data = this.data();
-    if (data) {
-      return (data.radius * 2) + data.strokeWidth;
-    }
-    else {
-      return 0;
-    }
+    return 20;
   });
 })();
