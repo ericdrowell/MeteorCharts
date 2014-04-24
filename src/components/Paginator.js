@@ -30,6 +30,7 @@
     render: function() {
       var style = this.style(),
           theme = this.chart.theme,
+          data = this.data(),
           leftArrowSVG = this.leftArrowSVG,
           leftArrow = this.leftArrow,
           text = this.text,
@@ -56,7 +57,10 @@
       // content
       text.style.height = arrowHeight + (arrowStrokeWidth * 2);
       text.style.lineHeight = (arrowHeight + (arrowStrokeWidth * 2)) + 'px';
-      text.innerHTML = this.data().text || '';
+      text.innerHTML = MeteorChart.Util.replace(data.template, {
+        value: data.value,
+        max: data.max
+      });
       text.style.fontSize = theme.fontSize;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
@@ -76,8 +80,10 @@
       rightArrow.setAttribute('stroke-linejoin', 'round');   
     },
     _bind: function() {
-      var leftArrow = this.leftArrow,
-          rightArrow = this.rightArrow;
+      var that = this,
+          leftArrow = this.leftArrow,
+          rightArrow = this.rightArrow,
+          oldValue;
 
       // cursors
       leftArrow.addEventListener('mouseover', function(evt) {
@@ -87,13 +93,26 @@
         leftArrow.style.cursor = 'default';
       }); 
 
-      // cursors
       rightArrow.addEventListener('mouseover', function(evt) {
         rightArrow.style.cursor = 'pointer';
       }); 
       rightArrow.addEventListener('mouseout', function(evt) {
         rightArrow.style.cursor = 'default';
-      });    
+      }); 
+
+      // clicks/touches
+      leftArrow.addEventListener('mousedown', function(evt) {
+        evt.preventDefault();
+        oldValue = that.data().value;
+        that.fire('valueChange', {newValue: oldValue - 1, oldValue: oldValue});
+      }); 
+
+      rightArrow.addEventListener('mousedown', function(evt) {
+        evt.preventDefault();
+        oldValue = that.data().value;
+        that.fire('valueChange', {newValue: oldValue + 1, oldValue: oldValue});
+      }); 
+ 
     }
   });
 

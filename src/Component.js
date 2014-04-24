@@ -80,11 +80,12 @@
     fire: function(event, obj) {
       var that = this;
       MeteorChart.Event.fire.call(this, MeteorChart.Util.merge({
-        event: event,
-        type: this.type,
-        id: this.id
-      }, 
-      obj));
+          event: event,
+          type: this.type,
+          id: this.id
+        }, 
+        obj)
+      );
     },
     clearCache: function() {
       this.cache = {

@@ -238,11 +238,16 @@
           width: function() {
             return 160;
           },
-          data: function() {
+          data: MeteorChart.Event.map({event: 'valueChange', id: 'paginator'}, function(evt) {
+            var newValue = evt.newValue;
             return {
-              text: 'Cycle 221 of 1709'
+              min: 0,
+              max: 1709,
+              value: newValue !== undefined ? newValue : 221,
+              step: 1,
+              template: 'Cycle {value} of {max}'
             }
-          }
+          })
         },
       ]
     };

@@ -1,5 +1,12 @@
 (function() {
   MeteorChart.Util = {
+    replace: function(str, tokens) {
+      var key;
+      for (key in tokens) {
+        str = str.replace('{' + key + '}', tokens[key]);
+      }
+      return str;
+    },
     addMethod: function(constructor, attr, def) {
       constructor.prototype[attr] = function() {
         var val;
