@@ -27,7 +27,7 @@
           equations: (function() {
             var arr = [];
 
-            for (var n=0; n<32; n++) {
+            for (var n=0; n<3200; n++) {
               (function(i) {
                 var rand = Math.random() + 0.9;
                 arr.push({
@@ -51,13 +51,7 @@
 
         theme: MeteorChart.Themes.Crochet,
         layout: MeteorChart.Layouts.InteractiveLineChartWithSliders,
-
-        // set components data and options
-        components: {
-          lineSeries: {
-            data: data
-          }
-        }
+        data: data
       });
 
    

@@ -67,6 +67,13 @@
           height: function() {
             var components = chart.components;
             return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 6) - components.xAxis.height() - components.paginator.height();
+          },
+          data: function() {
+            var value = chart.components.paginator.data().value;
+     
+            return {
+              series: (chart.data().series).slice(value, value + 3200)
+            };
           }
         },
         {
@@ -243,7 +250,7 @@
             return {
               min: 0,
               max: 1709,
-              value: newValue !== undefined ? newValue : 221,
+              value: newValue !== undefined ? newValue : 0,
               step: 1,
               template: 'Cycle {value} of {max}'
             }

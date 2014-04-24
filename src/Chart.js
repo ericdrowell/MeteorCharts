@@ -15,7 +15,7 @@ var MeteorChart;
 
     this.layout = config.layout(this);
     this.theme = config.theme;
-    this._components = config.components;
+    this._components = config.components || {};
     this.components = [];
 
     components = this.layout.components;

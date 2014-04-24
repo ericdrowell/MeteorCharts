@@ -88,7 +88,9 @@
       };
     },
     isEqual: function(a, b) {
-      var aType = Object.prototype.toString.call(a);
+
+      var aType = Object.prototype.toString.call(a),
+          len;
 
       if (aType === '[object Object]') {
         for (var key in a) {
@@ -99,23 +101,35 @@
         return true;
       }
       else if (aType === '[object Array]') {
-        // TODO: it's extremely expensive to do a diff of large arrays, which 
-        // are currently only data series data structures.  For now, always return
-        // true.  Need to find a way to detect if two data series are equal or not
-        // in a very fast way.
+        len = a.length;
 
-        // for (var n=0, len=a.length; n<len; n++) {
-        //   if (!this.isEqual(a[n], b[n])) {
-        //     return false;
-        //   }
-        // }
-        //return true;
+        // for large arrays, use sampling to approximate equality
+        // TODO: for now, the sampling "algo" just looks at the first element
+        // and the last element.  This should eventually bit a bit more 
+        // robust to reduce false positives 
+        if (len > 5) {
+          if (!this.isEqual(a[0], b[0])) {
+            return false;
+          }
+          if (!this.isEqual(a[len-1], b[len-1])) {
+            return false;
+          }
+        }
+        // for smaller arrays, compare every single element for 100% accuracy
+        else {
+          for (var n=0; n<len; n++) {
+            if (!this.isEqual(a[n], b[n])) {
+              return false;
+            }
+          }
+        }
 
-        return a.join() === b.join();
+        return true;        
       }
       else {
         return a === b
       }
+      
     },
     // Returns a function, that, when invoked, will only be triggered at most once
     // during a given window of time. Normally, the throttled function will run
