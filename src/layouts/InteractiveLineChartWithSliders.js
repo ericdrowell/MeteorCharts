@@ -72,7 +72,7 @@
             var value = chart.components.paginator.data().value;
      
             return {
-              series: (chart.data().series).slice(value, value + 3200)
+              series: (chart.data().series).slice(value, value + 320)
             };
           }
         },
