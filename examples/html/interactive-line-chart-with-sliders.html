@@ -57,11 +57,7 @@
       MeteorChart.Event.on({event: 'valueChange', id: 'paginator'}, function(evt) {
 
         if (evt.newValue > evt.oldValue) {
-          var value = (evt.newValue - 1) / 10;
-
-          console.log(value)
-
-          console.log('on valueChange')
+          var value = (evt.newValue - 10) / 10;
 
           chart.add({
             id: 'lineSeries' + value,
