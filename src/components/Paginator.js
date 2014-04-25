@@ -102,15 +102,17 @@
 
       // clicks/touches
       leftArrow.addEventListener('mousedown', function(evt) {
+        var data = that.data();
         evt.preventDefault();
-        oldValue = that.data().value;
-        that.fire('valueChange', {newValue: oldValue - 1, oldValue: oldValue});
+        oldValue = data.value;
+        that.fire('valueChange', {newValue: oldValue - data.step, oldValue: oldValue});
       }); 
 
       rightArrow.addEventListener('mousedown', function(evt) {
+        var data = that.data();
         evt.preventDefault();
-        oldValue = that.data().value;
-        that.fire('valueChange', {newValue: oldValue + 1, oldValue: oldValue});
+        oldValue = data.value;
+        that.fire('valueChange', {newValue: oldValue + data.step, oldValue: oldValue});
       }); 
  
     }

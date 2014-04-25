@@ -27,7 +27,7 @@
           equations: (function() {
             var arr = [];
 
-            for (var n=0; n<320; n++) {
+            for (var n=0; n<3200; n++) {
               (function(i) {
                 var rand = Math.random() + 0.9;
                 arr.push({
@@ -52,6 +52,45 @@
         theme: MeteorChart.Themes.Crochet,
         layout: MeteorChart.Layouts.InteractiveLineChartWithSliders,
         data: data
+      });
+
+      MeteorChart.Event.on({event: 'valueChange', id: 'paginator'}, function(evt) {
+
+        if (evt.newValue > evt.oldValue) {
+          var value = (evt.newValue - 1) / 10;
+
+          console.log(value)
+
+          console.log('on valueChange')
+
+          chart.add({
+            id: 'lineSeries' + value,
+            type: 'LineSeries',
+            x: function() {
+              var yAxis = chart.components.yAxis;
+
+              return yAxis.x() + yAxis.width() + chart.padding();
+            },
+            y: function() {
+              var inspectSlider = chart.components.inspectSlider;
+              return inspectSlider.y() + inspectSlider.height() + chart.components.paginator.height();
+            },
+            width: function() {
+              var yAxis = chart.components.yAxis;
+
+              return chart.width() - yAxis.width() - yAxis.x() - (chart.padding() * 2);
+            },
+            height: function() {
+              var components = chart.components;
+              return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 6) - components.xAxis.height() - components.paginator.height();
+            },
+            data: function() {
+              return {
+                series: (chart.data().series).slice(value * 320, (value * 320) + 320)
+              };
+            }
+          }, chart.components.yAxis.content);
+        }
       });
 
    

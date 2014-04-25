@@ -17,7 +17,7 @@
           context = this.context,
           n, line, points, i, pointsLen, viewport;
 
-      console.log('render lineSeries')
+      MeteorChart.log('render ' + this.id)
 
       // recalculate range and scale
       viewport = MeteorChart.Util.getSeriesMinMax(series);

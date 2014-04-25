@@ -38,28 +38,8 @@ var MeteorChart;
     MeteorChart.Dom.dummy.className = 'dom-dummy';
     this.content.appendChild(MeteorChart.Dom.dummy);
 
-    MeteorChart.log('1) INITIALIZE COMPONENTS');
     for (n=0; n<len; n++) {
-      conf = components[n];
-      MeteorChart.log('-- ' + conf.id);
-
-      this._decorateConf(conf);
-      component = new MeteorChart.Components[conf.type](conf);
-
-      this.components[component.id] = component;
-      this.components.push(component); 
-
-      if (component.init) {
-        component.init();
-      }
-    }
-
-    MeteorChart.log('2) RENDER AND ADD COMPONENTS');
-    for (n=0; n<this.components.length; n++) {
-      component = this.components[n];
-      MeteorChart.log('-- ' + component.id);
-      component._render();
-      this.content.appendChild(component.content); 
+      this._add(components[n]);
     }
 
     // manually re-render components in case a state dependency has changed due
@@ -73,6 +53,28 @@ var MeteorChart;
   };
 
   MeteorChart.prototype = {
+    _add: function(conf, insertBefore) {
+      var component;
+
+      MeteorChart.log('add ' + conf.id);
+
+      this._decorateConf(conf);
+      component = new MeteorChart.Components[conf.type](conf);
+
+      this.components[component.id] = component;
+      this.components.push(component); 
+
+      if (component.init) {
+        component.init();
+      }
+
+      if (insertBefore) {
+        this.content.insertBefore(component.content, insertBefore);
+      }
+      else {
+        this.content.appendChild(component.content); 
+      }
+    },
     _decorateConf: function(conf) {
       var id = conf.id,
           component = this._components[id];
@@ -101,11 +103,9 @@ var MeteorChart;
       // clear any leftover DOM
       this.container.innerHTML = '';
     },
-    add: function(component) {
-      component.chart = this;
-      component.build();
-      component.update();
-      this.content.appendChild(component.content); 
+    add: function(conf, insertBefore) {
+      this._add(conf, insertBefore);
+      this.render();
     },
     render: function() { 
       var components = this.components,
@@ -167,8 +167,8 @@ var MeteorChart;
     };
   })(this);
 
-  MeteorChart.log = function(obj) {
-    console.log(obj);
+  MeteorChart.log = function(str) {
+    console.log('-- ' + str);
   };
 
   MeteorChart.render = function() {

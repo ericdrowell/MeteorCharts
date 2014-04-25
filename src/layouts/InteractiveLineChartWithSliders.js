@@ -69,10 +69,8 @@
             return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 6) - components.xAxis.height() - components.paginator.height();
           },
           data: function() {
-            var value = chart.components.paginator.data().value;
-     
             return {
-              series: (chart.data().series).slice(value, value + 320)
+              series: (chart.data().series).slice(0, 320)
             };
           }
         },
@@ -248,10 +246,10 @@
           data: MeteorChart.Event.map({event: 'valueChange', id: 'paginator'}, function(evt) {
             var newValue = evt.newValue;
             return {
-              min: 0,
+              min: 1,
               max: 1709,
-              value: newValue !== undefined ? newValue : 0,
-              step: 1,
+              value: newValue !== undefined ? newValue : 1,
+              step: 10,
               template: 'Cycle {value} of {max}'
             }
           })
