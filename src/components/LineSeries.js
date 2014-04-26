@@ -103,7 +103,7 @@
 
       this.renderer.setSize(width, height);
 
-      this.camera = new THREE.OrthographicCamera(0, width, height / 2, height / - 2, 1, 1000 );
+      this.camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / - 2, 1, 1000 );
       this.camera.position.set(0, 0, 300);
       this.camera.lookAt(new THREE.Vector3(0, 0, 0));
       this.scene = new THREE.Scene();
@@ -159,10 +159,9 @@
           len = lines.length,
           n;
 
-
       for (n=0; n<len; n++) {
 
-
+        lines[n].position.x = -1 * data.zoomX * this.width() / 2;
         lines[n].scale.set(this.scaleX * data.zoomX, this.scaleY * data.zoomY, 1);
 
       } 
