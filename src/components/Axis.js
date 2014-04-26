@@ -5,7 +5,7 @@
       this.innerContent.style.position = 'relative';
       this.content.appendChild(this.innerContent);
     },
-    render: function() {
+    _render: function() {
       var that = this,
           chart = this.chart,
           data = this.data(),

@@ -1,22 +1,40 @@
 (function() {
   MeteorChart.Layouts.LineChartWithZoom = function(chart) {
-    var zoomX = 1,
-        zoomY = 1;
+
+    // globals
+    var ZOOM_X = 1,
+        ZOOM_Y = 1,
+        INSPECT_SLIDER_OFFSET_X = 0,
+        PAGINATOR_VALUE = 0,
+        NEAREST_POINT = null;
 
     // bindings
     MeteorChart.Event.on({event: 'dragmove', id: 'xSlider'}, function(evt) {
-      zoomX = ((evt.value * 4) + 1) || 1;
-      chart.components.lineSeries._render();
+      ZOOM_X = ((evt.value * 4) + 1) || 1;
+      chart.components.lineSeries.transform();
     });
 
     MeteorChart.Event.on({event: 'dragmove', id: 'ySlider'}, function(evt) {
-      zoomY = (6 - ((evt.value * 4) + 1)) || 1;
-      chart.components.lineSeries._render();
+      ZOOM_Y = (5 - ((evt.value * 4))) || 1;
+      chart.components.lineSeries.transform();
     });
 
+    MeteorChart.Event.on({event: 'dragmove', id: 'inspectSlider'}, function(evt) {
+      var lineSeries = chart.components.lineSeries;
 
+      INSPECT_SLIDER_OFFSET_X = evt.offset;
+      NEAREST_POINT = lineSeries.getSeriesNearestPointX(0, evt.offset);
 
+      chart.render('inspectCircle', 'inspectLine');
 
+      chart.components.inspectCircle._render();
+      chart.components.inspectLine._render();
+    });
+
+    MeteorChart.Event.on({event: 'valueChange', id: 'paginator'}, function(evt) {
+      PAGINATOR_VALUE = evt.newValue;
+      chart.components.paginator._render();
+    });
 
     return {
       components: [ 
@@ -90,8 +108,8 @@
             //console.log(evt)
             return {
               series: chart.data().series,
-              zoomX: zoomX,
-              zoomY: zoomY
+              zoomX: ZOOM_X,
+              zoomY: ZOOM_Y
               //series: (chart.data().series).slice(0, 3200)
             };
           }
@@ -163,11 +181,10 @@
         {
           id: 'inspectLine',
           type: 'Line',
-          x: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) {
-            var offset = evt && evt.offset ? evt.offset : 0,
-                inspectSlider = chart.components.inspectSlider;
-            return offset + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
-          }),
+          x: function() {
+            var inspectSlider = chart.components.inspectSlider;
+            return INSPECT_SLIDER_OFFSET_X + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
+          },
           y: function() {
             var inspectSlider = chart.components.inspectSlider;
             return inspectSlider.y() + inspectSlider.height();
@@ -188,31 +205,29 @@
           id: 'inspectCircle',
           type: 'Circle',
 
-          x: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) { 
+          x: function() { 
             var lineSeries = chart.components.lineSeries,
-                nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset),
                 style = chart.components.inspectCircle.style();
 
-            if (nearestPoint) {
-              return nearestPoint.x + lineSeries.x() - style.radius - (style.strokeWidth/2);
+            if (NEAREST_POINT) {
+              return NEAREST_POINT.x + lineSeries.x() - style.radius - (style.strokeWidth/2);
             }
             else {
               return 0;
             }
-          }),
+          },
 
-          y: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) { 
+          y: function() { 
             var lineSeries = chart.components.lineSeries,
-                nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset),
                 style = chart.components.inspectCircle.style();
 
-            if (nearestPoint) {
-              return nearestPoint.y + lineSeries.y() - style.radius - (style.strokeWidth/2);
+            if (NEAREST_POINT) {
+              return NEAREST_POINT.y + lineSeries.y() - style.radius - (style.strokeWidth/2);
             }
             else {
               return 0;
             }
-          }),
+          },
 
           style: function() {
             var dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
@@ -224,16 +239,14 @@
             }
           },
 
-          data: MeteorChart.Event.map({event: 'dragmove', id: 'inspectSlider'}, function(evt) {            
-            var nearestPoint = chart.components.lineSeries.getSeriesNearestPointX(0, evt.offset);
-
-            if (nearestPoint) {
+          data: function() {            
+            if (NEAREST_POINT) {
               return {};
             }
             else {
               return null;
             }
-          })
+          }
         },
         {
           id: 'inspectSlider',
@@ -269,16 +282,15 @@
           width: function() {
             return 180;
           },
-          data: MeteorChart.Event.map({event: 'valueChange', id: 'paginator'}, function(evt) {
-            var newValue = evt.newValue;
+          data: function() {
             return {
               min: 10,
               max: 1709,
-              value: newValue !== undefined ? newValue : 10,
+              value: PAGINATOR_VALUE,
               step: 10,
               template: 'Cycles 1 - {value} of {max}'
             }
-          })
+          }
         },
       ]
     };

@@ -4,7 +4,7 @@
       this.text = MeteorChart.Dom.createElement('h2');
       this.content.appendChild(this.text);
     },
-    render: function() {
+    _render: function() {
       var theme = this.chart.theme;
 
       this.text.style.fontSize = theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;

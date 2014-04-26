@@ -18,9 +18,6 @@ var MeteorChart;
     this._components = config.components || {};
     this.components = [];
 
-    
-
-
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'meteorchart-content';
@@ -50,15 +47,14 @@ var MeteorChart;
     for (n=0, len=this.components.length; n<len; n++) {
       component = this.components[n];
 
-      if (component.preRender) {
-        component.preRender();
+      component.render();
+
+      if (component.transform) {
+        component.transform();
       }
+      MeteorChart.log('add ' + component.id);
       this.content.appendChild(component.content); 
     }
-
-
-    this.render();
-
 
     // store reference to this chart
     MeteorChart.charts.push(this);
@@ -68,7 +64,7 @@ var MeteorChart;
     _init: function(conf) {
       var component;
 
-      MeteorChart.log('add ' + conf.id);
+      MeteorChart.log('init ' + conf.id);
 
       this._decorateConf(conf);
       component = new MeteorChart.Components[conf.type](conf);
@@ -118,16 +114,21 @@ var MeteorChart;
     // },
     render: function() { 
       var components = this.components,
-          len = components.length,
-          stateChanged = false,
           n, component;
 
-      // TODO: implement while loop whenever stateChanged = true
-      // in case rendering a component affects the state of another component.
-      // so far this isn't a problem for any of the existing layouts
-      for (n=0; n<len; n++) {
-        if (components[n]._render()) {
-          stateChanged = true;
+      // if arguments are provided, render the components by id
+      if (arguments.length) {
+        len = arguments.length;
+        for (n=0; n<len; n++) {
+          components[arguments[n]].render();
+        }
+      }
+
+      // if no arguments are provided, render all components
+      else {
+        len = components.length;
+        for (n=0; n<len; n++) {
+          components[n].render();
         }
       }
     },

@@ -27,7 +27,7 @@
 
       this._bind();
     },
-    render: function() {
+    _render: function() {
       var style = this.style(),
           theme = this.chart.theme,
           data = this.data(),

@@ -74,7 +74,7 @@
       
 
     },
-    preRender: function() {
+    _render: function() {
       var data = this.data(),
           style = this.style(),
           width = this.width(),
@@ -86,16 +86,7 @@
           n, line, points, i, pointsLen, viewport;
 
       this.lines = [];
-
-      //MeteorChart.log('render ' + this.id)
-
-      // recalculate range and scale
-      viewport = this.getSeriesMinMax(series);
-      this.minX = viewport.minX;
-      this.minY = viewport.minY;
-      this.maxX = viewport.maxX;
-      this.maxY = viewport.maxY;
-      this._setScale();
+      this._setMinMaxScale();
 
       // update formatters
       this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
@@ -153,7 +144,7 @@
 
       this.renderer.render(this.scene, this.camera);  
     },
-    render: function() {
+    transform: function() {
       var data = this.data(),
           lines = this.lines,
           len = lines.length,
@@ -165,8 +156,6 @@
         lines[n].scale.set(this.scaleX * data.zoomX, this.scaleY * data.zoomY, 1);
 
       } 
-
-
 
       this.renderer.render(this.scene, this.camera);   
     },
@@ -195,8 +184,9 @@
         maxY: maxY
       };
     },
-    getSeriesMinMax: function(series) {
-      var minX = Infinity,
+    getSeriesMinMax: function() {
+      var series = this.data().series,
+          minX = Infinity,
           minY = Infinity,
           maxX = Infinity * -1,
           maxY = Infinity * -1,
@@ -352,20 +342,19 @@
         that.fire('mouseout');
       });
     },
-    _setScale: function() {
-      var x = this.x(),
-          y = this.y(),
+    _setMinMaxScale: function() {
+      var viewport = this.getSeriesMinMax(),
           width = this.width(),
           height = this.height(),
-          minX = this.minX,
-          maxX = this.maxX,
-          minY = this.minY,
-          maxY = this.maxY,
-          diffX = maxX - minX,
-          diffY = maxY - minY,
+          diffX = viewport.maxX - viewport.minX,
+          diffY = viewport.maxY - viewport.minY,
           scaleX = width / diffX,
           scaleY = height / diffY;
 
+      this.minX = viewport.minX;
+      this.minY = viewport.minY;
+      this.maxX = viewport.maxX;
+      this.maxY = viewport.maxY;
       this.scaleX = scaleX;
       this.scaleY = scaleY;
     }

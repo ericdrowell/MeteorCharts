@@ -28,52 +28,66 @@
   };
 
   MeteorChart.Component.prototype = {
-    _render: function() {
-      var state = {
-        x: this.x(),
-        y: this.y(),
-        width: this.width(),
-        height: this.height(),
-        data: this.data(),
-        style: this.style()
-      };
+    render: function() {
+      //MeteorChart.log(this.id + ' render');
 
-      if (!MeteorChart.Util.isEqual(this.cache, state)) {
-        //MeteorChart.log(this.id + ' render');
+      // reset width and height so that they do not affect component
+      // width and height methods
+      this.content.style.width = 'auto';
+      this.content.style.height = 'auto';
 
-        // reset width and height so that they do not affect component
-        // width and height methods
-        this.content.style.width = 'auto';
-        this.content.style.height = 'auto';
-
-        // render concrete component first because the component width and height
-        // may depend on it
-        if (this.render) {
-          this.render();
-        }
-
-        this.content.style.left = this.x();
-        this.content.style.top = this.y();
-        this.content.style.width = this.width();
-        this.content.style.height = this.height();
-
-        
-
-        // set cache to current state
-        this.cache = state;
-
-        // did not use cache
-        return false;
-      }
-      else {
-        //MeteorChart.log(this.id + ' state is the same');
-
-        // used cache
-        return true;
+      // render concrete component first because the component width and height
+      // may depend on it
+      if (this._render) {
+        this._render();
       }
 
-
+      this.content.style.left = this.x();
+      this.content.style.top = this.y();
+      this.content.style.width = this.width();
+      this.content.style.height = this.height();
     },
+    // _render: function() {
+    //   var state = {
+    //     x: this.x(),
+    //     y: this.y(),
+    //     width: this.width(),
+    //     height: this.height(),
+    //     data: this.data(),
+    //     style: this.style()
+    //   };
+
+    //   if (!MeteorChart.Util.isEqual(this.cache, state)) {
+    //     //MeteorChart.log(this.id + ' render');
+
+    //     // reset width and height so that they do not affect component
+    //     // width and height methods
+    //     this.content.style.width = 'auto';
+    //     this.content.style.height = 'auto';
+
+    //     // render concrete component first because the component width and height
+    //     // may depend on it
+    //     if (this.render) {
+    //       this.render();
+    //     }
+
+    //     this.content.style.left = this.x();
+    //     this.content.style.top = this.y();
+    //     this.content.style.width = this.width();
+    //     this.content.style.height = this.height();
+
+    //     // set cache to current state
+    //     this.cache = state;
+    //   }
+    //   else {
+    //     //MeteorChart.log(this.id + ' state is the same');
+
+    //     // used cache
+    //     return true;
+    //   }
+
+
+    // },
     destroy: function() {
 
     },

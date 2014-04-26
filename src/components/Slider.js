@@ -21,7 +21,7 @@
 
       this._bind();
     },
-    render: function() {
+    _render: function() {
       var handle = this.handle,
           track = this.track,
           style = this.style(),

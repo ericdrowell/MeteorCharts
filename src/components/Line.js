@@ -1,6 +1,6 @@
 (function() {
   MeteorChart.Component.extend('Line', {
-    render: function() {
+    _render: function() {
       this.content.style.backgroundColor = this.style().stroke || this.chart.theme.primary;
     }
   });

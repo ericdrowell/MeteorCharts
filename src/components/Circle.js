@@ -7,7 +7,7 @@
       this.svg.appendChild(this.circle);
       this.content.appendChild(this.svg);
     },
-    render: function() {
+    _render: function() {
       var style = this.style(),
           strokeWidth, radius;
 

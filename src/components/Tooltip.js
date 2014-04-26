@@ -18,7 +18,7 @@
       this.tooltip.appendChild(this.tooltipContent);
       this.content.appendChild(this.tooltip);
     },
-    render: function() {
+    _render: function() {
       var data = this.data(),
           style = this.style(),
           theme = this.chart.theme;
