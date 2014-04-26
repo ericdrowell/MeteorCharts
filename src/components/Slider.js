@@ -48,7 +48,7 @@
       }
 
       if (style.orientation === 'vertical') {
-        handle.style.top = 0;
+        handle.style.top = this.height() - handleHeight;
         handle.style.left = 0;
 
         if (showTrack) {
@@ -77,6 +77,9 @@
           handle = this.handle,
           chartContent = this.chart.content,
           orientation = this.style().orientation || 'horizontal',
+          style = this.style(),
+          handleWidth = style.handleWidth,
+          handleHeight = style.handleHeight,
           startOffsetPos = null,
           startPointerPos = null;
 
@@ -129,7 +132,8 @@
           }
 
           that.fire('dragmove', {
-            offset: newOffset
+            offset: newOffset,
+            value: newOffset / (orientation === 'horizontal' ? (that.width() - handleWidth) : (that.height() - handleHeight))
           });
         }
       }, 17));

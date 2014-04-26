@@ -39,7 +39,7 @@
       };
 
       if (!MeteorChart.Util.isEqual(this.cache, state)) {
-        //MeteorChart.log('-- ' + this.id + ' render');
+        //MeteorChart.log(this.id + ' render');
 
         // reset width and height so that they do not affect component
         // width and height methods
@@ -66,7 +66,7 @@
         return false;
       }
       else {
-        //MeteorChart.log('-- ' + this.id + ' state is the same');
+        //MeteorChart.log(this.id + ' state is the same');
 
         // used cache
         return true;

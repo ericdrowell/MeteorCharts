@@ -3,7 +3,7 @@ var MeteorChart;
   MeteorChart = function(config) { 
     var that = this,
         container = config.container,
-        components, len, n, componentId, conf, componentData;
+        layoutComponents, components, component, len, n, componentId, conf, componentData;
 
     this.attrs= {};
     this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
@@ -18,8 +18,8 @@ var MeteorChart;
     this._components = config.components || {};
     this.components = [];
 
-    components = this.layout.components;
-    len = components.length;
+    
+
 
     // build content container
     this.content = document.createElement('div');
@@ -38,22 +38,34 @@ var MeteorChart;
     MeteorChart.Dom.dummy.className = 'dom-dummy';
     this.content.appendChild(MeteorChart.Dom.dummy);
 
+    layoutComponents = this.layout.components;
+    len = layoutComponents.length;
+
+    // init components
     for (n=0; n<len; n++) {
-      this._add(components[n]);
+      this._init(layoutComponents[n]);
     }
 
-    // manually re-render components in case a state dependency has changed due
-    // to the initial renderings.  For each component, if the state is unchanged, its
-    // render() method will not be called
+    // add components to chart content
+    for (n=0, len=this.components.length; n<len; n++) {
+      component = this.components[n];
+
+      if (component.preRender) {
+        component.preRender();
+      }
+      this.content.appendChild(component.content); 
+    }
+
+
     this.render();
-    this.render();
+
 
     // store reference to this chart
     MeteorChart.charts.push(this);
   };
 
   MeteorChart.prototype = {
-    _add: function(conf, insertBefore) {
+    _init: function(conf) {
       var component;
 
       MeteorChart.log('add ' + conf.id);
@@ -68,12 +80,9 @@ var MeteorChart;
         component.init();
       }
 
-      if (insertBefore) {
-        this.content.insertBefore(component.content, insertBefore);
-      }
-      else {
-        this.content.appendChild(component.content); 
-      }
+
+      
+     
     },
     _decorateConf: function(conf) {
       var id = conf.id,
@@ -103,10 +112,10 @@ var MeteorChart;
       // clear any leftover DOM
       this.container.innerHTML = '';
     },
-    add: function(conf, insertBefore) {
-      this._add(conf, insertBefore);
-      this.render();
-    },
+    // add: function(conf, insertBefore) {
+    //   this._add(conf, insertBefore);
+    //   this.render();
+    // },
     render: function() { 
       var components = this.components,
           len = components.length,

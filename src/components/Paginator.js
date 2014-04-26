@@ -119,6 +119,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Paginator, 'height', function() {
-    return this.text.offsetHeight;
+    //return this.text.offsetHeight;
+    return 30;
   });
 })();

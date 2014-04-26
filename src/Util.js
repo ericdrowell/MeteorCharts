@@ -39,54 +39,6 @@
         }
       };
     },
-    getPointsMinMax: function(points) {
-      var minX = Infinity,
-          minY = Infinity,
-          maxX = Infinity * -1,
-          maxY = Infinity * -1,
-          len = points.length,
-          n, x, y;
-
-      for (n=0; n<len; n+=2) {
-        point = points[n];
-        x = points[n];
-        y = points[n+1];
-        minX = Math.min(minX, x);
-        minY = Math.min(minY, y);
-        maxX = Math.max(maxX, x);
-        maxY = Math.max(maxY, y);
-      } 
-
-      return {
-        minX: minX,
-        minY: minY,
-        maxX: maxX,
-        maxY: maxY
-      };
-    },
-    getSeriesMinMax: function(series) {
-      var minX = Infinity,
-          minY = Infinity,
-          maxX = Infinity * -1,
-          maxY = Infinity * -1,
-          len = series.length,
-          n, viewport;
-
-      for (n=0; n<len; n++) {
-        viewport = this.getPointsMinMax(series[n].points);
-        minX = Math.min(minX, viewport.minX);
-        minY = Math.min(minY, viewport.minY);
-        maxX = Math.max(maxX, viewport.maxX);
-        maxY = Math.max(maxY, viewport.maxY);
-      } 
-
-      return {
-        minX: minX,
-        minY: minY,
-        maxX: maxX,
-        maxY: maxY
-      };
-    },
     isEqual: function(a, b) {
 
       var aType = Object.prototype.toString.call(a),

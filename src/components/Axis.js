@@ -54,16 +54,18 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'width', function() {
-    var spans = this.content.getElementsByTagName('span'),
-        len = spans.length,
-        maxWidth = 0,
-        n;
+    // var spans = this.content.getElementsByTagName('span'),
+    //     len = spans.length,
+    //     maxWidth = 0,
+    //     n;
 
-    for (n=0; n<len; n++) {
-      maxWidth = Math.max(maxWidth, spans[n].offsetWidth);
-    }
+    // for (n=0; n<len; n++) {
+    //   maxWidth = Math.max(maxWidth, spans[n].offsetWidth);
+    // }
 
-    return maxWidth; 
+    // return maxWidth; 
+
+    return 50;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {

@@ -13,7 +13,7 @@
   <body>
     <div id="container"></div>
 
-    
+    <script src="../../lib/three.min.js"></script>
     <script src="../js/Grapher.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
@@ -51,7 +51,7 @@
         height: 400,
 
         theme: MeteorChart.Themes.Crochet,
-        layout: MeteorChart.Layouts.InteractiveLineChartWithSliders,
+        layout: MeteorChart.Layouts.LineChartWithZoom,
         data: data
       });
 

@@ -1,5 +1,23 @@
 (function() {
-  MeteorChart.Layouts.InteractiveLineChartWithSliders = function(chart) {
+  MeteorChart.Layouts.LineChartWithZoom = function(chart) {
+    var zoomX = 1,
+        zoomY = 1;
+
+    // bindings
+    MeteorChart.Event.on({event: 'dragmove', id: 'xSlider'}, function(evt) {
+      zoomX = ((evt.value * 4) + 1) || 1;
+      chart.components.lineSeries._render();
+    });
+
+    MeteorChart.Event.on({event: 'dragmove', id: 'ySlider'}, function(evt) {
+      zoomY = (6 - ((evt.value * 4) + 1)) || 1;
+      chart.components.lineSeries._render();
+    });
+
+
+
+
+
     return {
       components: [ 
         {
@@ -69,8 +87,12 @@
             return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 6) - components.xAxis.height() - components.paginator.height();
           },
           data: function() {
+            //console.log(evt)
             return {
-              series: (chart.data().series).slice(0, 320)
+              series: chart.data().series,
+              zoomX: zoomX,
+              zoomY: zoomY
+              //series: (chart.data().series).slice(0, 3200)
             };
           }
         },
@@ -90,8 +112,10 @@
           },
           data: function() {
             // bind axis data to line min and max values
-            var data = chart.components.lineSeries.data(),
-                viewport = MeteorChart.Util.getSeriesMinMax(data.series);
+            var lineSeries = chart.components.lineSeries,
+                data = lineSeries.data(),
+                viewport = lineSeries.getSeriesMinMax(data.series);
+
             return {
               min: viewport.minY,
               max: viewport.maxY
@@ -121,8 +145,10 @@
           },
           data: function() {
             // bind axis data to line min and max values
-            var data = chart.components.lineSeries.data(),
-                viewport = MeteorChart.Util.getSeriesMinMax(data.series);
+            var lineSeries = chart.components.lineSeries,
+                data = lineSeries.data(),
+                viewport = lineSeries.getSeriesMinMax(data.series);
+
             return {
               min: viewport.minX,
               max: viewport.maxX
