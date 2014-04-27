@@ -5,7 +5,7 @@
     var ZOOM_X = 1,
         ZOOM_Y = 1,
         INSPECT_SLIDER_OFFSET_X = 0,
-        PAGINATOR_VALUE = 0,
+        PAGINATOR_VALUE = 100,
         NEAREST_POINT = null;
 
     // bindings
@@ -25,15 +25,13 @@
       INSPECT_SLIDER_OFFSET_X = evt.offset;
       NEAREST_POINT = lineSeries.getSeriesNearestPointX(0, evt.offset);
 
-      chart.render('inspectCircle', 'inspectLine');
-
-      chart.components.inspectCircle._render();
-      chart.components.inspectLine._render();
+      chart.components.inspectCircle.render();
+      chart.components.inspectLine.render();
     });
 
     MeteorChart.Event.on({event: 'valueChange', id: 'paginator'}, function(evt) {
       PAGINATOR_VALUE = evt.newValue;
-      chart.components.paginator._render();
+      chart.components.paginator.render();
     });
 
     return {
