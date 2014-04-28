@@ -64,6 +64,8 @@
 
   MeteorChart.Component.extend('LineSeries', {
     init: function() {
+      this.colorIndex = 0;
+
       this.renderer = new THREE.WebGLRenderer({
         alpha: true,
         // NOTE: when antialias is turned on, the lines are disjointed
@@ -104,39 +106,7 @@
 
       for (n=0; n<len; n++) {
 
-        points = series[n].points;
-        pointsLen = points.length;
-
-
-        var material = new THREE.LineBasicMaterial({
-              color: MeteorChart.Color.getDataColor(this.chart.theme.data, n),
-              linewidth: 2
-          });
-
-        var geometry = new THREE.Geometry();
-          // geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
-          // geometry.vertices.push(new THREE.Vector3(0, 10, 0));
-          // geometry.vertices.push(new THREE.Vector3(10, 0, 0));
-
-        for (i = 0; i<pointsLen; i+=2) {
-          geometry.vertices.push(new THREE.Vector3(points[i], points[i+1], 0));
-        }
-
-        var line = new THREE.Line(geometry, material);
-
-         this.scene.add(line);
-
-         this.lines.push(line);
-
-        // geometry.computeBoundingBox();
-
-        // width = geometry.boundingBox.max.x - geometry.boundingBox.min.x
-        // height = geometry.boundingBox.max.y - geometry.boundingBox.min.y 
-
-        // console.log(width);
-        // console.log(height)
-
-        //line.scale.set(this.scaleX * data.zoomX, this.scaleY * data.zoomY, 1);
+        this.push(series[n]);
 
       } 
 
@@ -153,13 +123,50 @@
           n;
 
       for (n=0; n<len; n++) {
-
         lines[n].position.x = -1 * zoomX * this.width() / 2;
         lines[n].scale.set(this.scaleX * zoomX, this.scaleY * zoomY, 1);
 
       } 
 
       this.renderer.render(this.scene, this.camera);   
+    },
+    shift: function(num) {
+      if (num === undefined) {
+        num = 1;
+      }
+
+      for (var n=0; n<num; n++) {
+        this.scene.remove(this.lines[0]);
+        this.data.series.shift();
+        this.lines.shift();
+      }
+    },
+    push: function(ser) {
+      if (MeteorChart.Util._isArray(ser)) {
+        for (var n=0; n<ser.length; n++) {
+          this.push(ser[n]);
+        }
+      }
+      else {
+
+        var points = ser.points,
+            pointsLen = points.length,
+            material = new THREE.LineBasicMaterial({
+              color: MeteorChart.Color.getDataColor(this.chart.theme.data, this.colorIndex++),
+              linewidth: 2
+            }),
+            geometry = new THREE.Geometry(),
+            i, line;
+
+        for (i = 0; i<pointsLen; i+=2) {
+          geometry.vertices.push(new THREE.Vector3(points[i], points[i+1], 0));
+        }
+
+        line = new THREE.Line(geometry, material);
+
+        this.scene.add(line);
+        this.lines.push(line);
+      }
     },
     getPointsMinMax: function(points) {
       var minX = Infinity,

@@ -33,7 +33,7 @@
       chart.components.inspectCircle.render();
       chart.components.inspectLine.render();
     });
-    
+
     return {
       components: [ 
         {

@@ -1,5 +1,8 @@
 (function() {
   MeteorChart.Color = {
+    colorToHex: function(color) {
+      return color.replace('#', '0x');
+    },
     hexToRgba: function(hex, alpha) {
       hex = hex.replace('#', '');
 
@@ -18,5 +21,8 @@
     getDataColor: function(colors, n) {
       return colors[n % colors.length];
     },
+    getDataHex: function(colors, n) {
+      return this.colorToHex(this.getDataColor(colors, n));
+    }
   }
 })();
