@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Component.extend('Slider', {
     init: function() {
-      var showTrack = this.style().showTrack;
+      var showTrack = this.style.showTrack;
 
       // default
       if (showTrack === undefined) {
@@ -24,7 +24,7 @@
     _render: function() {
       var handle = this.handle,
           track = this.track,
-          style = this.style(),
+          style = this.style,
           theme = this.chart.theme,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
@@ -76,8 +76,8 @@
       var that = this,
           handle = this.handle,
           chartContent = this.chart.content,
-          orientation = this.style().orientation || 'horizontal',
-          style = this.style(),
+          orientation = this.style.orientation || 'horizontal',
+          style = this.style,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
           startOffsetPos = null,
@@ -107,7 +107,7 @@
           var diff, newOffset;
 
           if (orientation === 'horizontal') {
-            diff = that.width() - that.style().handleWidth;
+            diff = that.width() - that.style.handleWidth;
             pointerPos = evt.clientX;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -119,7 +119,7 @@
             handle.style.left = newOffset;
           }
           else {
-            diff = that.height() - that.style().handleHeight;
+            diff = that.height() - that.style.handleHeight;
             pointerPos = evt.clientY;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -158,11 +158,11 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'width', function() {
-    return this.style().handleWidth;
+    return this.style.handleWidth;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'height', function() {
-    return this.style().handleHeight;
+    return this.style.handleHeight;
   });
 
 })();

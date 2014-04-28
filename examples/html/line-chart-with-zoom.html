@@ -28,7 +28,7 @@
           equations: (function() {
             var arr = [];
 
-            for (var n=0; n<3200; n++) {
+            for (var n=0; n<32; n++) {
               (function(i) {
                 var rand = Math.random() + 0.9;
                 arr.push({
@@ -52,7 +52,12 @@
 
         theme: MeteorChart.Themes.Crochet,
         layout: MeteorChart.Layouts.LineChartWithZoom,
-        data: data
+
+        components: {
+          lineSeries: {
+            data: data
+          }
+        }
       });
 
       // MeteorChart.Event.on({event: 'valueChange', id: 'paginator'}, function(evt) {

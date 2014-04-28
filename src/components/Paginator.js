@@ -28,9 +28,9 @@
       this._bind();
     },
     _render: function() {
-      var style = this.style(),
+      var style = this.style,
           theme = this.chart.theme,
-          data = this.data(),
+          data = this.data,
           leftArrowSVG = this.leftArrowSVG,
           leftArrow = this.leftArrow,
           text = this.text,
@@ -102,17 +102,25 @@
 
       // clicks/touches
       leftArrow.addEventListener('mousedown', function(evt) {
-        var data = that.data();
+        var data = that.data,
+            oldValue = data.value,
+            newValue = oldValue - data.step;
+
         evt.preventDefault();
-        oldValue = data.value;
-        that.fire('valueChange', {newValue: oldValue - data.step, oldValue: oldValue});
+        that.data.value = newValue;
+        that.render();
+        that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
       }); 
 
       rightArrow.addEventListener('mousedown', function(evt) {
-        var data = that.data();
+        var data = that.data,
+            oldValue = data.value,
+            newValue = oldValue + data.step;
+
         evt.preventDefault();
-        oldValue = data.value;
-        that.fire('valueChange', {newValue: oldValue + data.step, oldValue: oldValue});
+        that.data.value = newValue;
+        that.render();
+        that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
       }); 
  
     }

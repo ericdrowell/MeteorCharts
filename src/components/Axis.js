@@ -8,8 +8,8 @@
     _render: function() {
       var that = this,
           chart = this.chart,
-          data = this.data(),
-          style = this.style(),
+          data = this.data,
+          style = this.style,
           min = data.min,
           max = data.max,
           diff = max - min,
@@ -39,7 +39,7 @@
       text.style.color = theme.primary;
       this.innerContent.appendChild(text);
 
-      if (this.style().orientation === 'vertical') {
+      if (this.style.orientation === 'vertical') {
         text.style.top = this.height() - offset - (MeteorChart.Dom.getTextHeight(val) /2);
         text.style.left = 0;
       }

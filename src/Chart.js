@@ -7,10 +7,9 @@ var MeteorChart;
 
     this.attrs= {};
     this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
-    
+
     this.width(config.width);
     this.height(config.height);
-    this.data(config.data);
     this.style(config.style);
 
     this.layout = config.layout(this);
@@ -87,9 +86,7 @@ var MeteorChart;
       if (component) {
         // decorate data
         if (component.data) {
-          conf.data = function() {
-            return component.data;
-          };
+          conf.data = component.data;
         }
       }
 

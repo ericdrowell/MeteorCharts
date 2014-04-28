@@ -2,38 +2,38 @@
   MeteorChart.Layouts.LineChartWithZoom = function(chart) {
 
     // globals
-    var ZOOM_X = 1,
-        ZOOM_Y = 1,
-        INSPECT_SLIDER_OFFSET_X = 0,
-        PAGINATOR_VALUE = 100,
+    var INSPECT_SLIDER_OFFSET_X = 0,
         NEAREST_POINT = null;
 
     // bindings
     MeteorChart.Event.on({event: 'dragmove', id: 'xSlider'}, function(evt) {
-      ZOOM_X = ((evt.value * 4) + 1) || 1;
-      chart.components.lineSeries.transform();
+      var lineSeries = chart.components.lineSeries;
+      lineSeries.data.zoomX = ((evt.value * 4) + 1) || 1;
+      lineSeries.transform();
     });
 
     MeteorChart.Event.on({event: 'dragmove', id: 'ySlider'}, function(evt) {
-      ZOOM_Y = (5 - ((evt.value * 4))) || 1;
-      chart.components.lineSeries.transform();
+      var lineSeries = chart.components.lineSeries;
+      lineSeries.data.zoomY = (5 - ((evt.value * 4))) || 1;
+      lineSeries.transform();
     });
 
     MeteorChart.Event.on({event: 'dragmove', id: 'inspectSlider'}, function(evt) {
-      var lineSeries = chart.components.lineSeries;
+      var components = chart.components,
+          lineSeries = components.lineSeries,
+          inspectCircle = components.inspectCircle,
+          dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
 
       INSPECT_SLIDER_OFFSET_X = evt.offset;
       NEAREST_POINT = lineSeries.getSeriesNearestPointX(0, evt.offset);
 
+      inspectCircle.style.fill = MeteorChart.Color.hexToRgba(dataColor, 0.3);
+      inspectCircle.style.stroke = dataColor;
+
       chart.components.inspectCircle.render();
       chart.components.inspectLine.render();
     });
-
-    MeteorChart.Event.on({event: 'valueChange', id: 'paginator'}, function(evt) {
-      PAGINATOR_VALUE = evt.newValue;
-      chart.components.paginator.render();
-    });
-
+    
     return {
       components: [ 
         {
@@ -51,12 +51,10 @@
           width: function() {
             return chart.components.lineSeries.width();
           },
-          style: function() {
-            return {
-              orientation: 'horizontal',
-              handleWidth: 30,
-              handleHeight: 12
-            }
+          style: {
+            orientation: 'horizontal',
+            handleWidth: 30,
+            handleHeight: 12  
           }
         }, 
         {
@@ -73,12 +71,10 @@
 
             return components.xAxis.y() - chart.padding();
           },
-          style: function() {
-            return {
-              orientation: 'vertical',
-              handleWidth: 12,
-              handleHeight: 30
-            }
+          style: {
+            orientation: 'vertical',
+            handleWidth: 12,
+            handleHeight: 30
           }
         }, 
         {
@@ -101,15 +97,6 @@
           height: function() {
             var components = chart.components;
             return chart.height() - components.inspectSlider.height() - components.xSlider.height() - (chart.padding() * 6) - components.xAxis.height() - components.paginator.height();
-          },
-          data: function() {
-            //console.log(evt)
-            return {
-              series: chart.data().series,
-              zoomX: ZOOM_X,
-              zoomY: ZOOM_Y
-              //series: (chart.data().series).slice(0, 3200)
-            };
           }
         },
         {
@@ -126,21 +113,12 @@
             // bind axis height to line height
             return chart.components.lineSeries.height();
           },
-          data: function() {
-            // bind axis data to line min and max values
-            var lineSeries = chart.components.lineSeries,
-                data = lineSeries.data(),
-                viewport = lineSeries.getSeriesMinMax(data.series);
-
-            return {
-              min: viewport.minY,
-              max: viewport.maxY
-            }
+          data: {
+            min: -500,
+            max: 500
           },
-          style: function() {
-            return {
-              orientation: 'vertical'
-            }
+          style: {
+            orientation: 'vertical'
           }
         },
         {
@@ -159,21 +137,12 @@
             // bind axis width to line width
             return chart.components.lineSeries.width();
           },
-          data: function() {
-            // bind axis data to line min and max values
-            var lineSeries = chart.components.lineSeries,
-                data = lineSeries.data(),
-                viewport = lineSeries.getSeriesMinMax(data.series);
-
-            return {
-              min: viewport.minX,
-              max: viewport.maxX
-            }
+          data: {
+            min: 0,
+            max: 10
           },
-          style: function() {
-            return {
-              maxIncrements: 5
-            }
+          style: {
+            maxIncrements: 5
           }
         },
         {
@@ -181,7 +150,7 @@
           type: 'Line',
           x: function() {
             var inspectSlider = chart.components.inspectSlider;
-            return INSPECT_SLIDER_OFFSET_X + inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2;
+            return INSPECT_SLIDER_OFFSET_X + inspectSlider.x() + (inspectSlider.style.handleWidth - chart.components.inspectLine.width())/ 2;
           },
           y: function() {
             var inspectSlider = chart.components.inspectSlider;
@@ -193,10 +162,8 @@
           height: function() {
             return chart.components.lineSeries.height() + chart.padding();
           },
-          style: function() {
-            return {
-              stroke: '#3fa9f5' // blue
-            };
+          style: {
+            stroke: '#3fa9f5' // blue
           }
         },
         {
@@ -205,7 +172,7 @@
 
           x: function() { 
             var lineSeries = chart.components.lineSeries,
-                style = chart.components.inspectCircle.style();
+                style = chart.components.inspectCircle.style;
 
             if (NEAREST_POINT) {
               return NEAREST_POINT.x + lineSeries.x() - style.radius - (style.strokeWidth/2);
@@ -217,7 +184,7 @@
 
           y: function() { 
             var lineSeries = chart.components.lineSeries,
-                style = chart.components.inspectCircle.style();
+                style = chart.components.inspectCircle.style;
 
             if (NEAREST_POINT) {
               return NEAREST_POINT.y + lineSeries.y() - style.radius - (style.strokeWidth/2);
@@ -227,45 +194,29 @@
             }
           },
 
-          style: function() {
-            var dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
-            return {
-              fill: MeteorChart.Color.hexToRgba(dataColor, 0.3),
-              stroke: dataColor,
-              radius: 16,
-              strokeWidth: 2
-            }
-          },
-
-          data: function() {            
-            if (NEAREST_POINT) {
-              return {};
-            }
-            else {
-              return null;
-            }
+          style: {
+            radius: 16,
+            strokeWidth: 2
           }
         },
         {
           id: 'inspectSlider',
           type: 'Slider',
           x: function() {
-            return chart.components.lineSeries.x() - (this.style().handleWidth) / 2;
+            return chart.components.lineSeries.x() - (this.style.handleWidth) / 2;
           },
           y: function() {
             return (chart.padding() * 2)+ chart.components.paginator.height();
           },
           width: function() {
-            return chart.components.lineSeries.width() + this.style().handleWidth;
+            return chart.components.lineSeries.width() + this.style.handleWidth;
           },
-          style: function() {
-            return {
-              handleFill: '#3fa9f5', // blue
-              orientation: 'horizontal',
-              showTrack: false,
-              handleWidth: 12,
-              handleHeight: 30
-            }
+          style: {
+            handleFill: '#3fa9f5', // blue
+            orientation: 'horizontal',
+            showTrack: false,
+            handleWidth: 12,
+            handleHeight: 30
           }
         },
         {
@@ -280,14 +231,12 @@
           width: function() {
             return 180;
           },
-          data: function() {
-            return {
-              min: 10,
-              max: 1709,
-              value: PAGINATOR_VALUE,
-              step: 10,
-              template: 'Cycles 1 - {value} of {max}'
-            }
+          data: {
+            min: 10,
+            max: 1709,
+            value: 100,
+            step: 10,
+            template: 'Cycles 1 - {value} of {max}'
           }
         },
       ]

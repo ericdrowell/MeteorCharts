@@ -10,9 +10,9 @@
     _render: function() {
       var theme = this.chart.theme,
           font = theme.font,
-          orientation = this.style().orientation || 'horizontal',
-          data = this.data(),
-          lineWidth = this.style().lineWidth,
+          orientation = this.style.orientation || 'horizontal',
+          data = this.data,
+          lineWidth = this.style.lineWidth,
           context = this.context,
           width = this.width(),
           height = this.height(),

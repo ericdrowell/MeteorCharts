@@ -6,17 +6,14 @@
     this.id = config.id;
     this.type = config.type;
     this.dependencies = config.dependencies || {};
+    this.data = config.data || {};
+    this.style = config.style || {};
 
     // binding functions
     this.x(config.x);
     this.y(config.y);
     this.width(config.width);
     this.height(config.height);
-    this.data(config.data);
-    this.style(config.style);
-
-    // cache
-    this.clearCache();
 
     // build content container
     this.content = document.createElement('div');
@@ -101,16 +98,6 @@
         obj)
       );
     },
-    clearCache: function() {
-      this.cache = {
-        x: null,
-        y: null,
-        width: null,
-        height: null,
-        data: null,
-        style: null
-      };
-    },
 
     // render helpers
     /**
@@ -122,7 +109,7 @@
       var chart = this.chart,
           scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
 
-      return (this.style().padding || chart.style().padding || chart.theme.padding) * scale;
+      return (this.style.padding || chart.style.padding || chart.theme.padding) * scale;
     }
   };
 
@@ -140,6 +127,4 @@
   MeteorChart.Util.addMethod(MeteorChart.Component, 'y', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'height', 0);
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'data');
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'style', function() {return {};});
 })();

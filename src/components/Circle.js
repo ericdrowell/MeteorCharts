@@ -8,10 +8,10 @@
       this.content.appendChild(this.svg);
     },
     _render: function() {
-      var style = this.style(),
+      var style = this.style,
           strokeWidth, radius;
 
-      if (style && this.data()) {
+      if (style.fill || style.stroke) {
         radius = style.radius;
         strokeWidth = style.strokeWidth;
 
@@ -29,7 +29,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'width', function() {
-    var style = this.style();
+    var style = this.style;
     if (style) {
       return (style.radius * 2) + style.strokeWidth;
     }
@@ -39,7 +39,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'height', function() {
-    var style = this.style();
+    var style = this.style;
     if (style) {
       return (style.radius * 2) + style.strokeWidth;
     }
