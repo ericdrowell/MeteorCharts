@@ -19,7 +19,11 @@
       }
     },
     setBorderRadius: function(el, radius) {
-      el.style['borderRadius'] = radius;
+      el.style['borderRadius'] = radius + 'px';
+      el.style['MozBorderRadius'] = radius + 'px';
+      el.style['WebkitBorderRadius'] = radius + 'px';
+      el.style['OBorderRadius'] = radius + 'px';
+      el.style['MSBorderRadius'] = radius + 'px';
     },
     getTextWidth: function(text) {
       var width = 0;
