@@ -309,6 +309,8 @@
           unit = data.unit || {},
           len = series.length,
           context = this.context,
+          zoomX = data.zoomX || 1,
+          zoomY = data.zoomY || 1,
           n, line, points, i, pointsLen, viewport;
 
       //MeteorChart.log('render ' + this.id)
@@ -323,15 +325,18 @@
       context.clearRect(0, 0, this.width(), this.height());
       this.canvas.width = this.width();
       this.canvas.height = this.height();
-      
+
       for (n=0; n<len; n++) {
         points = series[n].points;
         pointsLen = points.length;
 
         context.save();
-        context.translate(0, this.height());
+
+        context.translate(this.width() / 2, this.height() / 2);
         context.scale(this.scaleX, this.scaleY * -1);
+        context.scale(zoomX, zoomY);
         context.translate(this.minX * -1, this.minY * -1);
+        context.translate(this.width() / (this.scaleX * -2), this.height() / (this.scaleY * -2));
         context.beginPath();
         context.moveTo(points[0], points[1]);
 
@@ -351,9 +356,7 @@
       }
 
       for (var n=0; n<num; n++) {
-        this.scene.remove(this.lines[0]);
         this.data.series.shift();
-        this.lines.shift();
       }
     },
     push: function(ser) {
@@ -363,24 +366,7 @@
         }
       }
       else {
-
-        var points = ser.points,
-            pointsLen = points.length,
-            material = new THREE.LineBasicMaterial({
-              color: MeteorChart.Color.getDataColor(this.chart.theme.data, this.colorIndex++),
-              linewidth: 2
-            }),
-            geometry = new THREE.Geometry(),
-            i, line;
-
-        for (i = 0; i<pointsLen; i+=2) {
-          geometry.vertices.push(new THREE.Vector3(points[i], points[i+1], 0));
-        }
-
-        line = new THREE.Line(geometry, material);
-
-        this.scene.add(line);
-        this.lines.push(line);
+        this.data.series.push(ser);
       }
     }
   });
