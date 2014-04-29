@@ -64,19 +64,6 @@
 
   MeteorChart.Component.extend('LineSeries', {
     init: function() {
-      this.colorIndex = 0;
-
-      this.renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        // NOTE: when antialias is turned on, the lines are disjointed
-        antialias: true
-      });
-      this.content.appendChild(this.renderer.domElement);
-
-      
-
-    },
-    _render: function() {
       var data = this.data,
           style = this.style,
           width = this.width(),
@@ -86,35 +73,31 @@
           len = series.length,
           context = this.context,
           n, line, points, i, pointsLen, viewport;
-
+          
+      this.colorIndex = 0;
+      this.renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        // NOTE: when antialias is turned on, the lines are disjointed
+        antialias: true
+      });
+      this.content.appendChild(this.renderer.domElement);
       this.lines = [];
       this._setMinMaxScale();
 
       // update formatters
       this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
       this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
-
       this.renderer.setSize(width, height);
-
       this.camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / - 2, 1, 1000 );
       this.camera.position.set(0, 0, 300);
       this.camera.lookAt(new THREE.Vector3(0, 0, 0));
       this.scene = new THREE.Scene();
 
-      
-
-
       for (n=0; n<len; n++) {
-
         this.push(series[n]);
-
       } 
-
-
-
-      this.renderer.render(this.scene, this.camera);  
     },
-    transform: function() {
+    _render: function() {
       var data = this.data,
           lines = this.lines,
           len = lines.length,

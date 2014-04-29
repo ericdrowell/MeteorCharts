@@ -46,11 +46,12 @@ var MeteorChart;
     for (n=0, len=this.components.length; n<len; n++) {
       component = this.components[n];
 
+      if (component.init) {
+        component.init();
+      }
+
       component.render();
 
-      if (component.transform) {
-        component.transform();
-      }
       MeteorChart.log('add ' + component.id);
       this.content.appendChild(component.content); 
     }
@@ -69,15 +70,7 @@ var MeteorChart;
       component = new MeteorChart.Components[conf.type](conf);
 
       this.components[component.id] = component;
-      this.components.push(component); 
-
-      if (component.init) {
-        component.init();
-      }
-
-
-      
-     
+      this.components.push(component);      
     },
     _decorateConf: function(conf) {
       var id = conf.id,

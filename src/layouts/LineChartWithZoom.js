@@ -9,13 +9,13 @@
     MeteorChart.Event.on({event: 'dragmove', id: 'xSlider'}, function(evt) {
       var lineSeries = chart.components.lineSeries;
       lineSeries.data.zoomX = ((evt.value * 4) + 1) || 1;
-      lineSeries.transform();
+      lineSeries.render();
     });
 
     MeteorChart.Event.on({event: 'dragmove', id: 'ySlider'}, function(evt) {
       var lineSeries = chart.components.lineSeries;
       lineSeries.data.zoomY = (5 - ((evt.value * 4))) || 1;
-      lineSeries.transform();
+      lineSeries.render();
     });
 
     MeteorChart.Event.on({event: 'dragmove', id: 'inspectSlider'}, function(evt) {

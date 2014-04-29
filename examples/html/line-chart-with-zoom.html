@@ -56,7 +56,7 @@
         components: {
           lineSeries: {
             data: {
-              series: getSeriesData(3200)
+              series: getSeriesData(32)
             }
           }
         }
@@ -71,12 +71,12 @@
 
 
         // remove last series
-        lineSeries.shift(100);
+        lineSeries.shift(2 /*320*/);
         
         // add new series
-        lineSeries.push(getSeriesData(100));
+        lineSeries.push(getSeriesData(2 /*320*/));
 
-        lineSeries.transform();        
+        lineSeries.render();        
       });
 
       console.log(chart);
