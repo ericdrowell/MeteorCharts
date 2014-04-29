@@ -27,23 +27,26 @@
 
   MeteorChart.Component.prototype = {
     render: function() {
-      //MeteorChart.log(this.id + ' render');
+      var that = this;
+      MeteorChart.Animation.queue(this.id, function() {
+        //MeteorChart.log(this.id + ' render');
 
-      // reset width and height so that they do not affect component
-      // width and height methods
-      this.content.style.width = 'auto';
-      this.content.style.height = 'auto';
+        // reset width and height so that they do not affect component
+        // width and height methods
+        that.content.style.width = 'auto';
+        that.content.style.height = 'auto';
 
-      // render concrete component first because the component width and height
-      // may depend on it
-      if (this._render) {
-        this._render();
-      }
+        // render concrete component first because the component width and height
+        // may depend on it
+        if (that._render) {
+          that._render();
+        }
 
-      this.content.style.left = this.x();
-      this.content.style.top = this.y();
-      this.content.style.width = this.width();
-      this.content.style.height = this.height();
+        that.content.style.left = that.x();
+        that.content.style.top = that.y();
+        that.content.style.width = that.width();
+        that.content.style.height = that.height();
+      });
     },
     // _render: function() {
     //   var state = {

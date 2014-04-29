@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     'src/Event.js',
     'src/Component.js',
     'src/Formatter.js',
+    'src/Animation.js',
 
     // components
     'src/components/LineSeries.js',

@@ -100,28 +100,13 @@ var MeteorChart;
       // clear any leftover DOM
       this.container.innerHTML = '';
     },
-    // add: function(conf, insertBefore) {
-    //   this._add(conf, insertBefore);
-    //   this.render();
-    // },
     render: function() { 
       var components = this.components,
-          n, component;
-
-      // if arguments are provided, render the components by id
-      if (arguments.length) {
-        len = arguments.length;
-        for (n=0; n<len; n++) {
-          components[arguments[n]].render();
-        }
-      }
-
-      // if no arguments are provided, render all components
-      else {
-        len = components.length;
-        for (n=0; n<len; n++) {
-          components[n].render();
-        }
+          len = components.length,
+          n, component
+        
+      for (n=0; n<len; n++) {
+        components[n].render();
       }
     },
     // render helpers
