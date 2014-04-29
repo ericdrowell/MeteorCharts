@@ -91,5 +91,5 @@
     }
   };
 
-  MeteorChart.Util.extend(MeteorChart.Formatters.Date, MeteorChart.Formatter);
+  MeteorChart.Util.extend(MeteorChart.Formatters.Date.prototype, MeteorChart.Formatter.prototype);
 })();

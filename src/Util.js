@@ -133,9 +133,9 @@
       return obj;
     },
     extend: function(c1, c2) {
-      for(var key in c2.prototype) {
-        if(!( key in c1.prototype)) {
-          c1.prototype[key] = c2.prototype[key];
+      for(var key in c2) {
+        if(!( key in c1)) {
+          c1[key] = c2[key];
         }
       }
     },

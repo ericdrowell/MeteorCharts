@@ -39,7 +39,7 @@ var MeteorChart;
 
     // init components
     for (n=0; n<len; n++) {
-      this._init(layoutComponents[n]);
+      this._initComponent(layoutComponents[n]);
     }
 
     // add components to chart content
@@ -61,13 +61,13 @@ var MeteorChart;
   };
 
   MeteorChart.prototype = {
-    _init: function(conf) {
+    _initComponent: function(conf) {
       var component;
 
       MeteorChart.log('init ' + conf.id);
 
       this._decorateConf(conf);
-      component = new MeteorChart.Components[conf.type](conf);
+      component = new MeteorChart.Components[(conf.renderer || '') + conf.type](conf);
 
       this.components[component.id] = component;
       this.components.push(component);      
@@ -77,9 +77,11 @@ var MeteorChart;
           component = this._components[id];
 
       if (component) {
-        // decorate data
         if (component.data) {
           conf.data = component.data;
+        }
+        if (component.renderer) {
+          conf.renderer = component.renderer;
         }
       }
 

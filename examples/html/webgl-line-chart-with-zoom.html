@@ -15,35 +15,10 @@
 
     <script src="../../lib/three.min.js"></script>
     <script src="../js/Grapher.js"></script>
+    <script src="../js/get-series.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
-    
-    
+      
     <script type="text/javascript">
-
-      function getSeriesData(num) {
-        return Grapher({
-          minX: 0,
-          maxX: 10,
-          increment: 0.05,
-          equations: (function() {
-            var arr = [];
-
-            for (var n=0; n<num; n++) {
-              (function(i) {
-                var rand = Math.random() + 0.9;
-                arr.push({
-                  title: 'sine ' + i,
-                  func: function(x) {
-                    return 500 * Math.sin(rand * x / 2);
-                  }
-                });
-              })(n);
-            }
-
-            return arr;
-          })()
-        });
-      }
 
       var chart = new MeteorChart({
         container: 'container',
@@ -55,6 +30,7 @@
 
         components: {
           lineSeries: {
+            renderer: 'WebGL',
             data: {
               series: getSeriesData(32)
             }

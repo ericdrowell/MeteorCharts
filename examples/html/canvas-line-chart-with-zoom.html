@@ -1,0 +1,60 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: white;
+      }
+      #container {
+        height: 450px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script src="../../lib/three.min.js"></script>
+    <script src="../js/Grapher.js"></script>
+    <script src="../js/get-series.js"></script>
+    <script src="../../dist/meteorcharts-dev.js"></script>
+      
+    <script type="text/javascript">
+
+      var chart = new MeteorChart({
+        container: 'container',
+        width: 800,
+        height: 400,
+
+        theme: MeteorChart.Themes.Crochet,
+        layout: MeteorChart.Layouts.LineChartWithZoom,
+
+        components: {
+          lineSeries: {
+            renderer: 'Canvas',
+            data: {
+              series: getSeriesData(32)
+            }
+          }
+        }
+      });
+
+      MeteorChart.Event.on({id: 'paginator', event: 'valueChange'}, function(evt) {
+        var value = evt.newValue,
+            lineSeries = chart.components.lineSeries,
+            data = lineSeries.data,
+            series = data.series,
+            len = series.length;
+
+        // remove last series
+        lineSeries.shift(2 /*320*/);
+        
+        // add new series
+        lineSeries.push(getSeriesData(2 /*320*/));
+
+        lineSeries.render();        
+      });
+
+      console.log(chart);
+    </script>
+  </body>
+</html>

@@ -8,6 +8,7 @@
     this.dependencies = config.dependencies || {};
     this.data = config.data || {};
     this.style = config.style || {};
+    this.renderer = config.renderer;
 
     // binding functions
     this.x(config.x);
@@ -119,7 +120,7 @@
     };
 
     MeteorChart.Components[type].prototype = methods;
-    MeteorChart.Util.extend(MeteorChart.Components[type], MeteorChart.Component);
+    MeteorChart.Util.extend(MeteorChart.Components[type].prototype, MeteorChart.Component.prototype);
   };
 
   // getters setters

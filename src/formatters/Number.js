@@ -42,5 +42,5 @@
     },
   };
 
-  MeteorChart.Util.extend(MeteorChart.Formatters.Number, MeteorChart.Formatter);
+  MeteorChart.Util.extend(MeteorChart.Formatters.Number.prototype, MeteorChart.Formatter.prototype);
 })();
