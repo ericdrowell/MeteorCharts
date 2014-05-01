@@ -50,7 +50,7 @@
         track.style.backgroundColor = theme.secondary, 0.1;
       }
 
-      if (style.orientation === 'vertical') {
+      if (this.orientation() === 'vertical') {
         handle.style.top = this.height() - handleHeight;
         handle.style.left = 0;
 
@@ -85,7 +85,7 @@
       var that = this,
           handle = this.handle,
           chartContent = this.chart.content,
-          orientation = this.style.orientation || 'horizontal',
+          orientation = this.orientation() || 'horizontal',
           style = this.style,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,

@@ -17,8 +17,10 @@
           width: function() {
             return chart.components.lineSeries.width();
           },
+          orientation: function() {
+            return 'horizontal';
+          },  
           style: {
-            orientation: 'horizontal',
             handleWidth: 30,
             handleHeight: 12  
           }
@@ -37,8 +39,10 @@
 
             return components.xAxis.y() - chart.padding();
           },
+          orientation: function() {
+            return 'vertical';
+          }, 
           style: {
-            orientation: 'vertical',
             handleWidth: 12,
             handleHeight: 30
           }
@@ -83,8 +87,8 @@
             min: -500,
             max: 500
           },
-          style: {
-            orientation: 'vertical'
+          orientation: function() {
+            return 'vertical';
           }
         },
         {
@@ -155,9 +159,11 @@
           width: function() {
             return chart.components.lineSeries.width() + this.style.handleWidth;
           },
+          orientation: function() {
+            return 'horizontal';
+          }, 
           style: {
             handleFill: '#3fa9f5', // blue
-            orientation: 'horizontal',
             showTrack: false,
             handleWidth: 12,
             handleHeight: 30

@@ -13,7 +13,7 @@
           min = data.min,
           max = data.max,
           diff = max - min,
-          scale = (style.orientation === 'vertical' ? this.height() : this.width()) / diff,
+          scale = (this.orientation() === 'vertical' ? this.height() : this.width()) / diff,
           offset = 0,
           formatter = new MeteorChart.Formatters[style.unit || 'Number'](data.min, data.max, style.maxNumLabels || 5),
           increment = formatter.increment;
@@ -39,7 +39,7 @@
       text.style.color = theme.primary;
       this.innerContent.appendChild(text);
 
-      if (this.style.orientation === 'vertical') {
+      if (this.orientation() === 'vertical') {
         text.style.top = this.height() - offset - (MeteorChart.Dom.getTextHeight(val) /2);
         text.style.left = 0;
       }

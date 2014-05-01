@@ -16,6 +16,7 @@
     this.y(config.y);
     this.width(config.width);
     this.height(config.height);
+    this.orientation(config.orientation);
 
     // build content container
     this.content = document.createElement('div');
@@ -161,4 +162,5 @@
   MeteorChart.Util.addMethod(MeteorChart.Component, 'y', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'height', 0);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'orientation', 0);
 })();
