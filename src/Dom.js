@@ -1,4 +1,7 @@
 (function() {
+  var VENDORS = ['Webkit', 'Moz', 'MS', 'O'],
+      VENDORS_LENGTH = VENDORS.length;
+
   MeteorChart.Dom = {
     createElement: function(tag) {
       var el = document.createElement(tag);
@@ -18,12 +21,19 @@
         y: rect.top
       }
     },
+    style: function(el, style, val) {
+      var n;
+
+      el.style[style] = val;
+      for (n=0; n<VENDORS_LENGTH; n++) {
+        el.style[VENDORS[n] + MeteorChart.Util.capitalize(style)] = val;
+      }
+    },
     setBorderRadius: function(el, radius) {
-      el.style['borderRadius'] = radius + 'px';
-      el.style['MozBorderRadius'] = radius + 'px';
-      el.style['WebkitBorderRadius'] = radius + 'px';
-      el.style['OBorderRadius'] = radius + 'px';
-      el.style['MSBorderRadius'] = radius + 'px';
+      this.style(el, 'borderRadius', radius + 'px');
+    },
+    setScale: function(el, x, y) {
+      this.style(el, 'transform', 'scale(' + x + ',' + y + ')');
     },
     getTextWidth: function(text) {
       var width = 0;

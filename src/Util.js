@@ -1,5 +1,8 @@
 (function() {
   MeteorChart.Util = {
+    capitalize: function(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
     replace: function(str, tokens) {
       var key;
       for (key in tokens) {

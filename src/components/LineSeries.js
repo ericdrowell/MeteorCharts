@@ -1,5 +1,80 @@
 (function() {
-  var LineSeries = {
+  MeteorChart.Component.extend('LineSeries', {
+    init: function() {
+      this.canvas = document.createElement('canvas');
+      this.context = this.canvas.getContext('2d');
+
+      this.content.style.overflow = 'hidden';
+      this.content.appendChild(this.canvas);
+
+      this._bind();
+    },
+    _render: function() {
+      var data = this.data,
+          series = data.series,
+          unit = data.unit || {},
+          len = series.length,
+          context = this.context,
+          zoomX = data.zoomX || 1,
+          zoomY = data.zoomY || 1,
+          n, line, points, i, pointsLen, viewport;
+
+      //MeteorChart.log('render ' + this.id)
+
+      this._setMinMaxScale();
+
+      // update formatters
+      this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
+      this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
+
+      // render
+      context.clearRect(0, 0, this.width(), this.height());
+      this.canvas.width = this.width();
+      this.canvas.height = this.height();
+
+      for (n=0; n<len; n++) {
+        points = series[n].points;
+        pointsLen = points.length;
+
+        context.save();
+
+        context.translate(this.width() / 2, this.height() / 2);
+        context.scale(this.scaleX, this.scaleY * -1);
+        context.scale(zoomX, zoomY);
+        context.translate(this.minX * -1, this.minY * -1);
+        context.translate(this.width() / (this.scaleX * -2), this.height() / (this.scaleY * -2));
+        context.beginPath();
+        context.moveTo(points[0], points[1]);
+
+        for (i = 2; i<pointsLen; i+=2) {
+          context.lineTo(points[i], points[i+1]);
+        }
+
+        context.restore();
+        context.strokeStyle = MeteorChart.Color.getDataColor(this.chart.theme.data, n);
+        context.lineWidth = 2;
+        context.stroke();
+      } 
+    },
+    shift: function(num) {
+      if (num === undefined) {
+        num = 1;
+      }
+
+      for (var n=0; n<num; n++) {
+        this.data.series.shift();
+      }
+    },
+    push: function(ser) {
+      if (MeteorChart.Util._isArray(ser)) {
+        for (var n=0; n<ser.length; n++) {
+          this.push(ser[n]);
+        }
+      }
+      else {
+        this.data.series.push(ser);
+      }
+    },
     getPointsMinMax: function(points) {
       var minX = Infinity,
           minY = Infinity,
@@ -199,178 +274,5 @@
       this.scaleX = scaleX;
       this.scaleY = scaleY;
     }
-  };
-
-  MeteorChart.Component.extend('WebGLLineSeries', {
-    init: function() {
-      var data = this.data,
-          style = this.style,
-          width = this.width(),
-          height = this.height(),
-          series = data.series,
-          unit = data.unit || {},
-          len = series.length,
-          context = this.context,
-          n, line, points, i, pointsLen, viewport;
-
-      this.colorIndex = 0;
-      this._renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        // NOTE: when antialias is turned on, the lines are disjointed
-        antialias: true
-      });
-      this.content.appendChild(this._renderer.domElement);
-      this.lines = [];
-      this._setMinMaxScale();
-
-      // update formatters
-      this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
-      this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
-      this._renderer.setSize(width, height);
-      this.camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / - 2, 1, 1000 );
-      this.camera.position.set(0, 0, 300);
-      this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-      this.scene = new THREE.Scene();
-
-      for (n=0; n<len; n++) {
-        this.push(series[n]);
-      } 
-    },
-    _render: function() {
-      var data = this.data,
-          lines = this.lines,
-          len = lines.length,
-          zoomX = data.zoomX || 1,
-          zoomY = data.zoomY || 1,
-          n;
-
-      for (n=0; n<len; n++) {
-        lines[n].position.x = -1 * zoomX * this.width() / 2;
-        lines[n].scale.set(this.scaleX * zoomX, this.scaleY * zoomY, 1);
-
-      } 
-
-      this._renderer.render(this.scene, this.camera);   
-    },
-    shift: function(num) {
-      if (num === undefined) {
-        num = 1;
-      }
-
-      for (var n=0; n<num; n++) {
-        this.scene.remove(this.lines[0]);
-        this.data.series.shift();
-        this.lines.shift();
-      }
-    },
-    push: function(ser) {
-      if (MeteorChart.Util._isArray(ser)) {
-        for (var n=0; n<ser.length; n++) {
-          this.push(ser[n]);
-        }
-      }
-      else {
-
-        var points = ser.points,
-            pointsLen = points.length,
-            material = new THREE.LineBasicMaterial({
-              color: MeteorChart.Color.getDataColor(this.chart.theme.data, this.colorIndex++),
-              linewidth: 2
-            }),
-            geometry = new THREE.Geometry(),
-            i, line;
-
-        for (i = 0; i<pointsLen; i+=2) {
-          geometry.vertices.push(new THREE.Vector3(points[i], points[i+1], 0));
-        }
-
-        line = new THREE.Line(geometry, material);
-
-        this.scene.add(line);
-        this.lines.push(line);
-      }
-    }
   });
-
-
-  MeteorChart.Component.extend('CanvasLineSeries', {
-    init: function() {
-      this.canvas = document.createElement('canvas');
-      this.context = this.canvas.getContext('2d');
-
-      // add canvas to the content container
-      this.content.appendChild(this.canvas);
-
-      this._bind();
-    },
-    _render: function() {
-      var data = this.data,
-          series = data.series,
-          unit = data.unit || {},
-          len = series.length,
-          context = this.context,
-          zoomX = data.zoomX || 1,
-          zoomY = data.zoomY || 1,
-          n, line, points, i, pointsLen, viewport;
-
-      //MeteorChart.log('render ' + this.id)
-
-      this._setMinMaxScale();
-
-      // update formatters
-      this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
-      this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
-
-      // render
-      context.clearRect(0, 0, this.width(), this.height());
-      this.canvas.width = this.width();
-      this.canvas.height = this.height();
-
-      for (n=0; n<len; n++) {
-        points = series[n].points;
-        pointsLen = points.length;
-
-        context.save();
-
-        context.translate(this.width() / 2, this.height() / 2);
-        context.scale(this.scaleX, this.scaleY * -1);
-        context.scale(zoomX, zoomY);
-        context.translate(this.minX * -1, this.minY * -1);
-        context.translate(this.width() / (this.scaleX * -2), this.height() / (this.scaleY * -2));
-        context.beginPath();
-        context.moveTo(points[0], points[1]);
-
-        for (i = 2; i<pointsLen; i+=2) {
-          context.lineTo(points[i], points[i+1]);
-        }
-
-        context.restore();
-        context.strokeStyle = MeteorChart.Color.getDataColor(this.chart.theme.data, n);
-        context.lineWidth = 2;
-        context.stroke();
-      } 
-    },
-    shift: function(num) {
-      if (num === undefined) {
-        num = 1;
-      }
-
-      for (var n=0; n<num; n++) {
-        this.data.series.shift();
-      }
-    },
-    push: function(ser) {
-      if (MeteorChart.Util._isArray(ser)) {
-        for (var n=0; n<ser.length; n++) {
-          this.push(ser[n]);
-        }
-      }
-      else {
-        this.data.series.push(ser);
-      }
-    }
-  });
-
-  MeteorChart.Util.extend(MeteorChart.Components.CanvasLineSeries.prototype, LineSeries);
-  MeteorChart.Util.extend(MeteorChart.Components.WebGLLineSeries.prototype, LineSeries);
 })();

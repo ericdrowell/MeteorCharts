@@ -30,14 +30,44 @@
 
         components: {
           lineSeries: {
-            renderer: 'Canvas',
             data: {
-              series: getSeriesData(3200)
+              series: getSeriesData(32)
             }
           }
         }
       });
 
+      // bindings
+      MeteorChart.Event.on({id: 'inspectSlider', event: 'dragmove'}, function(evt) {
+        var components = chart.components,
+            lineSeries = components.lineSeries,
+            inspectCircle = components.inspectCircle,
+            inspectCircleStyle = inspectCircle.style;
+            dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0),
+            inspectSliderOffsetX = evt.offset,
+            nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset);
+
+        inspectCircle.style.fill = MeteorChart.Color.hexToRgba(dataColor, 0.3);
+        inspectCircle.style.stroke = dataColor;
+
+        inspectCircle.x(nearestPoint.x + lineSeries.x() - inspectCircleStyle.radius);
+        inspectCircle.y(nearestPoint.y + lineSeries.y() - inspectCircleStyle.radius);
+
+        chart.components.inspectCircle.render();
+      });
+
+      MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
+        var lineSeries = chart.components.lineSeries;
+        lineSeries.data.zoomX = ((evt.value * 4) + 1) || 1;
+        lineSeries.render();
+      });
+
+      MeteorChart.Event.on({id: 'ySlider', event: 'dragmove'}, function(evt) {
+        var lineSeries = chart.components.lineSeries;
+        lineSeries.data.zoomY = (5 - ((evt.value * 4))) || 1;
+        lineSeries.render();
+      });
+      
       MeteorChart.Event.on({id: 'paginator', event: 'valueChange'}, function(evt) {
         var value = evt.newValue,
             lineSeries = chart.components.lineSeries,

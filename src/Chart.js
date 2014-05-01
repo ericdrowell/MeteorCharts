@@ -6,6 +6,7 @@ var MeteorChart;
         layoutComponents, components, component, len, n, componentId, conf, componentData;
 
     this.attrs= {};
+    this.deps = {};
     this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
 
     this.width(config.width);
@@ -67,7 +68,7 @@ var MeteorChart;
       MeteorChart.log('init ' + conf.id);
 
       this._decorateConf(conf);
-      component = new MeteorChart.Components[(conf.renderer || '') + conf.type](conf);
+      component = new MeteorChart.Components[conf.type](conf);
 
       this.components[component.id] = component;
       this.components.push(component);      

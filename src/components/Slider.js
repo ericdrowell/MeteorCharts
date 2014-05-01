@@ -19,6 +19,9 @@
       this.handle.style.position = 'absolute';
       this.content.appendChild(this.handle);
 
+      this.set('offset', 0);
+      this.set('value', 0);
+
       this._bind();
     },
     _render: function() {
@@ -72,6 +75,12 @@
       
       
     },
+    getValue: function() {
+      return this.value;
+    },
+    getOffset: function() {
+      return this.offset;
+    },
     _bind: function() {
       var that = this,
           handle = this.handle,
@@ -102,9 +111,10 @@
 
       // drag
       document.body.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        
+        var diff, newOffset, value;
+
         if (startOffsetPos !== null) {
-          var diff, newOffset;
+          
 
           if (orientation === 'horizontal') {
             diff = that.width() - that.style.handleWidth;
@@ -131,9 +141,14 @@
             handle.style.top = newOffset;    
           }
 
+          value = newOffset / (orientation === 'horizontal' ? (that.width() - handleWidth) : (that.height() - handleHeight));
+
+          that.set('offset', newOffset);
+          that.set('value', value);
+
           that.fire('dragmove', {
             offset: newOffset,
-            value: newOffset / (orientation === 'horizontal' ? (that.width() - handleWidth) : (that.height() - handleHeight))
+            value: value
           });
         }
       }, 17));

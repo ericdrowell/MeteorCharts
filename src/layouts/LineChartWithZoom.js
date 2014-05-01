@@ -1,39 +1,5 @@
 (function() {
   MeteorChart.Layouts.LineChartWithZoom = function(chart) {
-
-    // globals
-    var INSPECT_SLIDER_OFFSET_X = 0,
-        NEAREST_POINT = null;
-
-    // bindings
-    MeteorChart.Event.on({event: 'dragmove', id: 'xSlider'}, function(evt) {
-      var lineSeries = chart.components.lineSeries;
-      lineSeries.data.zoomX = ((evt.value * 4) + 1) || 1;
-      lineSeries.render();
-    });
-
-    MeteorChart.Event.on({event: 'dragmove', id: 'ySlider'}, function(evt) {
-      var lineSeries = chart.components.lineSeries;
-      lineSeries.data.zoomY = (5 - ((evt.value * 4))) || 1;
-      lineSeries.render();
-    });
-
-    MeteorChart.Event.on({event: 'dragmove', id: 'inspectSlider'}, function(evt) {
-      var components = chart.components,
-          lineSeries = components.lineSeries,
-          inspectCircle = components.inspectCircle,
-          dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0);
-
-      INSPECT_SLIDER_OFFSET_X = evt.offset;
-      NEAREST_POINT = lineSeries.getSeriesNearestPointX(0, evt.offset);
-
-      inspectCircle.style.fill = MeteorChart.Color.hexToRgba(dataColor, 0.3);
-      inspectCircle.style.stroke = dataColor;
-
-      chart.components.inspectCircle.render();
-      chart.components.inspectLine.render();
-    });
-
     return {
       components: [ 
         {
@@ -150,7 +116,8 @@
           type: 'Line',
           x: function() {
             var inspectSlider = chart.components.inspectSlider;
-            return INSPECT_SLIDER_OFFSET_X + inspectSlider.x() + (inspectSlider.style.handleWidth - chart.components.inspectLine.width())/ 2;
+
+            return inspectSlider.x() + (inspectSlider.style.handleWidth - chart.components.inspectLine.width())/ 2 + inspectSlider.get('offset', this);
           },
           y: function() {
             var inspectSlider = chart.components.inspectSlider;
@@ -170,30 +137,6 @@
           id: 'inspectCircle',
           type: 'Circle',
 
-          x: function() { 
-            var lineSeries = chart.components.lineSeries,
-                style = chart.components.inspectCircle.style;
-
-            if (NEAREST_POINT) {
-              return NEAREST_POINT.x + lineSeries.x() - style.radius - (style.strokeWidth/2);
-            }
-            else {
-              return 0;
-            }
-          },
-
-          y: function() { 
-            var lineSeries = chart.components.lineSeries,
-                style = chart.components.inspectCircle.style;
-
-            if (NEAREST_POINT) {
-              return NEAREST_POINT.y + lineSeries.y() - style.radius - (style.strokeWidth/2);
-            }
-            else {
-              return 0;
-            }
-          },
-
           style: {
             radius: 16,
             strokeWidth: 2
@@ -203,6 +146,7 @@
           id: 'inspectSlider',
           type: 'Slider',
           x: function() {
+            
             return chart.components.lineSeries.x() - (this.style.handleWidth) / 2;
           },
           y: function() {
