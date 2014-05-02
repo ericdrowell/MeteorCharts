@@ -23,7 +23,7 @@
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.StandardLineChartWithTooltip,
+        layout: MeteorChart.Layouts.StandardLineChart,
 
         // set components data and options
         components: {
@@ -51,10 +51,93 @@
                 }
               ]
             }
+          },
+          xAxis: {
+            data: {
+              min: -100,
+              max: 300
+            }
+          },
+          yAxis: {
+            data: {
+              min: -100,
+              max: 200
+            }
           }
         }
       });
-   
+
+
+
+
+        //   x: MeteorChart.Event.map({event: 'mousemove', id: 'lineSeries'}, function(evt) {
+        //     var lineSeries = chart.components.lineSeries,
+        //         tooltip = chart.components.tooltip,
+        //         nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
+        //         newX;
+
+        //     if (nearestPoint) {
+        //       newX = nearestPoint.x + lineSeries.x() - (tooltip.width() / 2);
+
+        //       // bounds
+        //       if (newX + tooltip.width() > chart.width()) {
+        //         newX = chart.width() - tooltip.width();
+        //       }
+
+        //       return newX;
+        //     }
+        //     else {
+        //       return 0;
+        //     }
+        //   }),
+
+        //   y: MeteorChart.Event.map({event: 'mousemove', id: 'lineSeries'}, function(evt) {
+        //     var lineSeries = chart.components.lineSeries,
+        //         tooltip = chart.components.tooltip,
+        //         nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
+        //         newY;
+
+        //     if (nearestPoint) {
+        //       newY = nearestPoint.y + lineSeries.y() - tooltip.height() - tooltip.padding(-3);
+
+        //       // bounds
+        //       if (newY < 0) {
+        //         newY = 0;
+        //       }
+
+        //       return newY;
+        //     }
+        //     else {
+        //       return 0;
+        //     }
+                
+        //     return (nearestPoint ? nearestPoint.y + lineSeries.y() : 0)
+        //       - tooltip.height() - tooltip.padding(-3);
+        //   }),
+
+        //   data: MeteorChart.Event.map([{event: 'mousemove', id: 'lineSeries'}, {event: 'mouseout', id: 'lineSeries'}], function(evt) {
+        //     var lineSeries = chart.components.lineSeries,
+        //         nearestPoint;
+
+        //     // TODO: shouldn't have to clear the cache here.  Need to do this automatically
+        //     // somehow
+        //     chart.components.tooltip.clearCache();
+                
+        //     if (evt.event === 'mousemove') {
+        //       nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
+        //       return {
+        //         title: nearestPoint.title,
+        //         content: nearestPoint.dataX + ', ' + nearestPoint.dataY
+        //       }
+        //     }
+        //     else {
+              
+        //       return {};
+        //     }
+        //   })
+        // }
+
+
       console.log(chart);
     </script>
   </body>

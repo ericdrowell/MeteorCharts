@@ -81,8 +81,8 @@ var MeteorChart;
         if (component.data) {
           conf.data = component.data;
         }
-        if (component.renderer) {
-          conf.renderer = component.renderer;
+        if (component.style) {
+          conf.style = component.style;
         }
       }
 

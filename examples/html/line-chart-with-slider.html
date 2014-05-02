@@ -13,24 +13,13 @@
   <body>
     <div id="container"></div>
 
+    <script src="../js/Grapher.js"></script>
     <script src="../js/get-series.js"></script>
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
     
     
     <script type="text/javascript">
-
-      var data = {
-        series: getSeries({
-          minX: -100,
-          minY: -100,
-          maxX: 500,
-          maxY: 500,
-          yVariance: 20,
-          numLines: 32,
-          numPoints: 1000
-        })
-      };
 
       var chart = new MeteorChart({
         container: 'container',
@@ -43,10 +32,54 @@
         // set components data and options
         components: {
           lineSeries: {
-            data: data          
+            data: {
+              series: [
+                {
+                  title: 'Series 1',
+                  points: [
+                    -100, -100,
+                    100, 100,
+                    200, 50
+                  ]
+                },
+                { 
+                  title: 'Series 2',
+                  points: [
+                    0, 100,
+                    100, 200,
+                    200, 150,
+                    300, 200
+                  ]
+                }
+              ]
+            }
+          },
+          slider: {
+            style: {
+              handleWidth: 60,
+              handleHeight: 15
+            }
+          },
+          xAxis: {
+            data: {
+              min: -100,
+              max: 300
+            }
+          },
+          yAxis: {
+            data: {
+              min: -100,
+              max: 200
+            }
           }
         }
       });
+
+          // style: {
+          //   orientation: 'horizontal',
+          //   handleWidth: 60,
+          //   handleHeight: 15
+          // }
 
    
       console.log(chart);
