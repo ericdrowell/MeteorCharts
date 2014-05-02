@@ -34,22 +34,6 @@
           width: function() {
             // bind axis width to line width
             return chart.components.lineSeries.width();
-          },
-          data: function() {
-            // bind axis data to line min and max values
-            var lineSeries = chart.components.lineSeries,
-                data = lineSeries.data(),
-                viewport = MeteorChart.Util.getSeriesMinMax(data.series);
-          
-            return {
-              min: viewport.minX,
-              max: viewport.maxX
-            };
-          },
-          style: function() {
-            return {
-              maxIncrements: 5
-            };
           }
         },
         {
@@ -65,22 +49,8 @@
             // bind axis height to line height
             return chart.components.lineSeries.height();
           },
-          data: function() {
-            // bind axis data to line min and max values
-            var lineSeries = chart.components.lineSeries,
-                data = lineSeries.data(),
-                viewport = MeteorChart.Util.getSeriesMinMax(data.series);
-
-            return {
-              min: viewport.minY,
-              max: viewport.maxY
-            };
-          },
-          style: function() {
-            return {
-              orientation: 'vertical',
-              maxIncrements: 5
-            };
+          orientation: function() {
+            return 'vertical'
           }
         }
       ]

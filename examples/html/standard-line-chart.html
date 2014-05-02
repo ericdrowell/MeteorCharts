@@ -26,13 +26,12 @@
         theme: MeteorChart.Themes.CoteAzur,
         layout: MeteorChart.Layouts.StandardLineChart,
 
-        // set components data and options
+        // set components data and styles
         components: {
           lineSeries: {
             data: {
               series: [
                 {
-                  // red
                   title: 'Series 1',
                   points: [
                     -100, -100,
@@ -41,7 +40,6 @@
                   ]
                 },
                 { 
-                  // green
                   title: 'Series 2',
                   points: [
                     0, 100,
@@ -51,6 +49,24 @@
                   ]
                 }
               ]
+            }
+          },
+          xAxis: {
+            data: {
+              min: -100,
+              max: 300
+            },
+            style: {
+              maxIncrements: 5
+            }
+          },
+          yAxis: {
+            data: {
+              min: -100,
+              max: 200
+            },
+            style: {
+              maxIncrements: 5
             }
           }
         }
