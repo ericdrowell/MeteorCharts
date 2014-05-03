@@ -8,7 +8,7 @@
     _render: function() {
       var that = this,
           chart = this.chart,
-          data = this.data,
+          data = this.data(),
           style = this.style,
           min = data.min,
           max = data.max,

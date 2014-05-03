@@ -30,7 +30,7 @@
     _render: function() {
       var style = this.style,
           theme = this.chart.theme,
-          data = this.data,
+          data = this.data(),
           leftArrowSVG = this.leftArrowSVG,
           leftArrow = this.leftArrow,
           text = this.text,

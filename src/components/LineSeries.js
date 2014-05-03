@@ -10,7 +10,7 @@
       this._bind();
     },
     _render: function() {
-      var data = this.data,
+      var data = this.data(),
           series = data.series,
           unit = data.unit || {},
           len = series.length,
@@ -62,7 +62,7 @@
       }
 
       for (var n=0; n<num; n++) {
-        this.data.series.shift();
+        this.data().series.shift();
       }
     },
     push: function(ser) {
@@ -72,7 +72,7 @@
         }
       }
       else {
-        this.data.series.push(ser);
+        this.data().series.push(ser);
       }
     },
     getPointsMinMax: function(points) {
@@ -101,7 +101,7 @@
       };
     },
     getSeriesMinMax: function() {
-      var series = this.data.series,
+      var series = this.data().series,
           minX = Infinity,
           minY = Infinity,
           maxX = Infinity * -1,
@@ -150,7 +150,7 @@
     },
     getSeriesNearestPointX: function(n, x) {
       var dataX = this.chartToDataX(x),
-          data = this.data,
+          data = this.data(),
           series = data.series,
           shortestDistance = Infinity,
           nearestPoint = null,
@@ -191,7 +191,7 @@
     },
     getNearestPoint: function(x, y) {
       var dataPos = this.chartToData(x, y),
-          data = this.data,
+          data = this.data(),
           series = data.series,
           len = series.length,
           shortestDistance = Infinity,

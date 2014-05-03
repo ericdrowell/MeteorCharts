@@ -10,7 +10,7 @@
       this.text.style.fontSize = theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;
       this.text.style.fontFamily = theme.fontFamily;
       this.text.style.color = theme.primary;
-      this.text.innerHTML = this.data;
+      this.text.innerHTML = this.data();
     }
   });
 

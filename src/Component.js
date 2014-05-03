@@ -7,7 +7,6 @@
     this.id = config.id;
     this.type = config.type;
     this.dependencies = config.dependencies || {};
-    this.data = config.data || {};
     this.style = config.style || {};
     this.renderer = config.renderer;
 
@@ -17,6 +16,7 @@
     this.width(config.width);
     this.height(config.height);
     this.orientation(config.orientation);
+    this.data(config.data);
 
     // build content container
     this.content = document.createElement('div');
@@ -163,4 +163,5 @@
   MeteorChart.Util.addMethod(MeteorChart.Component, 'width', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'height', 0);
   MeteorChart.Util.addMethod(MeteorChart.Component, 'orientation', 0);
+  MeteorChart.Util.addMethod(MeteorChart.Component, 'data');
 })();
