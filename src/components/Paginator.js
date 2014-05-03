@@ -28,7 +28,7 @@
       this._bind();
     },
     _render: function() {
-      var style = this.style,
+      var style = this.style(),
           theme = this.chart.theme,
           data = this.data(),
           leftArrowSVG = this.leftArrowSVG,

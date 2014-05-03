@@ -10,9 +10,9 @@
     _render: function() {
       var theme = this.chart.theme,
           font = theme.font,
-          orientation = this.style.orientation || 'horizontal',
-          data = this.data,
-          lineWidth = this.style.lineWidth,
+          orientation = this.orientation() || 'horizontal',
+          data = this.data(),
+          lineWidth = this.style().lineWidth,
           context = this.context,
           width = this.width(),
           height = this.height(),
@@ -20,7 +20,7 @@
 
       if (data) {
         len = data.length;
-      
+
         this.canvas.width = this.width();
         this.canvas.height = this.height();
         context.clearRect(0, 0, width, height);

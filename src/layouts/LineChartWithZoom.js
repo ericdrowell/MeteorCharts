@@ -121,7 +121,7 @@
           x: function() {
             var inspectSlider = chart.components.inspectSlider;
 
-            return inspectSlider.x() + (inspectSlider.style.handleWidth - chart.components.inspectLine.width())/ 2 + inspectSlider.get('offset', this);
+            return inspectSlider.x() + (inspectSlider.style().handleWidth - chart.components.inspectLine.width())/ 2 + inspectSlider.get('offset', this);
           },
           y: function() {
             var inspectSlider = chart.components.inspectSlider;
@@ -151,13 +151,13 @@
           type: 'Slider',
           x: function() {
             
-            return chart.components.lineSeries.x() - (this.style.handleWidth) / 2;
+            return chart.components.lineSeries.x() - (this.style().handleWidth) / 2;
           },
           y: function() {
             return (chart.padding() * 2)+ chart.components.paginator.height();
           },
           width: function() {
-            return chart.components.lineSeries.width() + this.style.handleWidth;
+            return chart.components.lineSeries.width() + this.style().handleWidth;
           },
           orientation: function() {
             return 'horizontal';

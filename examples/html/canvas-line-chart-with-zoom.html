@@ -42,13 +42,13 @@
         var components = chart.components,
             lineSeries = components.lineSeries,
             inspectCircle = components.inspectCircle,
-            inspectCircleStyle = inspectCircle.style;
+            inspectCircleStyle = inspectCircle.style();
             dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0),
             inspectSliderOffsetX = evt.offset,
             nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset);
 
-        inspectCircle.style.fill = MeteorChart.Color.hexToRgba(dataColor, 0.3);
-        inspectCircle.style.stroke = dataColor;
+        inspectCircle.style().fill = MeteorChart.Color.hexToRgba(dataColor, 0.3);
+        inspectCircle.style().stroke = dataColor;
 
         inspectCircle.x(nearestPoint.x + lineSeries.x() - inspectCircleStyle.radius);
         inspectCircle.y(nearestPoint.y + lineSeries.y() - inspectCircleStyle.radius);

@@ -20,7 +20,7 @@
     },
     _render: function() {
       var data = this.data,
-          style = this.style,
+          style = this.style(),
           theme = this.chart.theme;
 
       if (data && data.title && data.content) {

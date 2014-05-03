@@ -9,7 +9,7 @@
       var that = this,
           chart = this.chart,
           data = this.data(),
-          style = this.style,
+          style = this.style(),
           min = data.min,
           max = data.max,
           diff = max - min,
@@ -20,7 +20,7 @@
 
       this.innerContent.innerHTML = '';
 
-      this.labelOffsets = [];
+      this.set('labelOffsets', []);
 
       formatter.each(function(n, val) {
         offset = n * increment * scale;
@@ -49,7 +49,8 @@
         text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2); 
       }
   
-      this.labelOffsets.push(offset);
+      this.set('labelOffsets', this.props.labelOffsets.concat([offset]));
+
     }
   });
 

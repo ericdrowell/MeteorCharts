@@ -27,7 +27,7 @@
     _render: function() {
       var handle = this.handle,
           track = this.track,
-          style = this.style,
+          style = this.style(),
           theme = this.chart.theme,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
@@ -86,7 +86,7 @@
           handle = this.handle,
           chartContent = this.chart.content,
           orientation = this.orientation() || 'horizontal',
-          style = this.style,
+          style = this.style(),
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
           startOffsetPos = null,
@@ -173,11 +173,11 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'width', function() {
-    return this.style.handleWidth;
+    return this.style().handleWidth;
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'height', function() {
-    return this.style.handleHeight;
+    return this.style().handleHeight;
   });
 
 })();

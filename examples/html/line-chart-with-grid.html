@@ -65,8 +65,13 @@
             }
           },
           verticalGridLines: {
-            data: {
-              
+            data: function() {
+              return this.chart.components.xAxis.get('labelOffsets', this);
+            }
+          },
+          horizontalGridLines: {
+            data: function() {
+              return this.chart.components.yAxis.get('labelOffsets', this);
             }
           }
         }
