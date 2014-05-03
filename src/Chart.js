@@ -45,16 +45,7 @@ var MeteorChart;
 
     // add components to chart content
     for (n=0, len=this.components.length; n<len; n++) {
-      component = this.components[n];
-
-      if (component.init) {
-        component.init();
-      }
-
-      component.render();
-
-      MeteorChart.log('add ' + component.id);
-      this.content.appendChild(component.content); 
+      this._addComponent(n);
     }
 
     // store reference to this chart
@@ -73,6 +64,18 @@ var MeteorChart;
       this.components[component.id] = component;
       this.components.push(component);      
     },
+    _addComponent: function(n) {
+      var component = this.components[n];
+
+      if (component.init) {
+        component.init();
+      }
+
+      component.render();
+
+      MeteorChart.log('add ' + component.id);
+      this.content.appendChild(component.content); 
+    },
     _decorateConf: function(conf) {
       var id = conf.id,
           component = this._components[id];
@@ -87,6 +90,10 @@ var MeteorChart;
       }
 
       conf.chart = this;
+    },
+    add: function(conf) {
+      this._initComponent(conf); 
+      this._addComponent(this.components.length-1);
     },
     destroy: function() {
       var components = this.components,

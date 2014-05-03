@@ -67,6 +67,46 @@
         }
       });
 
+      chart.add({
+        id: 'tooltip',
+        type: 'Tooltip'
+      });
+
+      MeteorChart.Event.on({id: 'lineSeries', event: 'mousemove'}, function(evt) {
+        var lineSeries = chart.components.lineSeries,
+            tooltip = chart.components.tooltip,
+            nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
+            newX, newY;
+
+        if (nearestPoint) {
+          newX = nearestPoint.x + lineSeries.x() - (tooltip.width() / 2);
+          newY = nearestPoint.y + lineSeries.y() - tooltip.height() - tooltip.padding(-3);
+
+          // bounds
+          if (newX + tooltip.width() > chart.width()) {
+            newX = chart.width() - tooltip.width();
+          }
+          if (newY < 0) {
+            newY = 0;
+          }
+
+          tooltip.x(newX);  
+          tooltip.y(newY); 
+          tooltip.data({
+            title: nearestPoint.title,
+            content: nearestPoint.dataX + ', ' + nearestPoint.dataY
+          });
+
+          tooltip.render();
+        }
+      });
+
+      MeteorChart.Event.on({id: 'lineSeries', event: 'mouseout'}, function(evt) {
+        var tooltip = chart.components.tooltip;
+        tooltip.data(null);
+        tooltip.render();
+      });
+
 
 
 
