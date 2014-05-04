@@ -166,7 +166,7 @@
     if (!methods.defaults) {
       methods.defaults = {};
     }
-    
+
     MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
     };
@@ -174,13 +174,4 @@
     MeteorChart.Components[type].prototype = methods;
     MeteorChart.Util.extend(MeteorChart.Components[type].prototype, MeteorChart.Component.prototype);
   };
-
-  // getters setters
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'x', 0);
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'y', 0);
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'width', 0);
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'height', 0);
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'orientation', 0);
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'data');
-  MeteorChart.Util.addMethod(MeteorChart.Component, 'style', function(){return {}});
 })();

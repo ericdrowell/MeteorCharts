@@ -9,9 +9,9 @@ var MeteorChart;
     this.deps = {};
     this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
 
-    this.width(config.width);
-    this.height(config.height);
-    this.style(config.style);
+    this.set('width', config.width);
+    this.set('height', config.height);
+    this.set('style', config.style);
 
     this.layout = config.layout(this);
     this.theme = config.theme;
@@ -21,8 +21,8 @@ var MeteorChart;
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'meteorchart-content';
-    this.content.style.width = this.width();
-    this.content.style.height = this.height();
+    this.content.style.width = this.get('width', this);
+    this.content.style.height = this.get('height', this);
     this.content.style.display = 'inline-block';
     this.content.style.backgroundColor = this.theme.background;
     this.content.style.position = 'relative';
@@ -37,8 +37,7 @@ var MeteorChart;
 
     layoutComponents = this.layout.components;
     len = layoutComponents.length;
-
-    setTimeout(function() {    
+ 
     // init components
     for (n=0; n<len; n++) {
       that._initComponent(layoutComponents[n]);
@@ -48,7 +47,6 @@ var MeteorChart;
     for (n=0, len=that.components.length; n<len; n++) {
       that._addComponent(n);
     }
-  }, 50);
 
     // store reference to this chart
     MeteorChart.charts.push(this);
@@ -128,7 +126,7 @@ var MeteorChart;
     // render helpers
     padding: function(scaleFactor) {
       var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
-      return (this.style().padding || this.theme.padding) * scale;
+      return (this.theme.padding) * scale;
     }
   };
 

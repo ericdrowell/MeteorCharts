@@ -12,11 +12,11 @@
             return chart.padding();
           },
           width: function() {
-            return chart.width() - chart.components.yAxis.get('width', this) - (chart.padding() * 3);
+            return chart.get('width', this) - chart.components.yAxis.get('width', this) - (chart.padding() * 3);
           },
           height: function() {
             var components = chart.components;
-            return chart.height() - (chart.padding() * 3) - components.xAxis.get('height', this);
+            return chart.get('height', this) - (chart.padding() * 3) - components.xAxis.get('height', this);
           }
         },
         {

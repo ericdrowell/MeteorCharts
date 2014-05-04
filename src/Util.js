@@ -184,9 +184,4 @@
     }
   };
 
-  // TODO: add methods to MeteorChart class. 
-  MeteorChart.Util.addMethod(MeteorChart, 'width', 0);
-  MeteorChart.Util.addMethod(MeteorChart, 'height', 0);
-  MeteorChart.Util.addMethod(MeteorChart, 'data');
-  MeteorChart.Util.addMethod(MeteorChart, 'style', function() {return {};});
 })();
