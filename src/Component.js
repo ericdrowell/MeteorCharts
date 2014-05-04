@@ -1,7 +1,6 @@
 (function() {
   MeteorChart.Component = function(config) {
     this.attrs = {}; // x, y, width, and height
-    this.props = {};
     this.chart = config.chart;
     this.className = config.type;
     this.id = config.id;
@@ -105,34 +104,34 @@
         obj)
       );
     },
-    set: function(prop, val) {
+    set: function(attr, val) {
       var chart = this.chart, 
           deps = chart.deps,
           componentIds, key;
 
-      this.props[prop] = val;
+      this.attrs[attr] = val;
 
-      if (deps[this.id] && deps[this.id][prop]) {
-        componentIds = deps[this.id][prop];
+      if (deps[this.id] && deps[this.id][attr]) {
+        componentIds = deps[this.id][attr];
         for (key in componentIds) {
           chart.components[key].render();
         }
       }
     },
-    get: function(prop, context) {
+    get: function(attr, context) {
       var chart = this.chart;
 
       if (!chart.deps[this.id]) {
         chart.deps[this.id] = {};
       }
 
-      if (!chart.deps[this.id][prop]) {
-        chart.deps[this.id][prop] = {};
+      if (!chart.deps[this.id][attr]) {
+        chart.deps[this.id][attr] = {};
       }
       
-      chart.deps[this.id][prop][context.id] = 1;
+      chart.deps[this.id][attr][context.id] = 1;
 
-      return this.props[prop];
+      return this.attrs[attr];
     },
 
     // render helpers

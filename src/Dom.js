@@ -35,10 +35,18 @@
     setScale: function(el, x, y) {
       this.style(el, 'transform', 'scale(' + x + ',' + y + ')');
     },
+    getElementWidth: function(el) {
+      var width = 0;
+      this.dummy.innerHTML = el.innerHTML;
+      width = this.dummy.offsetWidth;
+      this.dummy.innerHTML = '';
+
+      return width;
+    },
     getTextWidth: function(text) {
       var width = 0;
       this.dummy.innerHTML = text;
-      width = this.dummy.clientWidth;
+      width = this.dummy.offsetWidth;
       this.dummy.innerHTML = '';
 
       return width;
@@ -46,7 +54,7 @@
     getTextHeight: function(text) {
       var height = 0;
       this.dummy.innerHTML = text;
-      height = this.dummy.clientHeight;
+      height = this.dummy.offsetHeight;
       this.dummy.innerHTML = '';
 
       return height;

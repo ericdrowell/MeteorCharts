@@ -49,7 +49,7 @@
         text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2); 
       }
   
-      this.set('labelOffsets', this.props.labelOffsets.concat([offset]));
+      this.set('labelOffsets', this.attrs.labelOffsets.concat([offset]));
 
     }
   });
@@ -61,7 +61,7 @@
     //     n;
 
     // for (n=0; n<len; n++) {
-    //   maxWidth = Math.max(maxWidth, spans[n].offsetWidth);
+    //   maxWidth = Math.max(maxWidth, MeteorChart.Dom.getElementWidth(spans[n]));
     // }
 
     // return maxWidth; 
