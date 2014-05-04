@@ -53,6 +53,11 @@ var MeteorChart;
   };
 
   MeteorChart.prototype = {
+    defaults: {
+      style: function() {
+        return {};
+      }
+    },
     _initComponent: function(conf) {
       var component;
 
@@ -117,16 +122,38 @@ var MeteorChart;
         components[n].render();
       }
     },
-    get: function(attr) {
-      return this.attrs[attr];
-    },
     set: function(attr, val) {
-      this.attrs[attr] = val;
+      if (val !== undefined) {
+        this.attrs[attr] = val;
+      }
+    },
+    get: function(attr, context) {
+      var chart = this.chart,
+          val = this.attrs[attr];
+
+      // default
+      if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
+        val = this.defaults[attr];
+      }
+
+      if (MeteorChart.Util._isFunction(val)) {
+        return val.call(this);
+      }
+      else {
+        return val;
+      }  
     },
     // render helpers
     padding: function(scaleFactor) {
-      var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
-      return (this.theme.padding) * scale;
+      var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor),
+          chartPadding = this.get('style', this).padding;
+
+      if (chartPadding !== undefined) {
+        return chartPadding * scale;
+      }
+      else {
+        return this.theme.padding * scale;
+      }
     }
   };
 

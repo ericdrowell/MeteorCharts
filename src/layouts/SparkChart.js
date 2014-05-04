@@ -6,16 +6,16 @@
           id: 'lineSeries',
           type: 'LineSeries',
           x: function () {
-            return this.chart.padding();
+            return chart.padding();
           },
           y: function() {
-            return this.chart.padding();
+            return chart.padding();
           },
           width: function() {
-            return this.chart.width() - (this.chart.padding() * 2);
+            return chart.get('width', this) - (this.chart.padding() * 2);
           },
           height: function() {
-            return this.chart.height() - (this.chart.padding() * 2);
+            return chart.get('height', this) - (this.chart.padding() * 2);
           }
         }
       ]
