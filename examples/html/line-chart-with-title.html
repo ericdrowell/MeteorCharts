@@ -17,7 +17,8 @@
     <script src="../../dist/meteorcharts-dev.js"></script>
     
     <script type="text/javascript">
-
+      MeteorChart.debug = true;
+      
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
@@ -59,12 +60,18 @@
             data: {
               min: -100,
               max: 300
+            },
+            style: {
+              maxIncrements: 5
             }
           },
           yAxis: {
             data: {
               min: -100,
               max: 200
+            },
+            style: {
+              maxIncrements: 5
             }
           }
         }

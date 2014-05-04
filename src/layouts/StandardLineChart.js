@@ -6,17 +6,17 @@
           id: 'lineSeries',
           type: 'LineSeries',
           x: function() {
-            return chart.components.yAxis.width() + (chart.padding() * 2);
+            return chart.components.yAxis.get('width', this) + (chart.padding() * 2);
           },
           y: function() {
             return chart.padding();
           },
           width: function() {
-            return chart.width() - chart.components.yAxis.width() - (chart.padding() * 3);
+            return chart.width() - chart.components.yAxis.get('width', this) - (chart.padding() * 3);
           },
           height: function() {
             var components = chart.components;
-            return chart.height() - (chart.padding() * 3) - components.xAxis.height();
+            return chart.height() - (chart.padding() * 3) - components.xAxis.get('height', this);
           }
         },
         {
@@ -24,16 +24,17 @@
           type: 'Axis',
           x: function() {
             // bind axis x position to line x position
-            return chart.components.lineSeries.x();
+            return chart.components.lineSeries.get('x', this);
           },
           y: function() {
             var line = chart.components.lineSeries;
 
-            return line.y() + line.height() + chart.padding();
+            return line.get('y', this) + line.get('height', this) + chart.padding();
           },
           width: function() {
             // bind axis width to line width
-            return chart.components.lineSeries.width();
+
+            return chart.components.lineSeries.get('width', this);
           }
         },
         {
@@ -47,7 +48,7 @@
           },
           height: function() {
             // bind axis height to line height
-            return chart.components.lineSeries.height();
+            return chart.components.lineSeries.get('height', this);
           },
           orientation: function() {
             return 'vertical'

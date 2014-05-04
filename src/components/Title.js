@@ -1,5 +1,10 @@
 (function() {
   MeteorChart.Component.extend('Title', {
+    defaults: {
+      height: function() {
+        return this.chart.theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;
+      }
+    },
     init: function() {
       this.text = MeteorChart.Dom.createElement('h2');
       this.content.appendChild(this.text);
@@ -10,12 +15,7 @@
       this.text.style.fontSize = theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;
       this.text.style.fontFamily = theme.fontFamily;
       this.text.style.color = theme.primary;
-      this.text.innerHTML = this.data();
+      this.text.innerHTML = this.get('data', this);
     }
   });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Title, 'height', function() {
-    return this.chart.theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;
-  });
-
 })();

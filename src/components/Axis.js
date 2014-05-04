@@ -1,5 +1,21 @@
 (function() {
   MeteorChart.Component.extend('Axis', {
+    defaults: {
+      width: function() {
+        var that = this,
+            maxWidth = 0,
+            formatter = this._getFormatter();
+
+        formatter.each(function(n, val) {
+          maxWidth = Math.max(maxWidth, MeteorChart.Dom.getElementWidth(that._getLabel(val)));
+        }); 
+
+        return maxWidth; 
+      },
+      height: function() {
+        return this.chart.theme.fontSize;
+      }
+    },
     init: function() {
       this.innerContent = MeteorChart.Dom.createElement('div');
       this.innerContent.style.position = 'relative';
@@ -8,14 +24,14 @@
     _render: function() {
       var that = this,
           chart = this.chart,
-          data = this.data(),
-          style = this.style(),
+          data = this.get('data', this),
+          style = this.get('style', this),
           min = data.min,
           max = data.max,
           diff = max - min,
-          scale = (this.orientation() === 'vertical' ? this.height() : this.width()) / diff,
+          scale = (this.orientation() === 'vertical' ? this.get('height') : this.get('width')) / diff,
           offset = 0,
-          formatter = new MeteorChart.Formatters[style.unit || 'Number'](data.min, data.max, style.maxNumLabels || 5),
+          formatter = this._getFormatter(),
           increment = formatter.increment;
 
       this.innerContent.innerHTML = '';
@@ -27,20 +43,31 @@
         that._addLabel(offset, val);
       });  
     },
-    _addLabel: function(offset, val) {
-      var theme = this.chart.theme,
-          text;
+    _getFormatter: function() {
+      var data = this.get('data', this),
+          style = this.get('style', this);
 
-      text = MeteorChart.Dom.createElement('span');
+      return new MeteorChart.Formatters[style.unit || 'Number'](data.min, data.max, style.maxNumLabels || 5)
+    },
+    _getLabel: function(val) {
+      var theme = this.chart.theme,
+          text = MeteorChart.Dom.createElement('span');
+
       text.innerHTML = val;
       text.style.position = 'absolute';
       text.style.fontSize = theme.fontSize;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
+      
+      return text;
+    },
+    _addLabel: function(offset, val) {
+      var text = this._getLabel(val);
+
       this.innerContent.appendChild(text);
 
       if (this.orientation() === 'vertical') {
-        text.style.top = this.height() - offset - (MeteorChart.Dom.getTextHeight(val) /2);
+        text.style.top = this.get('height') - offset - (MeteorChart.Dom.getTextHeight(val) /2);
         text.style.left = 0;
       }
       // horizontal
@@ -54,23 +81,23 @@
     }
   });
 
-  MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'width', function() {
-    // var spans = this.content.getElementsByTagName('span'),
-    //     len = spans.length,
-    //     maxWidth = 0,
-    //     n;
+  // MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'width', function() {
+  //   // var spans = this.content.getElementsByTagName('span'),
+  //   //     len = spans.length,
+  //   //     maxWidth = 0,
+  //   //     n;
 
-    // for (n=0; n<len; n++) {
-    //   maxWidth = Math.max(maxWidth, MeteorChart.Dom.getElementWidth(spans[n]));
-    // }
+  //   // for (n=0; n<len; n++) {
+  //   //   maxWidth = Math.max(maxWidth, MeteorChart.Dom.getElementWidth(spans[n]));
+  //   // }
 
-    // return maxWidth; 
+  //   // return maxWidth; 
 
-    return 50;
-  });
+  //   return 50;
+  // });
 
-  MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {
-    return this.chart.theme.fontSize;
-  });
+  // MeteorChart.Util.addMethod(MeteorChart.Components.Axis, 'height', function() {
+  //   return this.chart.theme.fontSize;
+  // });
 
 })();

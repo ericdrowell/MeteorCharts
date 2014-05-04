@@ -11,12 +11,18 @@ window.requestAnimFrame = (function(){
 (function() {
   MeteorChart.Animation = {
     handlers: {},
-    running: false,
+    waiting: false,
     queue: function(componentId, func) {
+      var that = this;
+
       this.handlers[componentId] = func;
 
-      if (!this.running) {
-        this.loop();
+      if (!this.waiting) {
+        setTimeout(function() {
+          that.loop();
+          that.waiting = false;
+        }, 10);
+        this.waiting = true;
       }
     },
     loop: function() {
@@ -39,11 +45,7 @@ window.requestAnimFrame = (function(){
       }
 
       if (len) {
-        that.running = true;
         requestAnimFrame(that.loop);
-      }
-      else {
-        that.running = false;
       }
     }
   };

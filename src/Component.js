@@ -5,18 +5,17 @@
     this.className = config.type;
     this.id = config.id;
     this.type = config.type;
-    this.dependencies = config.dependencies || {};
 
     // layout bindings
-    this.x(config.x);
-    this.y(config.y);
-    this.width(config.width);
-    this.height(config.height);
-    this.orientation(config.orientation);
+    this.set('x', config.x);
+    this.set('y', config.y);
+    this.set('width', config.width);
+    this.set('height', config.height);
+    this.set('orientation', config.orientation);
 
     // app bindings
-    this.data(config.data);
-    this.style(config.style);
+    this.set('data', config.data);
+    this.set('style', config.style);
 
     // build content container
     this.content = document.createElement('div');
@@ -31,7 +30,7 @@
     render: function() {
       var that = this;
       MeteorChart.Animation.queue(this.id, function() {
-        //MeteorChart.log(this.id + ' render');
+        MeteorChart.log(this.id + ' render');
 
         // reset width and height so that they do not affect component
         // width and height methods
@@ -44,10 +43,10 @@
           that._render();
         }
 
-        that.content.style.left = that.x();
-        that.content.style.top = that.y();
-        that.content.style.width = that.width();
-        that.content.style.height = that.height();
+        that.content.style.left = that.get('x');
+        that.content.style.top = that.get('y');
+        that.content.style.width = that.get('width')
+        that.content.style.height = that.get('height');
       });
     },
     // _render: function() {
@@ -109,29 +108,44 @@
           deps = chart.deps,
           componentIds, key;
 
-      this.attrs[attr] = val;
+      if (val !== undefined) {
+        this.attrs[attr] = val;
 
-      if (deps[this.id] && deps[this.id][attr]) {
-        componentIds = deps[this.id][attr];
-        for (key in componentIds) {
-          chart.components[key].render();
+        if (deps[this.id] && deps[this.id][attr]) {
+          componentIds = deps[this.id][attr];
+          for (key in componentIds) {
+            chart.components[key].render();
+          }
         }
       }
     },
     get: function(attr, context) {
-      var chart = this.chart;
+      var chart = this.chart,
+          val = this.attrs[attr];
 
-      if (!chart.deps[this.id]) {
-        chart.deps[this.id] = {};
+      // default
+      if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
+        val = this.defaults[attr];
       }
 
-      if (!chart.deps[this.id][attr]) {
-        chart.deps[this.id][attr] = {};
-      }
-      
-      chart.deps[this.id][attr][context.id] = 1;
+      if (context) {
+        if (!chart.deps[this.id]) {
+          chart.deps[this.id] = {};
+        }
 
-      return this.attrs[attr];
+        if (!chart.deps[this.id][attr]) {
+          chart.deps[this.id][attr] = {};
+        }
+        
+        chart.deps[this.id][attr][context.id] = 1;
+      }
+
+      if (MeteorChart.Util._isFunction(val)) {
+        return val.call(this);
+      }
+      else {
+        return val;
+      }  
     },
 
     // render helpers
@@ -149,6 +163,10 @@
   };
 
   MeteorChart.Component.extend = function(type, methods) {
+    if (!methods.defaults) {
+      methods.defaults = {};
+    }
+    
     MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
     };

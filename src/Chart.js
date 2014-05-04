@@ -38,15 +38,17 @@ var MeteorChart;
     layoutComponents = this.layout.components;
     len = layoutComponents.length;
 
+    setTimeout(function() {    
     // init components
     for (n=0; n<len; n++) {
-      this._initComponent(layoutComponents[n]);
+      that._initComponent(layoutComponents[n]);
     }
 
     // add components to chart content
-    for (n=0, len=this.components.length; n<len; n++) {
-      this._addComponent(n);
+    for (n=0, len=that.components.length; n<len; n++) {
+      that._addComponent(n);
     }
+  }, 50);
 
     // store reference to this chart
     MeteorChart.charts.push(this);
@@ -117,6 +119,12 @@ var MeteorChart;
         components[n].render();
       }
     },
+    get: function(attr) {
+      return this.attrs[attr];
+    },
+    set: function(attr, val) {
+      this.attrs[attr] = val;
+    },
     // render helpers
     padding: function(scaleFactor) {
       var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
@@ -137,6 +145,7 @@ var MeteorChart;
 
   // global properties
   MeteorChart.charts = [];
+  MeteorChart.debug = false;
 
   // UA
   MeteorChart.UA = (function(root) {
@@ -163,7 +172,9 @@ var MeteorChart;
   })(this);
 
   MeteorChart.log = function(str) {
-    console.log('-- ' + str);
+    if (this.debug) {
+      console.log('-- ' + str);
+    }
   };
 
   MeteorChart.render = function() {
