@@ -167,6 +167,10 @@
       methods.defaults = {};
     }
 
+    if (!methods.defaults.style) {
+      methods.defaults.style = {};
+    }
+
     MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
     };

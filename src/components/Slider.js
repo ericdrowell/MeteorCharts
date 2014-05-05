@@ -1,7 +1,17 @@
 (function() {
   MeteorChart.Component.extend('Slider', {
+    defaults: {
+      offset: 0,
+      value: 0,
+      width: function() {
+        return this.get('style', this).handleWidth;
+      },
+      height: function() {
+        return this.get('style', this).handleHeight;
+      }
+    },
     init: function() {
-      var showTrack = this.style.showTrack;
+      var showTrack = this.get('style', this).showTrack;
 
       // default
       if (showTrack === undefined) {
@@ -19,15 +29,12 @@
       this.handle.style.position = 'absolute';
       this.content.appendChild(this.handle);
 
-      this.set('offset', 0);
-      this.set('value', 0);
-
       this._bind();
     },
     _render: function() {
       var handle = this.handle,
           track = this.track,
-          style = this.style(),
+          style = this.get('style', this),
           theme = this.chart.theme,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
@@ -50,14 +57,14 @@
         track.style.backgroundColor = theme.secondary, 0.1;
       }
 
-      if (this.orientation() === 'vertical') {
-        handle.style.top = this.height() - handleHeight;
+      if (this.get('orientation', this) === 'vertical') {
+        handle.style.top = this.get('height', this) - handleHeight;
         handle.style.left = 0;
 
         if (showTrack) {
           this.track.style.width = trackSize;
-          this.track.style.height = this.height();
-          this.track.style.left = (this.width() - trackSize) / 2;
+          this.track.style.height = this.get('height', this);
+          this.track.style.left = (this.get('width', this) - trackSize) / 2;
         }
       }
       else {
@@ -65,9 +72,9 @@
         handle.style.left = 0;
 
         if (showTrack) {
-          this.track.style.width = this.width();
+          this.track.style.width = this.get('width', this);
           this.track.style.height = trackSize;
-          this.track.style.top = (this.height() - trackSize) / 2;
+          this.track.style.top = (this.get('height', this) - trackSize) / 2;
         }
       }
 
@@ -85,8 +92,8 @@
       var that = this,
           handle = this.handle,
           chartContent = this.chart.content,
-          orientation = this.orientation() || 'horizontal',
-          style = this.style(),
+          orientation = this.get('orientation', this) || 'horizontal',
+          style = this.get('style', this),
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
           startOffsetPos = null,
@@ -117,7 +124,7 @@
           
 
           if (orientation === 'horizontal') {
-            diff = that.width() - that.style.handleWidth;
+            diff = that.get('width', this) - that.get('style', this).handleWidth;
             pointerPos = evt.clientX;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -129,7 +136,7 @@
             handle.style.left = newOffset;
           }
           else {
-            diff = that.height() - that.style.handleHeight;
+            diff = that.get('height', this) - that.get('style', this).handleHeight;
             pointerPos = evt.clientY;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -141,7 +148,7 @@
             handle.style.top = newOffset;    
           }
 
-          value = newOffset / (orientation === 'horizontal' ? (that.width() - handleWidth) : (that.height() - handleHeight));
+          value = newOffset / (orientation === 'horizontal' ? (that.get('width', this) - handleWidth) : (that.get('height', this) - handleHeight));
 
           that.set('offset', newOffset);
           that.set('value', value);
@@ -171,13 +178,4 @@
 
     }
   });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'width', function() {
-    return this.style().handleWidth;
-  });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Slider, 'height', function() {
-    return this.style().handleHeight;
-  });
-
 })();
