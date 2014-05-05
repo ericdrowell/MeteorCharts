@@ -1,5 +1,13 @@
 (function() {
   MeteorChart.Component.extend('Tooltip', {
+    defaults: {
+      width: function() {
+        return this.tooltip.offsetWidth;
+      },
+      height: function() {
+        return this.tooltip.offsetHeight;
+      }
+    },
     init: function() {
       // NOTE: the pointerEvents style is not supported in IE < 11
       // therefore, older IE users might have the tooltip stuck under
@@ -19,8 +27,8 @@
       this.content.appendChild(this.tooltip);
     },
     _render: function() {
-      var data = this.data(),
-          style = this.style(),
+      var data = this.get('data', this),
+          style = this.get('style', this),
           theme = this.chart.theme;
 
       if (data && data.title && data.content) {
@@ -46,13 +54,4 @@
       }
     }
   });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'width', function() {
-    return this.tooltip.offsetWidth;
-  });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Tooltip, 'height', function() {
-    return this.tooltip.offsetHeight;
-  });
-
 })();

@@ -79,20 +79,20 @@
             newX, newY;
 
         if (nearestPoint) {
-          newX = nearestPoint.x + lineSeries.x() - (tooltip.width() / 2);
-          newY = nearestPoint.y + lineSeries.y() - tooltip.height() - tooltip.padding(-3);
+          newX = nearestPoint.x + lineSeries.get('x', this) - (tooltip.get('width', this) / 2);
+          newY = nearestPoint.y + lineSeries.get('y', this) - tooltip.get('height', this) - tooltip.padding(-3);
 
           // bounds
-          if (newX + tooltip.width() > chart.width()) {
-            newX = chart.width() - tooltip.width();
+          if (newX + tooltip.get('width', this) > chart.get('width', this)) {
+            newX = chart.get('width', this) - tooltip.get('width', this);
           }
           if (newY < 0) {
             newY = 0;
           }
 
-          tooltip.x(newX);  
-          tooltip.y(newY); 
-          tooltip.data({
+          tooltip.set('x', newX);  
+          tooltip.set('y', newY); 
+          tooltip.set('data', {
             title: nearestPoint.title,
             content: nearestPoint.dataX + ', ' + nearestPoint.dataY
           });
@@ -103,7 +103,7 @@
 
       MeteorChart.Event.on({id: 'lineSeries', event: 'mouseout'}, function(evt) {
         var tooltip = chart.components.tooltip;
-        tooltip.data(null);
+        tooltip.set('data', null);
         tooltip.render();
       });
 

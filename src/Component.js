@@ -137,10 +137,15 @@
      *   scale, use 2.  If you want to triple it, use 3.  If you want to halve it, use -2
      */
     padding: function(scaleFactor) {
-      var chart = this.chart,
-          scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor);
+      var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor),
+          chartPadding = this.chart.get('style', this).padding;
 
-      return (this.style.padding || chart.style.padding || chart.theme.padding) * scale;
+      if (chartPadding !== undefined) {
+        return chartPadding * scale;
+      }
+      else {
+        return this.chart.theme.padding * scale;
+      }
     }
   };
 

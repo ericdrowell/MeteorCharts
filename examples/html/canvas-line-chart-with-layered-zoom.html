@@ -43,31 +43,34 @@
       MeteorChart.Event.on({id: 'xSlider', event: 'dragend'}, function(evt) {
         var lineSeries = chart.components.lineSeries;
 
-        startZoomX = lineSeries.data().zoomX;
-        startZoomY = lineSeries.data().zoomY;
+        startZoomX = lineSeries.get('data', this).zoomX;
+        startZoomY = lineSeries.get('data', this).zoomY;
 
         MeteorChart.Dom.setScale(lineSeries.canvas, 1, 1);
         lineSeries.render();
       });
 
       MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
-        lineSeries.data().zoomX = ((evt.value * 4) + 1);
+        var that = this,
+            lineSeries = chart.components.lineSeries;
 
-        MeteorChart.Dom.setScale(lineSeries.canvas, lineSeries.data().zoomX || 1, lineSeries.data().zoomY || 1);
+        lineSeries.get('data', this).zoomX = ((evt.value * 4) + 1);
+
+        MeteorChart.Dom.setScale(lineSeries.canvas, lineSeries.get('data', this).zoomX || 1, lineSeries.get('data', that).zoomY || 1);
       });
 
       MeteorChart.Event.on({id: 'ySlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
-        lineSeries.data().zoomY = (5 - ((evt.value * 4)));
+        var that = this,
+            lineSeries = chart.components.lineSeries;
+        lineSeries.get('data', this).zoomY = (5 - ((evt.value * 4)));
 
-        MeteorChart.Dom.setScale(lineSeries.canvas, lineSeries.data().zoomX || 1, lineSeries.data().zoomY || 1);
+        MeteorChart.Dom.setScale(lineSeries.canvas, lineSeries.get('data', this).zoomX || 1, lineSeries.get('data', that).zoomY || 1);
       });
 
       MeteorChart.Event.on({id: 'paginator', event: 'valueChange'}, function(evt) {
         var value = evt.newValue,
             lineSeries = chart.components.lineSeries,
-            data = lineSeries.data(),
+            data = lineSeries.get('data', this),
             series = data.series,
             len = series.length;
 
