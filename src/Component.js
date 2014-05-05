@@ -1,6 +1,7 @@
 (function() {
   MeteorChart.Component = function(config) {
-    this.attrs = {}; // x, y, width, and height
+    this.attrs = {}; 
+    this.cache = {};
     this.chart = config.chart;
     this.className = config.type;
     this.id = config.id;
@@ -30,7 +31,7 @@
     render: function() {
       var that = this;
       MeteorChart.Animation.queue(this.id, function() {
-        MeteorChart.log(this.id + ' render');
+        //MeteorChart.log(this.id + ' render');
 
         // reset width and height so that they do not affect component
         // width and height methods
@@ -49,47 +50,7 @@
         that.content.style.height = that.get('height');
       });
     },
-    // _render: function() {
-    //   var state = {
-    //     x: this.x(),
-    //     y: this.y(),
-    //     width: this.width(),
-    //     height: this.height(),
-    //     data: this.data(),
-    //     style: this.style()
-    //   };
 
-    //   if (!MeteorChart.Util.isEqual(this.cache, state)) {
-    //     //MeteorChart.log(this.id + ' render');
-
-    //     // reset width and height so that they do not affect component
-    //     // width and height methods
-    //     this.content.style.width = 'auto';
-    //     this.content.style.height = 'auto';
-
-    //     // render concrete component first because the component width and height
-    //     // may depend on it
-    //     if (this.render) {
-    //       this.render();
-    //     }
-
-    //     this.content.style.left = this.x();
-    //     this.content.style.top = this.y();
-    //     this.content.style.width = this.width();
-    //     this.content.style.height = this.height();
-
-    //     // set cache to current state
-    //     this.cache = state;
-    //   }
-    //   else {
-    //     //MeteorChart.log(this.id + ' state is the same');
-
-    //     // used cache
-    //     return true;
-    //   }
-
-
-    // },
     destroy: function() {
 
     },
@@ -111,9 +72,17 @@
       if (val !== undefined) {
         this.attrs[attr] = val;
 
+        // invalidate attr cache
+        delete this.cache[attr];
+
+        // render any components that are affected by this change
         if (deps[this.id] && deps[this.id][attr]) {
           componentIds = deps[this.id][attr];
           for (key in componentIds) {
+            // TODO: cuurently invalidating entire cache because I don't know
+            // which component attrs are dependent on this component.  There might
+            // be a smater way to go about this.
+            chart.components[key].cache = {};
             chart.components[key].render();
           }
         }
@@ -121,13 +90,10 @@
     },
     get: function(attr, context) {
       var chart = this.chart,
-          val = this.attrs[attr];
+          val = this.attrs[attr],
+          ret;
 
-      // default
-      if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
-        val = this.defaults[attr];
-      }
-
+      // add dependency
       if (context) {
         if (!chart.deps[this.id]) {
           chart.deps[this.id] = {};
@@ -140,12 +106,28 @@
         chart.deps[this.id][attr][context.id] = 1;
       }
 
+      // if attr value is cached, immediately return it
+      if (this.cache[attr] !== undefined) {
+        return this.cache[attr];
+      }
+
+      // default
+      if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
+        val = this.defaults[attr];
+      }
+
+      // if val is a function then execute it to obtain the val
       if (MeteorChart.Util._isFunction(val)) {
-        return val.call(this);
+        ret = val.call(this);
       }
       else {
-        return val;
+        ret = val;
       }  
+
+      // cache the new result
+      this.cache[attr] = ret;
+
+      return ret;
     },
 
     // render helpers

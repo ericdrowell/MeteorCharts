@@ -11,6 +11,7 @@
         }); 
 
         return maxWidth; 
+        //return 50;
       },
       height: function() {
         return this.chart.theme.fontSize;

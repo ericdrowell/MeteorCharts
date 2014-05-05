@@ -1,5 +1,10 @@
 (function() {
   MeteorChart.Component.extend('Paginator', {
+    defaults: {
+      height: function() {
+        return this.chart.theme.fontSize;
+      }
+    },  
     init: function() {
       this.leftArrowSVG = MeteorChart.SVG.createElement('svg');
       this.leftArrowSVG.style.position = 'absolute';
@@ -28,9 +33,9 @@
       this._bind();
     },
     _render: function() {
-      var style = this.style(),
+      var style = this.get('style', this),
           theme = this.chart.theme,
-          data = this.data(),
+          data = this.get('data', this),
           leftArrowSVG = this.leftArrowSVG,
           leftArrow = this.leftArrow,
           text = this.text,
@@ -102,32 +107,27 @@
 
       // clicks/touches
       leftArrow.addEventListener('mousedown', function(evt) {
-        var data = that.data,
+        var data = that.get('data', that),
             oldValue = data.value,
             newValue = oldValue - data.step;
 
         evt.preventDefault();
-        that.data.value = newValue;
+        that.get('data', that).value = newValue;
         that.render();
         that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
       }); 
 
       rightArrow.addEventListener('mousedown', function(evt) {
-        var data = that.data,
+        var data = that.get('data', that),
             oldValue = data.value,
             newValue = oldValue + data.step;
 
         evt.preventDefault();
-        that.data.value = newValue;
+        that.get('data', that).value = newValue;
         that.render();
         that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
       }); 
  
     }
-  });
-
-  MeteorChart.Util.addMethod(MeteorChart.Components.Paginator, 'height', function() {
-    //return this.text.offsetHeight;
-    return 30;
   });
 })();
