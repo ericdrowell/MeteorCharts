@@ -1,5 +1,9 @@
 (function() {
   MeteorChart.Component.extend('LineSeries', {
+    defaults: {
+      zoomX: 1,
+      zoomY: 1
+    },
     init: function() {
       this.canvas = document.createElement('canvas');
       this.context = this.canvas.getContext('2d');
@@ -15,8 +19,8 @@
           unit = data.unit || {},
           len = series.length,
           context = this.context,
-          zoomX = data.zoomX || 1,
-          zoomY = data.zoomY || 1,
+          zoomX = this.get('zoomX'),
+          zoomY = this.get('zoomY'),
           n, line, points, i, pointsLen, viewport;
 
       //MeteorChart.log('render ' + this.id)

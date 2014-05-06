@@ -12,10 +12,10 @@
             return chart.padding();
           },
           width: function() {
-            return chart.get('width', this) - (this.chart.padding() * 2);
+            return chart.get('width') - (this.chart.padding() * 2);
           },
           height: function() {
-            return chart.get('height', this) - (this.chart.padding() * 2);
+            return chart.get('height') - (this.chart.padding() * 2);
           }
         }
       ]

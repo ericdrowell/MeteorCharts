@@ -165,7 +165,10 @@
         startOffsetPos = null;
         startPointerPos = null;
 
-        that.fire('dragend');
+        that.fire('dragend', {
+          offset: that.get('offset'),
+          value: that.get('value')
+        });
       }); 
 
       // cursors

@@ -20,8 +20,6 @@
       
     <script type="text/javascript">
 
-      MeteorChart.debug = true;
-
       var chart = new MeteorChart({
         container: 'container',
         width: 800,
@@ -33,13 +31,15 @@
         components: {
           lineSeries: {
             data: {
-              series: getSeriesData(32)
+              series: getSeriesData(3200)
             }
           }
         }
       });
 
-      // bindings
+      var zoomX = 1;
+      var zoomY = 1;
+
       MeteorChart.Event.on({id: 'inspectSlider', event: 'dragmove'}, function(evt) {
         var components = chart.components,
             lineSeries = components.lineSeries,
@@ -58,18 +58,32 @@
         chart.components.inspectCircle.render();
       });
 
-      MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
+      MeteorChart.Event.on({id: 'xSlider', event: 'dragend'}, function(evt) {
         var lineSeries = chart.components.lineSeries;
-        lineSeries.set('zoomX', ((evt.value * 4) + 1) || 1);
-        lineSeries.render();
+
+        //MeteorChart.Dom.setScale(lineSeries.canvas, 1, 1);
+        //lineSeries.render();
+      });
+
+      MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
+        var that = this,
+            lineSeries = chart.components.lineSeries,
+            newZoomX = ((evt.value * 4) + 1);
+
+        lineSeries.set('zoomX', newZoomX);
+
+        MeteorChart.Dom.setScale(lineSeries.canvas, lineSeries.get('zoomX'), lineSeries.get('zoomY'));
       });
 
       MeteorChart.Event.on({id: 'ySlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
-        lineSeries.set('zoomY', (5 - ((evt.value * 4))) || 1);
-        lineSeries.render();
+        var that = this,
+            lineSeries = chart.components.lineSeries;
+            
+        lineSeries.set('zoomY', 5 - ((evt.value * 4)));
+
+        MeteorChart.Dom.setScale(lineSeries.canvas, lineSeries.get('zoomX'), lineSeries.get('zoomY'));
       });
-      
+
       MeteorChart.Event.on({id: 'paginator', event: 'valueChange'}, function(evt) {
         var value = evt.newValue,
             lineSeries = chart.components.lineSeries,
@@ -77,13 +91,29 @@
             series = data.series,
             len = series.length;
 
+        zoomX = lineSeries.get('zoomX');
+        zoomY = lineSeries.get('zoomY');
+
+        MeteorChart.Dom.setScale(lineSeries.canvas, 1, 1);
+        lineSeries.set('zoomX', 1);
+        lineSeries.set('zoomY', 1);
+
         // remove last series
         lineSeries.shift(2 /*320*/);
         
         // add new series
         lineSeries.push(getSeriesData(2 /*320*/));
 
-        lineSeries.render();        
+
+        lineSeries.render(); 
+
+        MeteorChart.Dom.setScale(lineSeries.canvas, zoomX, zoomY);
+        //data.zoomX = zoomX;
+        //data.zoomY = zoomY; 
+  
+        
+
+        //MeteorChart.Dom.setScale(lineSeries.canvas, zoomX, zoomY);      
       });
 
       console.log(chart);
