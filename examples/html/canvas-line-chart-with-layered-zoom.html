@@ -21,6 +21,7 @@
     <script type="text/javascript">
 
       MeteorChart.debug = true;
+      MeteorChart.lazyRender = true;
 
       var chart = new MeteorChart({
         container: 'container',
@@ -41,9 +42,9 @@
 
       var lineSeries = chart.components.lineSeries;
 
-      for (var n=0; n<1; n++) {
+      for (var n=0; n<3; n++) {
         chart.add({
-          id: 'lineSeries' + 0,
+          id: 'lineSeries' + n,
           type: 'LineSeries',
           data: {
             series: getSeriesData(100)
@@ -72,16 +73,19 @@
         inspectCircle.set('y', nearestPoint.y + lineSeries.get('y') - inspectCircleStyle.radius);
 
         chart.components.inspectCircle.render();
+
       });
 
       MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
         lineSeries.set('zoomX', ((evt.value * 4) + 1) || 1);
         lineSeries.render();
+        for (var n=0; n<3; n++) {
+          chart.components['lineSeries' + n].set('zoomX', ((evt.value * 4) + 1) || 1);
+          chart.components['lineSeries' + n].render();
+        }
       });
 
       MeteorChart.Event.on({id: 'ySlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
         lineSeries.set('zoomY', (5 - ((evt.value * 4))) || 1);
         lineSeries.render();
       });
