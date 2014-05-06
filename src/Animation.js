@@ -38,10 +38,18 @@ window.requestAnimFrame = (function(){
         });
       }
 
-      // cleanup the handlers hash
-      for (n=0, len=arr.length; n<len; n++) {
-        arr[n].handler();
-        delete that.handlers[arr[n].id];
+      len = arr.length;
+
+      if (MeteorChart.batchRender && len) {
+        arr[0].handler();
+        delete that.handlers[arr[0].id];
+      }
+      else {
+        // cleanup the handlers hash
+        for (n=0; n<len; n++) {
+          arr[n].handler();
+          delete that.handlers[arr[n].id];
+        }
       }
 
       if (len) {

@@ -33,9 +33,9 @@
       this._bind();
     },
     _render: function() {
-      var style = this.get('style', this),
+      var style = this.get('style'),
           theme = this.chart.theme,
-          data = this.get('data', this),
+          data = this.get('data'),
           leftArrowSVG = this.leftArrowSVG,
           leftArrow = this.leftArrow,
           text = this.text,

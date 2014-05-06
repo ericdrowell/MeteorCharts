@@ -33,6 +33,18 @@
             data: {
               series: getSeriesData(3200)
             }
+          },
+          xAxis: {
+            data: {
+              min: 0,
+              max: 10
+            }
+          },
+          yAxis: {
+            data: {
+              min: -500,
+              max: 500
+            }
           }
         }
       });
@@ -56,6 +68,9 @@
         inspectCircle.set('y', nearestPoint.y + lineSeries.get('y', this) - inspectCircleStyle.radius);
 
         chart.components.inspectCircle.render();
+
+        chart.components.inspectLine.cache = {};
+        chart.components.inspectLine.render();
       });
 
       MeteorChart.Event.on({id: 'xSlider', event: 'dragend'}, function(evt) {

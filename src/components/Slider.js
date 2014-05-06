@@ -4,14 +4,14 @@
       offset: 0,
       value: 0,
       width: function() {
-        return this.get('style', this).handleWidth;
+        return this.get('style').handleWidth;
       },
       height: function() {
-        return this.get('style', this).handleHeight;
+        return this.get('style').handleHeight;
       }
     },
     init: function() {
-      var showTrack = this.get('style', this).showTrack;
+      var showTrack = this.get('style').showTrack;
 
       // default
       if (showTrack === undefined) {
@@ -34,7 +34,7 @@
     _render: function() {
       var handle = this.handle,
           track = this.track,
-          style = this.get('style', this),
+          style = this.get('style'),
           theme = this.chart.theme,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
@@ -57,14 +57,14 @@
         track.style.backgroundColor = theme.secondary, 0.1;
       }
 
-      if (this.get('orientation', this) === 'vertical') {
-        handle.style.top = this.get('height', this) - handleHeight;
+      if (this.get('orientation') === 'vertical') {
+        handle.style.top = this.get('height') - handleHeight;
         handle.style.left = 0;
 
         if (showTrack) {
           this.track.style.width = trackSize;
-          this.track.style.height = this.get('height', this);
-          this.track.style.left = (this.get('width', this) - trackSize) / 2;
+          this.track.style.height = this.get('height');
+          this.track.style.left = (this.get('width') - trackSize) / 2;
         }
       }
       else {
@@ -72,9 +72,9 @@
         handle.style.left = 0;
 
         if (showTrack) {
-          this.track.style.width = this.get('width', this);
+          this.track.style.width = this.get('width');
           this.track.style.height = trackSize;
-          this.track.style.top = (this.get('height', this) - trackSize) / 2;
+          this.track.style.top = (this.get('height') - trackSize) / 2;
         }
       }
 
@@ -92,8 +92,8 @@
       var that = this,
           handle = this.handle,
           chartContent = this.chart.content,
-          orientation = this.get('orientation', this) || 'horizontal',
-          style = this.get('style', this),
+          orientation = this.get('orientation') || 'horizontal',
+          style = this.get('style'),
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
           startOffsetPos = null,
@@ -121,10 +121,9 @@
         var diff, newOffset, value;
 
         if (startOffsetPos !== null) {
-          
 
           if (orientation === 'horizontal') {
-            diff = that.get('width', this) - that.get('style', this).handleWidth;
+            diff = that.get('width') - that.get('style').handleWidth;
             pointerPos = evt.clientX;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -136,7 +135,7 @@
             handle.style.left = newOffset;
           }
           else {
-            diff = that.get('height', this) - that.get('style', this).handleHeight;
+            diff = that.get('height') - that.get('style').handleHeight;
             pointerPos = evt.clientY;
             newOffset = pointerPos - startPointerPos + startOffsetPos;
             if (newOffset < 0) {
@@ -148,7 +147,7 @@
             handle.style.top = newOffset;    
           }
 
-          value = newOffset / (orientation === 'horizontal' ? (that.get('width', this) - handleWidth) : (that.get('height', this) - handleHeight));
+          value = newOffset / (orientation === 'horizontal' ? (that.get('width') - handleWidth) : (that.get('height') - handleHeight));
 
           that.set('offset', newOffset);
           that.set('value', value);
@@ -162,13 +161,15 @@
  
       // end drag & drop
       document.body.addEventListener('mouseup', function(evt) {
-        startOffsetPos = null;
-        startPointerPos = null;
+        if (startOffsetPos !== null) {
+          startOffsetPos = null;
+          startPointerPos = null;
 
-        that.fire('dragend', {
-          offset: that.get('offset'),
-          value: that.get('value')
-        });
+          that.fire('dragend', {
+            offset: that.get('offset'),
+            value: that.get('value')
+          });
+        }
       }); 
 
       // cursors

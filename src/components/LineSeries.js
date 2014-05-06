@@ -14,7 +14,7 @@
       this._bind();
     },
     _render: function() {
-      var data = this.get('data', this),
+      var data = this.get('data'),
           series = data.series,
           unit = data.unit || {},
           len = series.length,
@@ -32,8 +32,8 @@
       this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
 
       // render
-      context.clearRect(0, 0, this.get('width', this), this.get('height'));
-      this.canvas.width = this.get('width', this);
+      context.clearRect(0, 0, this.get('width'), this.get('height'));
+      this.canvas.width = this.get('width');
       this.canvas.height = this.get('height');
 
       for (n=0; n<len; n++) {
@@ -42,11 +42,11 @@
 
         context.save();
 
-        context.translate(this.get('width', this) / 2, this.get('height') / 2);
+        context.translate(this.get('width') / 2, this.get('height') / 2);
         context.scale(this.scaleX, this.scaleY * -1);
         context.scale(zoomX, zoomY);
         context.translate(this.minX * -1, this.minY * -1);
-        context.translate(this.get('width', this) / (this.scaleX * -2), this.get('height') / (this.scaleY * -2));
+        context.translate(this.get('width') / (this.scaleX * -2), this.get('height') / (this.scaleY * -2));
         context.beginPath();
         context.moveTo(points[0], points[1]);
 
@@ -66,7 +66,7 @@
       }
 
       for (var n=0; n<num; n++) {
-        this.get('data', this).series.shift();
+        this.get('data').series.shift();
       }
     },
     push: function(ser) {
@@ -76,7 +76,7 @@
         }
       }
       else {
-        this.get('data', this).series.push(ser);
+        this.get('data').series.push(ser);
       }
     },
     getPointsMinMax: function(points) {
@@ -105,7 +105,7 @@
       };
     },
     getSeriesMinMax: function() {
-      var series = this.get('data', this).series,
+      var series = this.get('data').series,
           minX = Infinity,
           minY = Infinity,
           maxX = Infinity * -1,
@@ -154,7 +154,7 @@
     },
     getSeriesNearestPointX: function(n, x) {
       var dataX = this.chartToDataX(x),
-          data = this.get('data', this),
+          data = this.get('data'),
           series = data.series,
           shortestDistance = Infinity,
           nearestPoint = null,
@@ -195,7 +195,7 @@
     },
     getNearestPoint: function(x, y) {
       var dataPos = this.chartToData(x, y),
-          data = this.get('data', this),
+          data = this.get('data'),
           series = data.series,
           len = series.length,
           shortestDistance = Infinity,
@@ -264,7 +264,7 @@
     },
     _setMinMaxScale: function() {
       var viewport = this.getSeriesMinMax(),
-          width = this.get('width', this),
+          width = this.get('width'),
           height = this.get('height'),
           diffX = viewport.maxX - viewport.minX,
           diffY = viewport.maxY - viewport.minY,

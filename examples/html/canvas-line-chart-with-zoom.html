@@ -35,6 +35,18 @@
             data: {
               series: getSeriesData(32)
             }
+          },
+          xAxis: {
+            data: {
+              min: 0,
+              max: 10
+            }
+          },
+          yAxis: {
+            data: {
+              min: -500,
+              max: 500
+            }
           }
         }
       });
@@ -56,18 +68,31 @@
         inspectCircle.set('y', nearestPoint.y + lineSeries.get('y', this) - inspectCircleStyle.radius);
 
         chart.components.inspectCircle.render();
+
+        chart.components.inspectLine.cache = {};
+        chart.components.inspectLine.render();
       });
 
       MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
-        lineSeries.set('zoomX', ((evt.value * 4) + 1) || 1);
-        lineSeries.render();
+        var newZoom = (evt.value * 4) + 1;
+
+        chart.components.lineSeries.set('zoomX', newZoom);
+        chart.components.lineSeries.render();
+
+        chart.components.xAxis.get('data').min = Math.round(5 - (5 / newZoom));
+        chart.components.xAxis.get('data').max = Math.round(5 + (5 / newZoom));
+        chart.components.xAxis.render();
       });
 
       MeteorChart.Event.on({id: 'ySlider', event: 'dragmove'}, function(evt) {
-        var lineSeries = chart.components.lineSeries;
-        lineSeries.set('zoomY', (5 - ((evt.value * 4))) || 1);
-        lineSeries.render();
+        var newZoom = 5 - (evt.value * 4);
+
+        chart.components.lineSeries.set('zoomY', newZoom);
+        chart.components.lineSeries.render();
+
+        chart.components.yAxis.get('data').min = Math.round(-500 / newZoom);
+        chart.components.yAxis.get('data').max = Math.round(500 / newZoom);
+        chart.components.yAxis.render();
       });
       
       MeteorChart.Event.on({id: 'paginator', event: 'valueChange'}, function(evt) {

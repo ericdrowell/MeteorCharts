@@ -25,12 +25,12 @@
     _render: function() {
       var that = this,
           chart = this.chart,
-          data = this.get('data', this),
-          style = this.get('style', this),
+          data = this.get('data'),
+          style = this.get('style'),
           min = data.min,
           max = data.max,
           diff = max - min,
-          scale = (this.get('orientation', this) === 'vertical' ? this.get('height') : this.get('width')) / diff,
+          scale = (this.get('orientation') === 'vertical' ? this.get('height') : this.get('width')) / diff,
           offset = 0,
           formatter = this._getFormatter(),
           increment = formatter.increment;
@@ -45,8 +45,8 @@
       });  
     },
     _getFormatter: function() {
-      var data = this.get('data', this),
-          style = this.get('style', this);
+      var data = this.get('data'),
+          style = this.get('style');
 
       return new MeteorChart.Formatters[style.unit || 'Number'](data.min, data.max, style.maxNumLabels || 5)
     },
@@ -67,7 +67,7 @@
 
       this.innerContent.appendChild(text);
 
-      if (this.get('orientation', this) === 'vertical') {
+      if (this.get('orientation') === 'vertical') {
         text.style.top = this.get('height') - offset - (MeteorChart.Dom.getTextHeight(val) /2);
         text.style.left = 0;
       }

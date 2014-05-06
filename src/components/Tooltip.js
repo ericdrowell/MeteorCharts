@@ -27,8 +27,8 @@
       this.content.appendChild(this.tooltip);
     },
     _render: function() {
-      var data = this.get('data', this),
-          style = this.get('style', this),
+      var data = this.get('data'),
+          style = this.get('style'),
           theme = this.chart.theme;
 
       if (data && data.title && data.content) {

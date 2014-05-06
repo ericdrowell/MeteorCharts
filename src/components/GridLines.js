@@ -10,19 +10,19 @@
     _render: function() {
       var theme = this.chart.theme,
           font = theme.font,
-          orientation = this.get('orientation', this) || 'horizontal',
-          data = this.get('data', this),
-          lineWidth = this.get('style', this).lineWidth,
+          orientation = this.get('orientation') || 'horizontal',
+          data = this.get('data'),
+          lineWidth = this.get('style').lineWidth,
           context = this.context,
-          width = this.get('width', this),
-          height = this.get('height', this),
+          width = this.get('width'),
+          height = this.get('height'),
           n, offset, len;
 
       if (data) {
         len = data.length;
 
-        this.canvas.width = this.get('width', this);
-        this.canvas.height = this.get('height', this);
+        this.canvas.width = this.get('width');
+        this.canvas.height = this.get('height');
         context.clearRect(0, 0, width, height);
         context.strokeStyle = this.chart.theme.secondary;
 

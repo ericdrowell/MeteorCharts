@@ -21,7 +21,9 @@
     <script type="text/javascript">
 
       MeteorChart.debug = true;
-      MeteorChart.lazyRender = true;
+      MeteorChart.batchRender = true;
+
+      var numLayers = 32;
 
       var chart = new MeteorChart({
         container: 'container',
@@ -36,23 +38,33 @@
             data: {
               series: getSeriesData(100)
             }
+          },
+          xAxis: {
+            data: {
+              min: 0,
+              max: 10
+            }
+          },
+          yAxis: {
+            data: {
+              min: -500,
+              max: 500
+            }
           }
         }
       });
 
-      var lineSeries = chart.components.lineSeries;
-
-      for (var n=0; n<3; n++) {
+      for (var n=0; n<numLayers-1; n++) {
         chart.add({
           id: 'lineSeries' + n,
           type: 'LineSeries',
           data: {
             series: getSeriesData(100)
           },
-          x: lineSeries.get('x'),
-          y: lineSeries.get('y'),
-          width: lineSeries.get('width'),
-          height: lineSeries.get('height')
+          x: chart.components.lineSeries.get('x'),
+          y: chart.components.lineSeries.get('y'),
+          width: chart.components.lineSeries.get('width'),
+          height: chart.components.lineSeries.get('height')
         });
       }
 
@@ -74,20 +86,41 @@
 
         chart.components.inspectCircle.render();
 
+        chart.components.inspectLine.cache = {};
+        chart.components.inspectLine.render();
+
       });
 
-      MeteorChart.Event.on({id: 'xSlider', event: 'dragmove'}, function(evt) {
-        lineSeries.set('zoomX', ((evt.value * 4) + 1) || 1);
-        lineSeries.render();
-        for (var n=0; n<3; n++) {
-          chart.components['lineSeries' + n].set('zoomX', ((evt.value * 4) + 1) || 1);
+      MeteorChart.Event.on({id: 'xSlider', event: 'dragend'}, function(evt) {
+        var newZoom = (evt.value * 4) + 1;
+
+        chart.components.xAxis.get('data').min = Math.round(5 - (5 / newZoom));
+        chart.components.xAxis.get('data').max = Math.round(5 + (5 / newZoom));
+        chart.components.xAxis.render();
+
+        chart.components.lineSeries.set('zoomX', newZoom);
+        chart.components.lineSeries.render();
+
+        for (var n=0; n<numLayers-1; n++) {
+          chart.components['lineSeries' + n].set('zoomX', newZoom);
           chart.components['lineSeries' + n].render();
         }
       });
 
-      MeteorChart.Event.on({id: 'ySlider', event: 'dragmove'}, function(evt) {
-        lineSeries.set('zoomY', (5 - ((evt.value * 4))) || 1);
-        lineSeries.render();
+      MeteorChart.Event.on({id: 'ySlider', event: 'dragend'}, function(evt) {
+        var newZoom = 5 - (evt.value * 4);
+
+        chart.components.yAxis.get('data').min = Math.round(-500 / newZoom);
+        chart.components.yAxis.get('data').max = Math.round(500 / newZoom);
+        chart.components.yAxis.render();
+        
+        chart.components.lineSeries.set('zoomY', newZoom);
+        chart.components.lineSeries.render();
+
+        for (var n=0; n<numLayers-1; n++) {
+          chart.components['lineSeries' + n].set('zoomY', newZoom);
+          chart.components['lineSeries' + n].render();
+        }
       });
       
       MeteorChart.Event.on({id: 'paginator', event: 'valueChange'}, function(evt) {

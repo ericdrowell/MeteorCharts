@@ -83,10 +83,6 @@
             // bind axis height to line height
             return chart.components.lineSeries.get('height');
           },
-          data: {
-            min: -500,
-            max: 500
-          },
           orientation: function() {
             return 'vertical';
           }
@@ -106,10 +102,6 @@
           width: function() {
             // bind axis width to line width
             return chart.components.lineSeries.get('width');
-          },
-          data: {
-            min: 0,
-            max: 10
           },
           style: {
             maxIncrements: 5

@@ -29,7 +29,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'width', function() {
-    var style = this.get('style', this);
+    var style = this.get('style');
     if (style) {
       return (style.radius * 2) + style.strokeWidth;
     }
@@ -39,7 +39,7 @@
   });
 
   MeteorChart.Util.addMethod(MeteorChart.Components.Circle, 'height', function() {
-    var style = this.get('style', this);
+    var style = this.get('style');
     if (style) {
       return (style.radius * 2) + style.strokeWidth;
     }
