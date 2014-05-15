@@ -8,7 +8,6 @@ module.exports = function(grunt) {
     'src/SVG.js',
     'src/Event.js',
     'src/Component.js',
-    'src/Formatter.js',
     'src/Animation.js',
 
     // components
@@ -37,7 +36,9 @@ module.exports = function(grunt) {
     'src/layouts/LineChartWithGrid.js',
     'src/layouts/LineChartWithHorizontalLines.js',
     'src/layouts/LineChartWithTitle.js',
-    'src/layouts/LineChartWithSlider.js',
+
+    'src/layouts/LineChartWithBottomSlider.js',
+    
     'src/layouts/LineChartWithZoom.js',
 
     // formatters

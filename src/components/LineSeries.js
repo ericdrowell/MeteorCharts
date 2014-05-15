@@ -27,10 +27,6 @@
 
       this._setMinMaxScale();
 
-      // update formatters
-      this.formatterX = new MeteorChart.Formatters[unit.x || 'Number'](this.minX, this.minY);
-      this.formatterY = new MeteorChart.Formatters[unit.y || 'Number'](this.maxX, this.maxY);
-
       // render
       context.clearRect(0, 0, this.get('width'), this.get('height'));
       this.canvas.width = this.get('width');
@@ -45,8 +41,10 @@
         context.translate(this.get('width') / 2, this.get('height') / 2);
         context.scale(this.scaleX, this.scaleY * -1);
         context.scale(zoomX, zoomY);
+        // commenting the line below fixes zoom
         context.translate(this.minX * -1, this.minY * -1);
         context.translate(this.get('width') / (this.scaleX * -2), this.get('height') / (this.scaleY * -2));
+
         context.beginPath();
         context.moveTo(points[0], points[1]);
 
@@ -104,7 +102,7 @@
         maxY: maxY
       };
     },
-    getSeriesMinMax: function() {
+    getMinMax: function() {
       var series = this.get('data').series,
           minX = Infinity,
           minY = Infinity,
@@ -128,8 +126,45 @@
         maxY: maxY
       };
     },
-    dataToChartX: function(x) {
-      return (x - this.minX) * this.scaleX;
+    getViewportMinX: function() {
+      var zoomX = this.get('zoomX'),
+          minMax = this.getMinMax(),
+          minX = minMax.minX,
+          maxX = minMax.maxX,
+          range = maxX - minX,
+          viewportRange = range / zoomX;
+
+      return minX + ((range - viewportRange) / 2);
+    },
+    getViewportMinY: function() {
+      var zoomY = this.get('zoomY'),
+          minMax = this.getMinMax(),
+          minY = minMax.minY,
+          maxY = minMax.maxY,
+          range = maxY - minY,
+          viewportRange = range / zoomY;
+
+      return minY + ((range - viewportRange) / 2);
+    },
+    getViewportMaxX: function() {
+      var zoomX = this.get('zoomX'),
+          minMax = this.getMinMax(),
+          minX = minMax.minX,
+          maxX = minMax.maxX,
+          range = maxX - minX,
+          viewportRange = range / zoomX;
+
+      return minX + viewportRange + ((range - viewportRange) / 2);
+    },
+    getViewportMaxY: function() {
+      var zoomY = this.get('zoomY'),
+          minMax = this.getMinMax(),
+          minY = minMax.minY,
+          maxY = minMax.maxY,
+          range = maxY - minY,
+          viewportRange = range / zoomY;
+
+      return minY + viewportRange + ((range - viewportRange) / 2);
     },
     dataToChartY: function(y) {
       return this.get('height') - ((y - this.minY) * this.scaleY);
@@ -263,7 +298,7 @@
       });
     },
     _setMinMaxScale: function() {
-      var viewport = this.getSeriesMinMax(),
+      var viewport = this.getMinMax(),
           width = this.get('width'),
           height = this.get('height'),
           diffX = viewport.maxX - viewport.minX,

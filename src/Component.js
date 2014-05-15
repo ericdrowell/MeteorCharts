@@ -73,19 +73,19 @@
         this.attrs[attr] = val;
 
         // invalidate attr cache
-        delete this.cache[attr];
+        // delete this.cache[attr];
 
-        // render any components that are affected by this change
-        if (deps[this.id] && deps[this.id][attr]) {
-          componentIds = deps[this.id][attr];
-          for (key in componentIds) {
-            // TODO: cuurently invalidating entire cache because I don't know
-            // which component attrs are dependent on this component.  There might
-            // be a smater way to go about this.
-            chart.components[key].cache = {};
-            chart.components[key].render();
-          }
-        }
+        // // render any components that are affected by this change
+        // if (deps[this.id] && deps[this.id][attr]) {
+        //   componentIds = deps[this.id][attr];
+        //   for (key in componentIds) {
+        //     // TODO: cuurently invalidating entire cache because I don't know
+        //     // which component attrs are dependent on this component.  There might
+        //     // be a smater way to go about this.
+        //     chart.components[key].cache = {};
+        //     chart.components[key].render();
+        //   }
+        // }
       }
     },
     get: function(attr, context) {
@@ -94,22 +94,22 @@
           ret;
 
       // add dependency
-      if (context) {
-        if (!chart.deps[this.id]) {
-          chart.deps[this.id] = {};
-        }
+      // if (context) {
+      //   if (!chart.deps[this.id]) {
+      //     chart.deps[this.id] = {};
+      //   }
 
-        if (!chart.deps[this.id][attr]) {
-          chart.deps[this.id][attr] = {};
-        }
+      //   if (!chart.deps[this.id][attr]) {
+      //     chart.deps[this.id][attr] = {};
+      //   }
         
-        chart.deps[this.id][attr][context.id] = 1;
-      }
+      //   chart.deps[this.id][attr][context.id] = 1;
+      // }
 
-      // if attr value is cached, immediately return it
-      if (this.cache[attr] !== undefined) {
-        return this.cache[attr];
-      }
+      // // if attr value is cached, immediately return it
+      // if (this.cache[attr] !== undefined) {
+      //   return this.cache[attr];
+      // }
 
       // default
       if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {

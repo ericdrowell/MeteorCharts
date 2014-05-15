@@ -28,9 +28,9 @@
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.LineChartWithSlider,
+        layout: MeteorChart.Layouts.LineChartWithBottomSlider,
 
-        // set components data and options
+        // set components data and styles
         components: {
           lineSeries: {
             data: {
@@ -38,23 +38,38 @@
                 {
                   title: 'Series 1',
                   points: [
-                    -100, -100,
+                    0, 200,
                     100, 100,
-                    200, 50
+                    200, 0
                   ]
                 },
                 { 
                   title: 'Series 2',
                   points: [
-                    0, 100,
+                    0, 0,
+                    100, 100,
+                    200, 200
+                  ]
+                },
+                { 
+                  title: 'Series 3',
+                  points: [
+                    0, 0,
+                    100, 300,
+                    200, 0
+                  ]
+                },
+                { 
+                  title: 'Series 3',
+                  points: [
+                    0, 200,
                     100, 200,
-                    200, 150,
-                    300, 200
+                    200, 200
                   ]
                 }
               ]
             }
-          },
+          },          
           slider: {
             style: {
               handleWidth: 40,
@@ -62,15 +77,27 @@
             }
           },
           xAxis: {
-            data: {
-              min: -100,
-              max: 300
+            data: function() {
+              var lineSeries = this.chart.components.lineSeries;
+              return {
+                min: lineSeries.getViewportMinX(),
+                max: lineSeries.getViewportMaxX()
+              }
+            },
+            style: {
+              increment: 25
             }
           },
           yAxis: {
-            data: {
-              min: -100,
-              max: 200
+            data: function() {
+              var lineSeries = this.chart.components.lineSeries;
+              return {
+                min: lineSeries.getViewportMinY(),
+                max: lineSeries.getViewportMaxY()
+              }
+            },
+            style: {
+              increment: 100
             }
           }
         }
@@ -84,12 +111,7 @@
         chart.components.lineSeries.set('zoomY', newZoom);
         chart.components.lineSeries.render();
 
-        chart.components.xAxis.get('data').min = Math.round(5 - (5 / newZoom));
-        chart.components.xAxis.get('data').max = Math.round(5 + (5 / newZoom));
         chart.components.xAxis.render();
-
-        chart.components.yAxis.get('data').min = Math.round(-500 / newZoom);
-        chart.components.yAxis.get('data').max = Math.round(500 / newZoom);
         chart.components.yAxis.render();
 
       });

@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Layouts.LineChartWithSlider = function(chart) {
+  MeteorChart.Layouts.LineChartWithBottomSlider = function(chart) {
     return {
       components: [ 
         {

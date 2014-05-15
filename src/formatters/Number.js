@@ -1,10 +1,5 @@
 (function() {
-  MeteorChart.Formatters.Number = function() {
-    this.base = 10;
-    MeteorChart.Formatter.apply(this, arguments);
-  };
-
-  MeteorChart.Formatters.Number.prototype = {
+  MeteorChart.Formatters.Number = {
     short: function(num) {
       var longestValue = this.getLongestValue();
 
@@ -28,19 +23,7 @@
       }
     },
     long: function(num) {
-      return this.addCommas(num);
-    },
-    start: function() {
-      var num = this.min,
-          increment = this.increment;
-      this.number = num + Math.abs(num % this.increment);
-      return this.number;
-    },
-    next: function() {
-      this.number += this.increment;
-      return this.number;
-    },
+      return MeteorChart.Util.addCommas(num);
+    }
   };
-
-  MeteorChart.Util.extend(MeteorChart.Formatters.Number.prototype, MeteorChart.Formatter.prototype);
 })();

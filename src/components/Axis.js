@@ -3,15 +3,9 @@
     defaults: {
       width: function() {
         var that = this,
-            maxWidth = 0,
-            formatter = this._getFormatter();
+            maxWidth = 0;
 
-        formatter.each(function(n, val) {
-          maxWidth = Math.max(maxWidth, MeteorChart.Dom.getElementWidth(that._getLabel(val)));
-        }); 
-
-        return maxWidth; 
-        //return 50;
+        return 50;
       },
       height: function() {
         return this.chart.theme.fontSize;
@@ -31,24 +25,33 @@
           max = data.max,
           diff = max - min,
           scale = (this.get('orientation') === 'vertical' ? this.get('height') : this.get('width')) / diff,
-          offset = 0,
-          formatter = this._getFormatter(),
-          increment = formatter.increment;
+          increment = style.increment,
+          val = this._getFirstValue(),
+          offset = (val - min) * scale;
 
       this.innerContent.innerHTML = '';
 
-      this.set('labelOffsets', []);
+      that._addLabel(offset, val);
+      val += increment;
 
-      formatter.each(function(n, val) {
-        offset = n * increment * scale;
+      while (val <= max) {
+        offset += increment * scale;
         that._addLabel(offset, val);
-      });  
+        val += increment;
+      }
     },
-    _getFormatter: function() {
+    _getFirstValue: function() {
       var data = this.get('data'),
-          style = this.get('style');
+          style = this.get('style'),
+          min = data.min,
+          increment = style.increment;
 
-      return new MeteorChart.Formatters[style.unit || 'Number'](data.min, data.max, style.maxNumLabels || 5)
+      if (min % increment === 0) {
+        return min
+      }
+      else {
+        return min - (min % increment) + increment;
+      }
     },
     _getLabel: function(val) {
       var theme = this.chart.theme,
@@ -77,7 +80,7 @@
         text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2); 
       }
   
-      this.set('labelOffsets', this.attrs.labelOffsets.concat([offset]));
+      //this.set('labelOffsets', this.attrs.labelOffsets.concat([offset]));
 
     }
   });

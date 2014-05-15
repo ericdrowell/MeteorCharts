@@ -54,21 +54,27 @@
             }
           },
           xAxis: {
-            data: {
-              min: -100,
-              max: 300
+            data: function() {
+              var lineSeries = this.chart.components.lineSeries;
+              return {
+                min: lineSeries.getViewportMinX(),
+                max: lineSeries.getViewportMaxX()
+              }
             },
             style: {
-              maxIncrements: 5
+              increment: 100
             }
           },
           yAxis: {
-            data: {
-              min: -100,
-              max: 200
+            data: function() {
+              var lineSeries = this.chart.components.lineSeries;
+              return {
+                min: lineSeries.getViewportMinY(),
+                max: lineSeries.getViewportMaxY()
+              }
             },
             style: {
-              maxIncrements: 5
+              increment: 100
             }
           }
         }
