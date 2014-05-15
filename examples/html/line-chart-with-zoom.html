@@ -3,7 +3,7 @@
   <head>
     <style>
       html, body {
-        background-color: #eee;
+        background-color: white;
       }
       #container {
         height: 450px;
@@ -13,13 +13,14 @@
   <body>
     <div id="container"></div>
 
+    <script src="../../lib/three.min.js"></script>
     <script src="../js/Grapher.js"></script>
     <script src="../js/get-series.js"></script>
-    <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
-    
-    
+      
     <script type="text/javascript">
+
+      MeteorChart.debug = true;
 
       var chart = new MeteorChart({
         container: 'container',
@@ -56,8 +57,8 @@
           },
           slider: {
             style: {
-              handleWidth: 60,
-              handleHeight: 15
+              handleWidth: 40,
+              handleHeight: 10
             }
           },
           xAxis: {
@@ -73,6 +74,24 @@
             }
           }
         }
+      });
+
+
+      MeteorChart.Event.on({id: 'slider', event: 'dragmove'}, function(evt) {
+        var newZoom = (evt.value * 4) + 1;
+
+        chart.components.lineSeries.set('zoomX', newZoom);
+        chart.components.lineSeries.set('zoomY', newZoom);
+        chart.components.lineSeries.render();
+
+        chart.components.xAxis.get('data').min = Math.round(5 - (5 / newZoom));
+        chart.components.xAxis.get('data').max = Math.round(5 + (5 / newZoom));
+        chart.components.xAxis.render();
+
+        chart.components.yAxis.get('data').min = Math.round(-500 / newZoom);
+        chart.components.yAxis.get('data').max = Math.round(500 / newZoom);
+        chart.components.yAxis.render();
+
       });
 
       console.log(chart);

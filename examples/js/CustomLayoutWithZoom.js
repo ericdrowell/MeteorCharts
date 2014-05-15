@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Layouts.LineChartWithZoom = function(chart) {
+  MeteorChart.Layouts.CustomLayoutWithZoom = function(chart) {
     return {
       components: [ 
         {

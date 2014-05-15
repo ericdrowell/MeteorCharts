@@ -17,6 +17,7 @@
     <script src="../js/Grapher.js"></script>
     <script src="../js/get-series.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
+    <script src="../js/CustomLayoutWithZoom.js"></script>
       
     <script type="text/javascript">
 
@@ -28,7 +29,7 @@
         height: 400,
 
         theme: MeteorChart.Themes.Crochet,
-        layout: MeteorChart.Layouts.LineChartWithZoom,
+        layout: MeteorChart.Layouts.CustomLayoutWithZoom,
 
         components: {
           lineSeries: {
@@ -59,13 +60,16 @@
             inspectCircleStyle = inspectCircle.get('style', this);
             dataColor = MeteorChart.Color.getDataColor(chart.theme.data, 0),
             inspectSliderOffsetX = evt.offset,
-            nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset);
+            nearestPoint = lineSeries.getSeriesNearestPointX(0, evt.offset),
+            zoomX = chart.components.lineSeries.get('zoomX'),
+            newX = ((nearestPoint.x + lineSeries.get('x', this) - inspectCircleStyle.radius) * zoomX),
+            newY = nearestPoint.y + lineSeries.get('y', this) - inspectCircleStyle.radius;
 
         inspectCircle.get('style', this).fill = MeteorChart.Color.hexToRgba(dataColor, 0.3);
         inspectCircle.get('style', this).stroke = dataColor;
 
-        inspectCircle.set('x', nearestPoint.x + lineSeries.get('x', this) - inspectCircleStyle.radius);
-        inspectCircle.set('y', nearestPoint.y + lineSeries.get('y', this) - inspectCircleStyle.radius);
+        inspectCircle.set('x', newX);
+        inspectCircle.set('y', newY);
 
         chart.components.inspectCircle.render();
 
