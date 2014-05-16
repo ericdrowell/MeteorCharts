@@ -58,6 +58,7 @@
     destroy: function() {
 
     },
+    
     fire: function(event, obj) {
       var that = this;
       MeteorChart.Event.fire.call(this, MeteorChart.Util.merge({

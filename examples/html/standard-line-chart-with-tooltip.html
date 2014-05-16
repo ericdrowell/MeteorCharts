@@ -21,6 +21,7 @@
         container: 'container',
         width: 500,
         height: 290,
+        id: 'chart',
 
         theme: MeteorChart.Themes.CoteAzur,
         layout: MeteorChart.Layouts.StandardLineChart,
@@ -53,15 +54,19 @@
             }
           },
           xAxis: {
-            data: {
-              min: -100,
-              max: 300
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxX();
+            },
+            style: {
+              increment: 100
             }
           },
           yAxis: {
-            data: {
-              min: -100,
-              max: 200
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxY();
+            },
+            style: {
+              increment: 100
             }
           }
         }
@@ -72,19 +77,24 @@
         type: 'Tooltip'
       });
 
-      MeteorChart.Event.on({id: 'lineSeries', event: 'mousemove'}, function(evt) {
+      MeteorChart.Event.on({id: 'chart', event: 'mousemove'}, function(evt) {
+        
         var lineSeries = chart.components.lineSeries,
             tooltip = chart.components.tooltip,
             nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
             newX, newY;
 
+        //console.log(nearestPoint.dataX)
+
         if (nearestPoint) {
-          newX = nearestPoint.x + lineSeries.get('x', this) - (tooltip.get('width', this) / 2);
-          newY = nearestPoint.y + lineSeries.get('y', this) - tooltip.get('height', this) - tooltip.padding(-3);
+          newX = nearestPoint.x + lineSeries.get('x') - (tooltip.get('width') / 2);
+          newY = nearestPoint.y + lineSeries.get('y') - tooltip.get('height') - tooltip.padding(-3);
+
+
 
           // bounds
-          if (newX + tooltip.get('width', this) > chart.get('width', this)) {
-            newX = chart.get('width', this) - tooltip.get('width', this);
+          if (newX + tooltip.get('width') > chart.get('width')) {
+            newX = chart.get('width') - tooltip.get('width');
           }
           if (newY < 0) {
             newY = 0;
@@ -101,7 +111,7 @@
         }
       });
 
-      MeteorChart.Event.on({id: 'lineSeries', event: 'mouseout'}, function(evt) {
+      MeteorChart.Event.on({id: 'chart', event: 'mouseout'}, function(evt) {
         var tooltip = chart.components.tooltip;
         tooltip.set('data', null);
         tooltip.render();

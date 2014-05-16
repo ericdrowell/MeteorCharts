@@ -178,27 +178,39 @@
 
       return minY + viewportRange + ((range - viewportRange) / 2);
     },
-    dataToChartY: function(y) {
-      return this.get('height') - ((y - this.minY) * this.scaleY);
-    },
+
+    /*
+     * convert data to chart coords
+     */
     dataToChart: function(x, y) {
       return {
         x: this.dataToChartX(x),
         y: this.dataToChartY(y)
       }; 
     },
-    chartToDataX: function(x) {
-      return (x / this.scaleX) + this.minX;
+    dataToChartX: function(x) {
+      return (x - this.minX) * this.scaleX;
     },
-    chartToDataY:function(y) {
-      return this.minY - ((y - this.get('height')) / this.scaleY);
+    dataToChartY: function(y) {
+      return this.get('height') - ((y - this.minY) * this.scaleY);
     },
+
+    /*
+     * convert chart to data coords
+     */
     chartToData: function(x, y) {
       return {
         x: this.chartToDataX(x),
         y: this.chartToDataY(y)
       };
     },
+    chartToDataX: function(x) {
+      return ((x - this.get('x')) / this.scaleX) + this.minX;
+    },
+    chartToDataY:function(y) {
+      return this.minY - (((y - this.get('y')) - this.get('height')) / this.scaleY);
+    },
+
     getSeriesNearestPointX: function(n, x) {
       var dataX = this.chartToDataX(x),
           data = this.get('data'),
@@ -249,6 +261,8 @@
           nearestPoint = null,
           squaredDistanceBetweenPoints = MeteorChart.Util.squaredDistanceBetweenPoints,
           n, i, ser, points, point, pointsLen, title, chartDistance;
+
+      //console.log(dataPos.y)
    
       for (n=0; n<len; n++) {
         ser = series[n];
@@ -292,22 +306,7 @@
       return nearestPoint;
     },
     _bind: function() {
-      var that = this,
-          content = this.content,
-          contentPos;
 
-      content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        contentPos = MeteorChart.Dom.getElementPosition(content);
-
-        that.fire('mousemove', {
-          x: evt.clientX - contentPos.x,
-          y: evt.clientY - contentPos.y
-        });
-      }, 17));
-
-      content.addEventListener('mouseout', function(evt) {
-        that.fire('mouseout');
-      });
     },
     _setMinMaxScale: function() {
       var viewport = this.getMinMax(),

@@ -13,6 +13,7 @@ var MeteorChart;
     this.set('height', config.height);
     this.set('style', config.style);
 
+    this.id = config.id;
     this.layout = config.layout(this);
     this.theme = config.theme;
     this._components = config.components || {};
@@ -48,6 +49,9 @@ var MeteorChart;
       that._addComponent(n);
     }
 
+    // bind events
+    this._bind();
+
     // store reference to this chart
     MeteorChart.charts.push(this);
   };
@@ -81,6 +85,24 @@ var MeteorChart;
       MeteorChart.log('add ' + component.id);
       this.content.appendChild(component.content); 
     },
+    _bind: function() {
+      var that = this,
+          content = this.content,
+          contentPos;
+
+      content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
+        contentPos = MeteorChart.Dom.getElementPosition(content);
+
+        that.fire('mousemove', {
+          x: evt.clientX - contentPos.x,
+          y: evt.clientY - contentPos.y
+        });
+      }, 17));
+
+      content.addEventListener('mouseout', function(evt) {
+        that.fire('mouseout');
+      });
+    },
     _decorateConf: function(conf) {
       var id = conf.id,
           component = this._components[id],
@@ -93,6 +115,18 @@ var MeteorChart;
       }
 
       conf.chart = this;
+    },
+    // TODO: this is copied and pasted from the component class.  Need to 
+    // extend some other higher level class
+    fire: function(event, obj) {
+      var that = this;
+      MeteorChart.Event.fire.call(this, MeteorChart.Util.merge({
+          event: event,
+          type: this.type,
+          id: this.id
+        }, 
+        obj)
+      );
     },
     add: function(conf) {
       this._initComponent(conf); 
@@ -120,11 +154,15 @@ var MeteorChart;
         components[n].render();
       }
     },
+    // TODO: this is copied and pasted from the component class.  Need to 
+    // extend some other higher level class
     set: function(attr, val) {
       if (val !== undefined) {
         this.attrs[attr] = val;
       }
     },
+    // TODO: this is copied and pasted from the component class.  Need to 
+    // extend some other higher level class
     get: function(attr, context) {
       var chart = this.chart,
           val = this.attrs[attr];
