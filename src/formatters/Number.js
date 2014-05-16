@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Formatters.Number = {
-    short: function(num) {
-      var longestValue = this.getLongestValue();
+    short: function(num, min, max) {
+      var longestValue = MeteorChart.Util.getLongerValue(min, max);
 
       if (longestValue < 10) {
         return Math.round(num);
@@ -25,5 +25,6 @@
     long: function(num) {
       return MeteorChart.Util.addCommas(num);
     }
+
   };
 })();

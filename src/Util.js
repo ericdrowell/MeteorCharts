@@ -38,7 +38,7 @@
           }
           else {
             return val;
-          }   
+          }
         }
       };
     },
@@ -60,8 +60,8 @@
 
         // for large arrays, use sampling to approximate equality
         // TODO: for now, the sampling "algo" just looks at the first element
-        // and the last element.  This should eventually bit a bit more 
-        // robust to reduce false positives 
+        // and the last element.  This should eventually bit a bit more
+        // robust to reduce false positives
         if (len > 5) {
           if (!this.isEqual(a[0], b[0])) {
             return false;
@@ -79,12 +79,12 @@
           }
         }
 
-        return true;        
+        return true;
       }
       else {
         return a === b
       }
-      
+
     },
     // Returns a function, that, when invoked, will only be triggered at most once
     // during a given window of time. Normally, the throttled function will run
@@ -146,6 +146,12 @@
       var diffX = p2.x - p1.x,
           diffY = p2.y - p1.y;
       return (diffX*diffX) + (diffY*diffY);
+    },
+    getLongerValue: function(a, b) {
+      return Math.max(
+        Math.abs(a),
+        Math.abs(b)
+      );
     },
     addCommas: function(nStr){
       nStr += '';

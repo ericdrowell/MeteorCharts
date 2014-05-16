@@ -40,14 +40,15 @@
           scale = (this.get('orientation') === 'vertical' ? this.get('height') : this.get('width')) / diff,
           increment = style.increment,
           val = this._getFirstValue(),
-          offset = (val - min) * scale;
+          offset = (val - min) * scale,
+          formatter = style.formatter || MeteorChart.Formatters.Number;
 
-      func(offset, val);
+      func(offset, formatter.short(val, min, max));
       val += increment;
 
       while (val <= max) {
         offset += increment * scale;
-        func(offset, val);
+        func(offset, formatter.short(val, min, max));
         val += increment;
       }
     },

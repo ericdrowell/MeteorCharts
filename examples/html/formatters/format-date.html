@@ -23,42 +23,39 @@
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        //theme: MeteorChart.Themes.Lollapalooza,
-
-        data: {
-          lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
-            },
-            series: [
-              {
-                // red
-                title: 'Series 1',
-                points: [
-                  1356998400, -100, // Jan 1 2013
-                  1359676800, 100, // Feb 1 2013
-                  1362096000, 50 // Mar 1 2013
-                ]
-              }
-            ]
-          }
-        },
         layout: MeteorChart.Layouts.StandardLineChart,
-        interaction: MeteorChart.Interactions.LineChartTooltip,
-        options: {
+
+        components: {
+          lineSeries: {
+            data: {
+              series: [
+                {
+                  // red
+                  title: 'Series 1',
+                  points: [
+                    1356998400, -100, // Jan 1 2013
+                    1359676800, 100, // Feb 1 2013
+                    1362096000, 50 // Mar 1 2013
+                  ]
+                }
+              ]
+            }
+          },
           xAxis: {
-            maxNumLabels: 5,
-            unit: 'Date'
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxX();
+            },
+            style: {
+              increment: 31500000,
+              formatter: MeteorChart.Formatters.Date
+            }
           },
           yAxis: {
-            maxNumLabels: 5,
-            unit: 'Number'
-          },
-          lineSeries: {
-            unit: {
-              x: 'Date',
-              y: 'Number'
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxY();
+            },
+            style: {
+              increment: 50
             }
           }
         }

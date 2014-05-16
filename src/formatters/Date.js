@@ -6,8 +6,8 @@
       SECONDS_IN_YEAR = 31500000;
 
   MeteorChart.Formatters.Date = {
-    short: function(seconds) {
-      var range = this.range,
+    short: function(seconds, min, max) {
+      var range = max - min,
           date = new moment(seconds * 1000);
 
       if (range < SECONDS_IN_HOUR) {
