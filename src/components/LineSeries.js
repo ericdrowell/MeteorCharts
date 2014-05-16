@@ -126,6 +126,18 @@
         maxY: maxY
       };
     },
+    getViewportMinMaxX: function() {
+      return {
+        min: this.getViewportMinX(),
+        max: this.getViewportMaxX()
+      }
+    },
+    getViewportMinMaxY: function() {
+      return {
+        min: this.getViewportMinY(),
+        max: this.getViewportMaxY()
+      }
+    },
     getViewportMinX: function() {
       var zoomX = this.get('zoomX'),
           minMax = this.getMinMax(),

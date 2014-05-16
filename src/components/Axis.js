@@ -17,6 +17,13 @@
       this.content.appendChild(this.innerContent);
     },
     _render: function() {
+      var that = this;
+
+      this._eachLabel(function(offset, val) {
+        that._addLabel(offset, val);
+      });
+    },
+    _eachLabel: function(func) {
       var that = this,
           chart = this.chart,
           data = this.get('data'),
@@ -31,14 +38,24 @@
 
       this.innerContent.innerHTML = '';
 
-      that._addLabel(offset, val);
+      func(offset, val);
       val += increment;
 
       while (val <= max) {
         offset += increment * scale;
-        that._addLabel(offset, val);
+        func(offset, val);
         val += increment;
       }
+    },
+    getLabelOffsets: function() {
+      var that = this,
+          labelOffsets = [];
+
+      this._eachLabel(function(offset, val) {
+        labelOffsets.push(offset);
+      });
+
+      return labelOffsets;
     },
     _getFirstValue: function() {
       var data = this.get('data'),

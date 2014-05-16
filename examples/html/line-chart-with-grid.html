@@ -53,25 +53,29 @@
             }
           },
           xAxis: {
-            data: {
-              min: -100,
-              max: 300
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxX();
+            },
+            style: {
+              increment: 100
             }
           },
           yAxis: {
-            data: {
-              min: -100,
-              max: 200
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxY();
+            },
+            style: {
+              increment: 100
             }
           },
           verticalGridLines: {
             data: function() {
-              return this.chart.components.xAxis.get('labelOffsets', this);
+              return this.chart.components.xAxis.getLabelOffsets();
             }
           },
           horizontalGridLines: {
             data: function() {
-              return this.chart.components.yAxis.get('labelOffsets', this);
+              return this.chart.components.yAxis.getLabelOffsets();
             }
           }
         }

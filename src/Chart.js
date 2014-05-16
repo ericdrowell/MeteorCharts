@@ -83,14 +83,12 @@ var MeteorChart;
     },
     _decorateConf: function(conf) {
       var id = conf.id,
-          component = this._components[id];
+          component = this._components[id],
+          key;
 
       if (component) {
-        if (component.data) {
-          conf.data = component.data;
-        }
-        if (component.style) {
-          conf.style = component.style;
+        for (key in component) {
+          conf[key] = component[key];
         }
       }
 

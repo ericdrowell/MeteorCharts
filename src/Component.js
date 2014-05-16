@@ -1,5 +1,13 @@
 (function() {
+  var ATTR_BLACKLIST = {
+    'id': 1,
+    'type': 1,
+    'chart': 1
+  };
+
   MeteorChart.Component = function(config) {
+    var key;
+
     this.attrs = {}; 
     this.cache = {};
     this.chart = config.chart;
@@ -7,16 +15,12 @@
     this.id = config.id;
     this.type = config.type;
 
-    // layout bindings
-    this.set('x', config.x);
-    this.set('y', config.y);
-    this.set('width', config.width);
-    this.set('height', config.height);
-    this.set('orientation', config.orientation);
-
-    // app bindings
-    this.set('data', config.data);
-    this.set('style', config.style);
+    // set attrs
+    for (key in config) {
+      if (!ATTR_BLACKLIST[key]) {
+        this.set(key, config[key]);
+      }
+    }
 
     // build content container
     this.content = document.createElement('div');

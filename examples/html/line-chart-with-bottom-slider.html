@@ -56,20 +56,24 @@
           },
           slider: {
             style: {
-              handleWidth: 60,
-              handleHeight: 15
+              handleWidth: 40,
+              handleHeight: 10
             }
           },
           xAxis: {
-            data: {
-              min: -100,
-              max: 300
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxX();
+            },
+            style: {
+              increment: 100
             }
           },
           yAxis: {
-            data: {
-              min: -100,
-              max: 200
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxY();
+            },
+            style: {
+              increment: 100
             }
           }
         }
