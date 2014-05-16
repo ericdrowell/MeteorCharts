@@ -47,6 +47,7 @@ var MeteorChart;
     // add components to chart content
     for (n=0, len=that.components.length; n<len; n++) {
       that._addComponent(n);
+      that.components[n].render();
     }
 
     // bind events
@@ -79,8 +80,6 @@ var MeteorChart;
       if (component.init) {
         component.init();
       }
-
-      component.render();
 
       MeteorChart.log('add ' + component.id);
       this.content.appendChild(component.content); 

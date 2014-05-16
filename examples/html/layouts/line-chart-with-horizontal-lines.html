@@ -1,0 +1,82 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <style>
+      html, body {
+        background-color: #eee;
+      }
+      #container {
+        height: 450px;
+      }
+    </style>
+  </head> 
+  <body>
+    <div id="container"></div>
+
+    <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../dist/meteorcharts-dev.js"></script>
+    
+    <script type="text/javascript">
+      var chart = new MeteorChart({
+        container: 'container',
+        width: 500,
+        height: 290,
+
+        theme: MeteorChart.Themes.CoteAzur,
+        layout: MeteorChart.Layouts.LineChartWithHorizontalLines,
+
+        // set components data and options
+        components: {
+          lineSeries: {
+            data: {
+              series: [
+                {
+                  // red
+                  title: 'Series 1',
+                  points: [
+                    -100, -100,
+                    100, 100,
+                    200, 50
+                  ]
+                },
+                { 
+                  // green
+                  title: 'Series 2',
+                  points: [
+                    0, 100,
+                    100, 200,
+                    200, 150,
+                    300, 200
+                  ]
+                }
+              ]
+            }
+          },
+          xAxis: {
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxX();
+            },
+            style: {
+              increment: 100
+            }
+          },
+          yAxis: {
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxY();
+            },
+            style: {
+              increment: 100
+            }
+          },
+          horizontalGridLines: {
+            data: function() {
+              return this.chart.components.yAxis.getLabelOffsets();
+            }
+          }
+        }
+      });
+   
+      console.log(chart);
+    </script>
+  </body>
+</html>

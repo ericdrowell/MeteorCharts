@@ -113,8 +113,7 @@
 
       MeteorChart.Event.on({id: 'chart', event: 'mouseout'}, function(evt) {
         var tooltip = chart.components.tooltip;
-        tooltip.set('data', null);
-        tooltip.render();
+        tooltip.hide();
       });
 
 

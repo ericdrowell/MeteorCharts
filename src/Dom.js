@@ -21,7 +21,7 @@
         y: rect.top
       }
     },
-    style: function(el, style, val) {
+    addVendorStyle: function(el, style, val) {
       var n;
 
       el.style[style] = val;
@@ -30,10 +30,10 @@
       }
     },
     setBorderRadius: function(el, radius) {
-      this.style(el, 'borderRadius', radius + 'px');
+      this.addVendorStyle(el, 'borderRadius', radius + 'px');
     },
     setScale: function(el, x, y) {
-      this.style(el, 'transform', 'scale(' + x + ',' + y + ')');
+      this.addVendorStyle(el, 'transform', 'scale(' + x + ',' + y + ')');
     },
     getElementWidth: function(el) {
       var width = 0;
