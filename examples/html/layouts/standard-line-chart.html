@@ -13,13 +13,12 @@
   <body>
     <div id="container"></div>
 
-    <script src="../js/Grapher.js"></script>
-    <script src="../js/get-series.js"></script>
-    <script src="../../lib/moment.min.js"></script>
-    <script src="../../dist/meteorcharts-dev.js"></script>
-    
-    
+    <script src="../../../lib/three.min.js"></script>
+    <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../dist/meteorcharts-dev.js"></script>
+
     <script type="text/javascript">
+      MeteorChart.debug = true;
 
       var chart = new MeteorChart({
         container: 'container',
@@ -27,9 +26,9 @@
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.LineChartWithBottomSlider,
+        layout: MeteorChart.Layouts.StandardLineChart,
 
-        // set components data and options
+        // set components data and styles
         components: {
           lineSeries: {
             data: {
@@ -42,7 +41,7 @@
                     200, 50
                   ]
                 },
-                { 
+                {
                   title: 'Series 2',
                   points: [
                     0, 100,
@@ -52,12 +51,6 @@
                   ]
                 }
               ]
-            }
-          },
-          slider: {
-            style: {
-              handleWidth: 40,
-              handleHeight: 10
             }
           },
           xAxis: {

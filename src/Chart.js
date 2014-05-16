@@ -47,7 +47,6 @@ var MeteorChart;
     // add components to chart content
     for (n=0, len=that.components.length; n<len; n++) {
       that._addComponent(n);
-      that.components[n].render();
     }
 
     // bind events
@@ -55,6 +54,12 @@ var MeteorChart;
 
     // store reference to this chart
     MeteorChart.charts.push(this);
+
+    // need to delay chart render in order for the css transition
+    // fade in to be applied
+    setTimeout(function() {
+      that.render();
+    }, 50);
   };
 
   MeteorChart.prototype = {

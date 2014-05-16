@@ -13,9 +13,9 @@
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/moment.min.js"></script>
-    <script src="../../dist/meteorcharts-dev.js"></script>
-    
+    <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../dist/meteorcharts-dev.js"></script>
+
     <script type="text/javascript">
       var chart = new MeteorChart({
         container: 'container',
@@ -36,9 +36,9 @@
                 // red
                 title: 'Series 1',
                 points: [
-                  1000000000, -100, 
-                  2300000000, 100, 
-                  3000000000, 50
+                  1000, -100,
+                  2300, 100,
+                  3000, 50
                 ]
               }
             ]
@@ -55,7 +55,7 @@
           }
         }
       });
-   
+
       console.log(chart);
     </script>
   </body>

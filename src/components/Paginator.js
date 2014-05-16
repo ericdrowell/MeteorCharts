@@ -4,7 +4,7 @@
       height: function() {
         return this.chart.theme.fontSize;
       }
-    },  
+    },
     init: function() {
       this.leftArrowSVG = MeteorChart.SVG.createElement('svg');
       this.leftArrowSVG.style.position = 'absolute';
@@ -62,7 +62,7 @@
       // content
       text.style.height = arrowHeight + (arrowStrokeWidth * 2);
       text.style.lineHeight = (arrowHeight + (arrowStrokeWidth * 2)) + 'px';
-      text.innerHTML = MeteorChart.Util.replace(data.template, {
+      text.innerHTML = MeteorChart.Util.replace(style.template, {
         value: data.value,
         max: data.max
       });
@@ -82,7 +82,7 @@
       rightArrow.setAttribute('fill', theme.secondary);
       rightArrow.setAttribute('stroke', theme.secondary);
       rightArrow.setAttribute('stroke-width', arrowStrokeWidth);
-      rightArrow.setAttribute('stroke-linejoin', 'round');   
+      rightArrow.setAttribute('stroke-linejoin', 'round');
     },
     _bind: function() {
       var that = this,
@@ -93,41 +93,45 @@
       // cursors
       leftArrow.addEventListener('mouseover', function(evt) {
         leftArrow.style.cursor = 'pointer';
-      }); 
+      });
       leftArrow.addEventListener('mouseout', function(evt) {
         leftArrow.style.cursor = 'default';
-      }); 
+      });
 
       rightArrow.addEventListener('mouseover', function(evt) {
         rightArrow.style.cursor = 'pointer';
-      }); 
+      });
       rightArrow.addEventListener('mouseout', function(evt) {
         rightArrow.style.cursor = 'default';
-      }); 
+      });
 
       // clicks/touches
       leftArrow.addEventListener('mousedown', function(evt) {
-        var data = that.get('data', that),
+        var data = that.get('data'),
             oldValue = data.value,
             newValue = oldValue - data.step;
 
-        evt.preventDefault();
-        that.get('data', that).value = newValue;
-        that.render();
-        that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
-      }); 
+        if (newValue >= data.min) {
+          evt.preventDefault();
+          that.get('data').value = newValue;
+          that.render();
+          that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
+        }
+      });
 
       rightArrow.addEventListener('mousedown', function(evt) {
-        var data = that.get('data', that),
+        var data = that.get('data'),
             oldValue = data.value,
             newValue = oldValue + data.step;
 
-        evt.preventDefault();
-        that.get('data', that).value = newValue;
-        that.render();
-        that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
-      }); 
- 
+        if (newValue <= data.max) {
+          evt.preventDefault();
+          that.get('data').value = newValue;
+          that.render();
+          that.fire('valueChange', {newValue: newValue, oldValue: oldValue});
+        }
+      });
+
     }
   });
 })();

@@ -13,14 +13,15 @@
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/moment.min.js"></script>
-    <script src="../../dist/meteorcharts-dev.js"></script>
-    
+    <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../dist/meteorcharts-dev.js"></script>
+
     <script type="text/javascript">
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
         height: 290,
+
         theme: MeteorChart.Themes.CoteAzur,
         //theme: MeteorChart.Themes.Lollapalooza,
 
@@ -35,27 +36,26 @@
                 // red
                 title: 'Series 1',
                 points: [
-                  -100 - 400, -100 - 300,
-                  100 - 400, 100 - 300,
-                  200 - 400, 50 - 300
-                ]
-              },
-              { 
-                // green
-                title: 'Series 2',
-                points: [
-                  0 - 400, 100 - 300,
-                  100 - 400, 200 - 300,
-                  200 - 400, 150 - 300,
-                  300 - 400, 200 - 300
+                  1000000000, -100,
+                  2300000000, 100,
+                  3000000000, 50
                 ]
               }
             ]
           }
         },
-        layout: MeteorChart.Layouts.StandardLineChart
+        layout: MeteorChart.Layouts.StandardLineChart,
+        interaction: MeteorChart.Interactions.LineChartTooltip,
+        options: {
+          xAxis: {
+            maxNumLabels: 5
+          },
+          yAxis: {
+            maxNumLabels: 5
+          }
+        }
       });
-   
+
       console.log(chart);
     </script>
   </body>

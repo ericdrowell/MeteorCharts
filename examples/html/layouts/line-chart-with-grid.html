@@ -13,24 +13,20 @@
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/moment.min.js"></script>
-    <script src="../../dist/meteorcharts-dev.js"></script>
-    
+    <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../dist/meteorcharts-dev.js"></script>
+
     <script type="text/javascript">
-      MeteorChart.debug = true;
-      
       var chart = new MeteorChart({
         container: 'container',
         width: 500,
         height: 290,
 
-        theme: MeteorChart.Themes.Firenze,
-        layout: MeteorChart.Layouts.LineChartWithTitle,
+        theme: MeteorChart.Themes.CoteAzur,
+        layout: MeteorChart.Layouts.LineChartWithGrid,
 
+        // set components data and options
         components: {
-          title: {
-            data: 'Awesome Blossom Possum'
-          },
           lineSeries: {
             data: {
               series: [
@@ -43,7 +39,7 @@
                     200, 50
                   ]
                 },
-                { 
+                {
                   // green
                   title: 'Series 2',
                   points: [
@@ -71,11 +67,20 @@
             style: {
               increment: 100
             }
+          },
+          verticalGridLines: {
+            data: function() {
+              return this.chart.components.xAxis.getLabelOffsets();
+            }
+          },
+          horizontalGridLines: {
+            data: function() {
+              return this.chart.components.yAxis.getLabelOffsets();
+            }
           }
         }
       });
 
-   
       console.log(chart);
     </script>
   </body>

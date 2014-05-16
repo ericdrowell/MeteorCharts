@@ -9,23 +9,25 @@
         height: 450px;
       }
     </style>
-  </head> 
+  </head>
   <body>
     <div id="container"></div>
 
-    <script src="../../lib/moment.min.js"></script>
-    <script src="../../dist/meteorcharts-dev.js"></script>
-    
+    <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../dist/meteorcharts-dev.js"></script>
+
     <script type="text/javascript">
       var chart = new MeteorChart({
         container: 'container',
-        width: 500,
-        height: 290,
+        width: 200,
+        height: 50,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.LineChartWithGrid,
+        layout: MeteorChart.Layouts.SparkChart,
 
-        // set components data and options
+        style: {
+          padding: 10
+        },
         components: {
           lineSeries: {
             data: {
@@ -39,7 +41,7 @@
                     200, 50
                   ]
                 },
-                { 
+                {
                   // green
                   title: 'Series 2',
                   points: [
@@ -51,36 +53,11 @@
                 }
               ]
             }
-          },
-          xAxis: {
-            data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxX();
-            },
-            style: {
-              increment: 100
-            }
-          },
-          yAxis: {
-            data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxY();
-            },
-            style: {
-              increment: 100
-            }
-          },
-          verticalGridLines: {
-            data: function() {
-              return this.chart.components.xAxis.getLabelOffsets();
-            }
-          },
-          horizontalGridLines: {
-            data: function() {
-              return this.chart.components.yAxis.getLabelOffsets();
-            }
           }
         }
       });
-   
+
+
       console.log(chart);
     </script>
   </body>

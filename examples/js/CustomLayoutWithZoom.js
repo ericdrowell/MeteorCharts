@@ -1,7 +1,7 @@
 (function() {
   MeteorChart.Layouts.CustomLayoutWithZoom = function(chart) {
     return {
-      components: [ 
+      components: [
         {
           id: 'xSlider',
           type: 'Slider',
@@ -19,12 +19,12 @@
           },
           orientation: function() {
             return 'horizontal';
-          },  
+          },
           style: {
             handleWidth: 30,
-            handleHeight: 12  
+            handleHeight: 12
           }
-        }, 
+        },
         {
           id: 'ySlider',
           type: 'Slider',
@@ -41,12 +41,12 @@
           },
           orientation: function() {
             return 'vertical';
-          }, 
+          },
           style: {
             handleWidth: 12,
             handleHeight: 30
           }
-        }, 
+        },
         {
           id: 'lineSeries',
           type: 'LineSeries',
@@ -142,7 +142,7 @@
           id: 'inspectSlider',
           type: 'Slider',
           x: function() {
-            
+
             return chart.components.lineSeries.get('x') - (this.get('style').handleWidth) / 2;
           },
           y: function() {
@@ -153,7 +153,7 @@
           },
           orientation: function() {
             return 'horizontal';
-          }, 
+          },
           style: {
             handleFill: '#3fa9f5', // blue
             showTrack: false,
@@ -180,7 +180,7 @@
             step: 10,
             template: 'Cycles 1 - {value} of {max}'
           }
-        },
+        }
       ]
     };
   };
