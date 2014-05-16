@@ -87,19 +87,29 @@ var MeteorChart;
     },
     _bind: function() {
       var that = this,
-          content = this.content,
-          contentPos;
+          content = this.content;
 
       content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        contentPos = MeteorChart.Dom.getElementPosition(content);
+        var contentPos = MeteorChart.Dom.getElementPosition(content);
 
         that.fire('mousemove', {
           x: evt.clientX - contentPos.x,
           y: evt.clientY - contentPos.y
         });
-      }, 17));
 
+
+      }, 17), false);
+
+      // NOTE: this is technically a mouseleave event
       content.addEventListener('mouseout', function(evt) {
+        var toElement = evt.toElement || evt.relatedTarget;
+        while(toElement) {
+          if (toElement == this) {
+            return false;
+          }
+          toElement = toElement.parentNode;
+        }
+
         that.fire('mouseout');
       });
     },
