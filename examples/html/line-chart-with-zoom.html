@@ -38,38 +38,61 @@
                 {
                   title: 'Series 1',
                   points: [
-                    0, 200,
+                    -100, -100,
                     100, 100,
-                    200, 0
+                    200, 50
                   ]
                 },
                 { 
                   title: 'Series 2',
                   points: [
-                    0, 0,
-                    100, 100,
-                    200, 200
-                  ]
-                },
-                { 
-                  title: 'Series 3',
-                  points: [
-                    0, 0,
-                    100, 300,
-                    200, 0
-                  ]
-                },
-                { 
-                  title: 'Series 3',
-                  points: [
-                    0, 200,
+                    0, 100,
                     100, 200,
-                    200, 200
+                    200, 150,
+                    300, 200
                   ]
                 }
               ]
             }
-          },          
+          },
+          // lineSeries: {
+          //   data: {
+          //     series: [
+          //       {
+          //         title: 'Series 1',
+          //         points: [
+          //           0, 200,
+          //           100, 100,
+          //           200, 0
+          //         ]
+          //       },
+          //       { 
+          //         title: 'Series 2',
+          //         points: [
+          //           0, 0,
+          //           100, 100,
+          //           200, 200
+          //         ]
+          //       },
+          //       { 
+          //         title: 'Series 3',
+          //         points: [
+          //           0, 0,
+          //           100, 300,
+          //           200, 0
+          //         ]
+          //       },
+          //       { 
+          //         title: 'Series 3',
+          //         points: [
+          //           0, 200,
+          //           100, 200,
+          //           200, 200
+          //         ]
+          //       }
+          //     ]
+          //   }
+          // },          
           slider: {
             style: {
               handleWidth: 40,
@@ -81,7 +104,7 @@
               return this.chart.components.lineSeries.getViewportMinMaxX();
             },
             style: {
-              increment: 25
+              increment: 50
             }
           },
           yAxis: {
