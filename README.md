@@ -3,7 +3,7 @@ MeteorCharts
 
 Website: [www.meteorcharts.com](http://www.meteorcharts.com)
 
-## What is this?
+## Next Generation Charting Framework
 
 MeteorCharts is the next generation charting framework for the web.  It uses an abstract layer for data binding, and therefore supports any rendering technology of your choice, including HTML5 Canvas, WebGL, SVG, VML, and Dom.  MeteorCharts excels in places where other charting libraries fall short, most notably with performance, extensibility, and mobile support
  
@@ -21,7 +21,7 @@ var chart = new MeteorChart({
   width: 500,
   height: 290,
   theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.StandardLineChart,
+  layout: MeteorChart.Layouts.SparkChart,
   components: {
     lineSeries: {
       data: [
@@ -55,6 +55,7 @@ var chart = new MeteorChart({
   * __Layout__ - layouts define the position, size, and data source of components in the chart through data binding.  Some examples of pre-built layouts include StandardLineChart, StandardLineChartWithTitle, SparkChart, and InteractiveLineChart.  It's also really easy to create your own layouts.
   * __Theme__ - themes define the color palette and fonts used in your chart.  Some exmaples of pre-built themes include CoteAzure and Lollapallooza.  It's easy to create your own themes as well.
   * __Data__ - most components require data to render.  For example, if you're creating a standard line chart, the data for the line component is a series of data points.  The data for the x and y axis is bound to the line component data.  And the data for the title component is just a string, like "This is my chart title".
+  * __Style__ - Style attributes can be used to specify the look of feel of individual components.
   * __Formatter__ - formatters are used to format data into human readable strings.  For example, if you're creating a line chart with dates along the x-axis, you'll want to use the Date formatter to convert the unix timestamps into human readable dates.  Formatters can also be used with other components, such as tooltips.
   
 ## Building the Project
