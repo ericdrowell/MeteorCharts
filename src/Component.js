@@ -8,7 +8,7 @@
   MeteorChart.Component = function(config) {
     var key;
 
-    this.attrs = {}; 
+    this.attrs = {};
     this.cache = {};
     this.chart = config.chart;
     this.className = config.type;
@@ -38,11 +38,12 @@
   MeteorChart.Component.prototype = {
     render: function() {
       var that = this;
+
+      // make component visible and trigger css transition
+      that.content.style.opacity = 1;
+
       MeteorChart.Animation.queue(this.id, function() {
         //MeteorChart.log(this.id + ' render');
-
-        // make component visible and trigger css transition
-        that.content.style.opacity = 1;
 
         // reset width and height so that they do not affect component
         // width and height methods
@@ -74,12 +75,12 @@
           event: event,
           type: this.type,
           id: this.id
-        }, 
+        },
         obj)
       );
     },
     set: function(attr, val) {
-      var chart = this.chart, 
+      var chart = this.chart,
           deps = chart.deps,
           componentIds, key;
 
@@ -116,7 +117,7 @@
       //   if (!chart.deps[this.id][attr]) {
       //     chart.deps[this.id][attr] = {};
       //   }
-        
+
       //   chart.deps[this.id][attr][context.id] = 1;
       // }
 
@@ -136,7 +137,7 @@
       }
       else {
         ret = val;
-      }  
+      }
 
       // cache the new result
       this.cache[attr] = ret;

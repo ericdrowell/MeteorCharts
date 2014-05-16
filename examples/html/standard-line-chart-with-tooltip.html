@@ -9,13 +9,13 @@
         height: 450px;
       }
     </style>
-  </head> 
+  </head>
   <body>
     <div id="container"></div>
 
     <script src="../../lib/moment.min.js"></script>
     <script src="../../dist/meteorcharts-dev.js"></script>
-    
+
     <script type="text/javascript">
       var chart = new MeteorChart({
         container: 'container',
@@ -40,7 +40,7 @@
                     200, 50
                   ]
                 },
-                { 
+                {
                   // green
                   title: 'Series 2',
                   points: [
@@ -78,19 +78,14 @@
       });
 
       MeteorChart.Event.on({id: 'chart', event: 'mousemove'}, function(evt) {
-        
         var lineSeries = chart.components.lineSeries,
             tooltip = chart.components.tooltip,
             nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y),
             newX, newY;
 
-        //console.log(nearestPoint.dataX)
-
         if (nearestPoint) {
           newX = nearestPoint.x + lineSeries.get('x') - (tooltip.get('width') / 2);
           newY = nearestPoint.y + lineSeries.get('y') - tooltip.get('height') - tooltip.padding(-3);
-
-
 
           // bounds
           if (newX + tooltip.get('width') > chart.get('width')) {
@@ -100,8 +95,8 @@
             newY = 0;
           }
 
-          tooltip.set('x', newX);  
-          tooltip.set('y', newY); 
+          tooltip.set('x', newX);
+          tooltip.set('y', newY);
           tooltip.set('data', {
             title: nearestPoint.title,
             content: nearestPoint.dataX + ', ' + nearestPoint.dataY
@@ -159,7 +154,7 @@
         //     else {
         //       return 0;
         //     }
-                
+
         //     return (nearestPoint ? nearestPoint.y + lineSeries.y() : 0)
         //       - tooltip.height() - tooltip.padding(-3);
         //   }),
@@ -171,7 +166,7 @@
         //     // TODO: shouldn't have to clear the cache here.  Need to do this automatically
         //     // somehow
         //     chart.components.tooltip.clearCache();
-                
+
         //     if (evt.event === 'mousemove') {
         //       nearestPoint = lineSeries.getNearestPoint(evt.x, evt.y);
         //       return {
@@ -180,7 +175,7 @@
         //       }
         //     }
         //     else {
-              
+
         //       return {};
         //     }
         //   })

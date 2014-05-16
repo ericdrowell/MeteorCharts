@@ -1,6 +1,6 @@
 var MeteorChart;
 (function() {
-  MeteorChart = function(config) { 
+  MeteorChart = function(config) {
     var that = this,
         container = config.container,
         layoutComponents, components, component, len, n, componentId, conf, componentData;
@@ -38,7 +38,7 @@ var MeteorChart;
 
     layoutComponents = this.layout.components;
     len = layoutComponents.length;
- 
+
     // init components
     for (n=0; n<len; n++) {
       that._initComponent(layoutComponents[n]);
@@ -72,7 +72,7 @@ var MeteorChart;
       component = new MeteorChart.Components[conf.type](conf);
 
       this.components[component.id] = component;
-      this.components.push(component);      
+      this.components.push(component);
     },
     _addComponent: function(n) {
       var component = this.components[n];
@@ -82,7 +82,7 @@ var MeteorChart;
       }
 
       MeteorChart.log('add ' + component.id);
-      this.content.appendChild(component.content); 
+      this.content.appendChild(component.content);
     },
     _bind: function() {
       var that = this,
@@ -97,7 +97,7 @@ var MeteorChart;
         });
 
 
-      }, 17), false);
+      }, 17, {trailing: false}), false);
 
       // NOTE: this is technically a mouseleave event
       content.addEventListener('mouseout', function(evt) {
@@ -125,7 +125,7 @@ var MeteorChart;
 
       conf.chart = this;
     },
-    // TODO: this is copied and pasted from the component class.  Need to 
+    // TODO: this is copied and pasted from the component class.  Need to
     // extend some other higher level class
     fire: function(event, obj) {
       var that = this;
@@ -133,12 +133,12 @@ var MeteorChart;
           event: event,
           type: this.type,
           id: this.id
-        }, 
+        },
         obj)
       );
     },
     add: function(conf) {
-      this._initComponent(conf); 
+      this._initComponent(conf);
       this._addComponent(this.components.length-1);
     },
     destroy: function() {
@@ -154,23 +154,23 @@ var MeteorChart;
       // clear any leftover DOM
       this.container.innerHTML = '';
     },
-    render: function() { 
+    render: function() {
       var components = this.components,
           len = components.length,
           n, component
-        
+
       for (n=0; n<len; n++) {
         components[n].render();
       }
     },
-    // TODO: this is copied and pasted from the component class.  Need to 
+    // TODO: this is copied and pasted from the component class.  Need to
     // extend some other higher level class
     set: function(attr, val) {
       if (val !== undefined) {
         this.attrs[attr] = val;
       }
     },
-    // TODO: this is copied and pasted from the component class.  Need to 
+    // TODO: this is copied and pasted from the component class.  Need to
     // extend some other higher level class
     get: function(attr, context) {
       var chart = this.chart,
@@ -186,7 +186,7 @@ var MeteorChart;
       }
       else {
         return val;
-      }  
+      }
     },
     // render helpers
     padding: function(scaleFactor) {

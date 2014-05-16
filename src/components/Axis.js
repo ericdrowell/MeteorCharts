@@ -5,7 +5,11 @@
         var that = this,
             maxWidth = 0;
 
-        return 50;
+        this._eachLabel(function(offset, val) {
+          maxWidth = Math.max(maxWidth, MeteorChart.Dom.getTextWidth(val));
+        });
+
+        return maxWidth;
       },
       height: function() {
         return this.chart.theme.fontSize;
@@ -18,6 +22,8 @@
     },
     _render: function() {
       var that = this;
+
+      this.innerContent.innerHTML = '';
 
       this._eachLabel(function(offset, val) {
         that._addLabel(offset, val);
@@ -35,8 +41,6 @@
           increment = style.increment,
           val = this._getFirstValue(),
           offset = (val - min) * scale;
-
-      this.innerContent.innerHTML = '';
 
       func(offset, val);
       val += increment;
@@ -79,7 +83,7 @@
       text.style.fontSize = theme.fontSize;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
-      
+
       return text;
     },
     _addLabel: function(offset, val) {
@@ -94,9 +98,9 @@
       // horizontal
       else {
         text.style.top = 0;
-        text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2); 
+        text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2);
       }
-  
+
       //this.set('labelOffsets', this.attrs.labelOffsets.concat([offset]));
 
     }

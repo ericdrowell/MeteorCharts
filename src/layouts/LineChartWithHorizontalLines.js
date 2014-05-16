@@ -1,7 +1,24 @@
 (function() {
   MeteorChart.Layouts.LineChartWithHorizontalLines = function(chart) {
     return {
-      components: [ 
+      components: [
+        {
+          id: 'horizontalGridLines',
+          type: 'GridLines',
+          x: function() {
+            return this.chart.components.lineSeries.get('x');
+          },
+          y: function() {
+            return this.chart.components.lineSeries.get('y');
+          },
+          width: function() {
+            return this.chart.components.lineSeries.get('width');
+          },
+          height: function() {
+            return this.chart.components.lineSeries.get('height');
+          },
+          orientation: 'horizontal'
+        },
         {
           id: 'lineSeries',
           type: 'LineSeries',
@@ -55,23 +72,6 @@
             return this.chart.components.lineSeries.get('height');
           },
           orientation: 'vertical'
-        },
-        {
-          id: 'horizontalGridLines',
-          type: 'GridLines',
-          x: function() {
-            return this.chart.components.lineSeries.get('x');
-          },
-          y: function() {
-            return this.chart.components.lineSeries.get('y');
-          },
-          width: function() {
-            return this.chart.components.lineSeries.get('width');
-          },
-          height: function() {
-            return this.chart.components.lineSeries.get('height');
-          },
-          orientation: 'horizontal'
         }
       ]
     };
