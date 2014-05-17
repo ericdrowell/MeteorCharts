@@ -1,4 +1,6 @@
 (function() {
+  var PX = 'px';
+
   MeteorChart.Component.extend('Tooltip', {
     defaults: {
       width: function() {
@@ -28,6 +30,7 @@
     },
     _render: function() {
       var data = this.get('data'),
+         chart = this.chart,
           style = this.get('style'),
           theme = this.chart.theme;
 
@@ -36,17 +39,17 @@
         this.tooltip.style.display = 'inline-block';
         this.tooltip.style.fontFamily = style.fontFamily || theme.fontFamily;
         this.tooltip.style.color = style.fontColor || theme.primary;
-        this.tooltip.style.padding = this.padding(-3);
+        this.tooltip.style.padding = chart.padding(-1) + PX;
         this.tooltip.style.border = '2px solid ' + (style.borderColor || theme.secondary); 
         this.tooltip.style.backgroundColor = style.backgroundColor || theme.background; 
 
         // title
-        this.tooltipTitle.style.fontSize = (style.fontSize || theme.fontSize) * MeteorChart.Constants.TYPOGRAPHIC_SCALE;
+        this.tooltipTitle.style.fontSize = this.fontSize(0) + PX;
         this.tooltipTitle.innerHTML = data.title;
 
         // content
-        this.tooltipContent.style.fontSize = style.fontSize || theme.fontSize;
-        this.tooltipContent.style.marginTop = 5;
+        this.tooltipContent.style.fontSize = this.fontSize(0) + PX;
+        this.tooltipContent.style.marginTop = 5 + PX;
         this.tooltipContent.innerHTML = data.content;
       }
       else {

@@ -1,4 +1,6 @@
 (function() {
+  var PX = 'px';
+
   var ATTR_BLACKLIST = {
     'id': 1,
     'type': 1,
@@ -8,6 +10,7 @@
   MeteorChart.Component = function(config) {
     var key;
 
+    this._id = MeteorChart.idCounter++;
     this.attrs = {};
     this.cache = {};
     this.chart = config.chart;
@@ -42,7 +45,7 @@
       // make component visible and trigger css transition
       that.content.style.opacity = 1;
 
-      MeteorChart.Animation.queue(this.id, function() {
+      MeteorChart.Renderer.queue(this.chart._id + '-' + this._id, function() {
         //MeteorChart.log(this.id + ' render');
 
         // reset width and height so that they do not affect component
@@ -56,10 +59,10 @@
           that._render();
         }
 
-        that.content.style.left = that.get('x');
-        that.content.style.top = that.get('y');
-        that.content.style.width = that.get('width')
-        that.content.style.height = that.get('height');
+        that.content.style.left =   that.get('x') + PX;
+        that.content.style.top =    that.get('y') + PX;
+        that.content.style.width =  that.get('width') + PX;
+        that.content.style.height = that.get('height') + PX;
       });
     },
 
@@ -80,51 +83,13 @@
       );
     },
     set: function(attr, val) {
-      var chart = this.chart,
-          deps = chart.deps,
-          componentIds, key;
-
       if (val !== undefined) {
         this.attrs[attr] = val;
-
-        // invalidate attr cache
-        // delete this.cache[attr];
-
-        // // render any components that are affected by this change
-        // if (deps[this.id] && deps[this.id][attr]) {
-        //   componentIds = deps[this.id][attr];
-        //   for (key in componentIds) {
-        //     // TODO: cuurently invalidating entire cache because I don't know
-        //     // which component attrs are dependent on this component.  There might
-        //     // be a smater way to go about this.
-        //     chart.components[key].cache = {};
-        //     chart.components[key].render();
-        //   }
-        // }
       }
     },
     get: function(attr, context) {
-      var chart = this.chart,
-          val = this.attrs[attr],
+      var val = this.attrs[attr],
           ret;
-
-      // add dependency
-      // if (context) {
-      //   if (!chart.deps[this.id]) {
-      //     chart.deps[this.id] = {};
-      //   }
-
-      //   if (!chart.deps[this.id][attr]) {
-      //     chart.deps[this.id][attr] = {};
-      //   }
-
-      //   chart.deps[this.id][attr][context.id] = 1;
-      // }
-
-      // // if attr value is cached, immediately return it
-      // if (this.cache[attr] !== undefined) {
-      //   return this.cache[attr];
-      // }
 
       // default
       if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
@@ -139,28 +104,31 @@
         ret = val;
       }
 
-      // cache the new result
-      this.cache[attr] = ret;
+      // auto round x, y, width, and height values because these should
+      // resolve to integer pixels
+
+      if (attr === 'x' 
+       || attr === 'y'
+       || attr === 'width'
+       || attr === 'height') {
+        ret = Math.round(ret);
+      }
+ 
+
 
       return ret;
     },
 
-    // render helpers
-    /**
-     * @param {Integer} [scaleFactor] can be -3, -2, -1, 0, 1, 2, etc.  -1, 0, and -1 and
-     *   1 have the same result, and 0 defaults to 1.  If you want to double the padding
-     *   scale, use 2.  If you want to triple it, use 3.  If you want to halve it, use -2
-     */
-    padding: function(scaleFactor) {
-      var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor),
-          chartPadding = this.chart.get('style', this).padding;
 
-      if (chartPadding !== undefined) {
-        return chartPadding * scale;
+    /**
+     * @param {Integer} [factor] can be -2, -1, 0, 1, 2, or 3.  0 is the base value.
+     * bigger numbers are larger font sizes, and smaller numbers are smaller font sizes
+     */
+    fontSize: function(power) {
+      if (power === undefined) {
+        power = 0;
       }
-      else {
-        return this.chart.theme.padding * scale;
-      }
+      return this.chart.theme.fontSize * Math.pow(MeteorChart.Constants.TYPOGRAPHIC_SCALE, power);
     }
   };
 

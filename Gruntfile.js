@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     'src/SVG.js',
     'src/Event.js',
     'src/Component.js',
-    'src/Animation.js',
+    'src/Renderer.js',
 
     // components
     'src/components/LineSeries.js',

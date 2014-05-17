@@ -5,6 +5,7 @@ var MeteorChart;
         container = config.container,
         layoutComponents, components, component, len, n, componentId, conf, componentData;
 
+    this._id = MeteorChart.idCounter++;
     this.attrs= {};
     this.deps = {};
     this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
@@ -22,8 +23,9 @@ var MeteorChart;
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'meteorchart-content';
-    this.content.style.width = this.get('width', this);
-    this.content.style.height = this.get('height', this);
+    this.content.style.width = this.get('width') + 'px';
+    console.log('set width = ' + this.content.style.width);
+    this.content.style.height = this.get('height') + 'px';
     this.content.style.display = 'inline-block';
     this.content.style.backgroundColor = this.theme.background;
     this.content.style.position = 'relative';
@@ -194,17 +196,24 @@ var MeteorChart;
       }
     },
     // render helpers
-    padding: function(scaleFactor) {
-      var scale = scale = MeteorChart.Util._getScale(MeteorChart.Constants.PADDING_SCALE, scaleFactor),
-          chartPadding = this.get('style', this).padding;
 
-      if (chartPadding !== undefined) {
-        return chartPadding * scale;
+    /**
+     * @param {Integer} [factor] can be -2, -1, 0, 1, 2, or 3.  0 is the base value.
+     * bigger numbers are larger font sizes, and smaller numbers are smaller font sizes
+     */
+    padding: function(power) {
+      var padding = this.get('style').padding;
+
+      if (padding === undefined) {
+        padding = this.theme.padding;
       }
-      else {
-        return this.theme.padding * scale;
+
+      if (power === undefined) {
+        power = 0;
       }
-    }
+
+      return padding * Math.pow(MeteorChart.Constants.PADDING_SCALE, power); 
+    },
   };
 
   MeteorChart.version = '@@version';
@@ -214,13 +223,14 @@ var MeteorChart;
   MeteorChart.Themes = {};
 
   MeteorChart.Constants = {
-    TYPOGRAPHIC_SCALE: 1.2,
-    PADDING_SCALE: 1.2
+    TYPOGRAPHIC_SCALE: 1.4,
+    PADDING_SCALE: 2
   };
 
   // global properties
   MeteorChart.charts = [];
   MeteorChart.debug = false;
+  MeteorChart.idCounter = 0;
 
   // UA
   MeteorChart.UA = (function(root) {

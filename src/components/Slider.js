@@ -1,4 +1,6 @@
 (function() {
+  var PX = 'px';
+
   MeteorChart.Component.extend('Slider', {
     defaults: {
       offset: 0,
@@ -47,8 +49,8 @@
       }
 
       // handle
-      handle.style.width = handleWidth;
-      handle.style.height = handleHeight;
+      handle.style.width = handleWidth + PX;
+      handle.style.height = handleHeight + PX;
       handle.style.backgroundColor = style.handleFill || theme.secondary;
       MeteorChart.Dom.setBorderRadius(handle, Math.min(handleWidth, handleHeight) / 2);
 
@@ -58,23 +60,23 @@
       }
 
       if (this.get('orientation') === 'vertical') {
-        handle.style.top = this.get('height') - handleHeight;
-        handle.style.left = 0;
+        handle.style.top = this.get('height') - handleHeight + PX;
+        handle.style.left = 0 + PX;
 
         if (showTrack) {
-          this.track.style.width = trackSize;
-          this.track.style.height = this.get('height');
-          this.track.style.left = (this.get('width') - trackSize) / 2;
+          this.track.style.width = trackSize + PX;
+          this.track.style.height = this.get('height') + PX;
+          this.track.style.left = ((this.get('width') - trackSize) / 2) + PX;
         }
       }
       else {
-        handle.style.top = 0;
-        handle.style.left = 0;
+        handle.style.top = 0 + PX;
+        handle.style.left = 0 + PX;
 
         if (showTrack) {
-          this.track.style.width = this.get('width');
-          this.track.style.height = trackSize;
-          this.track.style.top = (this.get('height') - trackSize) / 2;
+          this.track.style.width = this.get('width') + PX;
+          this.track.style.height = trackSize + PX;
+          this.track.style.top = ((this.get('height') - trackSize) / 2) + PX;
         }
       }
 
@@ -132,7 +134,7 @@
             else if (newOffset > diff) {
               newOffset = diff;
             }
-            handle.style.left = newOffset;
+            handle.style.left = newOffset + PX;
           }
           else {
             diff = that.get('height') - that.get('style').handleHeight;
@@ -144,7 +146,7 @@
             else if (newOffset > diff) {
               newOffset = diff;
             }
-            handle.style.top = newOffset;    
+            handle.style.top = newOffset + PX;    
           }
 
           value = newOffset / (orientation === 'horizontal' ? (that.get('width') - handleWidth) : (that.get('height') - handleHeight));

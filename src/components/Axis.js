@@ -1,4 +1,5 @@
 (function() {
+  var PX = 'px';
   MeteorChart.Component.extend('Axis', {
     defaults: {
       width: function() {
@@ -12,7 +13,7 @@
         return maxWidth;
       },
       height: function() {
-        return this.chart.theme.fontSize;
+        return this.fontSize(0);
       }
     },
     init: function() {
@@ -81,7 +82,7 @@
 
       text.innerHTML = val;
       text.style.position = 'absolute';
-      text.style.fontSize = theme.fontSize;
+      text.style.fontSize = this.fontSize(0) + PX;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
 
@@ -93,17 +94,14 @@
       this.innerContent.appendChild(text);
 
       if (this.get('orientation') === 'vertical') {
-        text.style.top = this.get('height') - offset - (MeteorChart.Dom.getTextHeight(val) /2);
-        text.style.left = 0;
+        text.style.top = (this.get('height') - offset - (MeteorChart.Dom.getTextHeight(val) /2)) + PX;
+        text.style.left = 0 + PX;
       }
       // horizontal
       else {
-        text.style.top = 0;
-        text.style.left = offset - (MeteorChart.Dom.getTextWidth(val)/2);
+        text.style.top = 0 + PX;
+        text.style.left = (offset - (MeteorChart.Dom.getTextWidth(val)/2)) + PX;
       }
-
-      //this.set('labelOffsets', this.attrs.labelOffsets.concat([offset]));
-
     }
   });
 })();

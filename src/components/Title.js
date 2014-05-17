@@ -1,8 +1,10 @@
 (function() {
+  var PX = 'px';
+
   MeteorChart.Component.extend('Title', {
     defaults: {
       height: function() {
-        return this.chart.theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;
+        return this.fontSize(2);
       }
     },
     init: function() {
@@ -12,7 +14,7 @@
     _render: function() {
       var theme = this.chart.theme;
 
-      this.text.style.fontSize = theme.fontSize * MeteorChart.Constants.TYPOGRAPHIC_SCALE * 2;
+      this.text.style.fontSize = this.fontSize(2) + PX;
       this.text.style.fontFamily = theme.fontFamily;
       this.text.style.color = theme.primary;
       this.text.innerHTML = this.get('data');

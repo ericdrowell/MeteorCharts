@@ -1,8 +1,10 @@
 (function() {
+  var PX = 'px';
+  
   MeteorChart.Component.extend('Paginator', {
     defaults: {
       height: function() {
-        return this.chart.theme.fontSize;
+        return this.fontSize(0);
       }
     },
     init: function() {
@@ -66,7 +68,7 @@
         value: data.value,
         max: data.max
       });
-      text.style.fontSize = theme.fontSize;
+      text.style.fontSize = this.fontSize(0) + PX;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
 

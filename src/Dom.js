@@ -1,6 +1,7 @@
 (function() {
   var VENDORS = ['Webkit', 'Moz', 'MS', 'O'],
-      VENDORS_LENGTH = VENDORS.length;
+      VENDORS_LENGTH = VENDORS.length,
+      PX = 'px';
 
   MeteorChart.Dom = {
     createElement: function(tag) {
@@ -12,7 +13,7 @@
       return el;
     },
     getNumber: function(val) {
-      return (val.replace('px', '')) * 1;
+      return (val.replace(PX, '')) * 1;
     },
     getElementPosition: function(el) {
       var rect = el.getBoundingClientRect ? el.getBoundingClientRect() : { top: 0, left: 0 };

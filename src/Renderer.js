@@ -9,13 +9,13 @@ window.requestAnimFrame = (function(){
 })();
 
 (function() {
-  MeteorChart.Animation = {
+  MeteorChart.Renderer = {
     handlers: {},
     waiting: false,
-    queue: function(componentId, func) {
+    queue: function(id, func) {
       var that = this;
 
-      this.handlers[componentId] = func;
+      this.handlers[id] = func;
 
       if (!this.waiting) {
         setTimeout(function() {
@@ -26,7 +26,7 @@ window.requestAnimFrame = (function(){
       }
     },
     loop: function() {
-      var that = MeteorChart.Animation,
+      var that = MeteorChart.Renderer,
           handlers = that.handlers,
           arr = [], 
           key, n, len;
