@@ -1,5 +1,7 @@
-var OPTIONS_CONTAINER = document.getElementById('options');
-var LAYOUT, THEME;
+var OPTIONS_CONTAINER = document.getElementById('options'),
+    PAGE = 1,
+    LAYOUT = 'SparkChart',
+    THEME = 'CoteAzur';
 
 var config = {
   container: 'container',
@@ -82,20 +84,22 @@ var config = {
 };
 
 function renderLayouts() {
-  config.theme = THEME || MeteorChart.Themes.CoteAzur
+  config.theme = MeteorChart.Themes[THEME];
   for (var key in MeteorChart.Layouts) {
     var li = document.createElement('li');
     var title = document.createElement('h3');
-    var container = document.createElement('div');
+    var anchor = document.createElement('a');
     
     title.innerHTML = key;
-    
+    anchor.setAttribute('href', '#');
+    anchor.setAttribute('data-layout', key);
+
     li.appendChild(title);
-    li.appendChild(container);
+    li.appendChild(anchor);
     OPTIONS_CONTAINER.appendChild(li);
   
     
-    config.container = container;
+    config.container = anchor;
     config.layout = MeteorChart.Layouts[key];
   
     new MeteorChart(config);
@@ -103,24 +107,49 @@ function renderLayouts() {
 }
 
 function renderThemes() {
-  config.layout = LAYOUT || MeteorChart.Layouts.StandardLineChart
+  config.layout = MeteorChart.Layouts[LAYOUT];
   for (var key in MeteorChart.Themes) {
     var li = document.createElement('li');
     var title = document.createElement('h3');
-    var container = document.createElement('div');
+    var anchor = document.createElement('a');
     
     title.innerHTML = key;
-    
+    anchor.setAttribute('href', '#');
+
     li.appendChild(title);
-    li.appendChild(container);
+    li.appendChild(anchor);
     OPTIONS_CONTAINER.appendChild(li);
   
     
-    config.container = container;
+    config.container = anchor;
     config.theme = MeteorChart.Themes[key];
   
     new MeteorChart(config);
   }
 }
 
-renderLayouts();
+$(function() {
+  $('#content').on('click', function(evt) {
+    var $target = $(evt.target);
+    
+    // if clicking on steps
+    if ($target.closest('#steps a').length) {
+      evt.preventDefault(); 
+      PAGE = $target.closest('#steps a').data('page');
+    }
+    
+    // if clicking on a chart
+    else if ($target.closest('#options > li > a').length) {
+      evt.preventDefault();
+      LAYOUT = $target.closest('#options > li > a').data('layout') || LAYOUT;
+    }
+    
+    console.log('===== STATE =====');
+    console.log('PAGE  = ' + PAGE);
+    console.log('LAYOUT = ' + LAYOUT);
+    console.log('THEME = ' + THEME);
+  });
+  renderLayouts();
+});
+
+

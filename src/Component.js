@@ -128,7 +128,7 @@
       if (power === undefined) {
         power = 0;
       }
-      return this.chart.theme.fontSize * Math.pow(MeteorChart.Constants.TYPOGRAPHIC_SCALE, power);
+      return Math.round(this.chart.theme.fontSize * Math.pow(MeteorChart.Constants.TYPOGRAPHIC_SCALE, power));
     }
   };
 
