@@ -1,6 +1,6 @@
 {
   "name": "MeteorCharts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "devDependencies": {
     "grunt-cli": "0.1.13",
     "grunt": "0.4.2",
