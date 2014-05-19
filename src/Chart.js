@@ -15,7 +15,7 @@ var MeteorChart;
     this.set('style', config.style);
 
     this.id = config.id;
-    this.layout = config.layout(this);
+    this.layout = config.layout;
     this.theme = config.theme;
     this._components = config.components || {};
     this.components = [];
@@ -36,7 +36,7 @@ var MeteorChart;
     MeteorChart.Dom.dummy.className = 'dom-dummy';
     this.content.appendChild(MeteorChart.Dom.dummy);
 
-    layoutComponents = this.layout.components;
+    layoutComponents = this.layout;
     len = layoutComponents.length;
 
     // init components

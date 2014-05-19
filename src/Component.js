@@ -12,7 +12,6 @@
 
     this._id = MeteorChart.idCounter++;
     this.attrs = {};
-    this.cache = {};
     this.chart = config.chart;
     this.className = config.type;
     this.id = config.id;
