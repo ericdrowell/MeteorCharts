@@ -1,4 +1,4 @@
-var OPTIONS_CONTAINER = document.getElementById('options'),
+var $OPTIONS_CONTAINER = $('#options'),
     PAGE = 1,
     LAYOUT = 'SparkChart',
     THEME = 'CoteAzur';
@@ -86,20 +86,20 @@ var config = {
 function renderLayouts() {
   config.theme = MeteorChart.Themes[THEME];
   for (var key in MeteorChart.Layouts) {
-    var li = document.createElement('li');
-    var title = document.createElement('h3');
-    var anchor = document.createElement('a');
+    var $li = $(document.createElement('li'));
+    var $title =$(document.createElement('h3'));
+    var $anchor = $(document.createElement('a'));
     
-    title.innerHTML = key;
-    anchor.setAttribute('href', '#');
-    anchor.setAttribute('data-layout', key);
+    $title.html(key);
+    $anchor.attr('href', '#');
+    $anchor.data('layout', key);
 
-    li.appendChild(title);
-    li.appendChild(anchor);
-    OPTIONS_CONTAINER.appendChild(li);
+    $li.append($title);
+    $li.append($anchor);
+    $OPTIONS_CONTAINER.append($li);
   
     
-    config.container = anchor;
+    config.container = $anchor[0];
     config.layout = MeteorChart.Layouts[key];
   
     new MeteorChart(config);
@@ -109,22 +109,42 @@ function renderLayouts() {
 function renderThemes() {
   config.layout = MeteorChart.Layouts[LAYOUT];
   for (var key in MeteorChart.Themes) {
-    var li = document.createElement('li');
-    var title = document.createElement('h3');
-    var anchor = document.createElement('a');
+    var $li = $(document.createElement('li'));
+    var $title =$(document.createElement('h3'));
+    var $anchor = $(document.createElement('a'));
     
-    title.innerHTML = key;
-    anchor.setAttribute('href', '#');
+    $title.html(key);
+    $anchor.attr('href', '#');
+    $anchor.data('theme', key);
 
-    li.appendChild(title);
-    li.appendChild(anchor);
-    OPTIONS_CONTAINER.appendChild(li);
+    $li.append($title);
+    $li.append($anchor);
+    $OPTIONS_CONTAINER.append($li);
   
     
-    config.container = anchor;
+    config.container = $anchor[0];
     config.theme = MeteorChart.Themes[key];
   
     new MeteorChart(config);
+  }
+}
+
+function setPage(num) {
+  PAGE = num;
+  
+  // update steps
+  $('#steps').removeClass('page1');
+  $('#steps').removeClass('page2');
+  $('#steps').removeClass('page3');
+  
+  $('#steps').addClass('page' + num);
+  
+  // udpate options
+  $('#options').html('');
+  
+  switch(num) {
+    case 1: renderLayouts(); break;
+    case 2: renderThemes(); break;
   }
 }
 
@@ -135,19 +155,18 @@ $(function() {
     // if clicking on steps
     if ($target.closest('#steps a').length) {
       evt.preventDefault(); 
-      PAGE = $target.closest('#steps a').data('page');
+      setPage($target.closest('#steps a').data('page'));
     }
     
     // if clicking on a chart
     else if ($target.closest('#options > li > a').length) {
       evt.preventDefault();
       LAYOUT = $target.closest('#options > li > a').data('layout') || LAYOUT;
+      setPage(2);
+      
+      
     }
     
-    console.log('===== STATE =====');
-    console.log('PAGE  = ' + PAGE);
-    console.log('LAYOUT = ' + LAYOUT);
-    console.log('THEME = ' + THEME);
   });
   renderLayouts();
 });

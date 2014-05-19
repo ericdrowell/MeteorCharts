@@ -23,9 +23,6 @@ module.exports = function(grunt) {
     'src/themes/CherryCheescake.js',
     'src/themes/CoteAzur.js',
     'src/themes/Firenze.js',
-    'src/themes/Crochet.js',
-    'src/themes/HiCharts.js',
-    'src/themes/LinkedIn.js',
     'src/themes/Lollapalooza.js',
 
     // layouts
@@ -35,9 +32,7 @@ module.exports = function(grunt) {
     'src/layouts/LineChartWithHorizontalLines.js',
     'src/layouts/LineChartWithTitle.js',
     'src/layouts/LineChartWithPaginator.js',
-
     'src/layouts/LineChartWithBottomSlider.js',
-
     'src/layouts/LineChartWithZoom.js',
 
     // formatters

@@ -3,12 +3,13 @@
       DARK_RED = '#461f1e',
       LIGHT_YELLOW = '#f5e19b',
       CREME = '#fcf9e2',
-      LIGHT_BROWN = '#9f732f';
+      BROWN = '#9f732f',
+      LIGHT_BROWN = '#d5c299';
 
   MeteorChart.Themes.CherryCheescake = {
     background: CREME,
-    primary: LIGHT_BROWN,
-    secondary: MeteorChart.Color.hexToRgba(LIGHT_BROWN, 0.2),
+    primary: BROWN,
+    secondary: LIGHT_BROWN,
     fontFamily: 'Arial',
     fontSize: 12,
     padding: 20,
