@@ -17,6 +17,7 @@
       this.text.style.fontSize = this.fontSize(2) + PX;
       this.text.style.fontFamily = theme.fontFamily;
       this.text.style.color = theme.primary;
+      this.text.style.textAlign = 'center';
       this.text.innerHTML = this.get('data');
     }
   });

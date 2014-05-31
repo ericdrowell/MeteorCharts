@@ -44,6 +44,14 @@
 
       return width;
     },
+    getElementHeight: function(el) {
+      var width = 0;
+      this.dummy.innerHTML = el.innerHTML;
+      width = this.dummy.offsetHeight;
+      this.dummy.innerHTML = '';
+
+      return width;
+    },
     getTextWidth: function(text) {
       var width = 0;
       this.dummy.innerHTML = text;

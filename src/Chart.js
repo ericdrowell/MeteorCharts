@@ -23,9 +23,6 @@ var MeteorChart;
     // build content container
     this.content = document.createElement('div');
     this.content.className = 'meteorchart-content';
-    this.content.style.width = this.get('width') + 'px';
-    this.content.style.height = this.get('height') + 'px';
-    this.content.style.backgroundColor = this.theme.background;
     this.content.style.position = 'relative';
     this.content.style.overflow = 'hidden';
     this.container.appendChild(this.content);
@@ -162,7 +159,11 @@ var MeteorChart;
     render: function() {
       var components = this.components,
           len = components.length,
-          n, component
+          n, component;
+
+      this.content.style.width = this.get('width') + 'px';
+      this.content.style.height = this.get('height') + 'px';
+      this.content.style.backgroundColor = this.theme.background;
 
       for (n=0; n<len; n++) {
         components[n].render();

@@ -18,6 +18,7 @@ module.exports = function(grunt) {
     'src/components/GridLines.js',
     'src/components/Slider.js',
     'src/components/Paginator.js',
+    'src/components/Legend.js',
 
     // themes
     'src/themes/CherryCheescake.js',
@@ -33,7 +34,7 @@ module.exports = function(grunt) {
     'src/layouts/LineChartWithTitle.js',
     'src/layouts/LineChartWithPaginator.js',
     'src/layouts/LineChartWithBottomSlider.js',
-    'src/layouts/LineChartWithZoom.js',
+    'src/layouts/LineChartWithTopLegend.js',
 
     // formatters
     'src/formatters/Date.js',
