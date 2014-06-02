@@ -86,7 +86,7 @@
         this.attrs[attr] = val;
       }
     },
-    get: function(attr, context) {
+    get: function(attr) {
       var val = this.attrs[attr],
           ret;
 

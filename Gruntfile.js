@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     'src/Event.js',
     'src/Component.js',
     'src/Renderer.js',
+    'src/Mutator.js',
 
     // components
     'src/components/LineSeries.js',
@@ -28,7 +29,7 @@ module.exports = function(grunt) {
 
     // layouts
     'src/layouts/SparkChart.js',
-    'src/layouts/StandardLineChart.js',
+    'src/layouts/L4.js',
     'src/layouts/LineChartWithGrid.js',
     'src/layouts/LineChartWithHorizontalLines.js',
     'src/layouts/LineChartWithTitle.js',

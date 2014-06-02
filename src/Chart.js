@@ -3,11 +3,10 @@ var MeteorChart;
   MeteorChart = function(config) {
     var that = this,
         container = config.container,
-        layoutComponents, components, component, len, n, componentId, conf, componentData;
+        len, n, slot;
 
     this._id = MeteorChart.idCounter++;
     this.attrs= {};
-    this.deps = {};
     this.container = MeteorChart.Util._isString(container) ? document.getElementById(container) : container;
 
     this.set('width', config.width);
@@ -17,8 +16,9 @@ var MeteorChart;
     this.id = config.id;
     this.layout = config.layout;
     this.theme = config.theme;
-    this._components = config.components || {};
-    this.components = [];
+
+    this.slots = {};
+    this.components = {};
 
     // build content container
     this.content = document.createElement('div');
@@ -33,17 +33,15 @@ var MeteorChart;
     MeteorChart.Dom.dummy.className = 'dom-dummy';
     this.content.appendChild(MeteorChart.Dom.dummy);
 
-    layoutComponents = this.layout;
-    len = layoutComponents.length;
-
     // init components
-    for (n=0; n<len; n++) {
-      that._initComponent(layoutComponents[n]);
+    for (n=0, len = config.components.length; n<len; n++) {
+      slot = config.components[n];
+      that._initComponent(MeteorChart.Util.merge(config.layout[slot.slot], slot));
     }
 
     // add components to chart content
-    for (n=0, len=that.components.length; n<len; n++) {
-      that._addComponent(n);
+    for (n=0, len = config.components.length; n<len; n++) {
+      that._addComponent(this.components[config.components[n].id]);
     }
 
     // bind events
@@ -66,19 +64,16 @@ var MeteorChart;
       }
     },
     _initComponent: function(conf) {
-      var component;
-
       MeteorChart.log('init ' + conf.id);
 
-      this._decorateConf(conf);
-      component = new MeteorChart.Components[conf.type](conf);
+      // final decorations
+      conf.chart = this;
 
-      this.components[component.id] = component;
-      this.components.push(component);
+      var component = new MeteorChart.Components[conf.type](conf);
+      this.components[conf.id] = component;
+      this.slots[conf.slot] = component;
     },
-    _addComponent: function(n) {
-      var component = this.components[n];
-
+    _addComponent: function(component) {
       if (component.init) {
         component.init();
       }
@@ -114,19 +109,6 @@ var MeteorChart;
         that.fire('mouseout');
       });
     },
-    _decorateConf: function(conf) {
-      var id = conf.id,
-          component = this._components[id],
-          key;
-
-      if (component) {
-        for (key in component) {
-          conf[key] = component[key];
-        }
-      }
-
-      conf.chart = this;
-    },
     // TODO: this is copied and pasted from the component class.  Need to
     // extend some other higher level class
     fire: function(event, obj) {
@@ -157,16 +139,18 @@ var MeteorChart;
       this.container.innerHTML = '';
     },
     render: function() {
+      MeteorChart.log('chart render');
+
       var components = this.components,
           len = components.length,
-          n, component;
+          key, component;
 
       this.content.style.width = this.get('width') + 'px';
       this.content.style.height = this.get('height') + 'px';
       this.content.style.backgroundColor = this.theme.background;
 
-      for (n=0; n<len; n++) {
-        components[n].render();
+      for (key in components) {
+        components[key].render();
       }
     },
     // TODO: this is copied and pasted from the component class.  Need to
