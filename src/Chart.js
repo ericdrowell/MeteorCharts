@@ -139,7 +139,7 @@ var MeteorChart;
       this.container.innerHTML = '';
     },
     render: function() {
-      MeteorChart.log('chart render');
+      MeteorChart.log('render chart');
 
       var components = this.components,
           len = components.length,
@@ -150,6 +150,7 @@ var MeteorChart;
       this.content.style.backgroundColor = this.theme.background;
 
       for (key in components) {
+        MeteorChart.log('render ' + components[key].id);
         components[key].render();
       }
     },

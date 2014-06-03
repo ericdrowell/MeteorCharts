@@ -28,11 +28,10 @@ module.exports = function(grunt) {
     'src/themes/Lollapalooza.js',
 
     // layouts
-    'src/layouts/SparkChart.js',
+    'src/layouts/L1.js',
     'src/layouts/L4.js',
-    'src/layouts/LineChartWithGrid.js',
+    'src/layouts/L5.js',
     'src/layouts/LineChartWithHorizontalLines.js',
-    'src/layouts/LineChartWithTitle.js',
     'src/layouts/LineChartWithPaginator.js',
     'src/layouts/LineChartWithBottomSlider.js',
     'src/layouts/LineChartWithTopLegend.js',

@@ -25,13 +25,31 @@
         height: 290,
 
         theme: MeteorChart.Themes.Firenze,
-        layout: MeteorChart.Layouts.LineChartWithTitle,
+        layout: MeteorChart.Layouts.L5,
 
-        components: {
-          title: {
+        components: [
+          {
+            slot: 0,
+            type: 'Title',
+            id: 'title',
             data: 'Awesome Blossom Possum'
           },
-          lineSeries: {
+          {
+            slot: 1,
+            type: 'Axis',
+            id: 'yAxis',
+            orientation: 'vertical',
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxX();
+            },
+            style: {
+              increment: 100
+            }
+          },
+          {
+            slot: 2,
+            type: 'LineSeries',
+            id: 'lineSeries',
             data: {
               series: [
                 {
@@ -56,15 +74,10 @@
               ]
             }
           },
-          xAxis: {
-            data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxX();
-            },
-            style: {
-              increment: 100
-            }
-          },
-          yAxis: {
+          {
+            slot: 3,
+            type: 'Axis',
+            id: 'xAxis',
             data: function() {
               return this.chart.components.lineSeries.getViewportMinMaxY();
             },
@@ -72,7 +85,7 @@
               increment: 100
             }
           }
-        }
+        ]
       });
 
 

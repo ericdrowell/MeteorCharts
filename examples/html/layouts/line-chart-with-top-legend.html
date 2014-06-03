@@ -26,16 +26,35 @@
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.LineChartWithTopLegend,
+        layout: MeteorChart.Layouts.L5,
 
         // set components data and styles
-        components: {
-          legend: {
+        components: [
+          {
+            slot: 0,
+            type: 'Legend',
+            id: 'legend',
+            align: 'right',
             data: function() {
               return this.chart.components.lineSeries.get('data'); 
             }
           },
-          lineSeries: {
+          {
+            slot: 1,
+            type: 'Axis',
+            id: 'yAxis',
+            orientation: 'vertical',
+            data: function() {
+              return this.chart.components.lineSeries.getViewportMinMaxY();
+            },
+            style: {
+              increment: 100
+            }
+          },
+          {
+            slot: 2,
+            type: 'LineSeries',
+            id: 'lineSeries',
             data: {
               series: [
                 {
@@ -58,23 +77,18 @@
               ]
             }
           },
-          xAxis: {
+          {
+            slot: 3,
+            type: 'Axis',
+            id: 'xAxis',
             data: function() {
               return this.chart.components.lineSeries.getViewportMinMaxX();
             },
             style: {
               increment: 100
             }
-          },
-          yAxis: {
-            data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxY();
-            },
-            style: {
-              increment: 100
-            }
           }
-        }
+        ]
       });
 
       console.log(chart);

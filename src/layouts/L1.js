@@ -1,5 +1,11 @@
 (function() {
-  MeteorChart.Layouts.SparkChart = [
+  /**
+   * L1 LAYOUT
+   * +---+
+   * | 0 |
+   * +---+
+   */
+  MeteorChart.Layouts.L1 = [
     {
       id: 'lineSeries',
       type: 'LineSeries',

@@ -50,14 +50,6 @@
           },
           {
             slot: 1,
-            type: 'GridLines',
-            id: 'horizontalGridLines',
-            data: function() {
-              return this.chart.components.yAxis.getLabelOffsets();
-            }
-          },
-          {
-            slot: 1,
             type: 'LineSeries',
             id: 'lineSeries',
             data: {
@@ -92,7 +84,7 @@
               return this.chart.components.lineSeries.getViewportMinMaxY();
             },
             style: {
-              increment: 100
+              increment: 50
             }
           }
         ]

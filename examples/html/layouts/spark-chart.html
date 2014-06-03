@@ -23,13 +23,17 @@
         height: 50,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.SparkChart,
+        layout: MeteorChart.Layouts.L1,
 
         style: {
           padding: 10
         },
-        components: {
-          lineSeries: {
+
+        components: [
+          {
+            slot: 0,
+            type: 'LineSeries',
+            id: 'lineSeries',
             data: {
               series: [
                 {
@@ -54,7 +58,7 @@
               ]
             }
           }
-        }
+        ]
       });
 
 

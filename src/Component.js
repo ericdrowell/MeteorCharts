@@ -38,6 +38,9 @@
   };
 
   MeteorChart.Component.prototype = {
+    defaults: {
+      align: 'left'
+    },
     render: function() {
       var that = this;
 
@@ -58,10 +61,11 @@
           that._render();
         }
 
-        that.content.style.left =   that.get('x') + PX;
-        that.content.style.top =    that.get('y') + PX;
-        that.content.style.width =  that.get('width') + PX;
-        that.content.style.height = that.get('height') + PX;
+        that.content.style.textAlign = that.get('align');
+        that.content.style.left =      that.get('x') + PX;
+        that.content.style.top =       that.get('y') + PX;
+        that.content.style.width =     that.get('width') + PX;
+        that.content.style.height =    that.get('height') + PX;
       });
     },
 
