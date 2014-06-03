@@ -12,8 +12,7 @@
   MeteorChart.Layouts.L5 = [ 
     // slot 0
     {
-      id: 'title',
-      type: 'Title',
+      orientation: 'horizontal',
       x: function() {
         return this.chart.padding();
       },
@@ -26,6 +25,7 @@
     },
     // slot 1
     {
+      orientation: 'vertical',
       x: function() {
         return this.chart.padding();
       },
@@ -60,6 +60,7 @@
     },
     // slot 3
     {
+      orientation: 'horizontal',
       x: function() {
         return this.chart.slots[2].get('x');
       },

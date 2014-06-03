@@ -31,10 +31,9 @@ module.exports = function(grunt) {
     'src/layouts/L1.js',
     'src/layouts/L4.js',
     'src/layouts/L5.js',
-    'src/layouts/LineChartWithHorizontalLines.js',
+    'src/layouts/L7.js',
     'src/layouts/LineChartWithPaginator.js',
     'src/layouts/LineChartWithBottomSlider.js',
-    'src/layouts/LineChartWithTopLegend.js',
 
     // formatters
     'src/formatters/Date.js',

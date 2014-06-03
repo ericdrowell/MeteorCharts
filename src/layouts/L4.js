@@ -10,6 +10,7 @@
   MeteorChart.Layouts.L4 = [  
     // slot 0
     {
+      orientation: 'vertical',
       x: function() {
         return this.chart.padding();
       },
@@ -38,6 +39,7 @@
     },
     // slot 2
     {
+      orienation: 'horizontal',
       x: function() {
         return this.chart.slots[1].get('x');
       },
