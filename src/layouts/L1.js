@@ -1,14 +1,12 @@
 (function() {
   /**
    * L1 LAYOUT
-   * +---+
-   * | 0 |
-   * +---+
+   * +-------+
+   * |   0   |
+   * +-------+
    */
   MeteorChart.Layouts.L1 = [
     {
-      id: 'lineSeries',
-      type: 'LineSeries',
       x: function () {
         return this.chart.padding();
       },

@@ -18,7 +18,6 @@ module.exports = function(grunt) {
     'src/components/Tooltip.js',
     'src/components/GridLines.js',
     'src/components/Slider.js',
-    'src/components/Paginator.js',
     'src/components/Legend.js',
 
     // themes
@@ -29,11 +28,12 @@ module.exports = function(grunt) {
 
     // layouts
     'src/layouts/L1.js',
+    'src/layouts/L2.js',
+    'src/layouts/L3.js',
     'src/layouts/L4.js',
     'src/layouts/L5.js',
+    'src/layouts/L6.js',
     'src/layouts/L7.js',
-    'src/layouts/LineChartWithPaginator.js',
-    'src/layouts/LineChartWithBottomSlider.js',
 
     // formatters
     'src/formatters/Date.js',
