@@ -12,10 +12,10 @@
     {
       orientation: 'vertical',
       x: function() {
-        return this.chart.padding();
+        return this.chart.get('style').padding;
       },
       y: function() {
-        return this.chart.padding();
+        return this.chart.get('style').padding;
       },
       height: function() {
         return this.chart.slots[1].get('height');
@@ -24,17 +24,17 @@
     // slot 1
     {
       x: function() {
-        return this.chart.slots[0].get('width') + (this.chart.padding() * 2);
+        return this.chart.slots[0].get('width') + (this.chart.get('style').padding * 2);
       },
       y: function() {
-        return this.chart.padding();
+        return this.chart.get('style').padding;
       },
       width: function() {
-        return this.chart.get('width') - this.chart.slots[0].get('width') - (this.chart.padding() * 3);
+        return this.chart.get('width') - this.chart.slots[0].get('width') - (this.chart.get('style').padding * 3);
       },
       height: function() {
         var slots = this.chart.slots;
-        return this.chart.get('height') - (this.chart.padding() * 3) - slots[2].get('height');
+        return this.chart.get('height') - (this.chart.get('style').padding * 3) - slots[2].get('height');
       }
     },
     // slot 2
@@ -45,7 +45,7 @@
       },
       y: function() {
         var slots = this.chart.slots;
-        return slots[1].get('y') + slots[1].get('height') + this.chart.padding();
+        return slots[1].get('y') + slots[1].get('height') + this.chart.get('style').padding;
       },
       width: function() {
         return this.chart.slots[1].get('width');

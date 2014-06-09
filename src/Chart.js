@@ -60,7 +60,9 @@ var MeteorChart;
   MeteorChart.prototype = {
     defaults: {
       style: function() {
-        return {};
+        return {
+          padding: this.theme.padding
+        };
       }
     },
     _initComponent: function(conf) {
@@ -178,26 +180,7 @@ var MeteorChart;
       else {
         return val;
       }
-    },
-    // render helpers
-
-    /**
-     * @param {Integer} [factor] can be -2, -1, 0, 1, 2, or 3.  0 is the base value.
-     * bigger numbers are larger font sizes, and smaller numbers are smaller font sizes
-     */
-    padding: function(power) {
-      var padding = this.get('style').padding;
-
-      if (padding === undefined) {
-        padding = this.theme.padding;
-      }
-
-      if (power === undefined) {
-        power = 0;
-      }
-
-      return padding * Math.pow(MeteorChart.Constants.PADDING_SCALE, power); 
-    },
+    }
   };
 
   MeteorChart.version = '@@version';
@@ -207,8 +190,7 @@ var MeteorChart;
   MeteorChart.Themes = {};
 
   MeteorChart.Constants = {
-    TYPOGRAPHIC_SCALE: 1.4,
-    PADDING_SCALE: 2
+    TYPOGRAPHIC_SCALE: 1.4
   };
 
   // global properties

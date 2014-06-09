@@ -18,7 +18,7 @@
     _render: function() {
       var chart = this.chart,
           theme = chart.theme,
-          data = this.get('data').series,
+          data = this.get('data'),
           len = data.length,
           n, ser;
 

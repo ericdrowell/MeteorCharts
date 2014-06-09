@@ -26,19 +26,9 @@
         height: 290,
 
         theme: MeteorChart.Themes.CoteAzur,
-        layout: MeteorChart.Layouts.L6,
+        layout: MeteorChart.Layouts.L4,
 
-        // set components data and styles
         components: [
-          {
-            slot: 3,
-            type: 'Legend',
-            id: 'legend',
-            orientation: 'vertical',
-            data: function() {
-              return this.chart.components.lineSeries.get('data'); 
-            }
-          },
           {
             slot: 0,
             type: 'Axis',
