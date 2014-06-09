@@ -39,10 +39,7 @@
             type: 'Axis',
             id: 'yAxis',
             data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxX();
-            },
-            style: {
-              increment: 100
+              return [-100, 0, 100, 200];
             }
           },
           {
@@ -74,10 +71,7 @@
             type: 'Axis',
             id: 'xAxis',
             data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxY();
-            },
-            style: {
-              increment: 100
+              return [-100, 0, 100, 200, 300];
             }
           }
         ]

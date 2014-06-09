@@ -34,7 +34,7 @@
             type: 'Axis',
             id: 'yAxis',
             data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxY();
+              return [30, 40, 50, 60, 70, 80, 90, 100]
             },
             style: {
               increment: 100
@@ -42,25 +42,16 @@
           },
           {
             slot: 1,
-            type: 'LineSeries',
-            id: 'lineSeries',
+            type: 'BarSeries',
+            id: 'barSeries',
             data: [
               {
                 title: 'Series 1',
-                points: [
-                  -100, -100,
-                  100, 100,
-                  200, 50
-                ]
-              },
-              {
-                title: 'Series 2',
-                points: [
-                  0, 100,
-                  100, 200,
-                  200, 150,
-                  300, 200
-                ]
+                values: {
+                  'Texas': 50,
+                  'California': 100,
+                  'Florida': 30
+                }
               }
             ]
           },
@@ -69,10 +60,7 @@
             type: 'Axis',
             id: 'xAxis',
             data: function() {
-              return this.chart.components.lineSeries.getViewportMinMaxX();
-            },
-            style: {
-              increment: 100
+              return ['Texas', 'California', 'Florida']
             }
           }
         ]

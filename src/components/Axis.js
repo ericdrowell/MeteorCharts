@@ -34,23 +34,25 @@
       var that = this,
           chart = this.chart,
           data = this.get('data'),
+          len = data.length,
           style = this.get('style'),
-          min = data.min,
-          max = data.max,
+          min = data[0],
+          max = data[len - 1],
           diff = max - min,
           scale = (this.get('orientation') === 'vertical' ? this.get('height') : this.get('width')) / diff,
-          increment = style.increment,
-          val = this._getFirstValue(),
-          offset = (val - min) * scale,
-          formatter = style.formatter || MeteorChart.Formatters.Number;
+          formatter = style.formatter || MeteorChart.Formatters.Number,
+          n, val, offset;
 
-      func(offset, formatter.short(val, min, max));
-      val += increment;
+      for (n=0; n<len; n++) {
+        val = data[n];
 
-      while (val <= max) {
-        offset += increment * scale;
-        func(offset, formatter.short(val, min, max));
-        val += increment;
+        if (this.get('orientation') === 'vertical') {
+          offset = (val - min) * scale;
+        }
+        else {
+          offset = (val - min) * scale;
+        }
+        func(offset, formatter.short(val, min, max)); 
       }
     },
     getLabelOffsets: function() {
