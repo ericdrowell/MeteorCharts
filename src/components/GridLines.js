@@ -16,18 +16,16 @@
           context = this.context,
           width = this.get('width'),
           height = this.get('height'),
-          n, offset, len;
+          key, offset;
 
       if (data) {
-        len = data.length;
-
         this.canvas.width = this.get('width');
         this.canvas.height = this.get('height');
         context.clearRect(0, 0, width, height);
         context.strokeStyle = this.chart.theme.secondary;
 
-        for (n=0; n<len; n++) {
-          offset = data[n];
+        for (key in data) {
+          offset = data[key].offset;
           context.beginPath();
           
           if (orientation === 'horizontal') {

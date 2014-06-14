@@ -19,6 +19,7 @@ module.exports = function(grunt) {
     'src/components/GridLines.js',
     'src/components/Slider.js',
     'src/components/Legend.js',
+    'src/components/BarSeries.js',
 
     // themes
     'src/themes/CherryCheescake.js',
@@ -37,7 +38,8 @@ module.exports = function(grunt) {
 
     // formatters
     'src/formatters/Date.js',
-    'src/formatters/Number.js'
+    'src/formatters/Number.js',
+    'src/formatters/String.js'
   ];
 
   var coreSourceFiles = [
