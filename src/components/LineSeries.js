@@ -14,7 +14,8 @@
       this._bind();
     },
     _render: function() {
-      var series = this.get('data'),
+      var data = this.get('data'),
+          series = data,
           len = series.length,
           context = this.context,
           zoomX = this.get('zoomX'),
@@ -23,7 +24,7 @@
 
       //MeteorChart.log('render ' + this.id)
 
-      this._setMinMaxScale();
+      this._setScale();
 
       // render
       context.clearRect(0, 0, this.get('width'), this.get('height'));
@@ -40,7 +41,7 @@
         context.scale(this.scaleX, this.scaleY * -1);
         context.scale(zoomX, zoomY);
         // commenting the line below fixes zoom
-        context.translate(this.minX * -1, this.minY * -1);
+        context.translate(this.get('viewport').minX * -1, this.get('viewport').minY * -1);
         context.translate(this.get('width') / (this.scaleX * -2), this.get('height') / (this.scaleY * -2));
 
         context.beginPath();
@@ -75,108 +76,6 @@
         this.get('data').push(ser);
       }
     },
-    getPointsMinMax: function(points) {
-      var minX = Infinity,
-          minY = Infinity,
-          maxX = Infinity * -1,
-          maxY = Infinity * -1,
-          len = points.length,
-          n, x, y;
-
-      for (n=0; n<len; n+=2) {
-        point = points[n];
-        x = points[n];
-        y = points[n+1];
-        minX = Math.min(minX, x);
-        minY = Math.min(minY, y);
-        maxX = Math.max(maxX, x);
-        maxY = Math.max(maxY, y);
-      } 
-
-      return {
-        minX: minX,
-        minY: minY,
-        maxX: maxX,
-        maxY: maxY
-      };
-    },
-    getMinMax: function() {
-      var series = this.get('data'),
-          minX = Infinity,
-          minY = Infinity,
-          maxX = Infinity * -1,
-          maxY = Infinity * -1,
-          len = series.length,
-          n, viewport;
-
-      for (n=0; n<len; n++) {
-        viewport = this.getPointsMinMax(series[n].points);
-        minX = Math.min(minX, viewport.minX);
-        minY = Math.min(minY, viewport.minY);
-        maxX = Math.max(maxX, viewport.maxX);
-        maxY = Math.max(maxY, viewport.maxY);
-      } 
-
-      return {
-        minX: minX,
-        minY: minY,
-        maxX: maxX,
-        maxY: maxY
-      };
-    },
-    getViewportMinMaxX: function() {
-      return {
-        min: this.getViewportMinX(),
-        max: this.getViewportMaxX()
-      }
-    },
-    getViewportMinMaxY: function() {
-      return {
-        min: this.getViewportMinY(),
-        max: this.getViewportMaxY()
-      }
-    },
-    getViewportMinX: function() {
-      var zoomX = this.get('zoomX'),
-          minMax = this.getMinMax(),
-          minX = minMax.minX,
-          maxX = minMax.maxX,
-          range = maxX - minX,
-          viewportRange = range / zoomX;
-
-      return minX + ((range - viewportRange) / 2);
-    },
-    getViewportMinY: function() {
-      var zoomY = this.get('zoomY'),
-          minMax = this.getMinMax(),
-          minY = minMax.minY,
-          maxY = minMax.maxY,
-          range = maxY - minY,
-          viewportRange = range / zoomY;
-
-      return minY + ((range - viewportRange) / 2);
-    },
-    getViewportMaxX: function() {
-      var zoomX = this.get('zoomX'),
-          minMax = this.getMinMax(),
-          minX = minMax.minX,
-          maxX = minMax.maxX,
-          range = maxX - minX,
-          viewportRange = range / zoomX;
-
-      return minX + viewportRange + ((range - viewportRange) / 2);
-    },
-    getViewportMaxY: function() {
-      var zoomY = this.get('zoomY'),
-          minMax = this.getMinMax(),
-          minY = minMax.minY,
-          maxY = minMax.maxY,
-          range = maxY - minY,
-          viewportRange = range / zoomY;
-
-      return minY + viewportRange + ((range - viewportRange) / 2);
-    },
-
     /*
      * convert data to chart coords
      */
@@ -187,10 +86,10 @@
       }; 
     },
     dataToChartX: function(x) {
-      return (x - this.minX) * this.scaleX;
+      return (x - this.get('viewport').minX) * this.scaleX;
     },
     dataToChartY: function(y) {
-      return this.get('height') - ((y - this.minY) * this.scaleY);
+      return this.get('height') - ((y - this.get('viewport').minY) * this.scaleY);
     },
 
     /*
@@ -203,15 +102,16 @@
       };
     },
     chartToDataX: function(x) {
-      return ((x - this.get('x')) / this.scaleX) + this.minX;
+      return ((x - this.get('x')) / this.scaleX) + this.get('viewport').minX;
     },
     chartToDataY:function(y) {
-      return this.minY - (((y - this.get('y')) - this.get('height')) / this.scaleY);
+      return this.get('viewport').minY - (((y - this.get('y')) - this.get('height')) / this.scaleY);
     },
 
     getSeriesNearestPointX: function(n, x) {
       var dataX = this.chartToDataX(x),
-          series = this.get('data'),
+          data = this.get('data'),
+          series = data,
           shortestDistance = Infinity,
           nearestPoint = null,
           i, ser, points, point, pointsLen, title, chartDistance;
@@ -251,7 +151,8 @@
     },
     getNearestPoint: function(x, y) {
       var dataPos = this.chartToData(x, y),
-          series = this.get('data'),
+          data = this.get('data'),
+          series = data,
           len = series.length,
           shortestDistance = Infinity,
           nearestPoint = null,
@@ -304,8 +205,8 @@
     _bind: function() {
 
     },
-    _setMinMaxScale: function() {
-      var viewport = this.getMinMax(),
+    _setScale: function() {
+      var viewport = this.get('viewport'),
           width = this.get('width'),
           height = this.get('height'),
           diffX = viewport.maxX - viewport.minX,
@@ -313,10 +214,6 @@
           scaleX = width / diffX,
           scaleY = height / diffY;
 
-      this.minX = viewport.minX;
-      this.minY = viewport.minY;
-      this.maxX = viewport.maxX;
-      this.maxY = viewport.maxY;
       this.scaleX = scaleX;
       this.scaleY = scaleY;
     }
