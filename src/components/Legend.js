@@ -4,15 +4,15 @@
   MeteorChart.Component.extend('Legend', {
     defaults: {
       width: function() {
-        return MeteorChart.Dom.getElementWidth(this.list);
+        return MeteorChart.DOM.getElementWidth(this.list);
       },
       height: function() {
-        return MeteorChart.Dom.getElementHeight(this.list);
+        return MeteorChart.DOM.getElementHeight(this.list);
       },
       orientation: 'horizontal'
     },
     init: function() {
-      this.list = MeteorChart.Dom.createElement('ol');
+      this.list = MeteorChart.DOM.createElement('ol');
       this.content.appendChild(this.list);
     },
     _render: function() {
@@ -39,9 +39,9 @@
           theme = chart.theme,
           style = this.get('style'),
           orientation = this.get('orientation'),
-          item = MeteorChart.Dom.createElement('li'),
-          box =  MeteorChart.Dom.createElement('span'),
-          text = MeteorChart.Dom.createElement('span');
+          item = MeteorChart.DOM.createElement('li'),
+          box =  MeteorChart.DOM.createElement('span'),
+          text = MeteorChart.DOM.createElement('span');
 
       if (orientation === 'horizontal') {
         item.style.display = 'inline-block';
@@ -61,7 +61,7 @@
       box.style.height = this.fontSize() + PX;
       box.style.display = 'inline-block';
       box.style.verticalAlign = 'top';
-      MeteorChart.Dom.setBorderRadius(box, 3);
+      MeteorChart.DOM.setBorderRadius(box, 3);
 
       text.innerHTML = str;
       text.style.display = 'inline-block';

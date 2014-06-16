@@ -16,12 +16,12 @@
       // the cursor from time to time
       this.content.style.pointerEvents = 'none';
 
-      this.tooltip = MeteorChart.Dom.createElement('div');
+      this.tooltip = MeteorChart.DOM.createElement('div');
 
-      this.tooltipTitle = MeteorChart.Dom.createElement('h2');
+      this.tooltipTitle = MeteorChart.DOM.createElement('h2');
       this.tooltipTitle.style.whiteSpace = 'nowrap';
 
-      this.tooltipContent = MeteorChart.Dom.createElement('p');
+      this.tooltipContent = MeteorChart.DOM.createElement('p');
       this.tooltipContent.style.whiteSpace = 'nowrap';
 
       this.tooltip.appendChild(this.tooltipTitle);

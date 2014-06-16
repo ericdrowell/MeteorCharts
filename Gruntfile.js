@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     'src/Chart.js',
     'src/Util.js',
     'src/Color.js',
-    'src/Dom.js',
+    'src/DOM.js',
     'src/SVG.js',
     'src/Event.js',
     'src/Component.js',

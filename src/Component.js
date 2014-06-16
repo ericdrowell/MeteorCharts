@@ -33,7 +33,7 @@
     this.content.style.position = 'absolute';
     this.content.style.opacity = 0;
 
-    MeteorChart.Dom.addVendorStyle(this.content, 'transition', 'opacity 0.3s ease-in-out');
+    MeteorChart.DOM.addVendorStyle(this.content, 'transition', 'opacity 0.3s ease-in-out');
     //this.content.style.WebkitTransition = 'opacity 1s';
   };
 
@@ -48,7 +48,7 @@
       that.content.style.opacity = 1;
 
       MeteorChart.Renderer.queue(this.chart._id + '-' + this._id, function() {
-        //MeteorChart.log(this.id + ' render');
+        MeteorChart.log('render ' + that.id);
 
         // reset width and height so that they do not affect component
         // width and height methods

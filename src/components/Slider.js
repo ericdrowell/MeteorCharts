@@ -21,12 +21,12 @@
       }
 
       if (showTrack) {
-        this.track = MeteorChart.Dom.createElement('div');
+        this.track = MeteorChart.DOM.createElement('div');
         this.track.style.position = 'absolute';
         this.content.appendChild(this.track);
       }
       
-      this.handle = MeteorChart.Dom.createElement('span');
+      this.handle = MeteorChart.DOM.createElement('span');
       this.handle.style.display = 'inline-block';
       this.handle.style.position = 'absolute';
       this.content.appendChild(this.handle);
@@ -52,7 +52,7 @@
       handle.style.width = handleWidth + PX;
       handle.style.height = handleHeight + PX;
       handle.style.backgroundColor = style.handleFill || theme.secondary;
-      MeteorChart.Dom.setBorderRadius(handle, Math.min(handleWidth, handleHeight) / 2);
+      MeteorChart.DOM.setBorderRadius(handle, Math.min(handleWidth, handleHeight) / 2);
 
       // track
       if (showTrack) {
@@ -107,11 +107,11 @@
         evt.preventDefault();
 
         if (orientation === 'horizontal') {
-          startOffsetPos = MeteorChart.Dom.getNumber(handle.style.left);
+          startOffsetPos = MeteorChart.DOM.getNumber(handle.style.left);
           startPointerPos = evt.clientX;
         }
         else {
-          startOffsetPos = MeteorChart.Dom.getNumber(handle.style.top);
+          startOffsetPos = MeteorChart.DOM.getNumber(handle.style.top);
           startPointerPos = evt.clientY;
         }
 

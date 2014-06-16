@@ -28,10 +28,10 @@ var MeteorChart;
     this.container.appendChild(this.content);
 
     // initialize renderer dummies
-    MeteorChart.Dom.dummy = MeteorChart.Dom.createElement('div');
-    MeteorChart.Dom.dummy.style.display = 'inline-block';
-    MeteorChart.Dom.dummy.className = 'dom-dummy';
-    this.content.appendChild(MeteorChart.Dom.dummy);
+    MeteorChart.DOM.dummy = MeteorChart.DOM.createElement('div');
+    MeteorChart.DOM.dummy.style.display = 'inline-block';
+    MeteorChart.DOM.dummy.className = 'dom-dummy';
+    this.content.appendChild(MeteorChart.DOM.dummy);
 
     // init components
     for (n=0, len = config.components.length; n<len; n++) {
@@ -88,7 +88,7 @@ var MeteorChart;
           content = this.content;
 
       content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        var contentPos = MeteorChart.Dom.getElementPosition(content);
+        var contentPos = MeteorChart.DOM.getElementPosition(content);
 
         that.fire('mousemove', {
           x: evt.clientX - contentPos.x,
@@ -152,7 +152,6 @@ var MeteorChart;
       this.content.style.backgroundColor = this.theme.background;
 
       for (key in components) {
-        MeteorChart.log('render ' + components[key].id);
         components[key].render();
       }
     },

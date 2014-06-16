@@ -73,7 +73,12 @@
                   }
                 ]
               }
-            ]
+            ],
+            style: function() {
+              return {
+                barWidth: 100
+              };
+            }
           },
           {
             slot: 2,
@@ -81,6 +86,11 @@
             id: 'xAxis',
             data: function() {
               return ['Texas', 'California', 'Florida']
+            },
+            style: function() {
+              return {
+                padding: this.chart.components.barSeries.get('style').barWidth / 2
+              };
             }
           }
         ]

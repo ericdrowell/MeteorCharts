@@ -8,7 +8,7 @@
       }
     },
     init: function() {
-      this.text = MeteorChart.Dom.createElement('h2');
+      this.text = MeteorChart.DOM.createElement('h2');
       this.content.appendChild(this.text);
     },
     _render: function() {

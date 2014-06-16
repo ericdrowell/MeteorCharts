@@ -3,7 +3,7 @@
       VENDORS_LENGTH = VENDORS.length,
       PX = 'px';
 
-  MeteorChart.Dom = {
+  MeteorChart.DOM = {
     createElement: function(tag) {
       var el = document.createElement(tag);
 
