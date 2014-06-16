@@ -25,11 +25,11 @@ var chart = new MeteorChart({
       },
       data: [
         {
-          title: 'Texas',
+          title: 'Califonia',
           bars: [
             {
               title: 'Republicans',
-              value: 90
+              value: 10
             }
           ]
         },
@@ -38,7 +38,7 @@ var chart = new MeteorChart({
           bars: [
             {
               title: 'Republicans',
-              value: 10
+              value: 50
             }
           ]
         },
@@ -50,11 +50,29 @@ var chart = new MeteorChart({
               value: 60
             }
           ]
+        },
+        {
+          title: 'New York',
+          bars: [
+            {
+              title: 'Republicans',
+              value: 10
+            }
+          ]
+        },
+        {
+          title: 'Texas',
+          bars: [
+            {
+              title: 'Republicans',
+              value: 90
+            }
+          ]
         }
       ],
       style: function() {
         return {
-          barWidth: 100
+          barWidth: (this.get('width') / 5) - 10
         };
       }
     },
@@ -63,7 +81,7 @@ var chart = new MeteorChart({
       type: 'Axis',
       id: 'xAxis',
       data: function() {
-        return ['Texas', 'California', 'Florida']
+        return ['California', 'Colorado', 'Florida', 'New York', 'Texas']
       },
       style: function() {
         return {
