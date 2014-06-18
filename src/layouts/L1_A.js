@@ -1,11 +1,11 @@
 (function() {
   /**
-   * L1 LAYOUT
+   * L1_A LAYOUT
    * +-------+
    * |   0   |
    * +-------+
    */
-  MeteorChart.Layouts.L1 = [
+  MeteorChart.Layouts.L1_A = [
     {
       x: function () {
         return this.chart.get('style').padding;

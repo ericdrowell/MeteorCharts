@@ -27,13 +27,11 @@ module.exports = function(grunt) {
     'src/themes/Lollapalooza.js',
 
     // layouts
-    'src/layouts/L1.js',
-    'src/layouts/L2.js',
-    'src/layouts/L3.js',
-    'src/layouts/L4.js',
-    'src/layouts/L5.js',
-    'src/layouts/L6.js',
-    'src/layouts/L7.js',
+    'src/layouts/L1_A.js',
+    'src/layouts/L4_A.js',
+    'src/layouts/L4_B.js',
+    'src/layouts/L4_C.js',
+    'src/layouts/L4_D.js',
 
     // formatters
     'src/formatters/Date.js',

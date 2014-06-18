@@ -4,7 +4,7 @@ var chart = new MeteorChart({
   height: 250,
 
   theme: MeteorChart.Themes.Firenze,
-  layout: MeteorChart.Layouts.L5,
+  layout: MeteorChart.Layouts.L4_B,
 
   components: [
     {

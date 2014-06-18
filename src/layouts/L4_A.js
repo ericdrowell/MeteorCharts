@@ -1,13 +1,13 @@
 (function() {
   /**
-   * L4 LAYOUT
+   * L4_A LAYOUT
    * +---+---+
    * | 0 | 1 |
    * +---+---+
    * | X | 2 |
    * +---+---+
    */
-  MeteorChart.Layouts.L4 = [  
+  MeteorChart.Layouts.L4_A = [  
     // slot 0
     {
       orientation: 'vertical',

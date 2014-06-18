@@ -1,6 +1,6 @@
 (function() {
   /**
-   * L5 LAYOUT
+   * L4_B LAYOUT
    * +-------+
    * |   0   |
    * +---+---+
@@ -9,7 +9,7 @@
    * | X | 3 |
    * +---+---+
    */
-  MeteorChart.Layouts.L5 = [ 
+  MeteorChart.Layouts.L4_B = [ 
     // slot 0
     {
       orientation: 'horizontal',
