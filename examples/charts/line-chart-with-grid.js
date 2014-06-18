@@ -1,7 +1,7 @@
 var chart = new MeteorChart({
   container: 'container',
-  width: 500,
-  height: 290,
+  width: 445,
+  height: 250,
 
   theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.L4,
@@ -43,25 +43,7 @@ var chart = new MeteorChart({
         minY: -100,
         maxY: 200,
       },
-      data: [
-        {
-          title: 'Series 1',
-          points: [
-            -100, -100,
-            100, 100,
-            200, 50
-          ]
-        },
-        {
-          title: 'Series 2',
-          points: [
-            0, 100,
-            100, 200,
-            200, 150,
-            300, 200
-          ]
-        }
-      ]
+      data: LINE_SERIES_DATA
     },
     {
       slot: 2,

@@ -52,7 +52,7 @@
         }
 
         context.restore();
-        context.strokeStyle = MeteorChart.Color.getDataColor(this.chart.theme.data, n);
+        context.strokeStyle = this.getDataColor(n);
         context.lineWidth = 2;
         context.stroke();
       } 

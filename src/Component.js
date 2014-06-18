@@ -72,6 +72,10 @@
     destroy: function() {
 
     },
+    getDataColor: function(n) {
+      var colors = this.chart.theme.data;
+      return colors[n % colors.length];
+    },
     hide: function() {
       this.content.style.opacity = 0;
     },

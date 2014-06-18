@@ -13,32 +13,33 @@
       var data = this.get('data'),
           theme = this.chart.theme,
           dataLen = data.length,
-          offset = 0,
+          groupOffset = 0,
           style = this.get('style'),
           barWidth = style.barWidth,
-          n, group, bars, barsLen, i, color, increment;
+          // TODO: currently counting the number of bars for the first group
+          // there's probably a better way
+          barsLen = data[0].bars.length,
+          n, group, bars, barsLen, i, color, increment, barOffset;
 
       this.content.innerHTML = '';
 
       if (this.get('orientation') === 'vertical') {
-        increment = (this.get('width') - barWidth) / (dataLen - 1);  
-      }
-      else {
-        increment = (this.get('height') - barWidth) / (dataLen - 1);
+        increment = (this.get('width') - (barWidth * barsLen)) / (dataLen - 1);  
       }
 
       for (n=0; n<dataLen; n++) {
         group = data[n];
-        bars = group.bars;
+        bars = group.bars; 
         barsLen = bars.length;
-
-
+        
         for (i=0; i<barsLen; i++) {
           bar = bars[i];
-          this._addBar(offset, bar, theme.data[i]);
-          offset += increment;
+          barOffset = barWidth * i;
+          this._addBar(groupOffset + barOffset, bar, this.getDataColor(i));
 
         }
+
+        groupOffset += increment;
       }
     },
     _addBar: function(offset, bar, color) {
@@ -52,9 +53,9 @@
       if (this.get('orientation') === 'vertical') {
         length = this.get('height') * bar.value / range;
         div.style.bottom = '0';
-        div.style.left = offset + 'px';
-        div.style.width = barWidth + 'px';
-        div.style.height = length + 'px';
+        div.style.left = Math.floor(offset) + 'px';
+        div.style.width = Math.floor(barWidth) + 'px';
+        div.style.height = Math.floor(length) + 'px';
       }
       else {
 

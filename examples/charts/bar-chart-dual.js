@@ -29,7 +29,11 @@ var chart = new MeteorChart({
           bars: [
             {
               title: 'Republicans',
-              value: 10
+              value: 5
+            },
+            {
+              title: 'Democrats',
+              value: 95
             }
           ]
         },
@@ -39,6 +43,10 @@ var chart = new MeteorChart({
             {
               title: 'Republicans',
               value: 15
+            },
+            {
+              title: 'Democrats',
+              value: 85
             }
           ]
         },
@@ -48,6 +56,10 @@ var chart = new MeteorChart({
             {
               title: 'Republicans',
               value: 25
+            },
+            {
+              title: 'Democrats',
+              value: 75
             }
           ]
         },
@@ -57,6 +69,10 @@ var chart = new MeteorChart({
             {
               title: 'Republicans',
               value: 45
+            },
+            {
+              title: 'Democrats',
+              value: 55
             }
           ]
         },
@@ -66,13 +82,17 @@ var chart = new MeteorChart({
             {
               title: 'Republicans',
               value: 85
+            },
+            {
+              title: 'Democrats',
+              value: 15
             }
           ]
         }
       ],
       style: function() {
         return {
-          barWidth: (this.get('width') / 5) - 10
+          barWidth: (this.get('width') / 10) - 10
         };
       }
     },
@@ -85,7 +105,7 @@ var chart = new MeteorChart({
       },
       style: function() {
         return {
-          padding: this.chart.components.barSeries.get('style').barWidth / 2
+          padding: this.chart.components.barSeries.get('style').barWidth
         };
       }
     }

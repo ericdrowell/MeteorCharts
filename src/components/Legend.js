@@ -27,12 +27,8 @@
 
       for (n=0; n<len; n++) {
         ser = data[n];
-        this._addItem(MeteorChart.Color.getDataColor(this.chart.theme.data, n), ser.title, n === len - 1);
+        this._addItem(this.getDataColor(n), ser.title, n === len - 1);
       }
-
-      
-
-
     },
     _addItem: function(color, str, last) {
       var chart = this.chart,
