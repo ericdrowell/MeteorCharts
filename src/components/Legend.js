@@ -26,8 +26,8 @@
       this.list.innerHTML = '';
 
       for (n=0; n<len; n++) {
-        ser = data[n];
-        this._addItem(this.getDataColor(n), ser.title, n === len - 1);
+        title = data[n];
+        this._addItem(this.getDataColor(n), title, n === len - 1);
       }
     },
     _addItem: function(color, str, last) {
@@ -57,7 +57,6 @@
       box.style.height = this.fontSize() + PX;
       box.style.display = 'inline-block';
       box.style.verticalAlign = 'top';
-      MeteorChart.DOM.setBorderRadius(box, 3);
 
       text.innerHTML = str;
       text.style.display = 'inline-block';

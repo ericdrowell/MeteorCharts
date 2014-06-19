@@ -25,6 +25,8 @@ var MeteorChart;
     this.content.className = 'meteorchart-content';
     this.content.style.position = 'relative';
     this.content.style.overflow = 'hidden';
+    this.content.style.opacity = 0;
+    MeteorChart.DOM.addVendorStyle(this.content, 'transition', 'opacity 0.3s ease-in-out');
     this.container.appendChild(this.content);
 
     // initialize renderer dummies
@@ -53,8 +55,10 @@ var MeteorChart;
     // need to delay chart render in order for the css transition
     // fade in to be applied
     setTimeout(function() {
-      that.render();
+      that._show();
     }, 50);
+
+    that.render();
   };
 
   MeteorChart.prototype = {
@@ -64,6 +68,10 @@ var MeteorChart;
           padding: this.theme.padding
         };
       }
+    },
+    _show: function() {
+      // make component visible and trigger css transition
+      this.content.style.opacity = 1;
     },
     _initComponent: function(conf) {
       MeteorChart.log('init ' + conf.id);

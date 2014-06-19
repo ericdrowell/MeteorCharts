@@ -17,59 +17,21 @@ var chart = new MeteorChart({
     },
     {
       slot: 1,
+      type: 'GridLines',
+      id: 'horizontalGridLines',
+      data: function() {
+        return this.chart.components.yAxis.getLabelInfo();
+      }
+    },
+    {
+      slot: 1,
       type: 'BarSeries',
       id: 'barSeries',
       viewport: {
         min: 0,
         max: 100
       },
-      data: [
-        {
-          title: 'Califonia',
-          bars: [
-            {
-              title: 'Republicans',
-              value: 10
-            }
-          ]
-        },
-        {
-          title: 'New York',
-          bars: [
-            {
-              title: 'Republicans',
-              value: 15
-            }
-          ]
-        },
-        {
-          title: 'Colorado',
-          bars: [
-            {
-              title: 'Republicans',
-              value: 25
-            }
-          ]
-        },
-        {
-          title: 'Florida',
-          bars: [
-            {
-              title: 'Republicans',
-              value: 45
-            }
-          ]
-        },
-        {
-          title: 'Texas',
-          bars: [
-            {
-              title: 'Republicans',
-              value: 85
-            }
-          ]
-        }
-      ],
+      data: BAR_SERIES_DATA,
       style: function() {
         return {
           barWidth: (this.get('width') / 5) - 10

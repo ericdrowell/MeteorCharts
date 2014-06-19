@@ -4,9 +4,18 @@ var chart = new MeteorChart({
   height: 250,
 
   theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.L4_A,
+  layout: MeteorChart.Layouts.L4_C,
 
   components: [
+    {
+      slot: 3,
+      type: 'Legend',
+      id: 'legend',
+      orientation: 'vertical',
+      data: function() {
+        return ['Republicans', 'Democrats'];
+      }
+    },
     {
       slot: 0,
       type: 'Axis',

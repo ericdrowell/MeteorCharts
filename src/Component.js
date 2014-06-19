@@ -31,10 +31,6 @@
     this.content.setAttribute('data-component-id', this.id);
     this.content.style.display = 'inline-block';
     this.content.style.position = 'absolute';
-    this.content.style.opacity = 0;
-
-    MeteorChart.DOM.addVendorStyle(this.content, 'transition', 'opacity 0.3s ease-in-out');
-    //this.content.style.WebkitTransition = 'opacity 1s';
   };
 
   MeteorChart.Component.prototype = {
@@ -43,9 +39,6 @@
     },
     render: function() {
       var that = this;
-
-      // make component visible and trigger css transition
-      that.content.style.opacity = 1;
 
       MeteorChart.Renderer.queue(this.chart._id + '-' + this._id, function() {
         MeteorChart.log('render ' + that.id);

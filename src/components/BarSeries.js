@@ -35,7 +35,7 @@
         for (i=0; i<barsLen; i++) {
           bar = bars[i];
           barOffset = barWidth * i;
-          this._addBar(groupOffset + barOffset, bar, this.getDataColor(i));
+          this._addBar(groupOffset + barOffset - i, bar, this.getDataColor(i));
 
         }
 

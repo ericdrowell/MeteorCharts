@@ -14,7 +14,7 @@ var chart = new MeteorChart({
       id: 'legend',
       orientation: 'vertical',
       data: function() {
-        return this.chart.components.lineSeries.get('data'); 
+        return ['Series 1', 'Series 2'];
       }
     },
     {

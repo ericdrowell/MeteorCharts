@@ -4,11 +4,20 @@ var chart = new MeteorChart({
   height: 250,
 
   theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.L4_A,
+  layout: MeteorChart.Layouts.L4_B,
 
   components: [
     {
       slot: 0,
+      type: 'Legend',
+      id: 'legend',
+      align: 'right',
+      data: function() {
+        return ['Republicans', 'Democrats'];
+      }
+    },
+    {
+      slot: 1,
       type: 'Axis',
       id: 'yAxis',
       data: function() {
@@ -16,7 +25,7 @@ var chart = new MeteorChart({
       }
     },
     {
-      slot: 1,
+      slot: 2,
       type: 'GridLines',
       id: 'horizontalGridLines',
       data: function() {
@@ -24,7 +33,7 @@ var chart = new MeteorChart({
       }
     },
     {
-      slot: 1,
+      slot: 2,
       type: 'BarSeries',
       id: 'barSeries',
       viewport: {
@@ -39,7 +48,7 @@ var chart = new MeteorChart({
       }
     },
     {
-      slot: 2,
+      slot: 3,
       type: 'Axis',
       id: 'xAxis',
       data: function() {

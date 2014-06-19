@@ -51,7 +51,7 @@
 
       for (n=0; n<len; n++) {
         val = data[n];
-        func(offset, formatter.short(val)); 
+        func(Math.floor(offset), formatter.short(val)); 
         offset += increment;
       }
     },
