@@ -4,8 +4,9 @@ var chart = new MeteorChart({
   height: 250,
 
   theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.L4_A,
+  layout: MeteorChart.Layouts.L4_D,
 
+  // set components data and options
   components: [
     {
       slot: 0,
@@ -25,7 +26,7 @@ var chart = new MeteorChart({
         minY: -100,
         maxY: 200,
       },
-      data: LINE_SERIES_DATA
+      data: @@LINE_SERIES_DATA
     },
     {
       slot: 2,
@@ -33,6 +34,15 @@ var chart = new MeteorChart({
       id: 'xAxis',
       data: function() {
         return [-100, 0, 100, 200, 300];
+      }
+    },
+    {
+      slot: 3,
+      type: 'Slider',
+      id: 'slider',
+      style: {
+        handleWidth: 40,
+        handleHeight: 10
       }
     }
   ]

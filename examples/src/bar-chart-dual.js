@@ -31,10 +31,10 @@ var chart = new MeteorChart({
         min: 0,
         max: 100
       },
-      data: BAR_SERIES_DUAL_DATA,
+      data: @@BAR_SERIES_DUAL_DATA,
       style: function() {
         return {
-          barWidth: (this.get('width') / 10) - 10
+          barWidth: (this.get('width') / 12)
         };
       }
     },

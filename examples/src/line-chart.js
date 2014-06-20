@@ -6,7 +6,6 @@ var chart = new MeteorChart({
   theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.L4_A,
 
-  // set components data and options
   components: [
     {
       slot: 0,
@@ -14,14 +13,6 @@ var chart = new MeteorChart({
       id: 'yAxis',
       data: function() {
         return [-100, 0, 100, 200];
-      }
-    },
-    {
-      slot: 1,
-      type: 'GridLines',
-      id: 'horizontalGridLines',
-      data: function() {
-        return this.chart.components.yAxis.getLabelInfo();
       }
     },
     {
@@ -34,7 +25,7 @@ var chart = new MeteorChart({
         minY: -100,
         maxY: 200,
       },
-      data: LINE_SERIES_DATA   
+      data: @@LINE_SERIES_DATA
     },
     {
       slot: 2,

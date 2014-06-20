@@ -1,5 +1,6 @@
 *.sublime-project
 *.sublime-workspace
 /dist
+/examples/dist
 /node_modules
 /docs

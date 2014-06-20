@@ -19,10 +19,9 @@ var chart = new MeteorChart({
     {
       slot: 1,
       type: 'GridLines',
-      id: 'verticalGridLines',
-      orientation: 'vertical',
+      id: 'horizontalGridLines',
       data: function() {
-        return this.chart.components.xAxis.getLabelInfo();
+        return this.chart.components.yAxis.getLabelInfo();
       }
     },
     {
@@ -35,7 +34,7 @@ var chart = new MeteorChart({
         minY: -100,
         maxY: 200,
       },
-      data: LINE_SERIES_DATA
+      data: @@LINE_SERIES_DATA   
     },
     {
       slot: 2,

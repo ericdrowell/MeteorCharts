@@ -83,7 +83,8 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      build: ['dist/*']
+      dist: ['dist/*'],
+      examples: ['examples/dist/*']
     },
     jshint: {
       options: {
@@ -104,6 +105,22 @@ module.exports = function(grunt) {
         files: [{
           src: ['dist/meteorcharts-dev.js'],
           dest: 'dist/meteorcharts-dev.js'
+        }]
+      },
+      examples: {
+        options: {
+          variables: {
+            LINE_SERIES_DATA: grunt.file.read('examples/data/line-series-data.json'),
+            BAR_SERIES_DATA: grunt.file.read('examples/data/bar-series-data.json'),
+            BAR_SERIES_DUAL_DATA: grunt.file.read('examples/data/bar-series-dual-data.json')
+          },
+          prefix: '@@'
+        },
+
+        files: [{
+          expand: true, flatten: true,
+          src: ['examples/src/*.js'],
+          dest: 'examples/dist/'
         }]
       },
       prodSrcLicense: {
@@ -154,19 +171,15 @@ module.exports = function(grunt) {
           spawn: false,
         },
       }
-    }
-    /*
-    shell: {
-      test: {
-        command: 'mocha -u tdd -d -v -R spec test/build/meteorcharts-test.js',
-        options: {
-          callback: function(err, stdout, stderr, cb) {
-            console.log(stdout);
-            cb();
-          }
-        }
+    },
+    copy: {
+      examples: {
+        flatten: true,
+        expand: true,
+        src: ['examples/src/*'],
+        dest: 'examples/dist/',
       }
-    }*/
+    }
   };
 
   grunt.initConfig(config);
@@ -179,10 +192,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Tasks
-  grunt.registerTask('dev', ['clean', 'concat:dev', 'concat:dev2', 'replace:dev']);
-  grunt.registerTask('full', ['clean', 'concat:prodSrc', 'uglify', 'concat:prodSrcLicense', 'concat:prodMinLicense', 'replace:prodSrcLicense', 'replace:prodMinLicense']);
+  grunt.registerTask('dev', ['clean:dist', 'concat:dev', 'concat:dev2', 'replace:dev']);
+  grunt.registerTask('examples', ['clean:examples', 'copy:examples:', 'replace:examples']);
+  grunt.registerTask('full', ['clean:dist', 'concat:prodSrc', 'uglify', 'concat:prodSrcLicense', 'concat:prodMinLicense', 'replace:prodSrcLicense', 'replace:prodMinLicense']);
   grunt.registerTask('test', ['simplemocha']);
   grunt.registerTask('devtest', ['dev', 'test']);
 

@@ -9,18 +9,15 @@ var chart = new MeteorChart({
   components: [
     {
       slot: 0,
-      type: 'BarSeries',
-      id: 'barSeries',
+      type: 'LineSeries',
+      id: 'lineSeries',
       viewport: {
-        min: 0,
-        max: 100
+        minX: -100,
+        maxX: 300,
+        minY: -100,
+        maxY: 200,
       },
-      data: BAR_SERIES_DATA,
-      style: function() {
-        return {
-          barWidth: (this.get('width') / 5) - 10
-        };
-      }
+      data: @@LINE_SERIES_DATA
     }
   ]
 });

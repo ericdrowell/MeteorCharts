@@ -6,23 +6,13 @@ var chart = new MeteorChart({
   theme: MeteorChart.Themes.CoteAzur,
   layout: MeteorChart.Layouts.L4_A,
 
-  // set components data and options
   components: [
     {
       slot: 0,
       type: 'Axis',
       id: 'yAxis',
       data: function() {
-        return [-100, 0, 100, 200];
-      }
-    },
-    {
-      slot: 1,
-      type: 'GridLines',
-      id: 'verticalGridLines',
-      orientation: 'vertical',
-      data: function() {
-        return this.chart.components.xAxis.getLabelInfo();
+        return [0, 20, 40, 60, 80, 100]
       }
     },
     {
@@ -35,22 +25,30 @@ var chart = new MeteorChart({
     },
     {
       slot: 1,
-      type: 'LineSeries',
-      id: 'lineSeries',
+      type: 'BarSeries',
+      id: 'barSeries',
       viewport: {
-        minX: -100,
-        maxX: 300,
-        minY: -100,
-        maxY: 200,
+        min: 0,
+        max: 100
       },
-      data: LINE_SERIES_DATA
+      data: @@BAR_SERIES_DATA,
+      style: function() {
+        return {
+          barWidth: (this.get('width') / 5) - 10
+        };
+      }
     },
     {
       slot: 2,
       type: 'Axis',
       id: 'xAxis',
       data: function() {
-        return [-100, 0, 100, 200, 300];
+        return ['California', 'New York', 'Colorado', 'Florida', 'Texas']
+      },
+      style: function() {
+        return {
+          padding: this.chart.components.barSeries.get('style').barWidth / 2
+        };
       }
     }
   ]

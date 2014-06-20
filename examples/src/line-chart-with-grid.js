@@ -4,21 +4,12 @@ var chart = new MeteorChart({
   height: 250,
 
   theme: MeteorChart.Themes.CoteAzur,
-  layout: MeteorChart.Layouts.L4_B,
+  layout: MeteorChart.Layouts.L4_A,
 
-  // set components data and styles
+  // set components data and options
   components: [
     {
       slot: 0,
-      type: 'Legend',
-      id: 'legend',
-      align: 'right',
-      data: function() {
-        return ['Series 1', 'Series 2'];
-      }
-    },
-    {
-      slot: 1,
       type: 'Axis',
       id: 'yAxis',
       data: function() {
@@ -26,7 +17,24 @@ var chart = new MeteorChart({
       }
     },
     {
-      slot: 2,
+      slot: 1,
+      type: 'GridLines',
+      id: 'verticalGridLines',
+      orientation: 'vertical',
+      data: function() {
+        return this.chart.components.xAxis.getLabelInfo();
+      }
+    },
+    {
+      slot: 1,
+      type: 'GridLines',
+      id: 'horizontalGridLines',
+      data: function() {
+        return this.chart.components.yAxis.getLabelInfo();
+      }
+    },
+    {
+      slot: 1,
       type: 'LineSeries',
       id: 'lineSeries',
       viewport: {
@@ -35,10 +43,10 @@ var chart = new MeteorChart({
         minY: -100,
         maxY: 200,
       },
-      data: LINE_SERIES_DATA
+      data: @@LINE_SERIES_DATA
     },
     {
-      slot: 3,
+      slot: 2,
       type: 'Axis',
       id: 'xAxis',
       data: function() {

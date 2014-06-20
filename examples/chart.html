@@ -16,9 +16,10 @@
     <script src="../../../lib/three.min.js"></script>
     <script src="../../../lib/moment.min.js"></script>
     <script src="../../../dist/meteorcharts-dev.js"></script>
-    <script src="data/line-series-data.js"></script>
-    <script src="data/bar-series-data.js"></script>
-    <script src="data/bar-series-dual-data.js"></script>
+
+    <script>
+      var CHARTS = [];
+    </script>
 
     <script type="text/javascript">
       var QUERY_STRING = function () {
@@ -47,7 +48,7 @@
 
       var js = document.createElement('script');
       js.type = 'text/javascript';
-      js.src = 'charts/' + QUERY_STRING.chart + '.js';
+      js.src = 'dist/' + QUERY_STRING.chart + '.js';
       document.body.appendChild(js);
     </script>
   </body>
