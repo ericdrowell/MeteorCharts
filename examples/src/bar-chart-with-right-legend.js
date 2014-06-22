@@ -1,9 +1,18 @@
 CHARTS.push({
-  id: 'bar-chart',
-  name: 'Bar Chart',
+  id: 'bar-chart-with-right-legend',
+  name: 'Bar Chart with Right Legend',
   config: {
-    layout: MeteorChart.Layouts.L4_A,
+    layout: MeteorChart.Layouts.L4_C,
     components: [
+      {
+        slot: 3,
+        type: 'Legend',
+        id: 'legend',
+        orientation: 'vertical',
+        data: function() {
+          return ['Republicans', 'Democrats'];
+        }
+      },
       {
         slot: 0,
         type: 'Axis',
@@ -28,10 +37,10 @@ CHARTS.push({
           min: 0,
           max: 100
         },
-        data: DATA.BAR_SERIES,
+        data: DATA.BAR_DUAL_SERIES,
         style: function() {
           return {
-            barWidth: (this.get('width') / 5) - 10
+            barWidth: (this.get('width') / 12)
           };
         }
       },
@@ -44,10 +53,10 @@ CHARTS.push({
         },
         style: function() {
           return {
-            padding: this.chart.components.barSeries.get('style').barWidth / 2
+            padding: this.chart.components.barSeries.get('style').barWidth
           };
         }
       }
     ]
   }
-}); 
+});

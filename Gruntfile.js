@@ -47,6 +47,33 @@ module.exports = function(grunt) {
     'src/Formatter.js'
   ];
 
+  var allChartFiles = [
+    'examples/src/charts.js',
+
+    // data
+    'examples/data/line-series-data.js',
+    'examples/data/bar-series-data.js',
+    'examples/data/bar-dual-series-data.js',
+
+    // line charts
+    'examples/src/line-chart.js',
+    'examples/src/line-spark-chart.js',
+    'examples/src/line-chart-with-top-legend.js',
+    'examples/src/line-chart-with-right-legend.js',
+    'examples/src/line-chart-with-title.js',
+    'examples/src/line-chart-with-grid.js',
+    'examples/src/line-chart-with-horizontal-lines.js',
+    'examples/src/line-chart-with-vertical-lines.js',
+    'examples/src/line-chart-with-bottom-slider.js',
+
+    // bar charts
+    'examples/src/bar-chart.js',
+    'examples/src/bar-spark-chart.js',
+    'examples/src/bar-dual-chart.js',
+    'examples/src/bar-chart-with-top-legend.js',
+    'examples/src/bar-chart-with-right-legend.js'
+  ];
+
   // Project configuration.
   var config = {
     pkg: grunt.file.readJSON('package.json'),
@@ -73,7 +100,11 @@ module.exports = function(grunt) {
       prodMinLicense: {
         src: ['license.js', 'dist/meteorcharts-v<%= pkg.version %>.min.js'],
         dest: 'dist/meteorcharts-v<%= pkg.version %>.min.js'
-      }
+      },
+      examples: {
+        src: allChartFiles,
+        dest: 'examples/dist/all-charts.js'
+      },
     },
     uglify: {
       build: {
@@ -105,22 +136,6 @@ module.exports = function(grunt) {
         files: [{
           src: ['dist/meteorcharts-dev.js'],
           dest: 'dist/meteorcharts-dev.js'
-        }]
-      },
-      examples: {
-        options: {
-          variables: {
-            LINE_SERIES_DATA: grunt.file.read('examples/data/line-series-data.json'),
-            BAR_SERIES_DATA: grunt.file.read('examples/data/bar-series-data.json'),
-            BAR_SERIES_DUAL_DATA: grunt.file.read('examples/data/bar-series-dual-data.json')
-          },
-          prefix: '@@'
-        },
-
-        files: [{
-          expand: true, flatten: true,
-          src: ['examples/src/*.js'],
-          dest: 'examples/dist/'
         }]
       },
       prodSrcLicense: {
@@ -165,19 +180,11 @@ module.exports = function(grunt) {
     },
     watch: {
       src: {
-        files: ['src/**/*.js'],
-        tasks: ['dev'],
+        files: ['src/**/*.js', 'examples/**/*.js'],
+        tasks: ['dev', 'examples'],
         options: {
           spawn: false,
         },
-      }
-    },
-    copy: {
-      examples: {
-        flatten: true,
-        expand: true,
-        src: ['examples/src/*'],
-        dest: 'examples/dist/',
       }
     }
   };
@@ -196,7 +203,7 @@ module.exports = function(grunt) {
 
   // Tasks
   grunt.registerTask('dev', ['clean:dist', 'concat:dev', 'concat:dev2', 'replace:dev']);
-  grunt.registerTask('examples', ['clean:examples', 'copy:examples:', 'replace:examples']);
+  grunt.registerTask('examples', ['clean:examples', 'concat:examples']);
   grunt.registerTask('full', ['clean:dist', 'concat:prodSrc', 'uglify', 'concat:prodSrcLicense', 'concat:prodMinLicense', 'replace:prodSrcLicense', 'replace:prodMinLicense']);
   grunt.registerTask('test', ['simplemocha']);
   grunt.registerTask('devtest', ['dev', 'test']);

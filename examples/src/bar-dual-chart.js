@@ -1,6 +1,6 @@
 CHARTS.push({
-  id: 'bar-chart',
-  name: 'Bar Chart',
+  id: 'bar-dual-chart',
+  name: 'Bar Dual Chart',
   config: {
     layout: MeteorChart.Layouts.L4_A,
     components: [
@@ -28,10 +28,10 @@ CHARTS.push({
           min: 0,
           max: 100
         },
-        data: DATA.BAR_SERIES,
+        data: DATA.BAR_DUAL_SERIES,
         style: function() {
           return {
-            barWidth: (this.get('width') / 5) - 10
+            barWidth: (this.get('width') / 12)
           };
         }
       },
@@ -44,10 +44,10 @@ CHARTS.push({
         },
         style: function() {
           return {
-            padding: this.chart.components.barSeries.get('style').barWidth / 2
+            padding: this.chart.components.barSeries.get('style').barWidth
           };
         }
       }
     ]
   }
-}); 
+});

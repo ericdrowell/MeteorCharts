@@ -15,11 +15,9 @@
 
     <script src="../../../lib/three.min.js"></script>
     <script src="../../../lib/moment.min.js"></script>
+    <script src="../../../lib/underscore.js"></script>
     <script src="../../../dist/meteorcharts-dev.js"></script>
-
-    <script>
-      var CHARTS = [];
-    </script>
+    <script src="dist/all-charts.js"></script>
 
     <script type="text/javascript">
       var QUERY_STRING = function () {
@@ -46,10 +44,20 @@
       } ();
 
 
-      var js = document.createElement('script');
-      js.type = 'text/javascript';
-      js.src = 'dist/' + QUERY_STRING.chart + '.js';
-      document.body.appendChild(js);
+
+      // QUERY_STRING.chart
+      for (var n=0; n<CHARTS.length; n++) {
+        if (CHARTS[n].id === QUERY_STRING.chart) {
+          var config = _.clone(CHARTS[n].config);
+          config.container = 'container';
+          config.width = 445;
+          config.height = 250;
+          config.theme = MeteorChart.Themes.CoteAzur;
+
+          var chart = new MeteorChart(config);
+          break;
+        }
+      }
     </script>
   </body>
 </html>

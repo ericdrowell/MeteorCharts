@@ -1,11 +1,20 @@
 CHARTS.push({
-  id: 'bar-chart',
-  name: 'Bar Chart',
+  id: 'bar-chart-with-top-legend',
+  name: 'Bar Chart with Top Legend',
   config: {
-    layout: MeteorChart.Layouts.L4_A,
+  layout: MeteorChart.Layouts.L4_B,
     components: [
       {
         slot: 0,
+        type: 'Legend',
+        id: 'legend',
+        align: 'right',
+        data: function() {
+          return ['Republicans', 'Democrats'];
+        }
+      },
+      {
+        slot: 1,
         type: 'Axis',
         id: 'yAxis',
         data: function() {
@@ -13,7 +22,7 @@ CHARTS.push({
         }
       },
       {
-        slot: 1,
+        slot: 2,
         type: 'GridLines',
         id: 'horizontalGridLines',
         data: function() {
@@ -21,22 +30,22 @@ CHARTS.push({
         }
       },
       {
-        slot: 1,
+        slot: 2,
         type: 'BarSeries',
         id: 'barSeries',
         viewport: {
           min: 0,
           max: 100
         },
-        data: DATA.BAR_SERIES,
+        data: DATA.BAR_DUAL_SERIES,
         style: function() {
           return {
-            barWidth: (this.get('width') / 5) - 10
+            barWidth: (this.get('width') / 12)
           };
         }
       },
       {
-        slot: 2,
+        slot: 3,
         type: 'Axis',
         id: 'xAxis',
         data: function() {
@@ -44,10 +53,10 @@ CHARTS.push({
         },
         style: function() {
           return {
-            padding: this.chart.components.barSeries.get('style').barWidth / 2
+            padding: this.chart.components.barSeries.get('style').barWidth
           };
         }
       }
     ]
   }
-}); 
+});
