@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'line-chart-with-bottom-slider',
   name: 'Line Chart with Bottom Slider',
   config: {
-    layout: MeteorChart.Layouts.L4_D,
+    layout: 'L4_D',
     components: [
       {
         slot: 0,

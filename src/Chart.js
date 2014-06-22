@@ -14,7 +14,7 @@ var MeteorChart;
     this.set('style', config.style);
 
     this.id = config.id;
-    this.layout = config.layout;
+    this.layout = MeteorChart.Layouts[config.layout];
     this.theme = config.theme;
 
     this.slots = {};
@@ -38,7 +38,7 @@ var MeteorChart;
     // init components
     for (n=0, len = config.components.length; n<len; n++) {
       slot = config.components[n];
-      that._initComponent(MeteorChart.Util.merge(config.layout[slot.slot], slot));
+      that._initComponent(MeteorChart.Util.merge(this.layout[slot.slot], slot));
     }
 
     // add components to chart content

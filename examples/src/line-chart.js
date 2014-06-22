@@ -1,16 +1,8 @@
 CHARTS.push({
-  id: '',
-  name: '',
-  config: {
-
-  }
-}); 
-
-CHARTS.push({
   id: 'line-chart',
   name: 'Line Chart',
   config: {
-    layout: MeteorChart.Layouts.L4_A,
+    layout: 'L4_A',
     components: [
       {
         slot: 0,

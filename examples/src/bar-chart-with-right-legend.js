@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'bar-chart-with-right-legend',
   name: 'Bar Chart with Right Legend',
   config: {
-    layout: MeteorChart.Layouts.L4_C,
+    layout: 'L4_C',
     components: [
       {
         slot: 3,

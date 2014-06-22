@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'bar-spark-chart',
   name: 'Bar Spark Chart',
   config: {
-    layout: MeteorChart.Layouts.L1_A,
+    layout: 'L1_A',
     components: [
       {
         slot: 0,

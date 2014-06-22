@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'bar-chart',
   name: 'Bar Chart',
   config: {
-    layout: MeteorChart.Layouts.L4_A,
+    layout: 'L4_A',
     components: [
       {
         slot: 0,
