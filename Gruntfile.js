@@ -22,11 +22,13 @@ module.exports = function(grunt) {
 
     // themes
     'src/themes/BeachsideShopping.js',
+    'src/themes/BlackMath.js',
     'src/themes/CherryCheescake.js',
     'src/themes/CoteAzur.js',
     'src/themes/Dribble.js',
     'src/themes/Firenze.js',
     'src/themes/Lollapalooza.js',
+    'src/themes/OddEnd.js',
     
     // layouts
     'src/layouts/L1_A.js',
