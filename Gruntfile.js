@@ -41,39 +41,26 @@ module.exports = function(grunt) {
     'src/formatters/String.js'
   ];
 
-  var coreSourceFiles = [
-    // core
-    'src/Chart.js',
-    'src/Util.js',
-    'src/Component.js',
-    'src/Formatter.js'
-  ];
-
   var allChartFiles = [
     'examples/src/charts.js',
 
-    // data
-    'examples/data/line-series-data.js',
-    'examples/data/bar-series-data.js',
-    'examples/data/bar-dual-series-data.js',
-
     // line charts
-    'examples/src/line-chart.js',
-    'examples/src/line-spark-chart.js',
-    'examples/src/line-chart-with-top-legend.js',
-    'examples/src/line-chart-with-right-legend.js',
-    'examples/src/line-chart-with-title.js',
-    'examples/src/line-chart-with-grid.js',
-    'examples/src/line-chart-with-horizontal-lines.js',
-    'examples/src/line-chart-with-vertical-lines.js',
-    'examples/src/line-chart-with-bottom-slider.js',
+    'examples/dist/line-chart.js',
+    'examples/dist/line-spark-chart.js',
+    'examples/dist/line-chart-with-top-legend.js',
+    'examples/dist/line-chart-with-right-legend.js',
+    'examples/dist/line-chart-with-title.js',
+    'examples/dist/line-chart-with-grid.js',
+    'examples/dist/line-chart-with-horizontal-lines.js',
+    'examples/dist/line-chart-with-vertical-lines.js',
+    'examples/dist/line-chart-with-bottom-slider.js',
 
     // bar charts
-    'examples/src/bar-chart.js',
-    'examples/src/bar-spark-chart.js',
-    'examples/src/bar-dual-chart.js',
-    'examples/src/bar-chart-with-top-legend.js',
-    'examples/src/bar-chart-with-right-legend.js'
+    'examples/dist/bar-chart.js',
+    'examples/dist/bar-spark-chart.js',
+    'examples/dist/bar-dual-chart.js',
+    'examples/dist/bar-chart-with-top-legend.js',
+    'examples/dist/bar-chart-with-right-legend.js'
   ];
 
   // Project configuration.
@@ -138,6 +125,22 @@ module.exports = function(grunt) {
         files: [{
           src: ['dist/meteorcharts-dev.js'],
           dest: 'dist/meteorcharts-dev.js'
+        }]
+      },
+      examples: {
+        options: {
+          variables: {
+            LINE_SERIES_DATA: grunt.file.read('examples/data/line-series-data.js'),
+            BAR_SERIES_DATA: grunt.file.read('examples/data/bar-series-data.js'),
+            BAR_DUAL_SERIES_DATA: grunt.file.read('examples/data/bar-dual-series-data.js')
+          },
+          prefix: '@@'
+        },
+
+        files: [{
+          expand: true, flatten: true,
+          src: ['examples/src/*.js'],
+          dest: 'examples/dist/'
         }]
       },
       prodSrcLicense: {
@@ -205,7 +208,7 @@ module.exports = function(grunt) {
 
   // Tasks
   grunt.registerTask('dev', ['clean:dist', 'concat:dev', 'concat:dev2', 'replace:dev']);
-  grunt.registerTask('examples', ['clean:examples', 'concat:examples']);
+  grunt.registerTask('examples', ['clean:examples', 'replace:examples', 'concat:examples']);
   grunt.registerTask('full', ['clean:dist', 'concat:prodSrc', 'uglify', 'concat:prodSrcLicense', 'concat:prodMinLicense', 'replace:prodSrcLicense', 'replace:prodMinLicense']);
   grunt.registerTask('test', ['simplemocha']);
   grunt.registerTask('devtest', ['dev', 'test']);

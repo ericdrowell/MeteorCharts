@@ -37,7 +37,7 @@ CHARTS.push({
           min: 0,
           max: 100
         },
-        data: DATA.BAR_DUAL_SERIES,
+        data: @@BAR_DUAL_SERIES_DATA,
         style: function() {
           return {
             barWidth: (this.get('width') / 12)

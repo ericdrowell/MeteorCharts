@@ -1,7 +1,7 @@
 (function() {
   var RED = '#FF3800',
       GREEN = '#009393',
-      LIGHT_YELLOW = '#FFFEED',
+      LIGHT_YELLOW = '#FFFFFC',
       YELLOW = '#CBDED1',
       DARK_BLUE = '#00585F';
 

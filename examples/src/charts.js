@@ -1,2 +1,1 @@
-var CHARTS = [],
-    DATA = {};
+var CHARTS = [];

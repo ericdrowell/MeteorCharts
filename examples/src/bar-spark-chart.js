@@ -12,7 +12,7 @@ CHARTS.push({
           min: 0,
           max: 100
         },
-        data: DATA.BAR_SERIES,
+        data: @@BAR_SERIES_DATA,
         style: function() {
           return {
             barWidth: (this.get('width') / 5) - 10
@@ -21,4 +21,4 @@ CHARTS.push({
       }
     ]
   }
-}); 
+});

@@ -14,7 +14,7 @@ CHARTS.push({
           minY: -100,
           maxY: 200,
         },
-        data: DATA.LINE_SERIES
+        data: @@LINE_SERIES_DATA
       }
     ]
   }
