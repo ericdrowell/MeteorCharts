@@ -1,17 +1,17 @@
 (function() {
-  var RED = '#882405',
-      GREEN = '#598465',
-      LIGHT_YELLOW = '#feeda9',
-      ORANGE = '#f5b04e',
-      PERU = '#b77445';
+  var RED = '#8E2800',
+      GREEN = '#468966',
+      LIGHT_YELLOW = '#FFF0A5',
+      ORANGE = '#FFB03B',
+      SALMON = '#AC5A28';
 
   MeteorChart.Themes.Firenze = {
     background: RED,
     primary: LIGHT_YELLOW,
-    secondary: PERU,
+    secondary: SALMON,
     fontFamily: 'Arial',
     fontSize: 12,
     padding: 20,
-    data: [ORANGE]
+    data: [ORANGE, GREEN]
   };
 })();

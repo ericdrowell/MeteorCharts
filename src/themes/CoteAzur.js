@@ -1,13 +1,14 @@
 (function() {
-  var RED = '#eb5233',
-      GREEN = '#419091',
-      LIGHT_YELLOW = '#fffefb',
-      DARK_BLUE = '#31353d';
+  var RED = '#FF3800',
+      GREEN = '#009393',
+      LIGHT_YELLOW = '#FFFEED',
+      YELLOW = '#CBDED1',
+      DARK_BLUE = '#00585F';
 
   MeteorChart.Themes.CoteAzur = {
     background: LIGHT_YELLOW,
     primary: DARK_BLUE,
-    secondary: '#ccc',
+    secondary: YELLOW,
     fontFamily: 'Arial',
     fontSize: 12,
     padding: 20,

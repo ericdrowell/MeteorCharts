@@ -15,7 +15,7 @@ var MeteorChart;
 
     this.id = config.id;
     this.layout = MeteorChart.Layouts[config.layout];
-    this.theme = config.theme;
+    this.theme = MeteorChart.Themes[config.theme];
 
     this.slots = {};
     this.components = {};

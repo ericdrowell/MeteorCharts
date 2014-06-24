@@ -1,18 +1,17 @@
 (function() {
-  var RED = '#a9302e',
-      DARK_RED = '#461f1e',
-      LIGHT_YELLOW = '#f5e19b',
-      CREME = '#fcf9e2',
-      BROWN = '#9f732f',
-      LIGHT_BROWN = '#d5c299';
+  var RED = '#B9121B',
+      DARK_RED = '#4C1B1B',
+      LIGHT_BROWN = '#DEC49E',
+      CREME = '#FCFAE1',
+      BROWN = '#BD8D46';
 
   MeteorChart.Themes.CherryCheescake = {
     background: CREME,
-    primary: BROWN,
+    primary: DARK_RED,
     secondary: LIGHT_BROWN,
     fontFamily: 'Arial',
     fontSize: 12,
     padding: 20,
-    data: [RED]
+    data: [RED, BROWN]
   };
 })();

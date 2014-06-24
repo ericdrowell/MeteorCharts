@@ -1,14 +1,13 @@
 (function() {
-  var RED = '#9d3132',
-      ORANGE = '#cd7d39',
-      DARK_BLUE = '#0a2634',
-      LIGHT_YELLOW = '#efe5c0',
-      WHITE = '#ffffff',
-      GRAY = '#65726c';
+  var RED = '#AB1A25',
+      ORANGE = '#D97925',
+      DARK_BLUE = '#002635',
+      PEACH = '#EFE7BE',
+      GRAY = '#3C5657';
 
   MeteorChart.Themes.Lollapalooza = {
     background: DARK_BLUE,
-    primary: LIGHT_YELLOW,
+    primary: PEACH,
     secondary: GRAY,
     fontFamily: 'Arial',
     fontSize: 12,

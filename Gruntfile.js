@@ -21,11 +21,13 @@ module.exports = function(grunt) {
     'src/components/BarSeries.js',
 
     // themes
+    'src/themes/BeachsideShopping.js',
     'src/themes/CherryCheescake.js',
     'src/themes/CoteAzur.js',
+    'src/themes/Dribble.js',
     'src/themes/Firenze.js',
     'src/themes/Lollapalooza.js',
-
+    
     // layouts
     'src/layouts/L1_A.js',
     'src/layouts/L4_A.js',
