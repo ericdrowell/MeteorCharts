@@ -8,7 +8,6 @@
       this.canvas = document.createElement('canvas');
       this.context = this.canvas.getContext('2d');
 
-      this.content.style.overflow = 'hidden';
       this.content.appendChild(this.canvas);
 
       this._bind();
@@ -20,16 +19,26 @@
           context = this.context,
           zoomX = this.get('zoomX'),
           zoomY = this.get('zoomY'),
+          padding = this.chart.theme.padding,
+          canvasWidth = this.get('width') + (padding * 2),
+          canvasHeight = this.get('height') + (padding * 2),
           n, line, points, i, pointsLen, viewport;
 
       //MeteorChart.log('render ' + this.id)
 
+      console.log(padding)
+
       this._setScale();
 
       // render
-      context.clearRect(0, 0, this.get('width'), this.get('height'));
-      this.canvas.width = this.get('width');
-      this.canvas.height = this.get('height');
+      context.clearRect(0, 0, canvasWidth, canvasHeight);
+      this.canvas.width = canvasWidth;
+      this.canvas.height = canvasHeight;
+      this.canvas.style.marginLeft = '-' + padding + 'px';
+      this.canvas.style.marginTop = '-' + padding + 'px';
+
+      context.save();
+      context.translate(padding, padding);
 
       for (n=0; n<len; n++) {
         points = series[n].points;
@@ -54,8 +63,12 @@
         context.restore();
         context.strokeStyle = this.getDataColor(n);
         context.lineWidth = 2;
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
         context.stroke();
       } 
+
+      context.restore();
     },
     shift: function(num) {
       if (num === undefined) {

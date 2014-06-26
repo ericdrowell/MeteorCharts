@@ -40,7 +40,7 @@
           theme = this.chart.theme,
           handleWidth = style.handleWidth,
           handleHeight = style.handleHeight,
-          trackSize = 1,
+          trackSize = 2,
           showTrack = style.showTrack;
 
       // default

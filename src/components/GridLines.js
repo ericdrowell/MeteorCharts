@@ -1,5 +1,10 @@
 (function() {
   MeteorChart.Component.extend('GridLines', {
+    defaults: {
+      style: {
+        lineWidth: 2
+      }
+    },
     init: function() {
       this.canvas = document.createElement('canvas');
       this.context = this.canvas.getContext('2d');
@@ -16,13 +21,23 @@
           context = this.context,
           width = this.get('width'),
           height = this.get('height'),
+          padding = theme.padding,
+          canvasWidth = width + (padding * 2),
+          canvasHeight = height + (padding * 2),
           key, offset;
 
       if (data) {
-        this.canvas.width = this.get('width');
-        this.canvas.height = this.get('height');
+        this.canvas.width = canvasWidth;
+        this.canvas.height = canvasHeight;
+        this.canvas.style.marginLeft = '-' + padding + 'px';
+        this.canvas.style.marginTop = '-' + padding + 'px';
+
+        context.save();
+        context.translate(padding, padding);
         context.clearRect(0, 0, width, height);
         context.strokeStyle = this.chart.theme.secondary;
+        context.lineWidth = lineWidth;
+        context.lineCap = 'round';
 
         for (key in data) {
           offset = data[key].offset;
@@ -40,6 +55,8 @@
             context.stroke();
           } 
         }
+
+        context.restore();
       }
     }
   });

@@ -35,7 +35,8 @@
 
   MeteorChart.Component.prototype = {
     defaults: {
-      align: 'left'
+      align: 'left',
+      style: {}
     },
     render: function() {
       var that = this;
@@ -74,7 +75,7 @@
     },
     fire: function(event, obj) {
       var that = this;
-      MeteorChart.Event.fire.call(this, MeteorChart.Util.merge({
+      MeteorChart.Event.fire.call(this, MeteorChart.Util.extend({
           event: event,
           type: this.type,
           id: this.id
@@ -133,19 +134,10 @@
   };
 
   MeteorChart.Component.extend = function(type, methods) {
-    if (!methods.defaults) {
-      methods.defaults = {};
-    }
-
-    if (!methods.defaults.style) {
-      methods.defaults.style = {};
-    }
-
     MeteorChart.Components[type] = function(config) {
       MeteorChart.Component.call(this, config);
     };
 
-    MeteorChart.Components[type].prototype = methods;
-    MeteorChart.Util.extend(MeteorChart.Components[type].prototype, MeteorChart.Component.prototype);
+    MeteorChart.Components[type].prototype = MeteorChart.Util.extend(methods, MeteorChart.Component.prototype);
   };
 })();

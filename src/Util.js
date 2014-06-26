@@ -120,27 +120,32 @@
         return result;
       };
     },
-    // add obj2 keys to obj1
-    merge: function(obj1, obj2) {
-      var obj = {},
-          key;
+    // c1 extends c2, meaning that we want to move all of the
+    // keys from c2 onto c1
+    extend: function(c1, c2) {
+      var key, obj = {};
 
-      for (key in obj1) {
-        obj[key] = obj1[key];
+      // first, clone c1
+      for(key in c1) {
+        obj[key] = c1[key]; 
       }
 
-      for (key in obj2) {
-        obj[key] = obj2[key];
+      // next, interate through keys of c2 and add them to obj
+      for(key in c2) {
+        // if there's a conflict...
+        if((key in c1) && this._isObject(c2[key])) {
+          obj[key] = this.extend(c1[key], c2[key]);
+        }
+        else {
+          obj[key] = c2[key];
+        }
       }
 
       return obj;
     },
-    extend: function(c1, c2) {
-      for(var key in c2) {
-        if(!( key in c1)) {
-          c1[key] = c2[key];
-        }
-      }
+    // clone object
+    clone: function(obj) {
+      return this.extend({}, obj);
     },
     squaredDistanceBetweenPoints: function(p1, p2) {
       var diffX = p2.x - p1.x,
