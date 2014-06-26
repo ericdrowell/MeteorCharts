@@ -15,16 +15,18 @@
           dataLen = data.length,
           groupOffset = 0,
           style = this.get('style'),
-          barWidth = style.barWidth,
+          barWidth = Math.round(style.barWidth),
           // TODO: currently counting the number of bars for the first group
           // there's probably a better way
           barsLen = data[0].bars.length,
-          n, group, bars, barsLen, i, color, increment, barOffset;
+          viewport = this.get('viewport'),
+          range = viewport.max - viewport.min,
+          n, group, bars, barsLen, i, color, increment, barOffset, length;
 
       this.content.innerHTML = '';
 
       if (this.get('orientation') === 'vertical') {
-        increment = (this.get('width') - (barWidth * barsLen)) / (dataLen - 1);  
+        increment = Math.round((this.get('width') - (barWidth * barsLen)) / (dataLen - 1));  
       }
 
       for (n=0; n<dataLen; n++) {
@@ -35,30 +37,24 @@
         for (i=0; i<barsLen; i++) {
           bar = bars[i];
           barOffset = barWidth * i;
-          this._addBar(groupOffset + barOffset, bar, this.getDataColor(i));
+          length = this.get('height') * bar.value / range;
+          this._addBar(groupOffset + barOffset, barWidth, length, this.getDataColor(i));
 
         }
 
         groupOffset += increment;
       }
     },
-    _addBar: function(offset, bar, color) {
+    _addBar: function(offset, width, length, color) {
       var div = MeteorChart.DOM.createElement('div'),
           style = this.get('style'),
-          viewport = this.get('viewport'),
-          range = viewport.max - viewport.min,
-          barWidth = style.barWidth,
           length;
 
       if (this.get('orientation') === 'vertical') {
-        length = this.get('height') * bar.value / range;
         div.style.bottom = '0';
-        div.style.left = Math.floor(offset) + 'px';
-        div.style.width = Math.floor(barWidth) + 'px';
+        div.style.left = offset + 'px';
+        div.style.width = width + 'px';
         div.style.height = Math.floor(length) + 'px';
-      }
-      else {
-
       }
 
       div.style.backgroundColor = color;
