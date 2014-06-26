@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'line-chart-with-top-legend',
   name: 'Line Chart with Top Legend',
   config: {
-    layout: 'L4_B',
+    layout: 'L4_A',
     components: [
       {
         slot: 0,

@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'line-chart-with-horizontal-lines',
   name: 'Line Chart with Horizontal Lines',
   config: {
-    layout: 'L4_A',
+    layout: 'L3_A',
     components: [
       {
         slot: 0,

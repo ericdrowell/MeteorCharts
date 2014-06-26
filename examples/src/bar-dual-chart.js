@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'bar-dual-chart',
   name: 'Bar Dual Chart',
   config: {
-    layout: 'L4_A',
+    layout: 'L3_A',
     components: [
       {
         slot: 0,

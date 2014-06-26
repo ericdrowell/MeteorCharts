@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'bar-chart-with-top-legend',
   name: 'Bar Chart with Top Legend',
   config: {
-    layout: 'L4_B',
+    layout: 'L4_A',
     components: [
       {
         slot: 0,

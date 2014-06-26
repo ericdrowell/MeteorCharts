@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'line-chart-with-bottom-slider',
   name: 'Line Chart with Bottom Slider',
   config: {
-    layout: 'L4_D',
+    layout: 'L4_C',
     components: [
       {
         slot: 0,

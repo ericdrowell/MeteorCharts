@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'line-chart-with-title',
   name: 'Line Chart with Title',
   config: {
-    layout: 'L4_B',
+    layout: 'L4_A',
     components: [
       {
         slot: 0,

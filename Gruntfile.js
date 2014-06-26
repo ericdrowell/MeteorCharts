@@ -32,10 +32,10 @@ module.exports = function(grunt) {
     
     // layouts
     'src/layouts/L1_A.js',
+    'src/layouts/L3_A.js',
     'src/layouts/L4_A.js',
     'src/layouts/L4_B.js',
     'src/layouts/L4_C.js',
-    'src/layouts/L4_D.js',
 
     // formatters
     'src/formatters/Date.js',

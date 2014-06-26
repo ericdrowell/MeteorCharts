@@ -2,7 +2,7 @@ CHARTS.push({
   id: 'line-chart',
   name: 'Line Chart',
   config: {
-    layout: 'L4_A',
+    layout: 'L3_A',
     components: [
       {
         slot: 0,
