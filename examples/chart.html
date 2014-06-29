@@ -4,6 +4,8 @@
     <style>
       html, body {
         background-color: #eee;
+        padding: 0;
+        margin: 0;
       }
       #container {
         height: 450px;
@@ -52,7 +54,7 @@
           config.container = 'container';
           config.width = 445;
           config.height = 250;
-          config.theme = 'OddEnd';
+          config.theme = QUERY_STRING.theme || 'CoteAzur';
 
           var chart = new MeteorChart(config);
           break;
