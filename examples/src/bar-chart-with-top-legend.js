@@ -31,7 +31,7 @@ CHARTS.push({
       },
       {
         slot: 2,
-        type: 'BarSeries',
+        type: 'Bars',
         id: 'barSeries',
         viewport: {
           min: 0,

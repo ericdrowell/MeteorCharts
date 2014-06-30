@@ -9,7 +9,7 @@ CHARTS.push({
         type: 'Axis',
         id: 'yAxis',
         data: function() {
-          return [-100, 0, 100, 200];
+          return [0, 5, 10, 15];
         }
       },
       {
@@ -23,13 +23,13 @@ CHARTS.push({
       },
       {
         slot: 1,
-        type: 'LineSeries',
+        type: 'Lines',
         id: 'lineSeries',
         viewport: {
-          minX: -100,
-          maxX: 300,
-          minY: -100,
-          maxY: 200,
+          minX: 1,
+          maxX: 10,
+          minY: 0,
+          maxY: 15,
         },
         data: @@LINE_SERIES_DATA
       },
@@ -38,7 +38,7 @@ CHARTS.push({
         type: 'Axis',
         id: 'xAxis',
         data: function() {
-          return [-100, 0, 100, 200, 300];
+          return [0, 2, 4, 6, 8, 10];
         }
       }
     ]

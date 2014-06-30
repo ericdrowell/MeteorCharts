@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.extend('BarSeries', {
+  MeteorChart.Component.extend('Bars', {
     defaults: {
       style: {
         barWidth: 20

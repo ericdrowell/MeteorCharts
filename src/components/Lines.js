@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.extend('LineSeries', {
+  MeteorChart.Component.extend('Lines', {
     defaults: {
       style: {
         nodeType: 'none',

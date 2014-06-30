@@ -6,7 +6,7 @@ CHARTS.push({
     components: [
       {
         slot: 0,
-        type: 'BarSeries',
+        type: 'Bars',
         id: 'barSeries',
         viewport: {
           min: 0,

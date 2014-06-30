@@ -11,14 +11,14 @@ module.exports = function(grunt) {
     'src/Attrs.js',
 
     // components
-    'src/components/LineSeries.js',
+    'src/components/Lines.js',
     'src/components/Axis.js',
     'src/components/Title.js',
     'src/components/Tooltip.js',
     'src/components/GridLines.js',
     'src/components/Slider.js',
     'src/components/Legend.js',
-    'src/components/BarSeries.js',
+    'src/components/Bars.js',
 
     // themes
     'src/themes/BeachsideShopping.js',
@@ -134,6 +134,7 @@ module.exports = function(grunt) {
         options: {
           variables: {
             LINE_SERIES_DATA: grunt.file.read('examples/data/line-series-data.js'),
+            LINE_DUAL_SERIES_DATA: grunt.file.read('examples/data/line-dual-series-data.js'),
             BAR_SERIES_DATA: grunt.file.read('examples/data/bar-series-data.js'),
             BAR_DUAL_SERIES_DATA: grunt.file.read('examples/data/bar-dual-series-data.js')
           },
@@ -188,7 +189,7 @@ module.exports = function(grunt) {
     },
     watch: {
       src: {
-        files: ['src/**/*.js', 'examples/**/*.js'],
+        files: ['src/**/*.js', 'examples/src/**/*.js'],
         tasks: ['dev', 'examples'],
         options: {
           spawn: false,

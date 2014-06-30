@@ -23,7 +23,7 @@ CHARTS.push({
       },
       {
         slot: 1,
-        type: 'LineSeries',
+        type: 'Lines',
         id: 'lineSeries',
         viewport: {
           minX: -100,
@@ -31,7 +31,7 @@ CHARTS.push({
           minY: -100,
           maxY: 200,
         },
-        data: @@LINE_SERIES_DATA
+        data: @@LINE_DUAL_SERIES_DATA
       },
       {
         slot: 2,
