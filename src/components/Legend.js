@@ -34,6 +34,7 @@
       var chart = this.chart,
           theme = chart.theme,
           style = this.get('style'),
+          fontSize = this.chart.theme.fontSize + PX,
           orientation = this.get('orientation'),
           item = MeteorChart.DOM.createElement('li'),
           box =  MeteorChart.DOM.createElement('span'),
@@ -53,14 +54,14 @@
 
 
       box.style.backgroundColor = color;
-      box.style.width = this.fontSize() + PX;
-      box.style.height = this.fontSize() + PX;
+      box.style.width = fontSize;
+      box.style.height = fontSize;
       box.style.display = 'inline-block';
       box.style.verticalAlign = 'top';
 
       text.innerHTML = str;
       text.style.display = 'inline-block';
-      text.style.fontSize = this.fontSize() + PX;
+      text.style.fontSize = fontSize;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
       text.style.verticalAlign = 'top';

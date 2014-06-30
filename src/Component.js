@@ -72,17 +72,6 @@
     },
     hide: function() {
       this.content.style.opacity = 0;
-    },
-
-    /**
-     * @param {Integer} [factor] can be -2, -1, 0, 1, 2, or 3.  0 is the base value.
-     * bigger numbers are larger font sizes, and smaller numbers are smaller font sizes
-     */
-    fontSize: function(power) {
-      if (power === undefined) {
-        power = 0;
-      }
-      return Math.round(this.chart.theme.fontSize * Math.pow(MeteorChart.Constants.TYPOGRAPHIC_SCALE, power));
     }
   };
 

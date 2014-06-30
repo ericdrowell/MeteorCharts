@@ -13,7 +13,7 @@
         return maxWidth;
       },
       height: function() {
-        return this.fontSize(0);
+        return this.chart.theme.fontSize;
       },
       style: {
         padding: 0
@@ -73,7 +73,7 @@
 
       text.innerHTML = val;
       text.style.position = 'absolute';
-      text.style.fontSize = this.fontSize(0) + PX;
+      text.style.fontSize = theme.fontSize + PX;
       text.style.fontFamily = theme.fontFamily;
       text.style.color = theme.primary;
 

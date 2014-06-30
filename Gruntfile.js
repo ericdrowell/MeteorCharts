@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     'src/Component.js',
     'src/Renderer.js',
     'src/Attrs.js',
-    
+
     // components
     'src/components/LineSeries.js',
     'src/components/Axis.js',
@@ -48,6 +48,7 @@ module.exports = function(grunt) {
 
     // line charts
     'examples/dist/line-chart.js',
+    'examples/dist/line-chart-with-circles.js',
     'examples/dist/line-spark-chart.js',
     'examples/dist/line-chart-with-top-legend.js',
     'examples/dist/line-chart-with-right-legend.js',

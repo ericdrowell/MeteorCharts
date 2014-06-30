@@ -159,10 +159,6 @@ var MeteorChart;
   MeteorChart.Layouts = {};
   MeteorChart.Themes = {};
 
-  MeteorChart.Constants = {
-    TYPOGRAPHIC_SCALE: 1.4
-  };
-
   // global properties
   MeteorChart.charts = [];
   MeteorChart.debug = false;
