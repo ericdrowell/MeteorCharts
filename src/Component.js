@@ -75,7 +75,7 @@
     },
     fire: function(event, obj) {
       var that = this;
-      MeteorChart.Event.fire.call(this, MeteorChart.Util.extend({
+      MeteorChart.Event.fire.call(this, MeteorChart.Util._extend({
           event: event,
           type: this.type,
           id: this.id
@@ -138,6 +138,6 @@
       MeteorChart.Component.call(this, config);
     };
 
-    MeteorChart.Components[type].prototype = MeteorChart.Util.extend(methods, MeteorChart.Component.prototype);
+    MeteorChart.Components[type].prototype = MeteorChart.Util._extend(methods, MeteorChart.Component.prototype);
   };
 })();

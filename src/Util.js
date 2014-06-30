@@ -1,4 +1,8 @@
 (function() {
+  var ArrayProto = Array.prototype,
+      slice = ArrayProto.slice,
+      nativeForEach = ArrayProto.forEach;
+
   MeteorChart.Util = {
     capitalize: function(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
@@ -86,67 +90,6 @@
       }
 
     },
-    // Returns a function, that, when invoked, will only be triggered at most once
-    // during a given window of time. Normally, the throttled function will run
-    // as much as it can, without ever going more than once per `wait` duration;
-    // but if you'd like to disable the execution on the leading edge, pass
-    // `{leading: false}`. To disable execution on the trailing edge, ditto.
-    _throttle: function(func, wait, options) {
-      var context, args, result;
-      var timeout = null;
-      var previous = 0;
-      options || (options = {});
-      var later = function() {
-        previous = options.leading === false ? 0 : new Date().getTime();
-        timeout = null;
-        result = func.apply(context, args);
-        context = args = null;
-      };
-      return function() {
-        var now = new Date().getTime();
-        if (!previous && options.leading === false) previous = now;
-        var remaining = wait - (now - previous);
-        context = this;
-        args = arguments;
-        if (remaining <= 0) {
-          clearTimeout(timeout);
-          timeout = null;
-          previous = now;
-          result = func.apply(context, args);
-          context = args = null;
-        } else if (!timeout && options.trailing !== false) {
-          timeout = setTimeout(later, remaining);
-        }
-        return result;
-      };
-    },
-    // c1 extends c2, meaning that we want to move all of the
-    // keys from c2 onto c1
-    extend: function(c1, c2) {
-      var key, obj = {};
-
-      // first, clone c1
-      for(key in c1) {
-        obj[key] = c1[key]; 
-      }
-
-      // next, interate through keys of c2 and add them to obj
-      for(key in c2) {
-        // if there's a conflict...
-        if((key in c1) && this._isObject(c2[key])) {
-          obj[key] = this.extend(c1[key], c2[key]);
-        }
-        else {
-          obj[key] = c2[key];
-        }
-      }
-
-      return obj;
-    },
-    // clone object
-    clone: function(obj) {
-      return this.extend({}, obj);
-    },
     squaredDistanceBetweenPoints: function(p1, p2) {
       var diffX = p2.x - p1.x,
           diffY = p2.y - p1.y;
@@ -203,7 +146,107 @@
     },
     _isString: function(obj) {
       return Object.prototype.toString.call(obj) == '[object String]';
+    },
+    // The cornerstone, an `each` implementation, aka `forEach`.
+    // Handles objects with the built-in `forEach`, arrays, and raw objects.
+    // Delegates to **ECMAScript 5**'s native `forEach` if available.
+    _each: function(obj, iterator, context) {
+      if (obj == null) return obj;
+      if (nativeForEach && obj.forEach === nativeForEach) {
+        obj.forEach(iterator, context);
+      } else if (obj.length === +obj.length) {
+        for (var i = 0, length = obj.length; i < length; i++) {
+          if (iterator.call(context, obj[i], i, obj) === breaker) return;
+        }
+      } else {
+        var keys = _.keys(obj);
+        for (var i = 0, length = keys.length; i < length; i++) {
+          if (iterator.call(context, obj[keys[i]], keys[i], obj) === breaker) return;
+        }
+      }
+      return obj;
+    },
+    // Fill in a given object with default properties.
+    _defaults: function(obj) {
+      this._each(slice.call(arguments, 1), function(source) {
+        if (source) {
+          for (var prop in source) {
+            if (obj[prop] === void 0) obj[prop] = source[prop];
+          }
+        }
+      });
+      return obj;
+    },
+    // Create a (shallow-cloned) duplicate of an object.
+    _clone: function(obj) {
+      if (!this._isObject(obj)) return obj;
+      return this._isArray(obj) ? obj.slice() : this._extend({}, obj);
+    },
+    // Extend a given object with all the properties in passed-in object(s).
+    // _extend: function(obj) {
+    //   this._each(slice.call(arguments, 1), function(source) {
+    //     if (source) {
+    //       for (var prop in source) {
+    //         obj[prop] = source[prop];
+    //       }
+    //     }
+    //   });
+    //   return obj;
+    // },
+    _extend: function(c1, c2) {
+      var key, obj = {};
+
+      // first, clone c1
+      for(key in c1) {
+        obj[key] = c1[key]; 
+      }
+
+      // next, interate through keys of c2 and add them to obj
+      for(key in c2) {
+        // if there's a conflict...
+        if((key in c1) && this._isObject(c2[key])) {
+          obj[key] = this._extend(c1[key], c2[key]);
+        }
+        else {
+          obj[key] = c2[key];
+        }
+      }
+
+      return obj;
+    },
+    // Returns a function, that, when invoked, will only be triggered at most once
+    // during a given window of time. Normally, the throttled function will run
+    // as much as it can, without ever going more than once per `wait` duration;
+    // but if you'd like to disable the execution on the leading edge, pass
+    // `{leading: false}`. To disable execution on the trailing edge, ditto.
+    _throttle: function(func, wait, options) {
+      var context, args, result;
+      var timeout = null;
+      var previous = 0;
+      options || (options = {});
+      var later = function() {
+        previous = options.leading === false ? 0 : new Date().getTime();
+        timeout = null;
+        result = func.apply(context, args);
+        context = args = null;
+      };
+      return function() {
+        var now = new Date().getTime();
+        if (!previous && options.leading === false) previous = now;
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0) {
+          clearTimeout(timeout);
+          timeout = null;
+          previous = now;
+          result = func.apply(context, args);
+          context = args = null;
+        } else if (!timeout && options.trailing !== false) {
+          timeout = setTimeout(later, remaining);
+        }
+        return result;
+      };
     }
   };
-
 })();

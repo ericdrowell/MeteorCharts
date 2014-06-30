@@ -38,7 +38,7 @@ var MeteorChart;
     // init components
     for (n=0, len = config.components.length; n<len; n++) {
       slot = config.components[n];
-      that._initComponent(MeteorChart.Util.extend(this.layout[slot.slot], slot));
+      that._initComponent(MeteorChart.Util._extend(this.layout[slot.slot], slot));
     }
 
     // add components to chart content
@@ -123,7 +123,7 @@ var MeteorChart;
     // extend some other higher level class
     fire: function(event, obj) {
       var that = this;
-      MeteorChart.Event.fire.call(this, MeteorChart.Util.extend({
+      MeteorChart.Event.fire.call(this, MeteorChart.Util._extend({
           event: event,
           type: this.type,
           id: this.id
