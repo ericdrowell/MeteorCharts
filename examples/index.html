@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
+  <body>
+    <h1>Examples</h1>
 
-  <h2>Line Charts</h2>
-  <ul>
-    <li><a href="chart.html?chart=line-chart">Line Chart</a></li>
-    <li><a href="chart.html?chart=line-chart-with-top-legend">Line Chart with Top Legend</a></li>
-    <li><a href="chart.html?chart=line-chart-with-right-legend">Line Chart with Right Legend</a></li>
-    <li><a href="chart.html?chart=line-chart-with-title">Line Chart with Title</a></li>
-    <li><a href="chart.html?chart=line-spark-chart">Line Spark Chart</a></li>
-    <li><a href="chart.html?chart=line-chart-with-grid">Line Chart with Grid</a></li>
-    <li><a href="chart.html?chart=line-chart-with-horizontal-lines">Line Chart with Horizontal Lines</a></li>
-    <li><a href="chart.html?chart=line-chart-with-vertical-lines">Line Chart with Vertical Lines</a></li>
-    <li><a href="chart.html?chart=line-chart-with-bottom-slider">Line Chart with Bottom Slider</a></li>
-  </ul>
-  <h2>Bar Charts</h2>
-  <ul>
-    <li><a href="chart.html?chart=bar-chart">Bar Chart</a></li>
-    <li><a href="chart.html?chart=bar-dual-chart">Bar Dual Chart</a></li>
-    <li><a href="chart.html?chart=bar-chart-with-top-legend">Bar Chart with Top Legend</a></li>
-    <li><a href="chart.html?chart=bar-chart-with-right-legend">Bar Chart with Right Legend</a></li>
-    <li><a href="chart.html?chart=bar-spark-chart">Bar Spark Chart</a></li>
+    <ul id="charts"></ul>
+
+    <script src="dist/all-charts.js"></script>
 
 
+    <script>
+      var charts = document.getElementById('charts');
 
-  </ul>
+      var html = [];
+
+      for (var n=0; n<CHARTS.length; n++) {
+        html.push('<li><a href="chart.html?chart=');
+        html.push(CHARTS[n].id);
+        html.push('">');
+        html.push(CHARTS[n].name);
+        html.push('</a></li>'); 
+      }
+
+      charts.innerHTML = html.join('');
+    </script>
+
+  </body>
 </html>
