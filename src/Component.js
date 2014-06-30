@@ -73,53 +73,6 @@
     hide: function() {
       this.content.style.opacity = 0;
     },
-    fire: function(event, obj) {
-      var that = this;
-      MeteorChart.Event.fire.call(this, MeteorChart.Util._extend({
-          event: event,
-          type: this.type,
-          id: this.id
-        },
-        obj)
-      );
-    },
-    set: function(attr, val) {
-      if (val !== undefined) {
-        this.attrs[attr] = val;
-      }
-    },
-    get: function(attr) {
-      var val = this.attrs[attr],
-          ret;
-
-      // default
-      if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
-        val = this.defaults[attr];
-      }
-
-      // if val is a function then execute it to obtain the val
-      if (MeteorChart.Util._isFunction(val)) {
-        ret = val.call(this);
-      }
-      else {
-        ret = val;
-      }
-
-      // auto round x, y, width, and height values because these should
-      // resolve to integer pixels
-
-      if (attr === 'x' 
-       || attr === 'y'
-       || attr === 'width'
-       || attr === 'height') {
-        ret = Math.round(ret);
-      }
- 
-
-
-      return ret;
-    },
-
 
     /**
      * @param {Integer} [factor] can be -2, -1, 0, 1, 2, or 3.  0 is the base value.

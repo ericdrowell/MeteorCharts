@@ -119,18 +119,6 @@ var MeteorChart;
         that.fire('mouseout');
       });
     },
-    // TODO: this is copied and pasted from the component class.  Need to
-    // extend some other higher level class
-    fire: function(event, obj) {
-      var that = this;
-      MeteorChart.Event.fire.call(this, MeteorChart.Util._extend({
-          event: event,
-          type: this.type,
-          id: this.id
-        },
-        obj)
-      );
-    },
     add: function(conf) {
       this._initComponent(conf);
       this._addComponent(this.components.length-1);
@@ -161,31 +149,6 @@ var MeteorChart;
 
       for (key in components) {
         components[key].render();
-      }
-    },
-    // TODO: this is copied and pasted from the component class.  Need to
-    // extend some other higher level class
-    set: function(attr, val) {
-      if (val !== undefined) {
-        this.attrs[attr] = val;
-      }
-    },
-    // TODO: this is copied and pasted from the component class.  Need to
-    // extend some other higher level class
-    get: function(attr, context) {
-      var chart = this.chart,
-          val = this.attrs[attr];
-
-      // default
-      if ((val === undefined || val === null) && this.defaults[attr] !== undefined) {
-        val = this.defaults[attr];
-      }
-
-      if (MeteorChart.Util._isFunction(val)) {
-        return val.call(this);
-      }
-      else {
-        return val;
       }
     }
   };
@@ -234,18 +197,6 @@ var MeteorChart;
       console.log('-- ' + str);
     }
   };
-
-  MeteorChart.render = function() {
-    var charts = this.charts,
-        len = charts.length,
-        n;
-
-    for (n=0; n<len; n++) {
-      charts[n].render();
-    }
-  }
-
-
 })();
 
 // Uses Node, AMD or browser globals to create a module.

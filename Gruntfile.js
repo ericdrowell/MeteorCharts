@@ -8,8 +8,8 @@ module.exports = function(grunt) {
     'src/Event.js',
     'src/Component.js',
     'src/Renderer.js',
-    'src/Mutator.js',
-
+    'src/Attrs.js',
+    
     // components
     'src/components/LineSeries.js',
     'src/components/Axis.js',

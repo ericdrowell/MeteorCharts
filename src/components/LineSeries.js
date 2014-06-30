@@ -1,8 +1,10 @@
 (function() {
   MeteorChart.Component.extend('LineSeries', {
     defaults: {
-      zoomX: 1,
-      zoomY: 1
+      style: {
+        nodeType: 'none',
+        lineWidth: 2
+      }
     },
     init: function() {
       this.canvas = document.createElement('canvas');
@@ -17,16 +19,12 @@
           series = data,
           len = series.length,
           context = this.context,
-          zoomX = this.get('zoomX'),
-          zoomY = this.get('zoomY'),
+          style = this.get('style'),
+          nodeType = style.nodeType, 
           padding = this.chart.theme.padding,
           canvasWidth = this.get('width') + (padding * 2),
           canvasHeight = this.get('height') + (padding * 2),
           n, line, points, i, pointsLen, viewport;
-
-      //MeteorChart.log('render ' + this.id)
-
-      console.log(padding)
 
       this._setScale();
 
@@ -45,26 +43,21 @@
         pointsLen = points.length;
 
         context.save();
-
         context.translate(this.get('width') / 2, this.get('height') / 2);
         context.scale(this.scaleX, this.scaleY * -1);
-        context.scale(zoomX, zoomY);
-        // commenting the line below fixes zoom
         context.translate(this.get('viewport').minX * -1, this.get('viewport').minY * -1);
         context.translate(this.get('width') / (this.scaleX * -2), this.get('height') / (this.scaleY * -2));
 
+
         context.beginPath();
         context.moveTo(points[0], points[1]);
-
         for (i = 2; i<pointsLen; i+=2) {
           context.lineTo(points[i], points[i+1]);
         }
 
         context.restore();
         context.strokeStyle = this.getDataColor(n);
-        context.lineWidth = 2;
-        context.lineCap = 'round';
-        context.lineJoin = 'round';
+        context.lineWidth = style.lineWidth;
         context.stroke();
       } 
 
