@@ -19,6 +19,7 @@ module.exports = function(grunt) {
     'src/components/Slider.js',
     'src/components/Legend.js',
     'src/components/Bars.js',
+    'src/components/Scatter.js',
 
     // themes
     'src/themes/BeachsideShopping.js',

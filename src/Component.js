@@ -36,31 +36,36 @@
   MeteorChart.Component.prototype = {
     defaults: {
       align: 'left',
-      style: {}
+      style: {},
+      visible: true
     },
     render: function() {
       var that = this;
 
-      MeteorChart.Renderer.queue(this.chart._id + '-' + this._id, function() {
-        MeteorChart.log('render ' + that.id);
+      // only add render to renderer queue if visible
+      if (this.get('visible')) {
+        MeteorChart.Renderer.queue(this.chart._id + '-' + this._id, function() {
+          MeteorChart.log('render ' + that.id);
 
-        // reset width and height so that they do not affect component
-        // width and height methods
-        that.content.style.width = 'auto';
-        that.content.style.height = 'auto';
+          // reset width and height so that they do not affect component
+          // width and height methods
+          that.content.style.width = 'auto';
+          that.content.style.height = 'auto';
 
-        // render concrete component first because the component width and height
-        // may depend on it
-        if (that._render) {
-          that._render();
-        }
+          // render concrete component first because the component width and height
+          // may depend on it
+          if (that._render) {
+            that._render();
+          }
 
-        that.content.style.textAlign = that.get('align');
-        that.content.style.left =      that.get('x') + PX;
-        that.content.style.top =       that.get('y') + PX;
-        that.content.style.width =     that.get('width') + PX;
-        that.content.style.height =    that.get('height') + PX;
-      });
+          that.content.style.textAlign = that.get('align');
+          that.content.style.left =      that.get('x') + PX;
+          that.content.style.top =       that.get('y') + PX;
+          that.content.style.width =     that.get('width') + PX;
+          that.content.style.height =    that.get('height') + PX;
+    
+        });
+      }
     },
 
     destroy: function() {

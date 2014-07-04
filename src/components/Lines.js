@@ -13,18 +13,18 @@
     },
     _render: function() {
       var data = this.get('data'),
+          width = this.get('width'),
+          height = this.get('height'),
           dataLen = data.length,
           context = this.context,
           style = this.get('style'),
           padding = this.chart.theme.padding,
-          canvasWidth = this.get('width') + (padding * 2),
-          canvasHeight = this.get('height') + (padding * 2),
+          canvasWidth = width + (padding * 2),
+          canvasHeight = height + (padding * 2),
           scale = this._getScale(),
           scaleX = scale.x,
           scaleY = scale.y,
           viewport = this.get('viewport'),
-          width = this.get('width'),
-          height = this.get('height'),
           n, line, points, i, pointsLen;
 
       // render
