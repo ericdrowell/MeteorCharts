@@ -72,6 +72,18 @@
     },
     hide: function() {
       this.content.style.opacity = 0;
+    },
+    _getScale: function() {
+      var viewport = this.get('viewport'),
+          width = this.get('width'),
+          height = this.get('height'),
+          diffX = viewport.maxX - viewport.minX,
+          diffY = viewport.maxY - viewport.minY;
+
+      return {
+        x: width / diffX,
+        y: height / diffY
+      };
     }
   };
 

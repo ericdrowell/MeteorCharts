@@ -9,7 +9,7 @@ CHARTS.push({
         type: 'Lines',
         id: 'lineSeries',
         viewport: {
-          minX: 1,
+          minX: 0,
           maxX: 10,
           minY: 0,
           maxY: 15,
