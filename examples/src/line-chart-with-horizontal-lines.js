@@ -33,6 +33,20 @@ CHARTS.push({
         data: @@LINE_SERIES_DATA
       },
       {
+        slot: 1,
+        type: 'Scatter',
+        id: 'scatter',
+        viewport: function() {
+          return this.chart.components.lineSeries.get('viewport');
+        },
+        data: function() {
+          return this.chart.components.lineSeries.get('data');
+        },
+        style: {
+          filled: false
+        }
+      },
+      {
         slot: 2,
         type: 'Axis',
         id: 'xAxis',

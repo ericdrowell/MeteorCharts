@@ -3,7 +3,9 @@
     defaults: {
       style: {
         nodeShape: 'circle',
-        nodeSize: 10
+        filled: true,
+        nodeSize: 10,
+        lineWidth: 2
       }
     },
     init: function() {
@@ -54,6 +56,11 @@
     _renderNode: function(x, y, color) {
       var context = this.context,
           style = this.get('style'),
+          nodeShape = style.nodeShape,
+          filled = style.filled,
+          lineWidth = style.lineWidth,
+          nodeSize = style.nodeSize,
+          backgroundColor = this.chart.theme.background;
           width = this.get('width'),
           height = this.get('height'),
           scale = this._getScale(),
@@ -67,9 +74,23 @@
       context.translate(0, height);
       context.scale(1, -1);
       context.beginPath();
-      context.arc(_x, _y, style.nodeSize / 2, 0, Math.PI * 2, false);
-      context.fillStyle = color;
-      context.fill();
+      
+      if (nodeShape === 'circle') {
+        context.arc(_x, _y, nodeSize / 2, 0, Math.PI * 2, false);
+
+        if (filled) {
+          context.fillStyle = color;
+          context.fill();
+        }
+        else {
+          context.strokeStyle = color;
+          context.fillStyle = backgroundColor;
+          context.lineWidth = lineWidth;
+          context.fill();
+          context.stroke(); 
+        }
+      }
+      
       context.restore();
     }
   });
