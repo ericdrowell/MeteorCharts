@@ -189,7 +189,7 @@ module.exports = function(grunt) {
     },
     watch: {
       src: {
-        files: ['src/**/*.js', 'examples/src/**/*.js'],
+        files: ['src/**/*.js', 'examples/src/**/*.js', 'examples/data/**/*.js'],
         tasks: ['dev', 'examples'],
         options: {
           spawn: false,

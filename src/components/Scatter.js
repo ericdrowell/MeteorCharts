@@ -1,17 +1,18 @@
 (function() {
+  var ALL_SHAPES = ['circle'];
+
   MeteorChart.Component.extend('Scatter', {
     defaults: {
       style: {
-        nodeShape: 'circle',
+        shape: 'circle',
         filled: true,
-        nodeSize: 10,
+        size: 10,
         lineWidth: 2
       }
     },
     init: function() {
       this.canvas = document.createElement('canvas');
       this.context = this.canvas.getContext('2d');
-
       this.content.appendChild(this.canvas);
     },
     _render: function() {
@@ -56,10 +57,10 @@
     _renderNode: function(x, y, color) {
       var context = this.context,
           style = this.get('style'),
-          nodeShape = style.nodeShape,
+          shape = style.shape,
           filled = style.filled,
           lineWidth = style.lineWidth,
-          nodeSize = style.nodeSize,
+          size = style.size,
           backgroundColor = this.chart.theme.background;
           width = this.get('width'),
           height = this.get('height'),
@@ -67,16 +68,16 @@
           scaleX = scale.x,
           scaleY = scale.y,
           viewport = this.get('viewport'),
-          _x = x * scaleX,
-          _y = y * scaleY;
+          _x = (x - viewport.minX) * scaleX,
+          _y = (y - viewport.minY) * scaleY;
 
       context.save();
       context.translate(0, height);
       context.scale(1, -1);
       context.beginPath();
       
-      if (nodeShape === 'circle') {
-        context.arc(_x, _y, nodeSize / 2, 0, Math.PI * 2, false);
+      if (shape === 'circle') {
+        context.arc(_x, _y, size / 2, 0, Math.PI * 2, false);
 
         if (filled) {
           context.fillStyle = color;

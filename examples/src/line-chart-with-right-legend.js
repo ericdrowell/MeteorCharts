@@ -12,7 +12,7 @@ CHARTS.push({
         data: function() {
           return ['Series 1', 'Series 2'];
         }
-      },
+      }, 
       {
         slot: 0,
         type: 'Axis',
@@ -32,6 +32,17 @@ CHARTS.push({
           maxY: 200,
         },
         data: @@LINE_DUAL_SERIES_DATA
+      },
+      {
+        slot: 1,
+        type: 'Scatter',
+        id: 'scatter',
+        viewport: function() {
+          return this.chart.components.lineSeries.get('viewport');
+        },
+        data: function() {
+          return this.chart.components.lineSeries.get('data');
+        }
       },
       {
         slot: 2,

@@ -31,21 +31,6 @@ CHARTS.push({
         data: @@LINE_SERIES_DATA
       },
       {
-        slot: 2,
-        type: 'Scatter',
-        id: 'scatter',
-        viewport: function() {
-          return this.chart.components.lineSeries.get('viewport');
-        },
-        data: function() {
-          return this.chart.components.lineSeries.get('data');
-        },
-        style: {
-          nodeShape: 'ring',
-          lineWidth: 2
-        }
-      },
-      {
         slot: 3,
         type: 'Axis',
         id: 'xAxis',

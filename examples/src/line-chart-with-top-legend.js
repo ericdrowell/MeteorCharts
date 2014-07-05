@@ -34,6 +34,20 @@ CHARTS.push({
         data: @@LINE_DUAL_SERIES_DATA
       },
       {
+        slot: 2,
+        type: 'Scatter',
+        id: 'scatter',
+        viewport: function() {
+          return this.chart.components.lineSeries.get('viewport');
+        },
+        data: function() {
+          return this.chart.components.lineSeries.get('data');
+        },
+        style: {
+          filled: false
+        }
+      },
+      {
         slot: 3,
         type: 'Axis',
         id: 'xAxis',
