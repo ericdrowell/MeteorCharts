@@ -10,7 +10,7 @@ CHARTS.push({
         id: 'legend',
         orientation: 'vertical',
         data: function() {
-          return ['Series 1', 'Series 2'];
+          return this.chart.components.lineSeries.getTitles();
         }
       }, 
       {

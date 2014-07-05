@@ -60,6 +60,19 @@
       div.style.backgroundColor = color;
       div.style.position = 'absolute';
       this.content.appendChild(div);
+    },
+    getTitles: function() {
+      var arr = [],
+          data = this.data(),
+          bars = data[0].bars,
+          len = bars.length,
+          n;
+
+      for (n=0; n<len; n++) {
+        arr.push(bars[n].title);
+      }
+
+      return arr;
     }
   });
 })();

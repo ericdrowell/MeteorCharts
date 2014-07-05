@@ -58,6 +58,9 @@ module.exports = function(grunt) {
     'examples/dist/line-chart-with-vertical-lines.js',
     'examples/dist/line-chart-with-bottom-slider.js',
 
+    // scatter plots
+    'examples/dist/scatter-plot-with-horizontal-lines.js',
+
     // bar charts
     'examples/dist/bar-chart.js',
     'examples/dist/bar-spark-chart.js',

@@ -8,9 +8,8 @@ CHARTS.push({
         slot: 3,
         type: 'Legend',
         id: 'legend',
-        orientation: 'vertical',
         data: function() {
-          return ['Republicans', 'Democrats'];
+          return this.chart.components.barSeries.getTitles();
         }
       },
       {

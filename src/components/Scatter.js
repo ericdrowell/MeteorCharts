@@ -16,17 +16,17 @@
       this.content.appendChild(this.canvas);
     },
     _render: function() {
-      var data = this.get('data'),
+      var data = this.data(),
           dataLen = data.length,
           context = this.context,
-          style = this.get('style'),
+          style = this.style(),
           padding = this.chart.theme.padding,
-          width = this.get('width'),
-          height = this.get('height'),
+          width = this.width(),
+          height = this.height(),
           scale = this._getScale(),
           scaleX = scale.x,
           scaleY = scale.y,
-          viewport = this.get('viewport'),
+          viewport = this.viewport(),
           canvasWidth = width + (padding * 2),
           canvasHeight = height + (padding * 2),
           n, line, points, i, pointsLen, color;
@@ -56,18 +56,18 @@
     },
     _renderNode: function(x, y, color) {
       var context = this.context,
-          style = this.get('style'),
+          style = this.style(),
           shape = style.shape,
           filled = style.filled,
           lineWidth = style.lineWidth,
           size = style.size,
           backgroundColor = this.chart.theme.background;
-          width = this.get('width'),
-          height = this.get('height'),
+          width = this.width(),
+          height = this.height(),
           scale = this._getScale(),
           scaleX = scale.x,
           scaleY = scale.y,
-          viewport = this.get('viewport'),
+          viewport = this.viewport(),
           _x = (x - viewport.minX) * scaleX,
           _y = (y - viewport.minY) * scaleY;
 
@@ -93,6 +93,18 @@
       }
       
       context.restore();
+    },
+    getTitles: function() {
+      var arr = [],
+          data = this.data(),
+          len = data.length,
+          n;
+
+      for (n=0; n<len; n++) {
+        arr.push(data[n].title);
+      }
+
+      return arr;
     }
   });
 })();

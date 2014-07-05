@@ -12,19 +12,19 @@
       this.content.appendChild(this.canvas);
     },
     _render: function() {
-      var data = this.get('data'),
-          width = this.get('width'),
-          height = this.get('height'),
+      var data = this.data(),
+          width = this.width(),
+          height = this.height(),
           dataLen = data.length,
           context = this.context,
-          style = this.get('style'),
+          style = this.style(),
           padding = this.chart.theme.padding,
           canvasWidth = width + (padding * 2),
           canvasHeight = height + (padding * 2),
           scale = this._getScale(),
           scaleX = scale.x,
           scaleY = scale.y,
-          viewport = this.get('viewport'),
+          viewport = this.viewport(),
           n, line, points, i, pointsLen;
 
       // render
@@ -59,6 +59,18 @@
       } 
 
       context.restore();
+    },
+    getTitles: function() {
+      var arr = [],
+          data = this.data(),
+          len = data.length,
+          n;
+
+      for (n=0; n<len; n++) {
+        arr.push(data[n].title);
+      }
+
+      return arr;
     }
   });
 })();

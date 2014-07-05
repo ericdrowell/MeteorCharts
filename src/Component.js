@@ -4,7 +4,8 @@
   var ATTR_BLACKLIST = {
     'id': 1,
     'type': 1,
-    'chart': 1
+    'chart': 1,
+    'slot': 1
   };
 
   MeteorChart.Component = function(config) {

@@ -1,4 +1,16 @@
 (function() {
+  var ATTR_WHITELIST = [
+    'x',
+    'y',
+    'width',
+    'height',
+    'orientation',
+    'visible',
+    'style',
+    'data',
+    'viewport'
+  ];
+
   MeteorChart.Attrs = {
     fire: function(event, obj) {
       var that = this;
@@ -50,6 +62,24 @@
       return ret;
     }
   };
+
+  (function() {
+    var len = ATTR_WHITELIST.length,
+        n, attr;
+
+    for (n=0; n<len; n++) {
+      (function(attr) {
+        MeteorChart.Attrs[attr] = function() {
+          if (arguments.length) {
+            return this.set.call(this, attr, arguments[0]);
+          }
+          else {
+            return this.get(attr);
+          }
+        }  
+      })(ATTR_WHITELIST[n])
+    }
+  })();
 
   MeteorChart.prototype = MeteorChart.Util._extend(MeteorChart.prototype, MeteorChart.Attrs);
   MeteorChart.Component.prototype = MeteorChart.Util._extend(MeteorChart.Component.prototype, MeteorChart.Attrs);

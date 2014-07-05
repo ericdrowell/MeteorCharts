@@ -10,7 +10,7 @@ CHARTS.push({
         id: 'legend',
         align: 'right',
         data: function() {
-          return ['Republicans', 'Democrats'];
+          return this.chart.components.barSeries.getTitles();
         }
       },
       {
