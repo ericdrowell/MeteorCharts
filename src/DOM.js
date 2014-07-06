@@ -10,10 +10,9 @@
       // inline resets
       el.style.padding = 0;
       el.style.margin = 0;
+      this.addVendorStyle(el, 'boxSizing', 'border-box');
+
       return el;
-    },
-    getNumber: function(val) {
-      return (val.replace(PX, '')) * 1;
     },
     getElementPosition: function(el) {
       var rect = el.getBoundingClientRect ? el.getBoundingClientRect() : { top: 0, left: 0 };
@@ -30,27 +29,11 @@
         el.style[VENDORS[n] + MeteorChart.Util.capitalize(style)] = val;
       }
     },
-    setBorderRadius: function(el, radius) {
-      this.addVendorStyle(el, 'borderRadius', radius + 'px');
-    },
-    setScale: function(el, x, y) {
-      this.addVendorStyle(el, 'transform', 'scale(' + x + ',' + y + ')');
-    },
     getElementWidth: function(el) {
-      var width = 0;
-      this.dummy.innerHTML = el.innerHTML;
-      width = this.dummy.offsetWidth;
-      this.dummy.innerHTML = '';
-
-      return width;
+      return el.offsetWidth;
     },
     getElementHeight: function(el) {
-      var width = 0;
-      this.dummy.innerHTML = el.innerHTML;
-      width = this.dummy.offsetHeight;
-      this.dummy.innerHTML = '';
-
-      return width;
+      return el.offsetHeight;
     },
     getTextWidth: function(text) {
       var width = 0;
@@ -79,6 +62,14 @@
     removeClass: function(el, name) {
       var reg = new RegExp('(\\s|^)'+name+'(\\s|$)');
       el.className = el.className.replace(reg,' ');
+    },
+    setPosition: function(el, top, right, bottom, left) {
+      el.style.position = 'absolute';
+      
+      el.style.top    = top    === null ? 'auto' : Math.round(top)    + 'px';
+      el.style.right  = right  === null ? 'auto' : Math.round(right)  + 'px';
+      el.style.bottom = bottom === null ? 'auto' : Math.round(bottom) + 'px';
+      el.style.left   = left   === null ? 'auto' : Math.round(left)   + 'px';
     }
   }
 })();

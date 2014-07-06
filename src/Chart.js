@@ -3,7 +3,7 @@ var MeteorChart;
   MeteorChart = function(config) {
     var that = this,
         container = config.container,
-        len, n, slot;
+        len, n, component;
 
     this._id = MeteorChart.idCounter++;
     this.attrs= {};
@@ -37,8 +37,15 @@ var MeteorChart;
 
     // init components
     for (n=0, len = config.components.length; n<len; n++) {
-      slot = config.components[n];
-      that._initComponent(MeteorChart.Util._extend(this.layout[slot.slot], slot));
+      component = config.components[n];
+
+      // if slot is defined, merge component config with layout slot
+      if (component.slot !== undefined) {
+        that._initComponent(MeteorChart.Util._extend(this.layout[component.slot], component));
+      }
+      else {
+        that._initComponent(component);
+      }   
     }
 
     // add components to chart content
@@ -81,7 +88,10 @@ var MeteorChart;
 
       var component = new MeteorChart.Components[conf.type](conf);
       this.components[conf.id] = component;
-      this.slots[conf.slot] = component;
+
+      if (conf.slot !== undefined) {
+        this.slots[conf.slot] = component;
+      }
     },
     _addComponent: function(component) {
       if (component.init) {
@@ -118,10 +128,6 @@ var MeteorChart;
 
         that.fire('mouseout');
       });
-    },
-    add: function(conf) {
-      this._initComponent(conf);
-      this._addComponent(this.components.length-1);
     },
     destroy: function() {
       var components = this.components,

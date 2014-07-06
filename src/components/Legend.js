@@ -4,7 +4,7 @@
   MeteorChart.Component.extend('Legend', {
     defaults: {
       width: function() {
-        return MeteorChart.DOM.getElementWidth(this.list);
+        return MeteorChart.DOM.getElementWidth(this.list) + 1;
       },
       height: function() {
         return MeteorChart.DOM.getElementHeight(this.list);

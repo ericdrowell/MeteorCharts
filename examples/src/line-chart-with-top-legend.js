@@ -54,6 +54,20 @@ CHARTS.push({
         data: function() {
           return [-100, 0, 100, 200, 300];
         }
+      },
+      {
+        // tooltips do not have a slot because they aren't bound
+        // to a layout
+        type: 'Tooltip',
+        id: 'tooltip',
+        data: function() {
+          return {
+            title: 'Test Title',
+            content: 'Test content'
+          };
+        },
+        x: 100,
+        y: 100
       }
     ]
   }

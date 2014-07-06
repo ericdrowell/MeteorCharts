@@ -8,7 +8,8 @@
     'visible',
     'style',
     'data',
-    'viewport'
+    'viewport',
+    'align'
   ];
 
   MeteorChart.Attrs = {
