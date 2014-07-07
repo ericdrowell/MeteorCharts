@@ -5,7 +5,8 @@
     'id': 1,
     'type': 1,
     'chart': 1,
-    'slot': 1
+    'slot': 1,
+    'on': 1
   };
 
   MeteorChart.Component = function(config) {
@@ -32,6 +33,8 @@
     this.content.setAttribute('data-component-id', this.id);
     this.content.style.display = 'inline-block';
     this.content.style.position = 'absolute';
+
+    this.__bind(config.on);
   };
 
   MeteorChart.Component.prototype = {
@@ -90,6 +93,13 @@
         x: width / diffX,
         y: height / diffY
       };
+    },
+    __bind: function(on) {
+      var key;
+
+      for (key in on) {
+        this.on(key, on[key]);
+      }
     }
   };
 

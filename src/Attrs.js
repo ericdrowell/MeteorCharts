@@ -13,15 +13,11 @@
   ];
 
   MeteorChart.Attrs = {
-    fire: function(event, obj) {
-      var that = this;
-      MeteorChart.Event.fire.call(this, MeteorChart.Util._extend({
-          event: event,
-          type: this.type,
-          id: this.id
-        },
-        obj)
-      );
+    on: function(str, func) {
+      MeteorChart.Event.on.call(this, this.id, str, func);
+    },
+    fire: function(str, obj) {
+      MeteorChart.Event.fire.call(this, this.id, str, obj);
     },
     set: function(attr, val) {
       if (val !== undefined) {

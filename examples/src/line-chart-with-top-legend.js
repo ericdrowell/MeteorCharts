@@ -45,6 +45,19 @@ CHARTS.push({
         },
         style: {
           filled: false
+        },
+        on: {
+          inspectPoint: function(evt) {
+            var tooltip = this.chart.components.tooltip;
+
+            tooltip.x(100);
+            tooltip.y(100);
+            tooltip.data({
+              title: 'Title',
+              content: 'content'
+            });
+            tooltip.render();
+          }
         }
       },
       {
@@ -56,18 +69,8 @@ CHARTS.push({
         }
       },
       {
-        // tooltips do not have a slot because they aren't bound
-        // to a layout
         type: 'Tooltip',
-        id: 'tooltip',
-        data: function() {
-          return {
-            title: 'Test Title',
-            content: 'Test content'
-          };
-        },
-        x: 100,
-        y: 100
+        id: 'tooltip'
       }
     ]
   }

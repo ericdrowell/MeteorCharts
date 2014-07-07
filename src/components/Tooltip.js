@@ -24,8 +24,20 @@
       this.tooltipContent = MeteorChart.DOM.createElement('p');
       this.tooltipContent.style.whiteSpace = 'nowrap';
 
+      this.secondaryTriangle = MeteorChart.DOM.createElement('span');
+      this.secondaryTriangle.style.width = 0;
+      this.secondaryTriangle.style.height = 0;
+      this.secondaryTriangle.style.display = 'inline-block';
+
+      this.bgTriangle = MeteorChart.DOM.createElement('span');
+      this.bgTriangle.style.width = 0;
+      this.bgTriangle.style.height = 0;
+      this.bgTriangle.style.display = 'inline-block';
+
       this.tooltip.appendChild(this.tooltipTitle);
       this.tooltip.appendChild(this.tooltipContent);
+      this.tooltip.appendChild(this.secondaryTriangle);
+      this.tooltip.appendChild(this.bgTriangle);
       this.content.appendChild(this.tooltip);
     },
     _render: function() {
@@ -53,6 +65,7 @@
         this.tooltipContent.style.marginTop = 5 + PX;
         this.tooltipContent.innerHTML = data.content;
 
+
         this._positionTooltip(); 
       }
       else {
@@ -60,9 +73,24 @@
       }
     },
     _positionTooltip: function() {
-      var tooltip = this.tooltip,  
+      var theme = this.chart.theme,
+          tooltip = this.tooltip,  
+          triangleSize = 10,
+          borderWidth = 2,
+          secondaryTriangle = this.secondaryTriangle,
+          bgTriangle = this.bgTriangle,
           width = MeteorChart.DOM.getElementWidth(tooltip),
           height = MeteorChart.DOM.getElementHeight(tooltip);
+
+      // secondary triangle
+      secondaryTriangle.style.border = triangleSize + 'px solid';
+      secondaryTriangle.style.borderColor = theme.secondary + ' transparent transparent transparent';
+      MeteorChart.DOM.setPosition(secondaryTriangle, height - borderWidth, null, null, (width)/2 - triangleSize);
+
+      // bg triangle
+      bgTriangle.style.border = triangleSize + 'px solid';
+      bgTriangle.style.borderColor = theme.background + ' transparent transparent transparent';
+      MeteorChart.DOM.setPosition(bgTriangle, height - (borderWidth * 2), null, null, (width)/2 - triangleSize);
 
       MeteorChart.DOM.setPosition(tooltip, -1 * height, null, null, -1 * width/2);
     }

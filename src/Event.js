@@ -1,63 +1,32 @@
 (function() {
   MeteorChart.Event = {
-    on: function(obj, func) {
-      var event = obj.event;
+    on: function(id, str, func) {
+      var _events = MeteorChart.Event._events;
 
-      if (!this._events[event]) {
-        this._events[event] = [];
+      if (!_events[str]) {
+        _events[str] = [];
       }
 
-      this._events[event].push({
-        type: obj.type,
-        id: obj.id,
+      _events[str].push({
+        id: id,
         handler: func
-      });
-        
+      });      
     },
-    fire: function(obj) {
-      var event = obj.event,
-          type = obj.type,
-          id = obj.id,
-          events = MeteorChart.Event._events[event],
-          len, n, event;
+    fire: function(id, str, obj) {
+      var events = MeteorChart.Event._events[str],
+          len, n, evt;
 
       if (events) {
         len = events.length;
         for (n=0; n<len; n++) {
-          event = events[n];
-          if (MeteorChart.Event._shouldExecuteHandler(event, type, id)) {
-            event.handler(obj);
+          evt = events[n];
+          if (MeteorChart.Event._shouldExecuteHandler(evt, id)) {
+            evt.handler.call(this, obj);
           }
         }
       }
     },
-    map: function(eventArr, func) {
-      var that = this,
-          cachedEvt = {},
-          n, len;
-
-      // convert eventArr into an array if it's not an array
-      if (!MeteorChart.Util._isArray(eventArr)) {
-        eventArr = [eventArr];
-      }
-
-      for (n=0, len=eventArr.length; n<len; n++) {
-        that.on(eventArr[n], function(evt) {
-          cachedEvt = MeteorChart.Util.merge(cachedEvt, evt);
-          MeteorChart.render();
-        });
-      }
-
-      return function() {
-        return func(cachedEvt);
-      };
-    },
-    _shouldExecuteHandler: function(event, type, id) {
-      // type check
-      if (event.type && event.type !== type) {
-        return false;
-      }
-
+    _shouldExecuteHandler: function(event, id) {
       // id check
       if (event.id && event.id !== id) {
         return false;

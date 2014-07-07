@@ -10,6 +10,8 @@
       this.context = this.canvas.getContext('2d');
 
       this.content.appendChild(this.canvas);
+
+      this._bind();
     },
     _render: function() {
       var data = this.data(),
@@ -71,6 +73,13 @@
       }
 
       return arr;
+    },
+    _bind: function() {
+      var that = this;
+      this.content.addEventListener('mousemove', function(evt) {
+        console.log('mousemove')
+        that.fire('inspectPoint', {});
+      }, false);
     }
   });
 })();

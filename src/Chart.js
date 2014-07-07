@@ -53,9 +53,6 @@ var MeteorChart;
       that._addComponent(this.components[config.components[n].id]);
     }
 
-    // bind events
-    this._bind();
-
     // store reference to this chart
     MeteorChart.charts.push(this);
 
@@ -100,34 +97,6 @@ var MeteorChart;
 
       MeteorChart.log('add ' + component.id);
       this.content.appendChild(component.content);
-    },
-    _bind: function() {
-      var that = this,
-          content = this.content;
-
-      content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        var contentPos = MeteorChart.DOM.getElementPosition(content);
-
-        that.fire('mousemove', {
-          x: evt.clientX - contentPos.x,
-          y: evt.clientY - contentPos.y
-        });
-
-
-      }, 17, {trailing: false}), false);
-
-      // NOTE: this is technically a mouseleave event
-      content.addEventListener('mouseout', function(evt) {
-        var toElement = evt.toElement || evt.relatedTarget;
-        while(toElement) {
-          if (toElement == this) {
-            return false;
-          }
-          toElement = toElement.parentNode;
-        }
-
-        that.fire('mouseout');
-      });
     },
     destroy: function() {
       var components = this.components,
