@@ -1,5 +1,6 @@
 (function() {
-  var PX = 'px';
+  var DOM = MeteorChart.DOM,
+      PX = 'px';
 
   MeteorChart.Component.extend('Tooltip', {
     defaults: {
@@ -17,6 +18,7 @@
       this.content.style.pointerEvents = 'none';
 
       this.tooltip = MeteorChart.DOM.createElement('div');
+      this.tooltip.style.opacity = 0.95;
 
       this.tooltipTitle = MeteorChart.DOM.createElement('h2');
       this.tooltipTitle.style.whiteSpace = 'nowrap';
@@ -55,6 +57,7 @@
         this.tooltip.style.padding = (theme.padding/2) + PX;
         this.tooltip.style.border = '2px solid ' + (style.borderColor || theme.secondary); 
         this.tooltip.style.backgroundColor = style.backgroundColor || theme.background; 
+        DOM.addVendorStyle(this.tooltip, 'border-radius', '3px');
 
         // title
         this.tooltipTitle.style.fontSize = theme.fontSize + PX;
@@ -85,14 +88,14 @@
       // secondary triangle
       secondaryTriangle.style.border = triangleSize + 'px solid';
       secondaryTriangle.style.borderColor = theme.secondary + ' transparent transparent transparent';
-      MeteorChart.DOM.setPosition(secondaryTriangle, height - borderWidth, null, null, (width)/2 - triangleSize);
+      DOM.setPosition(secondaryTriangle, height - borderWidth, null, null, (width)/2 - triangleSize - borderWidth);
 
       // bg triangle
       bgTriangle.style.border = triangleSize + 'px solid';
       bgTriangle.style.borderColor = theme.background + ' transparent transparent transparent';
-      MeteorChart.DOM.setPosition(bgTriangle, height - (borderWidth * 2), null, null, (width)/2 - triangleSize);
+      DOM.setPosition(bgTriangle, height - (borderWidth * 2.2), null, null, (width)/2 - triangleSize - borderWidth);
 
-      MeteorChart.DOM.setPosition(tooltip, -1 * height, null, null, -1 * width/2);
+      DOM.setPosition(tooltip, (-1 * height) - triangleSize - 2, null, null, -1 * width/2);
     }
   });
 })();

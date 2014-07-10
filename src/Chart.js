@@ -43,8 +43,10 @@ var MeteorChart;
       if (component.slot !== undefined) {
         that._initComponent(MeteorChart.Util._extend(this.layout[component.slot], component));
       }
+      // if slot is not defined, go ahead and initialize the component but
+      // set the opacity to 1
       else {
-        that._initComponent(component);
+        (that._initComponent(component)).content.style.opacity = 0;
       }   
     }
 
@@ -89,6 +91,8 @@ var MeteorChart;
       if (conf.slot !== undefined) {
         this.slots[conf.slot] = component;
       }
+
+      return component;
     },
     _addComponent: function(component) {
       if (component.init) {

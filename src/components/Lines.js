@@ -62,6 +62,11 @@
 
       context.restore();
     },
+
+
+
+
+    
     getTitles: function() {
       var arr = [],
           data = this.data(),

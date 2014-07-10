@@ -1,5 +1,6 @@
 (function() {
-  var PX = 'px';
+  var DOM = MeteorChart.DOM,
+      PX = 'px';
 
   var ATTR_BLACKLIST = {
     'id': 1,
@@ -33,6 +34,7 @@
     this.content.setAttribute('data-component-id', this.id);
     this.content.style.display = 'inline-block';
     this.content.style.position = 'absolute';
+    DOM.addVendorStyle(this.content, 'transition', 'all 0.2s ease-in-out');
 
     this.__bind(config.on);
   };
@@ -79,6 +81,9 @@
       var colors = this.chart.theme.data;
       return colors[n % colors.length];
     },
+    show: function() {
+      this.content.style.opacity = 1;
+    },
     hide: function() {
       this.content.style.opacity = 0;
     },
@@ -95,11 +100,20 @@
       };
     },
     __bind: function(on) {
-      var key;
+      var that = this,
+          key;
 
       for (key in on) {
         this.on(key, on[key]);
       }
+
+      this.content.addEventListener('mouseover', MeteorChart.Util._throttle(function(evt) {
+        that.fire('mouseover');
+      }, 17), false);
+
+      this.content.addEventListener('mouseout', MeteorChart.Util._throttle(function(evt) {
+        that.fire('mouseout');
+      }, 17), false);
     }
   };
 
