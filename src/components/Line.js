@@ -59,6 +59,10 @@
       } 
 
       context.restore();
+    },
+    getDescription: function() {
+      var numSeries = this.data().length;
+      return numSeries + ' line series';
     }
   });
 

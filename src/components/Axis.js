@@ -17,7 +17,8 @@
       },
       style: {
         padding: 0
-      }
+      },
+      orientation: 'horizontal'
     },
     init: function() {
       this.innerContent = MeteorChart.DOM.createElement('div');
@@ -93,6 +94,10 @@
         text.style.top = 0 + PX;
         text.style.left = (offset - (MeteorChart.DOM.getTextWidth(val)/2)) + PX;
       }
+    },
+    getDescription: function() {
+      var data = this.data();
+      return MeteorChart.Util.capitalize(this.orientation()) + ' axis from ' + data[0] + ' to ' + data[data.length-1];
     }
   });
 })();

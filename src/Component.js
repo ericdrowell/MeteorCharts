@@ -36,6 +36,12 @@
     this.content.style.position = 'absolute';
     DOM.addVendorStyle(this.content, 'transition', 'all 0.2s ease-in-out');
 
+    // build description container
+    if (this.getDescription) {
+      this.description = document.createElement('li');
+      this.chart.description.appendChild(this.description);
+    }
+
     this.__bind(config.on);
   };
 
@@ -69,6 +75,10 @@
           that.content.style.top =       that.get('y') + PX;
           that.content.style.width =     that.get('width') + PX;
           that.content.style.height =    that.get('height') + PX;
+
+          if (that.getDescription) {
+            that.description.innerHTML = that.getDescription();
+          }
     
         });
       }

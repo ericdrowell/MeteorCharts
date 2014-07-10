@@ -70,6 +70,23 @@
       item.appendChild(box);
       item.appendChild(text);
       this.list.appendChild(item);
+    },
+    getDescription: function() {
+      var data = this.data(),
+          len = data.length,
+          str = 'Legend with the following labels: ',
+          n;
+
+
+      for (n=0; n<len; n++) {
+        str += data[n];
+
+        if (n<len-1) {
+          str += ', ';
+        }
+      }
+
+      return str;
     }
   });
 })();

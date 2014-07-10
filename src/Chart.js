@@ -29,6 +29,12 @@ var MeteorChart;
     MeteorChart.DOM.addVendorStyle(this.content, 'transition', 'opacity 0.3s ease-in-out');
     this.container.appendChild(this.content);
 
+    // build description container
+    this.description = document.createElement('ul');
+    this.description.className = 'meteorchart-description';
+    this.description.style.textIndent = '-99999px';
+    this.content.appendChild(this.description);
+
     // initialize renderer dummies
     MeteorChart.DOM.dummy = MeteorChart.DOM.createElement('div');
     MeteorChart.DOM.dummy.style.display = 'inline-block';
