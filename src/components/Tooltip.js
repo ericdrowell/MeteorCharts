@@ -95,7 +95,7 @@
       bgTriangle.style.borderColor = theme.background + ' transparent transparent transparent';
       DOM.setPosition(bgTriangle, height - (borderWidth * 2.2), null, null, (width)/2 - triangleSize - borderWidth);
 
-      DOM.setPosition(tooltip, (-1 * height) - triangleSize - 2, null, null, -1 * width/2);
+      DOM.setPosition(tooltip, (-1 * height) - 12, null, null, -1 * width/2 - borderWidth);
     }
   });
 })();

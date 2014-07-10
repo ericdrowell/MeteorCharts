@@ -61,30 +61,8 @@
       } 
 
       context.restore();
-    },
-
-
-
-
-    
-    getTitles: function() {
-      var arr = [],
-          data = this.data(),
-          len = data.length,
-          n;
-
-      for (n=0; n<len; n++) {
-        arr.push(data[n].title);
-      }
-
-      return arr;
-    },
-    _bind: function() {
-      var that = this;
-      this.content.addEventListener('mousemove', function(evt) {
-        console.log('mousemove')
-        that.fire('inspectPoint', {});
-      }, false);
     }
   });
+
+  MeteorChart.Components.Lines.prototype = MeteorChart.Util._extend(MeteorChart.Components.Lines.prototype, MeteorChart.Data.Points);
 })();

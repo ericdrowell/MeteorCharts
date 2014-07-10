@@ -42,6 +42,25 @@ CHARTS.push({
         },
         data: function() {
           return this.chart.components.lineSeries.get('data');
+        },
+        on: {
+          newTarget: function(evt) {
+            var tooltip = this.chart.components.tooltip;
+
+            tooltip.x(this.x() + evt.x);
+            tooltip.y(this.y() + evt.y - 5);
+            tooltip.data({
+              title: evt.title,
+              content: 'x=' + evt.dataX + ', y=' + evt.dataY
+            });
+            tooltip.render();
+          },
+          mouseover: function(evt) {
+            this.chart.components.tooltip.show();
+          },
+          mouseout: function(evt) {
+            this.chart.components.tooltip.hide();
+          }
         }
       },
       {
@@ -51,6 +70,10 @@ CHARTS.push({
         data: function() {
           return [-100, 0, 100, 200, 300];
         }
+      },
+      {
+        type: 'Tooltip',
+        id: 'tooltip'
       }
     ]
   }

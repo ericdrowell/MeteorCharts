@@ -137,6 +137,7 @@ var MeteorChart;
   MeteorChart.Formatters = {};
   MeteorChart.Layouts = {};
   MeteorChart.Themes = {};
+  MeteorChart.Data = {};
 
   // global properties
   MeteorChart.charts = [];

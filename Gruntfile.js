@@ -10,6 +10,9 @@ module.exports = function(grunt) {
     'src/Renderer.js',
     'src/Attrs.js',
 
+    // data
+    'src/data/Points.js',
+
     // components
     'src/components/Lines.js',
     'src/components/Axis.js',
