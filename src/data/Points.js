@@ -15,7 +15,8 @@
     _bind: function() {
       var that = this;
       this.content.addEventListener('mousemove', MeteorChart.Util._throttle(function(evt) {
-        var nearestPoint = that._getNearestPoint(evt.clientX, evt.clientY);
+        var contentPosition = that.chart.getContentPosition(),
+            nearestPoint = that._getNearestPoint(evt.clientX - contentPosition.x, evt.clientY - contentPosition.y);
         that.fire('newTarget', nearestPoint);
       }, 17), false);
     },

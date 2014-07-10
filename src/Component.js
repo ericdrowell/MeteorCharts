@@ -124,6 +124,9 @@
       this.content.addEventListener('mouseout', MeteorChart.Util._throttle(function(evt) {
         that.fire('mouseout');
       }, 17), false);
+    },
+    getContentPosition: function() {
+      return DOM.getElementPosition(this.content);
     }
   };
 

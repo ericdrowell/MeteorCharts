@@ -135,6 +135,9 @@ var MeteorChart;
       for (key in components) {
         components[key].render();
       }
+    },
+    getContentPosition: function() {
+      return MeteorChart.DOM.getElementPosition(this.content);
     }
   };
 
