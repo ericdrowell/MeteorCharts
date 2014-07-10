@@ -1,5 +1,5 @@
 (function() {
-  MeteorChart.Component.extend('Lines', {
+  MeteorChart.Component.extend('Line', {
     defaults: {
       style: {
         lineWidth: 2
@@ -8,9 +8,7 @@
     init: function() {
       this.canvas = document.createElement('canvas');
       this.context = this.canvas.getContext('2d');
-
       this.content.appendChild(this.canvas);
-
       this._bind();
     },
     _render: function() {
@@ -64,5 +62,5 @@
     }
   });
 
-  MeteorChart.Components.Lines.prototype = MeteorChart.Util._extend(MeteorChart.Components.Lines.prototype, MeteorChart.Data.Points);
+  MeteorChart.Components.Line.prototype = MeteorChart.Util._extend(MeteorChart.Components.Line.prototype, MeteorChart.Data.Points);
 })();

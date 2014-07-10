@@ -31,7 +31,7 @@ CHARTS.push({
       },
       {
         slot: 1,
-        type: 'Lines',
+        type: 'Line',
         id: 'lineSeries',
         viewport: {
           minX: 0,

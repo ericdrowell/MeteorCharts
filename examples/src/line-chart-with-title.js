@@ -20,7 +20,7 @@ CHARTS.push({
       },
       {
         slot: 2,
-        type: 'Lines',
+        type: 'Line',
         id: 'lineSeries',
         viewport: {
           minX: 0,

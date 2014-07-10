@@ -14,14 +14,14 @@ module.exports = function(grunt) {
     'src/data/Points.js',
 
     // components
-    'src/components/Lines.js',
+    'src/components/Line.js',
     'src/components/Axis.js',
     'src/components/Title.js',
     'src/components/Tooltip.js',
     'src/components/GridLines.js',
     'src/components/Slider.js',
     'src/components/Legend.js',
-    'src/components/Bars.js',
+    'src/components/Bar.js',
     'src/components/Scatter.js',
 
     // themes

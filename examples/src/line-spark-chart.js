@@ -6,7 +6,7 @@ CHARTS.push({
     components: [
       {
         slot: 0,
-        type: 'Lines',
+        type: 'Line',
         id: 'lineSeries',
         viewport: {
           minX: 0,
