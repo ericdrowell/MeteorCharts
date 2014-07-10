@@ -1,5 +1,6 @@
 (function() {
-  var PX = 'px';
+  var DOM = MeteorChart.DOM,
+      PX = 'px';
 
   MeteorChart.Component.extend('Slider', {
     defaults: {
@@ -107,11 +108,11 @@
         evt.preventDefault();
 
         if (orientation === 'horizontal') {
-          startOffsetPos = MeteorChart.DOM.getNumber(handle.style.left);
+          startOffsetPos = DOM.pxToNum(handle.style.left);
           startPointerPos = evt.clientX;
         }
         else {
-          startOffsetPos = MeteorChart.DOM.getNumber(handle.style.top);
+          startOffsetPos = DOM.pxToNum(handle.style.top);
           startPointerPos = evt.clientY;
         }
 

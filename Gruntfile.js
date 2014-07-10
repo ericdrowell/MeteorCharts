@@ -142,7 +142,9 @@ module.exports = function(grunt) {
             LINE_SERIES_DATA: grunt.file.read('examples/data/line-series-data.js'),
             LINE_DUAL_SERIES_DATA: grunt.file.read('examples/data/line-dual-series-data.js'),
             BAR_SERIES_DATA: grunt.file.read('examples/data/bar-series-data.js'),
-            BAR_DUAL_SERIES_DATA: grunt.file.read('examples/data/bar-dual-series-data.js')
+            BAR_DUAL_SERIES_DATA: grunt.file.read('examples/data/bar-dual-series-data.js'),
+
+            TOOLTIP_INTERACTION: grunt.file.read('examples/interactions/tooltip.js')
           },
           prefix: '@@'
         },

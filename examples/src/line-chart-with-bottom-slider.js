@@ -22,7 +22,8 @@ CHARTS.push({
           minY: 0,
           maxY: 15,
         },
-        data: @@LINE_SERIES_DATA
+        data: @@LINE_SERIES_DATA,
+        on: @@TOOLTIP_INTERACTION
       },
       {
         slot: 2,
@@ -40,6 +41,10 @@ CHARTS.push({
           handleWidth: 40,
           handleHeight: 10
         }
+      },
+      {
+        type: 'Tooltip',
+        id: 'tooltip'
       }
     ]
   }

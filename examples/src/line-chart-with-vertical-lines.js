@@ -31,7 +31,8 @@ CHARTS.push({
           minY: 0,
           maxY: 15,
         },
-        data: @@LINE_SERIES_DATA
+        data: @@LINE_SERIES_DATA,
+        on: @@TOOLTIP_INTERACTION
       },
       {
         slot: 2,
@@ -40,6 +41,10 @@ CHARTS.push({
         data: function() {
           return [0, 2, 4, 6, 8, 10];
         }
+      },
+      {
+        type: 'Tooltip',
+        id: 'tooltip'
       }
     ]
   }

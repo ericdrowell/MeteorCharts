@@ -50,7 +50,8 @@ CHARTS.push({
         },
         data: function() {
           return this.chart.components.lineSeries.get('data');
-        }
+        },
+        on: @@TOOLTIP_INTERACTION
       },
       {
         slot: 2,
@@ -59,6 +60,10 @@ CHARTS.push({
         data: function() {
           return [0, 2, 4, 6, 8, 10];
         }
+      },
+      {
+        type: 'Tooltip',
+        id: 'tooltip'
       }
     ]
   }

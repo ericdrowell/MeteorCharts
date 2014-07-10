@@ -70,6 +70,9 @@
       el.style.right  = right  === null ? 'auto' : Math.round(right)  + 'px';
       el.style.bottom = bottom === null ? 'auto' : Math.round(bottom) + 'px';
       el.style.left   = left   === null ? 'auto' : Math.round(left)   + 'px';
+    },
+    pxToNum: function(str) {
+      return parseInt(str.replace('px', ''));
     }
   }
 })();

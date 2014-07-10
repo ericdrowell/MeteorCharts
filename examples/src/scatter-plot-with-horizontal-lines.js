@@ -33,7 +33,8 @@ CHARTS.push({
         data: @@LINE_DUAL_SERIES_DATA,
         style: {
           filled: false
-        }
+        },
+        on: @@TOOLTIP_INTERACTION
       },
       {
         slot: 2,
@@ -42,6 +43,10 @@ CHARTS.push({
         data: function() {
           return [-100, 0, 100, 200, 300];
         }
+      },
+      {
+        type: 'Tooltip',
+        id: 'tooltip'
       }
     ]
   }
