@@ -34,7 +34,7 @@
     this.content.setAttribute('data-component-id', this.id);
     this.content.style.display = 'inline-block';
     this.content.style.position = 'absolute';
-    DOM.addVendorStyle(this.content, 'transition', 'opacity 0.2s ease-in-out');
+    DOM.addVendorStyle(this.content, 'transition', 'all 0.2s ease-in-out');
 
     this.__bind(config.on);
   };
